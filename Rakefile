@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Mapknitter::Application.load_tasks
+Whirld::Application.load_tasks

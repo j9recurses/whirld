@@ -107,21 +107,6 @@ ActiveRecord::Schema.define(:version => 20150117041704) do
   add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
   add_index "tags", ["warpable_id"], :name => "index_tags_on_warpable_id"
 
-  create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100, :default => ""
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.string   "identity_url"
-    t.string   "role",                      :limit => 40,  :default => "basic"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-  end
-
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
   create_table "warpables", :force => true do |t|
     t.integer  "parent_id"

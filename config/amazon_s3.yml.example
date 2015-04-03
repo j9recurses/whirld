@@ -1,0 +1,11 @@
+development:
+  bucket: "grassrootsmapping"
+  access_key_id: 
+  secret_access_key: 
+test:
+  access_key_id: 
+  secret_access_key:
+production:
+  bucket: "grassrootsmapping"
+  access_key_id: 
+  secret_access_key: 

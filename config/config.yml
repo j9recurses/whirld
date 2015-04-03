@@ -1,0 +1,7 @@
+development:
+  google_maps_api_key: "AIzaSyDZ4iVBOZ4m6jkZzZJSn7IHmLaBdGhUX0s"
+
+test:
+
+production:
+  google_maps_api_key: "AIzaSyDZ4iVBOZ4m6jkZzZJSn7IHmLaBdGhUX0s"

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Whirld</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-ui/jquery-ui.min.js"></script>
+    <link href="/lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
+    <script src="/lib/bootstrap-css/js/bootstrap.js"></script>
+    <script src="/lib/sparklines/source/sparkline.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+    <% if params[:controller] == "map" && params[:action] == "index" %>
+      <link href="/style-2.css" rel="stylesheet" />
+    <% else %>
+      <link href="/style.css" rel="stylesheet" />
+    <% end %>
+    <link href="/feeds/all" rel="alternate" type="application/rss+xml" title="Recent maps on MapKnitter.org" />
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7636025-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+  <div id="bodywrap">
+
+    <% unless params[:controller] == "map" && params[:action] == "index" || params[:controller] == "beta" && params[:action] == "index"%>
+      <a href="/" style="float:left;"><img src="/images/mapknitter-masked.png" /></a>
+    <% end %>
+      <br style="clear:both;" />
+  </div>
+
+  <div class="container-fluid">
+    <div class="alert error"><button type="button" class="close" data-dismiss="alert">×</button><b>Warning:</b> MapKnitter is undergoing major infrastructural upgrades; please report any issues you encounter <a href="https://github.com/publiclab/mapknitter/issues">on Github</a> or to <a href="web@publiclab.org">web@publiclab.org</a></div>
+
+    <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+    <% end %>
+    <% if flash[:error] %>
+    <div class="alert alert-error">
+      <%= flash[:error] %>
+    </div>
+    <% end %>
+  </div>
+
+    <%= yield %>
+
+
+  </div>
+
+
+</body>
+</html>

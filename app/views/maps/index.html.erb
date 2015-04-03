@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+
+      <a class="btn btn-lg btn-primary create-map" href="<%= new_map_url %>">
+        <i class="fa fa-plus-circle"></i> Create a map </a>
+
+      <div>
+        <br />
+        <%= render :partial => "maps/search" %>
+        <br />
+      </div>
+
+
+      </div>
+    </div><!-- .col-md-3 -->
+    <div class="maps-list col-md-9">
+
+      <div class="hero">
+        <h1>Make maps from aerial photos</h1>
+      </div>
+
+  
+      <h2><%= @title ||= "Featured" %> <small> | <a href="/recent">Recent maps</a></small></h2>
+
+      <div class="row map-list">
+        <% @maps.each_with_index do |map,i| %>
+        <%= render :partial => 'maps/list', :locals => {:map => map} %>
+        <% end %>
+      </div>
+      <br style="clear:both;" />
+      <%= will_paginate @maps, renderer: BootstrapPagination::Rails unless @unpaginated %>
+    </div><!-- .col-md-9 -->
+  </div><!-- .row -->
+</div>

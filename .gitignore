@@ -10,6 +10,9 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+#bower components
+/bower_components
+
 # Ignore all logfiles and tempfiles.
 /tmp
 *.swp

@@ -14,7 +14,7 @@
 <div class="tab-content">
   <div class="tab-pane active" id="map-export-subtab">
 
-    <% if Rails.env.production? && !logged_in? %>
+    <% if Rails.env.production? && !current_user %>
       <div id="recaptcha-container"></div><br />
       <div <% if @map.exporting? %>style="display:none;"<% end %> id="run_export">Prove that you're a person, then click EXPORT to begin: <br />
     <% end %>
@@ -24,7 +24,7 @@
         <span class="" id="export_progress"><%= @map.export ? @map.export.status : "Loading..." %></span>
       </div>
     </div>
-    <% if logged_in? || @map.anonymous? %>
+    <% if current_user || @map.anonymous? %>
       <p>
         <button id="begin-export" class="btn btn-lg btn-primary"<% if @map.export && @map.exporting? %> style="display:none;"<% end %>>Start export</button>
         <button <% unless @map.export && @map.exporting? %>style="display:none;"<% end %> id="cancel-export" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel export</button>

@@ -1,0 +1,44 @@
+[ 2015-04-03 19:36:01.1704 10392/7f630bcb6780 age/Wat/Main.cpp:1264 ]: Starting PassengerAgent watchdog...
+[ 2015-04-03 19:36:01.1742 10395/7f7481b3e780 age/Hel/Main.cpp:891 ]: Starting PassengerAgent server...
+[ 2015-04-03 19:36:01.1743 10395/7f7481b3e780 age/Hel/Main.cpp:234 ]: PassengerAgent server running in multi-application mode.
+[ 2015-04-03 19:36:01.1760 10395/7f7481b3e780 age/Hel/Main.cpp:645 ]: PassengerAgent server online, PID 10395
+[ 2015-04-03 19:36:01.1878 10402/7ff3eec1f780 age/Log/Main.cpp:439 ]: Starting PassengerAgent logger...
+[ 2015-04-03 19:36:01.1885 10402/7ff3eec1f780 age/Log/Main.cpp:320 ]: PassengerAgent logger online, PID 10402
+2015/04/03 19:36:03 [error] 10414#0: *4 "/home/j9/Desktop/spring2015/final_project/whirld/app/views/users/registrations/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+2015/04/03 19:36:06 [error] 10414#0: *5 open() "/home/j9/Desktop/spring2015/final_project/whirld/app/views/users/registrations/public/sign_in" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /sign_in HTTP/1.1", host: "localhost:3000"
+
+
+[ 2015-04-03 19:36:10.2804 10395/7f747b7fe700 age/Hel/Main.cpp:455 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-03 19:36:10.2804 10402/7ff3ed604700 age/Log/Main.cpp:346 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-03 19:36:10.2804 10395/7f7481b3e780 age/Hel/Main.cpp:814 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-03 19:36:10.2805 10402/7ff3eec1f780 age/Log/Main.cpp:408 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-03 19:36:10.2806 10395/7f747b7fe700 Ser/Server.h:455 ]: [ServerThr.1] Shutdown finished
+[ 2015-04-03 19:36:10.2806 10402/7ff3ed604700 Ser/Server.h:455 ]: [LoggerAdminServer] Shutdown finished
+[ 2015-04-03 19:36:10.2806 10395/7f747affd700 Ser/Server.h:455 ]: [ServerThr.2] Shutdown finished
+[ 2015-04-03 19:36:10.2807 10395/7f7479ffb700 Ser/Server.h:455 ]: [ServerThr.4] Shutdown finished
+[ 2015-04-03 19:36:10.2807 10395/7f747a7fc700 Ser/Server.h:455 ]: [ServerThr.3] Shutdown finished
+[ 2015-04-03 19:36:10.2808 10402/7ff3eec1f780 age/Log/Main.cpp:433 ]: PassengerAgent logger shutdown finished
+[ 2015-04-03 19:36:10.2809 10395/7f74797fa700 Ser/Server.h:455 ]: [AdminServer] Shutdown finished
+[ 2015-04-03 19:36:10.2822 10395/7f7481b3e780 age/Hel/Main.cpp:876 ]: PassengerAgent server shutdown finished
+[ 2015-04-03 19:36:31.8174 10448/7fabd298d780 age/Wat/Main.cpp:1264 ]: Starting PassengerAgent watchdog...
+[ 2015-04-03 19:36:31.8213 10451/7f75d989f780 age/Hel/Main.cpp:891 ]: Starting PassengerAgent server...
+[ 2015-04-03 19:36:31.8214 10451/7f75d989f780 age/Hel/Main.cpp:234 ]: PassengerAgent server running in multi-application mode.
+[ 2015-04-03 19:36:31.8232 10451/7f75d989f780 age/Hel/Main.cpp:645 ]: PassengerAgent server online, PID 10451
+[ 2015-04-03 19:36:31.8349 10459/7faf8ea42780 age/Log/Main.cpp:439 ]: Starting PassengerAgent logger...
+[ 2015-04-03 19:36:31.8358 10459/7faf8ea42780 age/Log/Main.cpp:320 ]: PassengerAgent logger online, PID 10459
+2015/04/03 19:36:33 [error] 10470#0: *4 open() "/home/j9/Desktop/spring2015/final_project/whirld/app/views/users/registrations/public/user/sign_in" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /user/sign_in HTTP/1.1", host: "localhost:3000"
+2015/04/03 19:36:34 [error] 10470#0: *5 "/home/j9/Desktop/spring2015/final_project/whirld/app/views/users/registrations/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+
+
+[ 2015-04-03 19:36:43.2180 10451/7f75d37fe700 age/Hel/Main.cpp:455 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-03 19:36:43.2180 10459/7faf8d427700 age/Log/Main.cpp:346 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-03 19:36:43.2181 10451/7f75d989f780 age/Hel/Main.cpp:814 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-03 19:36:43.2182 10459/7faf8ea42780 age/Log/Main.cpp:408 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-03 19:36:43.2183 10459/7faf8d427700 Ser/Server.h:455 ]: [LoggerAdminServer] Shutdown finished
+[ 2015-04-03 19:36:43.2183 10451/7f75d2ffd700 Ser/Server.h:455 ]: [ServerThr.2] Shutdown finished
+[ 2015-04-03 19:36:43.2185 10451/7f75d27fc700 Ser/Server.h:455 ]: [ServerThr.3] Shutdown finished
+[ 2015-04-03 19:36:43.2185 10451/7f75d17fa700 Ser/Server.h:455 ]: [AdminServer] Shutdown finished
+[ 2015-04-03 19:36:43.2185 10459/7faf8ea42780 age/Log/Main.cpp:433 ]: PassengerAgent logger shutdown finished
+[ 2015-04-03 19:36:43.2186 10451/7f75d1ffb700 Ser/Server.h:455 ]: [ServerThr.4] Shutdown finished
+[ 2015-04-03 19:36:43.2186 10451/7f75d37fe700 Ser/Server.h:455 ]: [ServerThr.1] Shutdown finished
+[ 2015-04-03 19:36:43.2303 10451/7f75d989f780 age/Hel/Main.cpp:876 ]: PassengerAgent server shutdown finished

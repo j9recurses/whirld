@@ -4,7 +4,7 @@
       <span class="fa fa-cog"></span>
     </a>
     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-      <% if logged_in? && current_user.can_delete?(@map) %>
+      <% if current_user %>
         <li><a>Delete Map</a></li>
       <% end %>
     </ul>
@@ -12,7 +12,7 @@
   <div class="sidebar-title">
     <h3><%= @map.name %></h3>
   </div>
-  
+
 <% end %>
 
 <% content_for :details do %>
@@ -29,7 +29,7 @@
     <tr><td><span class="map-detail-label">Latitude </span><%= @map.lat %></td><td><span class="map-detail-label">Longitude </span><%= @map.lon %></td></tr>
   </table>
 
-  <% if logged_in? %>
+  <% if current_user %>
     <hr />
     <p>
       <a onClick="$('#map-edit-container').toggle()" class="btn btn btn-default">Edit details</a>
@@ -44,7 +44,6 @@
     <%= render :partial => 'maps/edit' %>
   </div>
 
-  <hr />
   <div class="tags">
     <%= render :partial => "tags/index" %>
   </div>

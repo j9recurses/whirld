@@ -12,7 +12,7 @@
 //
 
 //= require jquery/dist/jquery.js
-//= require jquery-ujs/src/rails.js 
+//= require jquery-ujs/src/rails.js
 
 //= require bootstrap/dist/js/bootstrap.js
 
@@ -26,4 +26,4 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
-// require_tree .
+//= require_tree .

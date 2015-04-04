@@ -2,13 +2,15 @@ require 'open3'
 
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
-  before_filter :require_login, :only => [:edit, :update, :destroy]
+  before_filter :authenticate_user!,  :except => [:index, :show, :images]
+
+
 
   layout 'knitter2'
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')
-    render :layout => 'application2'
+    render :layout => 'application'
   end
 
   def new
@@ -16,9 +18,9 @@ class MapsController < ApplicationController
   end
 
   def create
-      @user = User.find(2)
+      @user = current_user
       @map = @user.maps.new(params[:map])
-      @map.author = @user.email # eventually deprecate
+      @map.author = @user.login
       puts @map.inspect
       if @map.save
         redirect_to "/maps/#{@map.slug}"

@@ -2,12 +2,10 @@
   <div class="sidebar-title new-map">
     <h4>Create a new map</h4>
     <p>Pan and zoom to locate your site, then give your map a title, location, and description.</p>
-  </div>
-<% end %>
+<%end%>
 
 <%= form_for @map, :html => { :class => "new-map" } do |f| %>
-  <div class="sidebar-content">
-
+<div class="sidebar-content">
     <%=raw errors_for @map %>
 
     <div class="form-group">
@@ -65,8 +63,7 @@
     <%= f.submit "Create map", :class => "btn btn-primary btn-lg", :tabIndex => 4 %>
 
     <input type="hidden" name="map[zoom]" id="map_zoom" />
-
-  </div><!-- .new-map-form -->
+</div>
 <% end %>
 
 <script><%= render :partial => 'maps/geocoder', :formats => [:js] %></script>

@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Whirld</title>
-  <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-  <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css" />
-
-  <%=javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tag %>
 </head>
-
 <body>
+<nav id='navbar-main' class='navbar main-nav padding-top'>
+  <div class='row group wrapper'>
+    <h1 id='main-logo' class='logo three columns first-header h5'>
+      <a href='/'>
+        <i class='fa fa-paper-plane'></i> Whirld
+      </a>
+    </h1>
+    <a class='toggle nine columns first-header' href='#'><i class='fa fa-bars h5 pull-right first-header'></i></a>
+    <nav id='left-nav' class='secondary-nav four columns'>
+      <ul class='inline-list'>
+        <li class='item'><a href='/' class=''>About</a></li>
+        <li class='item'><a href='/new' class=''>Create</a></li>
+      </ul>
+    </nav>
+    <nav id='right-nav' class='secondary-nav five columns'>
+      <ul class='inline-list pull-right'>
+        <li class='item'><a href='/' class=''><i class='fa fa-search'></i></a></li>
+        <li class='item'><a href='/' class=''>dronePil0t <i class='fa fa-caret-down'></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</nav>
+<%= yield %>
 
-  <ul class="hmenu">
-    <% if user_signed_in? %>
-      <%=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
-        <%end %>
-          <%=render 'devise/menu/registration_items' %>
-            <%=render 'devise/menu/login_items' %>
-  </ul>
-  </br>
-
-  <div class="container">
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%=value %>
-      </div>
-      <% end %>
-</div>
-
-
-  <%=yield; %>
-
-
+<%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
+<%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.min.js" %>
+<%= javascript_include_tag "main.js" %>
 </body>
-
 </html>

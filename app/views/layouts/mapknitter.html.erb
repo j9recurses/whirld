@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Whirld</title>
+  <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <%=stylesheet_link_tag 'application' %>
+  <%=stylesheet_link_tag 'bootstrap/dist/css/bootstrap.min' %>
+  <%=stylesheet_link_tag 'mapknitter/annotations' %>
+  <%=stylesheet_link_tag 'mapknitter/maps' %>
+  <%=stylesheet_link_tag 'mapknitter/style' %>
+  <%=stylesheet_link_tag 'mapknitter/uploads' %>
+  <%=javascript_include_tag 'application' %>
+</head>
+
+<body>
+
+  <ul class="hmenu">
+    <% if user_signed_in? %>
+      <%=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
+        <%end %>
+          <%=render 'devise/menu/registration_items' %>
+            <%=render 'devise/menu/login_items' %>
+  </ul>
+  </br>
+
+  <div class="container">
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%=value %>
+      </div>
+      <% end %>
+</div>
+
+
+  <%=yield; %>
+  <h1>Mapknitter layout is working.</h1>
+</body>
+
+</html>

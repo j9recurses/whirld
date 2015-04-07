@@ -1,0 +1,13 @@
+{
+  "name": "leaflet-google",
+  "_cacheHeaders": {
+    "ETag": "\"cf45c6b521e9992ec546f12328ba3db868081efe\"",
+    "Content-Length": "5006",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:cf45c6b52",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/shramov/leaflet-plugins/master/layer/tile/Google.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/shramov/leaflet-plugins/master/layer/tile/Google.js"
+}

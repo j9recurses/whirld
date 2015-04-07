@@ -11,12 +11,17 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 
-//= require jquery/dist/jquery.js
-//= require jquery-ujs/src/rails.js
 
+
+
+// Both
+//= require jquery/dist/jquery.js
+//= require leaflet/dist/leaflet
+
+// Mapknitter
+//= require jquery-ujs/src/rails.js
 //= require bootstrap/dist/js/bootstrap.js
 
-//= require leaflet/dist/leaflet
 //= require leaflet-providers/leaflet-providers.js
 //= require leaflet-draw/dist/leaflet.draw-src.js
 //= require leaflet-illustrate/dist/Leaflet.Illustrate.js
@@ -25,5 +30,8 @@
 //= require leaflet-easybutton/easy-button.js
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
+
+// Katey's part
+//= autosize/dest/autosize.min
 
 //= require_tree .

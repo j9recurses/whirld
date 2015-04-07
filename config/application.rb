@@ -57,12 +57,18 @@ module Whirld
     # Enable the asset pipeline
     config.assets.enabled = true
     config.filter_parameters << :password
-   config.cookie_secret = 'asdfjdasgaisaolghrwiohrkahguilboiwelkxwbranjkl'
+    config.cookie_secret = 'asdfjdasgaisaolghrwiohrkahguilboiwelkxwbranjkl'
 
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.3'
     config.assets.paths << Rails.root.join("public","lib")
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    
+    #Bower
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
+    #Add load paths
+    # config.sass.load_paths << File.expand_path('../../vendor/assets/components/')
   end
 end

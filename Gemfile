@@ -7,6 +7,10 @@ gem "will_paginate", "3.0.7"
 gem "will_paginate-bootstrap"
 gem "friendly_id"
 
+gem "omniauth-google-oauth2"
+gem 'youtube_it', github: 'bodrovis/youtube_it'
+gem 'acts_as_commentable', '3.0.1'
+
 # dependencies
 group :dependencies do
   gem "mysql", "2.9.1"

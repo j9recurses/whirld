@@ -1,0 +1,43 @@
+<%= form_tag '', id: 'video_pre_upload' do %>
+  <div class="form-group">
+    <%= text_field_tag :title, @pre_upload_info[:title], required: true,
+                       placeholder: 'Title', class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= text_area_tag :description, @pre_upload_info[:description], required: true,
+                      placeholder: 'Description', class: 'form-control' %>
+  </div>
+<% end %>
+
+<%= form_tag '', id: 'video_upload', multipart: true do %>
+  <%= hidden_field_tag :token, '' %>
+
+  <div class="form-group">
+    <%= file_field_tag :file, required: true %>
+  </div>
+<% end %>
+
+<button id="submit_pre_upload_form" class="btn btn-lg btn-primary">Upload</button>
+<%= image_tag 'ajax-loader.gif', class: 'preloader', alt: 'Uploading...', title: 'Uploading...' %>
+
+<script>
+  $(document).ready(function() {
+    var submit_button = $('#submit_pre_upload_form');
+    var video_upload = $('#video_upload');
+    submit_button.click(function () {
+      $.ajax({
+        type: 'POST',
+        url: '<%= get_upload_token_path %>',
+        data: $('#video_pre_upload').serialize(),
+        dataType: 'json',
+        success: function(response) {
+          video_upload.find('#token').val(response.token);
+          video_upload.attr('action', response.url.replace(/^http:/i, window.location.protocol)).submit();
+          submit_button.unbind('click').hide();
+          $('.preloader').css('display', 'block');
+        }
+      });
+    });
+  });
+</script>

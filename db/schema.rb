@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150404061537) do
+ActiveRecord::Schema.define(:version => 20150407104419) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -25,12 +25,18 @@ ActiveRecord::Schema.define(:version => 20150404061537) do
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "user_id"
-    t.string   "body"
-    t.integer  "map_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "title",            :limit => 50, :default => ""
+    t.text     "comment"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
   end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "exports", :force => true do |t|
     t.integer  "map_id",       :default => 0
@@ -120,10 +126,34 @@ ActiveRecord::Schema.define(:version => 20150404061537) do
     t.string   "last_sign_in_ip"
     t.string   "login",                  :limit => 40
     t.string   "name",                   :limit => 100, :default => ""
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "videos", :force => true do |t|
+    t.string   "link"
+    t.string   "title"
+    t.string   "author"
+    t.string   "duration"
+    t.integer  "likes"
+    t.integer  "dislikes"
+    t.date     "vid_date"
+    t.time     "vid_time"
+    t.integer  "user_id"
+    t.integer  "map_id"
+    t.string   "description"
+    t.string   "yt_video_id"
+    t.boolean  "is_complete", :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "uid"
+  end
+
+  add_index "videos", ["map_id"], :name => "index_videos_on_map_id"
+  add_index "videos", ["user_id"], :name => "index_videos_on_user_id"
 
   create_table "warpables", :force => true do |t|
     t.integer  "parent_id"

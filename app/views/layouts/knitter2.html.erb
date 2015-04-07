@@ -2,140 +2,155 @@
    "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <%=raw csrf_meta_tags %>
-  <title>Whirld: <%= @map[:name] ? @map[:name] : "New map" %></title>
-  <meta name="description" content="<%= @map.description.gsub('"',"'") if @map.description %>" />
-  <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-  <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="/lib/leaflet/dist/leaflet.css"/>
-  <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag 'application' %>
-  <%= javascript_include_tag 'maps' %>
-  <%= javascript_include_tag 'uploads' %>
-  <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+    <title>Whirld:
+      <%=@ map[:name] ? @map[:name] : "New map" %>
+    </title>
+    <meta name="description" content="<%= @map.description.gsub('" ',"' ") if @map.description %>" />
+    <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/lib/leaflet/dist/leaflet.css" />
+    <%=s tylesheet_link_tag 'application' %>
+      <%=j avascript_include_tag 'application' %>
+        <%=j avascript_include_tag 'maps' %>
+          <%=j avascript_include_tag 'uploads' %>
+            <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
 </head>
+
 <body>
 
 
   <ul class="hmenu">
-    <% if   user_signed_in? %>
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-    <%end %>
-    <%= render 'devise/menu/registration_items' %>
-    <%= render 'devise/menu/login_items' %>
+    <% if user_signed_in? %>
+      <%=l ink_to "Sign out", destroy_user_session_path, :method=> :delete %>
+        <%end %>
+          <%=r ender 'devise/menu/registration_items' %>
+            <%=r ender 'devise/menu/login_items' %>
   </ul>
-</br>
+  </br>
 
 
 
-  <div id="knitter-map-pane"<% if @embed %> style="width:100%;max-width:none;"<% end %>>
+  <div id="knitter-map-pane" <% if @embed %> style="width:100%;max-width:none;"
+    <% end %>>
 
-  <% unless @embed %><a class="sidebar-toggle sidebar-toggle-tab"><i class="fa fa-chevron-left"></i></a><% end %>
+      <% unless @embed %><a class="sidebar-toggle sidebar-toggle-tab"><i class="fa fa-chevron-left"></i></a>
+        <% end %>
   </div>
 
   <% unless @embed %>
-  <div class="sidebar">
-    <div class="sidebar-wrap">
-      <div class="sidebar-inner-wrap">
-        <div class="sidebar-header"><%= yield :title %></div> <% if @map.new_record? %>
-          <%= yield %>
-        <% else %>
-          <div class="sidebar-content-wrap">
-            <!-- Toolbar for uploading and viewing images and exporting the map. -->
-            <div class="btn-group btn-group-justified sidebar-buttons">
-              <!-- Upload images -->
-              <div class="btn-group">
-                <button class="btn btn-default" title="Upload images" type"button" data-toggle="modal" data-target="#uploadModal" onClick="$('#map-images-tab').tab('show')">
-                  <span class="fa fa-upload"></span>
-                  <span class="hidden-xs">Upload</span>
-                </button>
-              </div>
+    <div class="sidebar">
+      <div class="sidebar-wrap">
+        <div class="sidebar-inner-wrap">
+          <div class="sidebar-header">
+            <%=y ield :title %>
+          </div>
+          <% if @map.new_record? %>
+            <%=y ield %>
+              <% else %>
+                <div class="sidebar-content-wrap">
+                  <!-- Toolbar for uploading and viewing images and exporting the map. -->
+                  <div class="btn-group btn-group-justified sidebar-buttons">
+                    <!-- Upload images -->
+                    <div class="btn-group">
+                      <button class="btn btn-default" title="Upload images" type "button" data-toggle="modal" data-target="#uploadModal" onClick="$('#map-images-tab').tab('show')">
+                        <span class="fa fa-upload"></span>
+                        <span class="hidden-xs">Upload</span>
+                      </button>
+                    </div>
 
-              <!-- Write a research note on Public Lab -->
-              <div class="btn-group">
-                <a target="_blank" class="btn btn-default" title="Post a research note on Public Lab" href="//publiclab.org/post">
-                  <span class="fa fa-file"></span>
-                  <span class="hidden-xs">Post</span>
-                </a>
-              </div>
+                    <!-- Write a research note on Public Lab -->
+                    <div class="btn-group">
+                      <a target="_blank" class="btn btn-default" title="Post a research note on Public Lab" href="//publiclab.org/post">
+                        <span class="fa fa-file"></span>
+                        <span class="hidden-xs">Post</span>
+                      </a>
+                    </div>
 
-              <!-- Export map -->
-              <div class="dropdown btn-group">
-                <button class="btn btn-default dropdown-toggle" title="Export map" type="button"  data-toggle="dropdown">
-                  <span class="fa fa-download"></span>
-                  <span class="hidden-xs">Download</span>
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right map-exports" role="menu">
-                  <%= render :partial => 'maps/exports' %>
-                </ul>
-              </div>
-            </div>
+                    <!-- Export map -->
+                    <div class="dropdown btn-group">
+                      <button class="btn btn-default dropdown-toggle" title="Export map" type="button" data-toggle="dropdown">
+                        <span class="fa fa-download"></span>
+                        <span class="hidden-xs">Download</span>
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right map-exports" role="menu">
+                        <%=r ender :partial=> 'maps/exports' %>
+                      </ul>
+                    </div>
+                  </div>
 
-            <div class="sidebar-tabs">
+                  <div class="sidebar-tabs">
 
-              <!-- Navigation tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#map-details-container" role="tab" data-toggle="tab">About</a></li>
-    <li><a id="map-images-tab" href="#map-images-container" role="tab" data-toggle="tab">
-                  <span class="hidden-xs">Images</span>
-                  <span class="visible-xs"><i class="fa fa-image"></i></span>
-                </a></li>
-      </ul>
+                    <!-- Navigation tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="active"><a href="#map-details-container" role="tab" data-toggle="tab">About</a></li>
+                      <li>
+                        <a id="map-images-tab" href="#map-images-container" role="tab" data-toggle="tab">
+                          <span class="hidden-xs">Images</span>
+                          <span class="visible-xs"><i class="fa fa-image"></i></span>
+                        </a>
+                      </li>
+                    </ul>
 
-              <!-- Tabbed panes -->
-              <div class="tab-content sidebar-content">
-                <div class="tab-pane active" id="map-details-container">
+                    <!-- Tabbed panes -->
+                    <div class="tab-content sidebar-content">
+                      <div class="tab-pane active" id="map-details-container">
 
-            <div class="visible-xs">
-              <p style="text-align:center;">
-               <a class="btn btn-primary btn-lg sidebar-toggle">View map <i class="fa fa-chevron-circle-right"></i></a>
-              </p>
-              <hr />
-            </div>
+                        <div class="visible-xs">
+                          <p style="text-align:center;">
+                            <a class="btn btn-primary btn-lg sidebar-toggle">View map <i class="fa fa-chevron-circle-right"></i></a>
+                          </p>
+                          <hr />
+                        </div>
 
-                  <%= yield :details %>
+                        <%=y ield :details %>
+                      </div>
+                      <div class="tab-pane" id="map-images-container">
+                        <%=y ield :images unless @map.warpables.empty? %>
+                      </div>
+
+                      <div class="tab-pane" id="map-exports-container">
+                        <%=r ender :partial=> "sidebar_exports" %>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <!-- .sidebar-tabs -->
                 </div>
-                <div class="tab-pane" id="map-images-container">
-                  <%= yield :images unless @map.warpables.empty? %>
-                </div>
+                <!-- .sidebar-content -->
+                <% end %>
+        </div>
+        <!-- .sidebar-inner-wrap -->
+      </div>
+      <!-- .sidebar-wrap -->
+    </div>
+    <!-- .sidebar -->
 
-                <div class="tab-pane" id="map-exports-container">
-                  <%= render :partial => "sidebar_exports" %>
-                </div>
-
-              </div>
-
-            </div><!-- .sidebar-tabs -->
-          </div><!-- .sidebar-content -->
-        <% end %>
-      </div><!-- .sidebar-inner-wrap -->
-    </div><!-- .sidebar-wrap -->
-  </div><!-- .sidebar -->
-
-  <%= render :partial => "/images/new" unless params[:action] == 'new' %>
-  <% end %>
-
-  <script>
-    var map
-    (function(){
-      window.mapKnitter = new MapKnitter.Map({
-        latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
-        zoom:       <%= @map.zoom %>,
-        readOnly:   <%= @embed == true %>,
-        warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
-      });
-      <% if @map.warpables.empty? && params[:action] == "show" %>
-        $('.modal-welcome').modal()
+    <%=r ender :partial=> "/images/new" unless params[:action] == 'new' %>
       <% end %>
-     })();
-  </script>
 
-  <%= link_to destroy_user_session_path %>
-</br>
-  <%= link_to new_user_session_path %>
+        <script>
+          var map(function() {
+            window.mapKnitter = new MapKnitter.Map({
+              latlng: L.latLng( <%= @map.lat %> , <%= @map.lon %> ),
+              zoom: <%= @map.zoom %> ,
+              readOnly: <%= @embed == true %> ,
+              warpablesUrl: "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
+            }); <%
+            if@ map.warpables.empty ? && params[: action] == "show" %>
+              $('.modal-welcome').modal() <% end %>
+          })();
+        </script>
+
+        <%=l ink_to destroy_user_session_path %>
+          </br>
+          <%=l ink_to new_user_session_path %>
 
 </body>
+
 </html>

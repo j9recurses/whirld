@@ -1,0 +1,18 @@
+.profile-thumb {
+  background-size: 22px 22px;
+  border-radius: 11px;
+  -webkit-box-shadow: 0 0 2px #616161 inset;
+  box-shadow: 0 0 2px #616161 inset;
+  float: left;
+  height: 22px;
+  margin: 1px 8px 0 0;
+  overflow: hidden;
+  width: 22px;
+}
+.user-meta {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: block;
+}

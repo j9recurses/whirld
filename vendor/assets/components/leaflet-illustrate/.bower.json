@@ -1,0 +1,14 @@
+{
+  "name": "leaflet-illustrate",
+  "homepage": "https://github.com/manleyjster/Leaflet.Illustrate",
+  "version": "0.0.2",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "c989590bfd04e445b9632b64bb9d4f71cbfaf4e5"
+  },
+  "_source": "git://github.com/manleyjster/Leaflet.Illustrate.git",
+  "_target": "0.0.2",
+  "_originalSource": "manleyjster/Leaflet.Illustrate"
+}

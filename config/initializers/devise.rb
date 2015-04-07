@@ -1,16 +1,20 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
-# Many of these configuration options can be set straight in your model.
+# Many of these configuration options can be set straight in your model
+
+
 Devise.setup do |config|
+  #require "omniauth-google-oauth2"
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   config.secret_key = 'c007765c6c8bf97f17da5d35421f18336d16929724ad67625e7410063e7e899776c49d151961bddd140daaf4c44df609e3d863c7356e53ea7a0ba7ac1922aa04'
-
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'emailer_dude@whirld.net'
+
+  #config.omniauth :google_oauth2, "36171865288-73du5g1a1ugameeccl2052qkpmerh0r0.apps.googleusercontent.com", "JdomduOn-gb7HSFm2nDYpOpI"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -61,7 +65,7 @@ Devise.setup do |config|
   # :database      = Support basic authentication with authentication key + password
   # config.http_authenticatable = false
 
-  # If 401 status code should be returned for AJAX requests. True by default.
+# If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
 
   # The realm used in Http Basic Authentication. 'Application' by default.

@@ -1,0 +1,29 @@
+<%= link_to "videos", videos_path %>
+<%= link_to "new", new_video_path %>
+
+
+<% unless @videos.nil? %>
+        <% @videos.each do |video| -%>
+          <td>
+            <%= video.id %>
+          </td>
+          <td>
+            <%= link_to video.title, video_path(video) %>
+          </td>
+          <td>
+            <%= video.created_at %>
+          </td>
+          <%= link_to image_tag("https://img.youtube.com/vi/#{video.uid}/mqdefault.jpg", alt: video.title,
+class: 'img-rounded'),
+"https://www.youtube.com/watch?v=#{video.uid}", target: '_blank' %>
+<div class="caption">
+<h4><%= video.title %></h4>
+<p><%= truncate video.description, length: 100 %></p>
+</div>
+          <td class="last">
+            <%= link_to "video", video_path(video) %> |
+            <%= link_to "delete", video_path(video), :method => :delete, :confirm => "Are you sure?" %>
+          </td>
+        </tr>
+        <% end %>
+      <%end%>

@@ -1,0 +1,7 @@
+<h1>Upload Video</h1>
+</div>
+<% if current_user %>
+<%= render 'form' %>
+<% else %>
+<p>Please <%= link_to 'authorize', '/auth/google_oauth2' %> via your Google account to continue.</p>
+<% end %>

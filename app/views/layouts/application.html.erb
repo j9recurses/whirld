@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Whirld</title>
-    <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
-    <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css"/>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Whirld</title>
+  <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
-    <%= javascript_include_tag 'application' %>
-  </head>
-  <body>
+  <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css" />
 
-    <ul class="hmenu">
-      <% if   user_signed_in? %>
-      <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-      <%end %>
-      <%= render 'devise/menu/registration_items' %>
-      <%= render 'devise/menu/login_items' %>
-    </ul>
+  <%=javascript_include_tag 'application' %>
+</head>
+
+<body>
+
+  <ul class="hmenu">
+    <% if user_signed_in? %>
+      <%=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
+        <%end %>
+          <%=render 'devise/menu/registration_items' %>
+            <%=render 'devise/menu/login_items' %>
+  </ul>
   </br>
 
+  <div class="container">
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%=value %>
+      </div>
+      <% end %>
+</div>
 
-    <%= yield; %>
+
+  <%=yield; %>
 
 
-  </body>
+</body>
+
 </html>

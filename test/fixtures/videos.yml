@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  link: MyString
+  title: MyString
+  author: MyString
+  duration: MyString
+  likes: 1
+  dislikes: 1
+  vid_date: 2015-04-07
+  vid_time: 2015-04-07 01:03:07
+  user_id: 1
+  map_id: 1
+
+two:
+  link: MyString
+  title: MyString
+  author: MyString
+  duration: MyString
+  likes: 1
+  dislikes: 1
+  vid_date: 2015-04-07
+  vid_time: 2015-04-07 01:03:07
+  user_id: 1
+  map_id: 1

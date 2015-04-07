@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>MapKnitter 2.0 preview</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="/lib/leaflet/dist/leaflet.js"></script>
-  <link href="/lib/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
-  <link href="/lib/leaflet/dist/leaflet.css" rel="stylesheet"/>
+  <link href="/lib/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="/lib/leaflet/dist/leaflet.css" rel="stylesheet" />
   <script src="/lib/jquery/dist/jquery.min.js"></script>
   <script src="/lib/leaflet-distortableimage/lib/easybutton.js"></script>
-  <link rel="stylesheet" href="/lib/leaflet-distortableimage/DistortableImageOverlay.css"/>
+  <link rel="stylesheet" href="/lib/leaflet-distortableimage/DistortableImageOverlay.css" />
   <script src="/lib/leaflet-distortableimage/DistortableImageOverlay.js"></script>
-  <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script> 
+  <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
   <script src="/lib/leaflet-google/index.js"></script>
 
 </head>
+
 <body style="margin:0;">
 
-  <form id="test_form" >
+  <form id="test_form">
     <input type="file" id="inputimage" accept="image/*">
   </form>
 
   <div id="map" style="width:100%; height:100%; position:absolute; top:0;"></div>
 
   <script>
-
     var map
 
-    (function(){
+      (function() {
 
       var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/anishshah101.ipm9j6em/{z}/{x}/{y}.png', {
         maxZoom: 24,
@@ -38,87 +39,78 @@
         id: 'examples.map-i86knfo3'
       })
 
-      var google = new L.Google("SATELLITE",{
+      var google = new L.Google("SATELLITE", {
         maxZoom: 24,
-        opacity:0.5
+        opacity: 0.5
       });
 
-      map = new L.map('map',{
+      map = new L.map('map', {
         layers: [google]
-      }).setView([<%= @map.lat %>,<%= @map.lon %>],<%= @map.zoom.to_i-1 %>);
+      }).setView([ <%= @map.lat %> , <%= @map.lon %> ], <%= @map.zoom.to_i - 1 %> );
 
       //map.fitBounds(map._layers[1]._bounds)
 
       var baseMaps = {
-          "OpenStreetMap": mapbox,
-          "Google Satellite": google
+        "OpenStreetMap": mapbox,
+        "Google Satellite": google
       };
-      var overlayMaps = {
-      };
-   
-      var layersControl = new L.Control.Layers(baseMaps,overlayMaps);
+      var overlayMaps = {};
+
+      var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
       map.addControl(layersControl);
 
       // startup the Leaflet.DistortableImage plugin
-      $L.initialize( {
+      $L.initialize({
         uploadBtn: true // prompt and handle new images
       })
 
-    <% @map.warpables.each do |warpable| %>
-      img = new L.DistortableImageOverlay(
-        '<%= warpable.image.url(:medium) %>',
-        { 
-          <% unless warpable.nodes == '' %>
-          latlng:  [ 
-            new L.latLng(<%= @map.nodes[warpable.id.to_s][0][1] %>,
-                         <%= @map.nodes[warpable.id.to_s][0][0] %>),
-            new L.latLng(<%= @map.nodes[warpable.id.to_s][1][1] %>,
-                         <%= @map.nodes[warpable.id.to_s][1][0] %>),
-            new L.latLng(<%= @map.nodes[warpable.id.to_s][3][1] %>,
-                         <%= @map.nodes[warpable.id.to_s][3][0] %>),
-            new L.latLng(<%= @map.nodes[warpable.id.to_s][2][1] %>,
-                         <%= @map.nodes[warpable.id.to_s][2][0] %>)
-                   ],
-          <% end %>
-          locked: <%= warpable.locked %> 
-      });
-      img.mk_id = <%= warpable.id %>
-      img.onDeselect = function() {
-        $.ajax('/images/update',{
-          type: 'POST',
-          data: {
-            warpable_id: this.mk_id,
-            locked: this.locked,
-            points: 
-              this.markers[0]._latlng.lng+','+this.markers[0]._latlng.lat+':'+
-              this.markers[1]._latlng.lng+','+this.markers[1]._latlng.lat+':'+
-              this.markers[3]._latlng.lng+','+this.markers[3]._latlng.lat+':'+
-              this.markers[2]._latlng.lng+','+this.markers[2]._latlng.lat,
-          },
-          beforeSend: function(e) {
-            $('.mk-save').removeClass('fa-check-circle fa-times-circle fa-green fa-red').addClass('fa-spinner fa-spin')
-          },
-          complete: function(e) {
-            $('.mk-save').removeClass('fa-spinner fa-spin').addClass('fa-check-circle fa-green')
-          },
-          error: function(e) {
-            $('.mk-save').removeClass('fa-spinner fa-spin').addClass('fa-times-circle fa-red')
-          }
-        })
-      }
+      <% @map.warpables.each do |warpable | %>
+          img = new L.DistortableImageOverlay(
+            '<%= warpable.image.url(:medium) %>', { <% unless warpable.nodes == '' %>
+                latlng: [
+                  new L.latLng( <%= @map.nodes[warpable.id.to_s][0][1] %> , <%= @map.nodes[warpable.id.to_s][0][0] %> ),
+                  new L.latLng( <%= @map.nodes[warpable.id.to_s][1][1] %> , <%= @map.nodes[warpable.id.to_s][1][0] %> ),
+                  new L.latLng( <%= @map.nodes[warpable.id.to_s][3][1] %> , <%= @map.nodes[warpable.id.to_s][3][0] %> ),
+                  new L.latLng( <%= @map.nodes[warpable.id.to_s][2][1] %> , <%= @map.nodes[warpable.id.to_s][2][0] %> )
+                ], <% end %>
+                locked: <%= warpable.locked %>
+            });
+        img.mk_id = <%= warpable.id %>
+        img.onDeselect = function() {
+          $.ajax('/images/update', {
+            type: 'POST',
+            data: {
+              warpable_id: this.mk_id,
+              locked: this.locked,
+              points: this.markers[0]._latlng.lng + ',' + this.markers[0]._latlng.lat + ':' +
+                this.markers[1]._latlng.lng + ',' + this.markers[1]._latlng.lat + ':' +
+                this.markers[3]._latlng.lng + ',' + this.markers[3]._latlng.lat + ':' +
+                this.markers[2]._latlng.lng + ',' + this.markers[2]._latlng.lat,
+            },
+            beforeSend: function(e) {
+              $('.mk-save').removeClass('fa-check-circle fa-times-circle fa-green fa-red').addClass('fa-spinner fa-spin')
+            },
+            complete: function(e) {
+              $('.mk-save').removeClass('fa-spinner fa-spin').addClass('fa-check-circle fa-green')
+            },
+            error: function(e) {
+              $('.mk-save').removeClass('fa-spinner fa-spin').addClass('fa-times-circle fa-red')
+            }
+          })
+        }
 
-    <% end %>
+      <% end %>
 
-      $L.saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
-        function() {},
-        'Save status',
-        map,
-        this
-      ) 
- 
-      $L.highResBtn = L.easyButton('fa-delicious', 
+        $L.saveBtn = L.easyButton('fa-check-circle fa-green mk-save',
+          function() {},
+          'Save status',
+          map,
+          this
+        )
+
+      $L.highResBtn = L.easyButton('fa-delicious',
         $L.highres = function() {
-          $.each($L.images,function(i,img) {
+          $.each($L.images, function(i, img) {
             img._image.src = img._image.src.split('_medium').join('')
           })
           $L.highResBtn._container.remove()
@@ -126,14 +118,18 @@
         'Switch to high-res imagery',
         map,
         this
-      ) 
+      )
 
     })()
-      
   </script>
   <style>
-    .fa-green { color:#3a3; }
-    .fa-red { color:#a33; }
+    .fa-green {
+      color: #3a3;
+    }
+    
+    .fa-red {
+      color: #a33;
+    }
   </style>
- 
+
 </html>

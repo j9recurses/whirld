@@ -150,18 +150,3 @@ $(document).ready(function(){
   })
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

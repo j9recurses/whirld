@@ -1,8 +1,37 @@
 $(document).ready(function(){
   autosize($('textarea'));
   stickyNav();
-  var endbar = new ButtonBar({type: 'end'});
-      endbar.init();
+  var bb = new ButtonBar({type: 'end'});
+      bb.init();
+  var form = new Form();
+      form.init();
+  
+  // var countries = new Bloodhound({
+  //   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  //   limit: 10,
+  //   prefetch: {
+  //     url: '/countries.json',
+  //     // the json file contains an array of strings, but the Bloodhound
+  //     // suggestion engine expects JavaScript objects so this converts all of
+  //     // those strings
+  //     filter: function(list) {
+  //       return $.map(list, function(country) { return { name: country }; });
+  //     }
+  //   }
+  // });
+   
+  // // kicks off the loading/processing of `local` and `prefetch`
+  // countries.initialize();
+ 
+  // // passing in `null` for the `options` arguments will result in the default
+  // // options being used
+  // $('#prefetch .typeahead').typeahead(null, {
+  //   name: 'countries',
+  //   displayKey: 'name',
+  //   source: countries.ttAdapter()
+  // }); // end typeahead
+
 });
 
 function ButtonBar(settings){
@@ -111,6 +140,106 @@ function Module(option){
     mod.before(btw.bar);
   }
 }
+function Form(){
+
+  function checkDup(newText){
+    var tagList = $('#project-tag-list');
+    var dup = false;
+    $.each(tagList.children('.tag'), function(i, exist){
+      if (newText == exist.innerText){
+        dup = true;
+        return dup;
+      }
+      else{
+        dup = false;
+      }
+    });
+    return dup
+  }
+  function appendTag(e){
+    if(e.which == 188 || e.which == 13){
+      var input = $(e.target);
+      var tagList = $('#project-tag-list');
+      var tagText = input.val().toLowerCase().split(',')[0];
+      var tagHTML = "<li class='tag item cursor-def'>" + tagText + "<i class='fa fa-remove'></i></li>";
+      var tag = $($.parseHTML(tagHTML));
+      var tagID = 'tag-' + tagText;
+          tag.attr('id', tagID);
+      var icon = $(tag.find('i.fa-remove'));
+          icon.on('click', function(){ $(this).parent().remove() });
+
+      if(tagList.children('.tag').length == 0){
+        tagList.append(tag);
+        input.val('');
+      }
+      else {
+        if($('#'+tagID).length > 0){
+          $('#'+tagID).addClass('duplicate');
+          input.val('');
+          setTimeout(function() {
+             $('#'+tagID).removeClass('duplicate');
+           }, 800); 
+        }
+        else{
+          tagList.append(tag);
+          input.val('');
+        }
+
+      }
+    }
+  }
+
+  // function appendTag(e){
+  //   if(e.which == 188 || e.which == 13){
+  //     var input = $(e.target);
+  //     var tagList = $('#project-tag-list');
+  //     var tagText = input.val().toLowerCase().split(',')[0];
+  //     var tagHTML = "<li class='tag item cursor-def'>" + tagText + "<i class='fa fa-remove'></i></li>";
+  //     var tag = $($.parseHTML(tagHTML));
+  //         tag.attr('id', 'tag-' + tagList.children('.tag').length)
+  //     var icon = $(tag.find('i.fa-remove'));
+  //         icon.on('click', function(){ $(this).parent().remove() });
+
+  //     var count = tagList.children('.tag').length;
+  //     if(count == 0){
+  //       tagList.append(tag);
+  //       input.val('');
+  //     }
+  //     else{
+  //       $.each(tagList.children('.tag'), function(i, exist){
+  //         if(exist.innerText == tagText){
+  //           console.log(tag)
+  //         }
+  //         else{
+
+  //         }
+  //       })
+  //     count += 1;
+  //     } // end count if
+  //   } // end e.which if
+  // } // end appendTag
+
+  this.init = function(){
+    $('#project-tags').keyup(function(e){ appendTag(e); })
+  }
+}
+  // // Project tags
+  // $('#project-tags').keyup(function(e){
+  //   var input = $(this);
+  //   var inputContainer = input.parent();
+  //   if(e.which == 188 || e.which == 13){
+  //     var tagText = input.val().toLowerCase().split(',')[0];
+  //     var tagHTML = "<li class='tag item'><a href='/'>" + tagText + "</a><i class='fa fa-remove'></i></li>";
+  //     var tag = $($.parseHTML(tagHTML));
+  //     inputContainer.after(tag);
+  //     input.val('');
+
+  //     var icon = $(tag.find('i.fa-remove'));
+  //         icon.on('click', function(){
+  //           $(this).parent().remove()
+  //         })
+  //   }
+  // })
 
 var stickyNav = function () {
   $('#navbar-create').stickyNavbar({
@@ -133,24 +262,6 @@ var stickyNav = function () {
 // $(document).ready(function(){
 //   autosize($('textarea'));
 //   stickyNav();
-
-  // Button Bar
-  // $('.button-bar').on('click', '.option-toggle', function(){ 
-  //   var buttonBar = $(this).parent(); toggleButtonBar(buttonBar);
-  // });
-
-  // $('.button-bar').on('click', '.option', function(){
-//     var buttonBar = $(this).parent();
-//     toggleButtonBar(buttonBar);
-//   });
-//   $('.option').on('click', function(){
-//     var moduleType = $(this).data('module-type');
-//     var module = createModule(moduleType);
-
-//     var buttonBar = $($(this).parent()); 
-//         buttonBar.before(module);
-//   })
-//   fadeButtonBarLabel();
 
 //   // Project tags
 //   $('#project-tags').keyup(function(e){

@@ -32,6 +32,6 @@
 //= require sparklines/source/sparkline.js
 
 // Katey's part
-//= autosize/dest/autosize.min
+//= autosize/dest/autosize.min\
 
 //= require_tree .

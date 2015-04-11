@@ -76,6 +76,10 @@ img{
   padding: 2px 8px;
   background-color: gray;
   border-radius: 1px;
+  color: white;
+  -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    transition: all .25s linear;
 }
   .tag a{
     color: white;

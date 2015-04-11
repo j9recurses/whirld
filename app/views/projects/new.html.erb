@@ -141,11 +141,11 @@
 	<div class='eight columns'>
 		<section id='project-header'>
 			<div class='wrapper'>
-				<form action=''>
+				<form id='project-create' action=''>
 					<div class='row group'>
 						<div class='twelve columns'>
 							<h1 class='project-title first-header h-centered'>
-								<textarea name='project-title' placeholder='Title'></textarea>
+								<textarea name='project-title' placeholder='Title' maxlength='70'></textarea>
 							</h1>
 						</div>
 					</div>
@@ -157,21 +157,20 @@
 							<span class='user-meta h3-size'>Juan Doe, Drone Pilot</span>
 						</a>
 						<div class='four columns'>
-							<input class='user-meta h3-size' placeholder='Location'>
+							<input class='user-meta h3-size' placeholder='Project Location'>
 						</div>
 					</div>
 					<div class='row group'>
 						<p class='project-description'>
-								<textarea name='project-description' placeholder='Describe your project.'></textarea>
+								<textarea name='project-description' placeholder='Describe your project.' maxlength='550'></textarea>
 						</p>
 					</div>
 					<div class='row group'>
 						<div class='twelve columns'>
-							<ul class='tag-list inline-list padding-top font_small'>
-									<li class='project-tags tag item'>
-										<textarea id='project-tags' name='project-tags' placeholder='Tag your project.'></textarea>
-									</li>	
-							</ul>
+							<div id='prefetch' class='project-tags tag item'>
+								<textarea id='project-tags' class='typeahead' name='project-tags' placeholder='Tag your project.'></textarea>
+							</div>	
+							<ul id='project-tag-list' class='tag-list inline-list padding-top font_small'></ul>
 						</div>
 					</div>
 				</form>

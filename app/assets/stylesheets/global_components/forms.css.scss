@@ -10,10 +10,6 @@
   -webkit-transition: all .25s ease;
     -moz-transition: all .25s ease;
     transition: all .25s ease;
-
-  -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    transform:rotate(45deg);
 }
 
 /*Styles*/
@@ -24,12 +20,14 @@
   width: 40px;
 }
   .option-toggle .add-module-btw{ background-color: rgb(187, 187, 187); }
-.add-module-end{
+
+#end-bar button{
   background-color: cadetblue;
   color: white;
   height: 75px;
   width: 75px;
 }
+
 button{
   border: 0;
   border-radius: 50%;
@@ -53,15 +51,18 @@ button i{ line-height: 0; }
   z-index: 1;
 }
 .button-bar-btw{
+  margin: 1.45em auto 1.45em auto;
+}
+.button-bar-btw button{
   height: 40px;
-  margin: 1.45em auto 3em auto;
+  width: 40px;
 }
 .button-label{
   opacity: 1;
-    -webkit-transition: opacity .5s ease;
-    -moz-transition: opacity .5s ease;
-    -o-transition: opacity .5s ease;
-  transition: opacity .5s ease;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+  transition: all .5s ease;
 }
 .button-label.hidden{ 
   opacity: 0;
@@ -79,27 +80,28 @@ button i{ line-height: 0; }
   left: 162.5px;
   position: absolute;
 }
-.button-bar .option-0{left: -109px;}
-.button-bar .option-1{left: -17px;}
-.button-bar .option-2{left: 72px;}
+
+.button-bar .option-0{left: -17px;}
+.button-bar .option-1{left: 72px;}
+.button-bar .option-2{left: 162.5px;}
 .button-bar .option-3{left: 252px;}
 .button-bar .option-4{left: 342px;}
-.button-bar .option-5{left: 432px;}
 .button-bar .option-toggle{
   z-index: 2;
 }
-.button-bar.button-bar-btw .option-0{left: -2px;}
-.button-bar.button-bar-btw .option-1{left: 53px;}
-.button-bar.button-bar-btw .option-2{left: 102px;}
-.button-bar.button-bar-btw .option-3{left: 217px;}
-.button-bar.button-bar-btw .option-4{left: 272px;}
-.button-bar.button-bar-btw .option-5{left: 327px;}
-.button-bar.button-bar-btw .option-toggle button:hover{
+.button-bar-btw .option-0{left: 70px;}
+.button-bar-btw .option-1{left: 125px;}
+.button-bar-btw .option-2, .button-bar-btw .option-toggle{left: 180px;}
+.button-bar-btw .option-3{left: 235px;}
+.button-bar-btw .option-4{left: 290px;}
+.button-bar-btw .option-toggle button:hover{
   opacity: 1;
 }
 .button-bar.open .option-toggle button:hover{
   opacity: 1;
 }
+.closed .option, .open .option-toggle { visibility: hidden; }
+.closed .option-toggle, .open .option { visibility: visible; }
 
 .dropped-photo{ position: relative; }
 .dropped-photo .img-container{

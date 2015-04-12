@@ -124,7 +124,7 @@ function Form(){
     else if(e.which == 13){
       tagText = input.val().toLowerCase().trim();
     }
-    var tagHTML = "<span class='project-tag light font_small'>#" + tagText + "</span>";
+    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
     var tag = $($.parseHTML(tagHTML));
     var tagID = 'tag-' + tagText;
         tag.attr('id', tagID);

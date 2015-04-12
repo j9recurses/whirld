@@ -36,7 +36,11 @@ button i{ line-height: 0; }
   z-index: 1;
 }
 .button-bar-btw{
-  margin: 1.45em auto 3em auto;
+  margin: 1.45em auto 1.45em auto;
+}
+.button-bar-btw button{
+  height: 40px;
+  width: 40px;
 }
 .button-label{
   opacity: 1;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150409235521) do
+ActiveRecord::Schema.define(:version => 20150412083828) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -98,6 +98,13 @@ ActiveRecord::Schema.define(:version => 20150409235521) do
     t.integer  "map_id",                                      :default => 0
     t.integer  "way_order",                                   :default => 0
     t.text     "body"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "taggings", :force => true do |t|
@@ -204,10 +211,12 @@ ActiveRecord::Schema.define(:version => 20150409235521) do
   end
 
   create_table "youtube_users", :force => true do |t|
-    t.string  "youtube_name"
-    t.string  "token"
-    t.string  "uid"
-    t.integer "user_id"
+    t.string   "youtube_name"
+    t.string   "token"
+    t.string   "uid"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

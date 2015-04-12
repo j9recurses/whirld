@@ -10,6 +10,7 @@ gem "friendly_id"
 gem "omniauth-google-oauth2"
 gem 'youtube_it', github: 'bodrovis/youtube_it'
 gem 'acts_as_commentable', '3.0.1'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 # dependencies
 group :dependencies do
@@ -57,3 +58,7 @@ group :passenger do
 end
 
 gem 'devise'
+
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jquery-turbolinks'

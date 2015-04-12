@@ -64,6 +64,9 @@ Whirld::Application.routes.draw do
   get ':controller/:action.:format'
   get ':controller/:action/:id.:format'
 
+  get 'tags/:tag', to: 'maps#index', as: :tag
+
+
   # RESTful API
   resources :maps do
     resources :tags
@@ -74,10 +77,13 @@ Whirld::Application.routes.draw do
   devise_for :users
   #, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  post '/videos/get_upload_token', to: 'videos#get_upload_token', as: :get_upload_token
+  post '/videos/videos_get_upload_token', to: 'videos#videos_get_upload_token', as: :videos_get_upload_token
   get '/videos/get_video_uid', to: 'videos#get_video_uid', as: :get_video_uid
-  get '/auth/:provider/callback', to: 'sessions#create'
+
+
+  get '/auth/:provider/callback', to: 'sessions#youtube_create'
   get '/auth/failure', to: 'sessions#fail'
   resources :videos, only: [:new, :index]
+
   match "videos/:id/add_comment", :to => "videos#add_comment"
 end

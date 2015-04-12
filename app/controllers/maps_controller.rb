@@ -31,11 +31,8 @@ class MapsController < ApplicationController
 
   def show
     @map = Map.find params[:id]
+    @map_tags = @map.tags
     @map.zoom ||= 12
-    # remove following lines once legacy interface is deprecated
-    if params[:legacy]
-      render :template => 'map/show', :layout => 'knitter'
-    end
   end
 
   def embed
@@ -57,8 +54,8 @@ class MapsController < ApplicationController
   def update
     @map = Map.find params[:id]
     @map.update_attributes(params[:map])
-
     # save new tags
+
     if params[:tags]
       params[:tags].gsub(' ', ',').split(',').each do |tagname|
         @map.add_tag(tagname.strip, current_user)
@@ -119,6 +116,16 @@ class MapsController < ApplicationController
     @maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
     @title = "Search results for '#{params[:id]}'"
     render "maps/index", :layout => "application2"
+  end
+
+  def create_tags
+    @map = Map.find params[:id]
+    @map.tag_list.add(params[:tag_list])
+  end
+
+  def delete_tags
+    @map = Map.find params[:id]
+    @map.tag_list.remove(params[:tag_list])
   end
 
 end

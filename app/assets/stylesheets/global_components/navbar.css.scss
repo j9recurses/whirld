@@ -1,0 +1,40 @@
+/*===== Navbar =====*/
+.logo a:hover { opacity: 1; }
+nav a { color: azure; }
+.main-nav { 
+	background-color: gray;
+  max-height: 53px;
+	width: 100%;
+}
+.scrollable {
+  height: 100%;
+  overflow: overlay;
+  position: fixed;
+}
+.secondary-nav { display: none; }
+.side-nav { 
+	background-color: black; 
+	margin-top: 0;
+}
+.side-nav .toggle { display: block; }
+.tab:first-child{ border-right: 1px solid white; }
+.tab a { color: #999; }
+.tab.active a{ color: white; }
+.tab.six{ width: 49%; }
+
+/*Bigger than 568px*/
+@media only screen and (min-width: 568px) {
+	#project-creation .logo { font-size: 1.333em; }
+	#main-logo, a.toggle { font-size: 1.333em; }
+}
+/*Bigger than 768px*/
+@media only screen and (min-width: 768px) {
+	#main-logo { font-size: 1.777em; }
+	a.toggle{ display: none; }
+	.secondary-nav{ display: inherit; }
+}
+/*Bigger than 1024px*/
+@media only screen and (min-width: 1024px) {
+	#left-nav{ width: 40.73%; }
+	#main-logo { width: 15.33%; }
+}

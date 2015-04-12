@@ -14,7 +14,7 @@
 
 /*Styles*/
 .add-module-btw{
-  background-color: cadetblue;
+  background-color: cornflowerblue;
   color: white;
   height: 40px;
   width: 40px;
@@ -22,7 +22,7 @@
   .option-toggle .add-module-btw{ background-color: rgb(187, 187, 187); }
 
 #end-bar button{
-  background-color: cadetblue;
+  background-color: cornflowerblue;
   color: white;
   height: 75px;
   width: 75px;
@@ -109,21 +109,23 @@ button i{ line-height: 0; }
   overflow: hidden;
 }
 .dropzone{
-  border: 2px dotted cadetblue;
+  background-color: rgba(100, 149, 237, 0.34);
+  box-sizing: border-box;
+  color: rgb(126, 162, 228);
   cursor: default;
   font-weight: bold;
   height: 290px;
   line-height: 13em;
   overflow: hidden;
 }
-.droppable{
-  background-color: rgb(210, 238, 239);
-  color: cadetblue;
- }
-.dropped{
-  background-color: rgb(121, 195, 197);
-  color: white;
- }
+.drop-active{
+  border: 3px dotted cornflowerblue;
+}
+.drop-target{
+  background-color: cornflowerblue;
+  border: none;
+  color: rgb(243, 247, 255);
+}
 .error{ color: cornflowerblue; }
 .fa-plus{ line-height: 0;}
 .grabbable{ cursor: -webkit-grab; }
@@ -135,7 +137,7 @@ input{
   border: none;
   width: 100%;
 }
-  input:focus{ outline: none; }
+input:focus{ outline: none; }
 
 .module{
   background-color: white;
@@ -165,56 +167,5 @@ textarea{
   vertical-align: top;
   width: 90%;
 }
-  textarea.caption{ height: 30px; }
-  textarea:focus{ outline: none; }
-
-.twitter-typeahead .tt-query,
-.twitter-typeahead .tt-hint {
-  margin-bottom: 0;
-}
-.tt-hint {
-/*  display: block;
-  width: 100%;
-  height: 38px;
-  padding: 8px 12px;
-  font-size: .75em;
-  line-height: 1.428571429;
-  color: #999;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 1px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;*/
-}
-.tt-dropdown-menu {
-  font-size: .75em;
-  height: 200px;
-  overflow: overlay;
-  min-width: 160px;
-  margin-top: 25px;
-  padding: 5px 0;
-  border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
- 
-}
-.tt-suggestion {
-  display: block;
-  padding: 3px 20px;
-}
-.tt-suggestion.tt-is-under-cursor {
-  color: #fff;
-  background-color: red;
-}
-.tt-suggestion.tt-is-under-cursor a {
-  color: #fff;
-}
-.tt-suggestion p {
-  margin: 0;
-}
+textarea.caption{ height: 30px; }
+textarea:focus{ outline: none; }

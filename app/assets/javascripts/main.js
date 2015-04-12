@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    stickyNav();
+    
+})
 var stickyNav = function () {
     $('#navbar-main').stickyNavbar({
     animDuration: 250,              // Duration of jQuery animation
@@ -15,12 +19,3 @@ var stickyNav = function () {
     unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
   });
 }
-
-var projectShowMap = function(){
-
-}
-
-$(document).ready(function(){
-    stickyNav();
-    projectShowMap();
-})

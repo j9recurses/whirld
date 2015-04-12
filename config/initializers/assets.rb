@@ -13,6 +13,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( stickyNavbar.js/jquery.easing.min.js )
 Rails.application.config.assets.precompile += %w( stickyNavbar.js/jquery.stickyNavbar.min.js )
 Rails.application.config.assets.precompile += %w( autosize/dest/autosize.min.js )
-Rails.application.config.assets.precompile += %w( typeahead/dist/typeahead.bundle.min.js )
+Rails.application.config.assets.precompile += %w( interact/interact.min.js )
 Rails.application.config.assets.precompile += %w( main.js )
 Rails.application.config.assets.precompile += %w( project-new.js )

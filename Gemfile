@@ -44,7 +44,7 @@ end
 
 group :development do
   gem "jshintrb"
-  gem "therubyracer"
+  #gem "therubyracer"
 end
 
 group :sqlite do
@@ -62,3 +62,4 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
+gem 'carrierwave'

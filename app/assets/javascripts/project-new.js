@@ -8,6 +8,7 @@ $(document).ready(function(){
       form.init();
 });
 
+
 function ButtonBar(settings){
   var type = settings.type;
   function closeBar(bar){
@@ -64,18 +65,17 @@ function ButtonBar(settings){
     });
   }
 }
-
 function Module(option){
   var bar = option.parent();
   var modid = this.type + "-module-" + $('.module').length;
   var type = option.data('module-type');
 
   function comparison(){
-    var html = "<section class='comparison-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Pete's Comparison bar</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='droppable dropzone h-centered six columns'><p class='caps'>Choose two photos to compare.</p></div></div></section>";
+    var html = "<section class='comparison-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Comparison</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='droppable dropzone h-centered row group wrapper'><p class='caps'>Drop two photos here.</p></div></section>";
     return html;
   }
   function grid(){
-    var html = "<section class='grid-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Photo Grid</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='droppable dropzone h-centered six columns'><p class='caps'>Drag up to ten images here.</p></div></div></section>";
+    var html = "<section class='grid-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Photo Grid</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='droppable dropzone h-centered six columns'><p class='caps'>Drop up to ten images here.</p></div></div></section>";
     return html;
   }
   function half(){
@@ -190,66 +190,3 @@ var stickyNav = function () {
     unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
   });
 }
-
-// $(document).ready(function(){
-//   autosize($('textarea'));
-//   stickyNav();
-
-//   // Photo manager
-
-//   $('#photo-state').on('click', '.tab', function(){
-//     var targetID = $(this).attr('id').split('-')[1];
-//     var target = $('#'+targetID);
-//     var link = $('#tab-'+targetID);
-
-//     var otherTargetID = '';
-
-//     if(targetID == 'uploaded'){
-//       otherTargetID = 'saved';
-//     }
-//     else if(targetID == 'saved'){
-//       otherTargetID = 'uploaded';
-//     }
-//     var otherTarget = $('#' + otherTargetID);
-//     var otherLink = $('#tab-'+otherTargetID);
-
-//     console.log(link)
-
-
-//     if(target.hasClass('hidden')){
-//       target.removeClass('hidden');
-//       otherTarget.addClass('hidden');
-
-//       link.addClass('active');
-//       otherLink.removeClass('active');
-//     }
-
-//   })
-
-// })
-
-  // var countries = new Bloodhound({
-  //   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  //   limit: 10,
-  //   prefetch: {
-  //     url: '/countries.json',
-  //     // the json file contains an array of strings, but the Bloodhound
-  //     // suggestion engine expects JavaScript objects so this converts all of
-  //     // those strings
-  //     filter: function(list) {
-  //       return $.map(list, function(country) { return { name: country }; });
-  //     }
-  //   }
-  // });
-   
-  // // kicks off the loading/processing of `local` and `prefetch`
-  // countries.initialize();
- 
-  // // passing in `null` for the `options` arguments will result in the default
-  // // options being used
-  // $('#prefetch .typeahead').typeahead(null, {
-  //   name: 'countries',
-  //   displayKey: 'name',
-  //   source: countries.ttAdapter()
-  // }); // end typeahead

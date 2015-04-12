@@ -144,8 +144,9 @@
 				<form id='project-create' action=''>
 					<div class='row group'>
 						<div class='twelve columns'>
-							<h1 class='project-title first-header h-centered'>
-								<textarea name='project-title' placeholder='Title' maxlength='70'></textarea>
+							<h1 class='project-title first-header'>
+								<textarea id='project-title' name='project-title' placeholder='Title' maxlength='70'></textarea>
+								<span class='font_small light hidden' data-limit='70'>70</span>
 							</h1>
 						</div>
 					</div>
@@ -162,15 +163,14 @@
 					</div>
 					<div class='row group'>
 						<p class='project-description'>
-								<textarea name='project-description' placeholder='Describe your project.' maxlength='550'></textarea>
+								<textarea id='project-description' name='project-description' placeholder='Describe your project.' maxlength='550'></textarea>
+								<span class='light hidden' data-limit='550'>550</span>
 						</p>
 					</div>
 					<div class='row group'>
 						<div class='twelve columns'>
-							<div id='prefetch' class='project-tags tag item'>
-								<textarea id='project-tags' class='typeahead' name='project-tags' placeholder='Tag your project.'></textarea>
-							</div>	
-							<ul id='project-tag-list' class='tag-list inline-list padding-top font_small'></ul>
+							<textarea id='project-tag-list' placeholder='#tags'></textarea>
+							<div id='tag-container'></div>
 						</div>
 					</div>
 				</form>

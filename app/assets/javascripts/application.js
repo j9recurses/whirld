@@ -26,6 +26,7 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
+
 // Katey's part
 //= autosize/dest/autosize.min
 
@@ -36,6 +37,7 @@
 //= require turbolinks
 //= require jquery.placeholder
 //= require_tree .
+
 
 $(document).ready(function() {
   var submit_button = $('#submit_pre_upload_form');

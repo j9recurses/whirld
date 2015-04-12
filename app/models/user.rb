@@ -11,12 +11,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :lockable, :timeoutable and :activatable
 
-  has_many :maps
-  has_many :tags
-  has_many :comments
-  has_many :exports
-  has_many :videos
-  has_many :youtube_users
+  has_many :maps, :dependent => :destroy
+  has_many :tags, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :exports, :dependent => :destroy
+  has_many :videos, :dependent => :destroy
+  has_many :youtube_users, :dependent => :destroy
+  has_many :user_galleries, :dependent => :destroy
 
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -27,6 +28,10 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
 
+
+  def at_least_one_photo?
+     self.photos.present?
+   end
 
 
  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)

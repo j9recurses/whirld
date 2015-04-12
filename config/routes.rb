@@ -86,4 +86,6 @@ Whirld::Application.routes.draw do
   resources :videos, only: [:new, :index]
 
   match "videos/:id/add_comment", :to => "videos#add_comment"
+
+  resources :photos
 end

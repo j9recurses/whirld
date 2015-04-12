@@ -24,6 +24,7 @@
     "cartagen":                 "jywarren/cartagen",
     "prototypejs-bower":        "plynchnlm/prototypejs-bower#1.7.2",
     "scriptaculous":            "http://script.aculo.us/dist/scriptaculous-js-1.9.0.zip",
-    "junction":                 "theleagueof/junction"
+    "junction":                 "theleagueof/junction",
+    "query.fileupload.js":     "https://raw.githubusercontent.com/kdironside/carrierwave-multi-file-upload/master/public/jquery-file-upload/jquery.fileupload.js"
   }
 }

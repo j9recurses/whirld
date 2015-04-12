@@ -1,0 +1,42 @@
+<!-- The form_for...remote=>true ensures that the csrf meta tag is carried thru to save
+the authenticity token. Without this, authentication gets dropped with an ajax call and
+strange things happen, lost authenticity + possible fall thru logic to next GET action. 
+Also see the setting in development.rb environment. New as of 3.2.3 -->
+
+<%= form_for [@gallery, @photo], :remote => true do %>
+
+	<h1>Upload Gallery Photos:	<%= @gallery.name %></h1>
+	<br>
+	<p>For multiple file uploading, I used the simplest version of the Jquery-File-Upload plugin. There are no bells and whistles here. First, you'll want to browse and select your file(s), Then, after clicking "Open"...BAM! The files are uploaded. There is no submit key here (yet). Right now, it's just the  basics, folks. Also, since this is a dev app, your uploaded photo files will go in the Public folder. In real life, you'd probably store them somewhere else, perhaps using Amazon's S3 cloud file storage service.<p>
+	<br>
+	<p id="notice"><%= notice %></p>
+
+		Upload Photos: 
+		<input id="fileupload" type="file" name="photo[photo_file]" multiple>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="/jquery-file-upload/vendor/jquery.ui.widget.js"></script>
+		<script src="/jquery-file-upload/jquery.iframe-transport.js"></script>
+		<script src="/jquery-file-upload/jquery.fileupload.js"></script>
+		<script>
+		$(function () {
+		    $('#fileupload').fileupload({
+		        dataType: 'json',
+		        url: '<%= gallery_photos_path(@gallery.id) %>',
+		        done: function (e, data) {
+		            $.each(data.result, function (index, file) { 
+		               $('<li><img src="'+file.thumbnail_url+'"></li>').appendTo('#thumbs');
+		            });
+		        }
+		    });
+		});
+		</script>
+
+		</br>
+		<%= link_to 'Back', galleries_path %> |
+		<%= link_to 'Photos Viewer', gallery_photos_path(@gallery) %>
+		</br>
+	
+		<ul id="thumbs" class="cf">
+	<!-- json-ajax response here, see fileupload script above, .appendTo css id:"thumbs"-->
+		</ul>
+<% end %>

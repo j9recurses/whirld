@@ -47,10 +47,8 @@ group :development do
   #gem "therubyracer"
 end
 
-group :sqlite do
-  # if you decide to use sqlite3 as the database
-  gem "sqlite3"
-end
+gem "jquery-fileupload-rails"
+
 
 group :passenger do
   # passenger server
@@ -62,4 +60,5 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'carrierwave'
+gem "carrierwave", "~> 0.6.2"
+gem "mini_magick", "~> 3.4"

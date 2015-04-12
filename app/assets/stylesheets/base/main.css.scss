@@ -48,6 +48,7 @@ img{
 }
 .inline-list .item:last-child{ margin-right: 0; }
 .invisible{ visibility: hidden; }
+.light{ color: #a9a9a9; }
 .meta { 
   color: gray;
   font-style: italic;
@@ -76,6 +77,10 @@ img{
   padding: 2px 8px;
   background-color: gray;
   border-radius: 1px;
+<<<<<<< HEAD
+=======
+  color: white;
+>>>>>>> katey-refactor
 }
   .tag a{
     color: white;

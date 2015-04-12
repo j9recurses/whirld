@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Whirld</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+
+<%= yield %>
+
+<%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
+<%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.min.js" %>
+<%= javascript_include_tag "autosize/dest/autosize.min.js" %>
+<%= javascript_include_tag "dropzone/dist/min/dropzone.min.js" %>
+</body>
+</html>

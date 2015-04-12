@@ -11,12 +11,17 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 
-//= require jquery/dist/jquery.js
-//= require jquery-ujs/src/rails.js
 
+
+
+// Both
+//= require jquery/dist/jquery.js
+//= require leaflet/dist/leaflet
+
+// Mapknitter
+//= require jquery-ujs/src/rails.js
 //= require bootstrap/dist/js/bootstrap.js
 
-//= require leaflet/dist/leaflet
 //= require leaflet-providers/leaflet-providers.js
 //= require leaflet-draw/dist/leaflet.draw-src.js
 //= require leaflet-illustrate/dist/Leaflet.Illustrate.js
@@ -30,11 +35,11 @@
 //= autosize/dest/autosize.min
 
 //for videos
-//= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.placeholder
+
 //= require_tree .
 
 $(document).ready(function() {
@@ -59,3 +64,4 @@ $(document).ready(function() {
        });
      });
 });
+

@@ -1,0 +1,137 @@
+<div id='project-creation' class='row group'>
+	<section id='photo-manager' class='side-nav four columns'>	
+			<nav id='navbar-create'>
+				<nav class='main-nav navbar padding-top'>
+					<div class='row group wrapper'>
+						<h1 class='logo five columns first-header h5'>
+							<a href='/'>
+								<i class='fa fa-paper-plane'></i>
+								Whirld
+							</a>
+						</h1>
+						<a class='toggle seven columns first-header' href='#'>
+							<i class='fa fa-bars h5 pull-right'></i>
+						</a>
+					</div>
+				</nav>
+
+				<nav id='photo-state' class='tab-nav row group padding-top'>
+					<div id='tab-uploaded' class='tab six columns h-centered active' >
+						<a href='#'>
+							<i class='fa fa-upload'></i>
+							Uploaded
+						</a>
+					</div>
+					<div id='tab-saved' class='tab six columns h-centered'>
+						<a href='#'>
+							<i class='fa fa-save'></i>
+							Saved
+						</a>
+					</div>
+				</nav>
+
+				<nav id='photo-cat-tags' class='row group padding-bottom padding-top'>
+					<ul class='tag-list inline-list twelve columns font_small wrapper'>
+						<li class='tag item'><a href='#' class='active'>Aerial</a></li>
+						<li class='tag item'><a href='#' class='inactive'>Street View</a></li>
+						<li class='tag item'><a href='#' class='inactive'>People</a></li>
+					</ul>
+				</nav>
+			</nav>
+
+			<section id='uploaded' class='photo-list first-section scrollable'>
+				<div class='photo-row row group wrapper'>
+					<article id='photo-upload' class='preview img-container grabbable h-centered six columns'>
+						<i class='fa fa-plus-circle v-centered h1-size'></i>
+					</article>
+				</div> <!-- end row group -->
+			</section>
+
+	</section>
+
+	<div class='eight columns'>
+		<section id='project-header'>
+			<div class='wrapper'>
+				<form id='project-create' action=''>
+					<div class='row group'>
+						<div class='twelve columns'>
+							<h1 class='project-title first-header'>
+								<textarea id='project-title' name='project-title' placeholder='Title' maxlength='70'></textarea>
+								<span class='font_small light hidden' data-limit='70'>70</span>
+							</h1>
+						</div>
+					</div>
+					<div class='row group'>
+						<a class='user-meta eight columns' href='/'>
+							<div class='image profile-thumb'>
+								<img src='https://s-media-cache-ak0.pinimg.com/avatars/kbasye_1391702042_30.jpg'/>
+							</div>
+							<span class='user-meta h3-size'>Juan Doe, Drone Pilot</span>
+						</a>
+						<div class='four columns'>
+							<input class='user-meta h3-size' placeholder='Project Location'>
+						</div>
+					</div>
+					<div class='row group'>
+						<p class='project-description'>
+								<textarea id='project-description' name='project-description' placeholder='Describe your project.' maxlength='550'></textarea>
+								<span class='light hidden' data-limit='550'>550</span>
+						</p>
+					</div>
+					<div class='row group'>
+						<div class='twelve columns'>
+							<textarea id='project-tag-list' placeholder='#tags'></textarea>
+							<div id='tag-container'></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+
+		<section id='project-basemap' class=''>
+		</section>
+
+		<ul id='end-bar' class='button-bar closed'>
+			<li class='option item' data-module-type='grid'>
+				<button>
+					<i class='h2-size fa fa-newspaper-o'></i>
+				</button><br>
+				<span class='hidden button-label font_small'>Grid</span>
+			</li>
+			<li class='option item' data-module-type='comparison'>
+				<button>
+					<i class='h2-size fa fa-cc-visa'></i>
+				</button><br>
+				<span class='hidden button-label font_small'>Compare</span>
+			</li>
+			<li class='item option-toggle'>
+				<button>
+					<i class='h2-size fa fa-plus'></i>
+				</button><br>
+				<span class='hidden font_small'>Add</span>
+			</li>
+			<li class='option item' data-module-type='half'>
+				<button>
+					<i class='h2-size fa fa-bar-chart'></i>
+				</button><br>
+				<span class='hidden button-label font_small'>Half</span>
+			</li>
+			<li class='option item' data-module-type='text'>
+				<button>
+					<i class='h2-size fa fa-file-text'></i>
+				</button><br>
+				<span class='hidden button-label font_small'>Text</span>
+			</li>
+			<li class='option item' data-module-type='video'>
+				<button>
+					<i class='h2-size fa fa-file-video-o'></i>
+				</button><br>
+				<span class='hidden button-label font_small'>Video</span>
+			</li>
+		</ul>
+
+
+	</div>
+
+</div>
+

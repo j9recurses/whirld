@@ -1,5 +1,7 @@
 
 class VideosController < ApplicationController
+  before_filter :authenticate_user!,  :except => [:index, :show, :images]
+
 
   def create
     @video = Video.new(params[:video])
@@ -13,6 +15,7 @@ class VideosController < ApplicationController
 
     def new
       @pre_upload_info = {}
+      puts "in here!"
     end
 
     def index
@@ -21,8 +24,10 @@ class VideosController < ApplicationController
 
     def get_video_uid
       video_uid = params[:id]
-      v = current_user.videos.build(uid: video_uid)
-      youtube = YouTubeIt::OAuth2Client.new(dev_key: ENV['AIzaSyDZ4iVBOZ4m6jkZzZJSn7IHmLaBdGhUX0s'])
+      puts "in here!!!"
+      youtubeuser = YoutubeUser.find(id: session[:youtube_user_id])
+      v = youtubeuser.videos.build(uid: video_uid)
+      youtube = YouTubeIt::OAuth2Client.new(dev_key:'AIzaSyDZ4iVBOZ4m6jkZzZJSn7IHmLaBdGhUX0s')
       yt_video = youtube.video_by(video_uid)
       v.title = yt_video.title
       v.description = yt_video.description
@@ -31,17 +36,18 @@ class VideosController < ApplicationController
       redirect_to root_url
     end
 
-    def get_upload_token
+    def videos_get_upload_token
       temp_params = { title: params[:title], description: params[:description], category: 'Education',
                       keywords: [] }
+      unless session[:youtube_user_id].nil?
+        youtube = YouTubeIt::OAuth2Client.new(client_access_token: session[:youtube_user_token],
+                                              dev_key:'AIzaSyDZ4iVBOZ4m6jkZzZJSn7IHmLaBdGhUX0s')
 
-      if current_user
-        youtube = YouTubeIt::OAuth2Client.new(client_access_token: current_user.token,
-                                              dev_key: ENV['GOOGLE_DEV_KEY'])
-
-        upload_info = youtube.upload_token(temp_params, get_video_uid_url)
+        upload_info = youtube.upload_token(temp_params, get_video_uid_path)
 
         render json: {token: upload_info[:token], url: upload_info[:url]}
+        puts "********"
+        puts upload_info.inspect
       else
         render json: {error_type: 'Not authorized.', status: :unprocessable_entity}
       end

@@ -25,6 +25,11 @@
     <a href="https://www.openstreetmap.org/#map=<%= @map.zoom %>/<%= @map.lat %>/<%= @map.lon %>"><%= @map.location %></a>
   </p>
 
+
+<% if !@map.tags.nil? %>
+<%end%>
+
+
   <table>
     <tr><td><span class="map-detail-label">Latitude </span><%= @map.lat %></td><td><span class="map-detail-label">Longitude </span><%= @map.lon %></td></tr>
   </table>

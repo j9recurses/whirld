@@ -12,7 +12,9 @@ class Map < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, :use => [:slugged, :static]
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom
+  acts_as_taggable_on
+
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug

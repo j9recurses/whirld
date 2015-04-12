@@ -1,0 +1,49 @@
+/*===== Grid =====*/
+/*  rows  */
+.row {
+  clear: both;
+  padding: 0px;
+}
+
+/*  COLUMN SETUP  */
+.columns {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1%;
+}
+.columns:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF TWELVE  */
+.twelve { width: 100%; }
+
+.eleven {width: 91.53%;}
+.ten {width: 83.06%;}
+
+.nine {width: 74.6%;}
+
+.eight {width: 66.13%;}
+
+.seven {width: 57.66%;}
+
+.six {width: 49.2%;}
+
+.five {width: 40.73%;}
+
+.four {width: 32.26%;}
+
+.three {width: 23.8%;}
+
+.two {width: 15.33%;}
+
+.one {width: 6.866%;}
+
+/*Bigger than 768px*/
+@media only screen and (min-width: 768px) {
+	.columns{margin: 1% 0 1% 1.6%;}
+}

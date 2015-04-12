@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :exports
   has_many :videos
+  has_many :youtube_users
 
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -41,7 +40,7 @@ class User < ActiveRecord::Base
            password: Devise.friendly_token[0,20]
          )
      end
-end
+  end
 
 
   def owns?(resource)

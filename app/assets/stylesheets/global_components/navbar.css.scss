@@ -14,9 +14,11 @@ nav a { color: azure; }
 .secondary-nav { display: none; }
 .side-nav { 
 	background-color: black; 
-	margin-top: 0;
+	margin-top: 51px;
 }
-.side-nav .toggle { display: block; }
+.side-nav .toggle {
+	display: block;
+}
 .tab:first-child{ border-right: 1px solid white; }
 .tab a { color: #999; }
 .tab.active a{ color: white; }

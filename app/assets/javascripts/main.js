@@ -8,29 +8,6 @@ $(document).ready(function(){
   var form = new Form();
       form.init();
 
-
-  // Video stuff
-  var submit_button = $('#submit_pre_upload_form');
-   var video_upload = $('#video_upload');
-   submit_button.click(function () {
-     $.ajax({
-       type: 'POST',
-       url: "/videos/videos_get_upload_token",
-       data: $('#video_pre_upload').serialize(),
-       dataType: 'json',
-       success: function(response) {
-         video_upload.find('#token').val(response.token);
-        window.alert(response.token)
-         video_upload.attr('action', response.url.replace(/^http:/i, window.location.protocol)).submit();
-         submit_button.unbind('click').hide();
-         $('.preloader').css('display', 'block');
-       },
-       error: function(XMLHttpRequest, textStatus, errorThrown) {
-         alert(errorThrown);
-       }
-     });
-   });
-
 });
 
 
@@ -92,33 +69,32 @@ function ButtonBar(settings){
 }
 function Module(option){
   var bar = option.parent();
-  var modid = this.type + "-module-" + $('.module').length;
   var type = option.data('module-type');
+  var modid = type + "-module-" + $('.module').length;
 
   function comparison(){
-    var html = "<section class='comparison-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Comparison</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='droppable dropzone h-centered row group wrapper'><p class='caps'>Drop two photos here.</p></div></section>";
+    var html = "<section id='comp-mod-1' class='comparison-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Comparison</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='droppable dropzone h-centered row group wrapper'><p class='caps'>Drop two photos here.</p></div><div class='row group wrapper'><textarea class='tag-input' placeholder='Tag your module here.'></textarea><div></div></div></section>";
     return html;
   }
   function grid(){
-    var html = "<section class='grid-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Photo Grid</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='droppable dropzone h-centered six columns'><p class='caps'>Drop up to ten images here.</p></div></div></section>";
+    var html = "<section class='grid-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Photo Grid</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='droppable dropzone h-centered row group wrapper'><p class='caps'>Drop up to ten photos here.</p></div><div class='row group wrapper'><textarea class='tag-input' placeholder='Tag your module here.'></textarea><div></div></div></section>";
     return html;
   }
   function half(){
-    var html = "<section class='half-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Half & Half</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='text-module h-centered six columns'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='droppable dropzone h-centered six columns'><p class='caps'>Drag photo here.</p></div></div></section>";
+    var html = "<section class='half-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-server'></i><span class='cursor-def'>Half & Half</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='text-module h-centered six columns'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='droppable dropzone h-centered six columns'><p class='caps'>Drag one photo here.</p></div></div><div class='row group wrapper'><textarea class='tag-input' placeholder='Tag your module here.'></textarea><div></div></div></section>";
     return html;
   }
   function text(){
-    var html = "<section class='text-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-text'></i><span class='cursor-def'>Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div></section>";
+    var html = "<section class='text-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-text'></i><span class='cursor-def'>Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='row group wrapper'><textarea class='tag-input' placeholder='Tag your module here.'></textarea><div></div></div></section>";
     return html;
   }
   function video(){
-    var html = "<section class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'>Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea></div></section>";
+    var html = "<section class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'>Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea></div><div class='row group wrapper'><textarea class='tag-input' placeholder='Tag your module here.'></textarea><div></div></div></section>";
     return html;
   }
   this.create = function(){
     var html;
     if(type == 'comparison'){ html = comparison() }
-    else if(type == 'grid'){ html = grid() }
     else if(type == 'grid'){ html = grid() }
     else if(type == 'half'){ html = half() }
     else if(type == 'text'){ html = text() }
@@ -137,17 +113,18 @@ function Module(option){
         btw.init();
     bar.before(mod);
     mod.before(btw.bar);
+
+    var tagbox = new Form();
+        tagbox.tagBox($('#'+modid).find('textarea'));
   }
 }
 function Form(){
   function createTag(e){
     var input = $(e.target);
-    var tagText;
-    if(e.which == 188){
-      tagText = input.val().toLowerCase().split(',')[0];
-    }
-    else if(e.which == 13){
-      tagText = input.val().toLowerCase().trim();
+    var s = input.val().toLowerCase();
+    var tagText = s.replace(/[\.,-\/#!'$?%\^&\*;:{}=\-_`~()]/g,"");
+    if(e.which == 13){
+      tagText = tagText.trim();
     }
     var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
     var tag = $($.parseHTML(tagHTML));
@@ -158,7 +135,7 @@ function Form(){
   }
   function appendTag(e){
     var input = $(e.target);
-    var tagList = $('#tag-container');
+    var tagList = input.next();
     var tag = createTag(e)[0];
     if(e.which == 188 || e.which == 13){
       if(tagList.children('.project-tag').length == 0){
@@ -190,6 +167,10 @@ function Form(){
     input.on('focusout', function(){
       if(letterCount == 0){ $($(this).next('span')[0]).addClass('hidden'); }
     });
+  }
+  this.tagBox = function(el){
+    console.log(el)
+    el.keyup(function(e){ appendTag(e); })
   }
   this.init = function(){
     $('#project-description').keyup(function(e){ changeCounter(e); });
@@ -233,3 +214,25 @@ var mainStickyNav = function () {
     unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
   });
 }
+
+  // Video stuff
+  // var submit_button = $('#submit_pre_upload_form');
+  //  var video_upload = $('#video_upload');
+  //  submit_button.click(function () {
+  //    $.ajax({
+  //      type: 'POST',
+  //      url: "/videos/videos_get_upload_token",
+  //      data: $('#video_pre_upload').serialize(),
+  //      dataType: 'json',
+  //      success: function(response) {
+  //        video_upload.find('#token').val(response.token);
+  //       window.alert(response.token)
+  //        video_upload.attr('action', response.url.replace(/^http:/i, window.location.protocol)).submit();
+  //        submit_button.unbind('click').hide();
+  //        $('.preloader').css('display', 'block');
+  //      },
+  //      error: function(XMLHttpRequest, textStatus, errorThrown) {
+  //        alert(errorThrown);
+  //      }
+  //    });
+  //  });

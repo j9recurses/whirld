@@ -122,13 +122,8 @@ input:focus{ outline: none; }
   margin-top: 1.45em;
 }
   .module.padding-bottom{ padding-bottom: 1em; }
+  .module textarea.tag-input{ margin-top: 1em; }
   .module .wrapper { width: 96%; }
-
-#project-tag-list{
-  resize: none;
-  height: 30px;
-}
-#project-tag-list:focus{ outline: none; }
 .project-tag{ 
   display: inline-block;
   margin: 0 10px 8px 0;
@@ -138,10 +133,24 @@ input:focus{ outline: none; }
 }
 .project-tag.error{ color: cornflowerblue; }
 .project-tag:hover{ text-decoration: line-through; }
+textarea.tag-input{ height: 19px; }
+textarea.tag-input::-webkit-input-placeholder { /* WebKit browsers */
+  font-size: .75em;
+}
+textarea.tag-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: .75em;
+}
+textarea.tag-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: .75em;
+}
+textarea.tag-input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  font-size: .75em;
+}
 
 textarea{
   background: none;
   border: none;
+  overflow: hidden;
   resize: none;
   vertical-align: top;
   width: 90%;

@@ -31,8 +31,11 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
-// Katey's part
+// Project editor
 //= autosize/dest/autosize.min
+//= jquery-ui/jquery-ui.min
+//= jquery-ui/ui/minified/draggable.min
+//= jquery-ui/ui/minified/droppable.min
 
 //for videos
 //= require jquery.turbolinks

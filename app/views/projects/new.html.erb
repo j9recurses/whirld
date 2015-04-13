@@ -27,55 +27,55 @@
 
 			<section id='uploaded' class='photo-list first-section scrollable'>
 				<div class='photo-row row group wrapper'>
-					<article id='photo-upload' class='preview img-wrapper grabbable h-centered six columns'>
+					<article id='photo-upload' class='preview img-wrapper h-centered six columns'>
 						<i class='fa fa-plus-circle v-centered h1-size'></i>
 					</article>
 
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/square.png", :alt => "", :class=>'draggable') %></div>
-						</div>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/comparison-01.png", :alt => "", :class=>'draggable') %>
+							</div>
 					</article>
 
 				</div> <!-- end row group -->
 				
 				<div class='photo-row row group wrapper'>
-					<article class='draggable preview-chosen preview img-wrapper grabbable six columns h-centered'>
+					<article class='preview-chosen preview img-wrapper six columns h-centered'>
 						<div class='img-wrapper v-centered'>
 							<i class='fa fa-check-circle h1-size icon-overlay'></i>
-							<div class='img-wrapper'><%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %></div>
+							<div class='img-wrapper'><%= image_tag("test/vertical.png", :alt => "", :class=>'') %></div>
 						</div>
 					</article>
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/comparison-bar.png", :alt => "", :class=>'draggable') %></div>
-						</div>
-					</article>
-				</div> <!-- end row group -->
-
-				<div class='photo-row row group wrapper'>
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/square.png", :alt => "", :class=>'draggable') %></div>
-						</div>
-					</article>
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %></div>
-						</div>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
+							</div>
 					</article>
 				</div> <!-- end row group -->
 
 				<div class='photo-row row group wrapper'>
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/project-chosen01.jpg", :alt => "", :class=>'draggable') %></div>
-						</div>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/project-chosen01.jpg", :alt => "", :class=>'draggable') %>
+							</div>
 					</article>
-					<article class='preview img-wrapper grabbable six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'><%= image_tag("test/project-chosen02.jpg", :alt => "", :class=>'draggable') %></div>
-						</div>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/project-chosen02.jpg", :alt => "", :class=>'draggable') %>
+							</div>
+					</article>
+				</div> <!-- end row group -->
+
+				<div class='photo-row row group wrapper'>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/square.png", :alt => "", :class=>'draggable') %>
+							</div>
+					</article>
+					<article class='preview six columns h-centered'>
+							<div class='img-wrapper v-centered'>
+								<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
+							</div>
 					</article>
 				</div> <!-- end row group -->
 			</section>
@@ -119,8 +119,7 @@
 			</div>
 		</section>
 
-		<section id='project-basemap' class=''>
-		</section>
+		<section id='project-basemap'></section>
 
 		<ul id='end-bar' class='button-bar closed'>
 			<li class='option item' data-module-type='grid'>

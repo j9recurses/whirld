@@ -8,6 +8,24 @@ $(document).ready(function(){
   var form = new Form();
       form.init();
 
+  $( '.draggable' ).draggable({
+    appendTo: '#project-basemap',
+    containment: '#project-creation',
+    cursor: '-webkit-grabbing',
+    distance: 10,
+    helper: 'clone',
+    opacity: '.9',
+    // refreshPositions,
+    revert: true,
+    revertDuration: 350,
+    // scope allows you to match certain dropzones with certain sets of draggables
+    snap: true,
+    snapMode: 'both',
+    snapTolerance: 10,
+    zIndex: 100,
+
+  });
+
 });
 
 
@@ -89,7 +107,7 @@ function Module(option){
     return html;
   }
   function video(){
-    var html = "<article class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'> Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Enter a caption for your photo'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
+    var html = "<article class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'> Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
     return html;
   }
   this.create = function(){

@@ -98,6 +98,10 @@ button i{ line-height: 0; }
   border: none;
   color: rgb(243, 247, 255);
 }
+#project-basemap img.draggable{
+  max-width: 180px;
+  max-height: 180px;
+}
 .error{ color: cornflowerblue; }
 .fa-plus{ line-height: 0;}
 .grabbable{ cursor: -webkit-grab; }

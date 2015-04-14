@@ -6,12 +6,13 @@
   <title>Whirld</title>
   <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <%=stylesheet_link_tag 'application' %>
-  <%=stylesheet_link_tag 'bootstrap/dist/css/bootstrap.min' %>
-  <%=stylesheet_link_tag 'mapknitter/annotations' %>
   <%=stylesheet_link_tag 'mapknitter/maps' %>
   <%=stylesheet_link_tag 'mapknitter/style' %>
   <%=stylesheet_link_tag 'mapknitter/uploads' %>
   <%=javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'main'%>
 </head>
 
 <body>

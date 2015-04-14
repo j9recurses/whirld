@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 ruby "2.1.2"
-gem "rails", "~>3.2"
+gem "rails", "~>3.2.3"
 
 gem "will_paginate", "3.0.7"
 gem "will_paginate-bootstrap"
@@ -36,21 +36,17 @@ group :dependencies do
 
   # asset pipelining
   gem "sprockets"#, "2.12.1"
-  gem "sass"
+  gem 'sass-rails',   '~> 3.2.3'
   gem "autoprefixer-rails"
-  gem "uglifier"
-
+  gem 'uglifier', '>= 1.0.3'
 end
 
 group :development do
   gem "jshintrb"
-  #gem "therubyracer"
+  gem "therubyracer"
 end
 
-group :sqlite do
-  # if you decide to use sqlite3 as the database
-  gem "sqlite3"
-end
+
 
 group :passenger do
   # passenger server
@@ -62,4 +58,6 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'carrierwave'
+gem "carrierwave", "~> 0.6.2"
+gem "mini_magick", "~> 3.4"
+gem 'jbuilder'

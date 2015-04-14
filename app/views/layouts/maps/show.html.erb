@@ -1,0 +1,63 @@
+<% content_for :title do %>
+  <div class="pull-right dropdown">
+    <a href="#" data-toggle="dropdown">
+      <span class="fa fa-cog"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+      <% if current_user %>
+        <li><a>Delete Map</a></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="sidebar-title">
+    <h3><%= @map.name %></h3>
+  </div>
+
+<% end %>
+
+<% content_for :details do %>
+  <div>
+    <%=raw markdown_to_html(@map.description) unless @map.description.nil? %>
+  </div>
+
+  <p>
+    <span class="map-detail-label">Location</span>
+    <a href="https://www.openstreetmap.org/#map=<%= @map.zoom %>/<%= @map.lat %>/<%= @map.lon %>"><%= @map.location %></a>
+  </p>
+
+
+<% if !@map.tags.nil? %>
+<%end%>
+
+
+  <table>
+    <tr><td><span class="map-detail-label">Latitude </span><%= @map.lat %></td><td><span class="map-detail-label">Longitude </span><%= @map.lon %></td></tr>
+  </table>
+
+  <% if current_user %>
+    <hr />
+    <p>
+      <a onClick="$('#map-edit-container').toggle()" class="btn btn btn-default">Edit details</a>
+      <a onClick="$('.share-link').toggle()" class="btn btn btn-default"><i class="fa fa-code"></i> Embed code</a>
+      <div class="share-link" style="display:none;">
+        <%= render :partial => 'maps/share' %>
+      </div>
+    </p>
+  <% end %>
+
+  <div style="display:none;" id="map-edit-container">
+    <%= render :partial => 'maps/edit' %>
+  </div>
+
+  <div class="tags">
+    <%= render :partial => "tags/index" %>
+  </div>
+
+  <hr />
+
+
+<% end %>
+
+<% content_for :images do %>
+  <%= render :partial => "/images/index" %>
+<% end %>

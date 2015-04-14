@@ -14,7 +14,7 @@
     height: 180px;
   }
 #project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 7em;}
-#project-creation{ 
+#project-creation{
   background-color: #f2f2f2;
   height: 100%;
   min-height: 700px;
@@ -39,16 +39,16 @@
   transition: all .25s ease;
 }
 /*===== Project Header =====*/
-#project-header{ 
+#project-header{
 	background-color: rgb(242, 242, 242);
 	/*max-height: 200px;*/
   /*overflow: hidden;*/
   /*display: none;*/
 }
 /*===== Project Map =====*/
-#project-basemap { 
-	height: 400px; 
-	/*display: none; */
+/***#project basemap */
+#knitter-map-pane {
+	height: 400px;	/*display: none; */
 }
 
 /*===== Project Content =====*/
@@ -63,7 +63,6 @@
 
 /*Bigger than 568px*/
 @media only screen and (min-width: 568px) {
-  
 }
 
 /*Bigger than 768px*/

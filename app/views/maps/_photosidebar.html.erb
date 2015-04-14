@@ -1,0 +1,82 @@
+<section id='photo-manager' class='side-nav four columns'>
+			<nav id='navbar-create'>
+				<nav id='photo-state' class='tab-nav row group padding-top'>
+					<div id='tab-uploaded' class='tab six columns h-centered active' >
+						<a href='#'>
+							<i class='fa fa-upload'></i>
+							Uploaded
+						</a>
+					</div>
+					<div id='tab-saved' class='tab six columns h-centered'>
+						<a href='#'>
+							<i class='fa fa-save'></i>
+							Saved
+						</a>
+					</div>
+				</nav>
+
+				<nav id='photo-cat-tags' class='row group padding-bottom padding-top'>
+					<ul class='tag-list inline-list twelve columns font_small wrapper'>
+						<li class='tag item'><a href='#' class='active'>Aerial</a></li>
+						<li class='tag item'><a href='#' class='inactive'>Street View</a></li>
+						<li class='tag item'><a href='#' class='inactive'>People</a></li>
+					</ul>
+				</nav>
+			</nav>
+
+			<section id='uploaded' class='photo-list first-section scrollable'>
+				<div class='photo-row row group wrapper'>
+					<article id='photo-upload' class='preview img-container grabbable h-centered six columns'>
+						<i class='fa fa-plus-circle v-centered h1-size'></i>
+					</article>
+
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/square.png", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+
+				</div> <!-- end row group -->
+
+				<div class='photo-row row group wrapper'>
+					<article class='draggable preview-chosen preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<i class='fa fa-check-circle h1-size icon-overlay'></i>
+							<div class='img-container'><%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/comparison-bar.png", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+				</div> <!-- end row group -->
+
+				<div class='photo-row row group wrapper'>
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/square.png", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+				</div> <!-- end row group -->
+
+				<div class='photo-row row group wrapper'>
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/project-chosen01.jpg", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+					<article class='preview img-container grabbable six columns h-centered'>
+						<div class='img-wrapper v-centered'>
+							<div class='img-container'><%= image_tag("test/project-chosen02.jpg", :alt => "", :class=>'draggable') %></div>
+						</div>
+					</article>
+				</div> <!-- end row group -->
+			</section>
+
+	</section>

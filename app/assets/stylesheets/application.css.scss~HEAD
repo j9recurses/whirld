@@ -18,7 +18,6 @@
  *= require style
  *= require maps
  *= require uploads
- *= require annotations
  *= require videos
 
  *= require_self

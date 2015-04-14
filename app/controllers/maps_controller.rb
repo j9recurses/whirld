@@ -4,13 +4,11 @@ class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
   before_filter :authenticate_user!,  :except => [:index, :show, :images]
 
-
-
-  layout 'mapknitter'
+  layout 'map'
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')
-    render :layout => 'mapknitter'
+    render :layout => 'maps'
   end
 
   def new
@@ -21,12 +19,26 @@ class MapsController < ApplicationController
       @user = current_user
       @map = @user.maps.new(params[:map])
       @map.author = @user.login
-      puts @map.inspect
-      if @map.save
-        redirect_to "/maps/#{@map.slug}"
+      @map.name = params[:name]
+      @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
+      gallery = UserGallery.new()
+      gallery.name = @map.slug
+      gallery.user_id = @user.id
+      if @map.save && gallery.save
+        UserGallery.update(gallery.id, map_id: @map.id)
+        redirect_to "/maps/map_info/#{@map.slug}"
       else
         render "new"
       end
+  end
+
+  def map_info
+    @map = Map.find params[:id]
+    user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
+    @user_gallery = UserGallery.find(user_gallery_id[0])
+    puts @user_gallery.inspect
+    @photo = Photo.new
+    render "map_info"
   end
 
   def show

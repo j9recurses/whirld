@@ -1,0 +1,19 @@
+/* Map pane */
+
+/*MAPKNITTER NEEDS THIS for JS and JQUERY!!!; just needs html*/
+#knitter-map-pane {
+  height: 400px;
+  width:600px;
+ /*display: none; */
+}
+
+#knitter-map-pane.fullscreen {
+  width: 100%;
+  max-width: none;
+}
+
+/* fix for firefox partial image display bug
+ * in css3 matrix distorted images */
+.leaflet-image-layer {
+  border:0px solid red;
+}

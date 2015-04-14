@@ -87,7 +87,8 @@ Whirld::Application.routes.draw do
   resources :videos, only: [:new, :index]
 
   match "videos/:id/add_comment", :to => "videos#add_comment"
-  get 'maps/map_info/:id', to: 'maps#map_info'
+  get 'maps/map_info/:id', to: 'maps#map_info',  :as => :map_info
+  post '/maps/update_remote/:id/' =>'maps#update_remote', :as => :map_update_remote, :defaults => {:format => 'json' }
 
   resources :user_galleries do
       resources :photos, :except => [:update, :edit]

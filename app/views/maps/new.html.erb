@@ -3,9 +3,9 @@
     <div id='project-form' class='eight columns'>
   		<section id='project-header'>
   			<div class='wrapper'>
-          <%= render "newmapform" %>
+          <%= render :partial => "maps/new_map_pieces/newmapform" %>
         </div>
 		  </section>
   </div>
 </div>
-<script><%= render :partial => 'maps/geocoder', :formats => [:js] %></script>
+<script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script>

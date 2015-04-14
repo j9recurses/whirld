@@ -12,7 +12,7 @@ class Map < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, :use => [:slugged, :static]
 
-  acts_as_taggable_on
+  acts_as_taggable
 
   attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
@@ -388,19 +388,6 @@ class Map < ActiveRecord::Base
 
   #--------------------
 
-  def has_tag(tagname)
-    Tag.find(:all, :conditions => { :map_id => self.id, :name => tagname }).length > 0
-  end
 
-  def add_tag(tagname, user)
-    tagname = tagname.downcase
-    unless self.has_tag(tagname)
-      tag = self.tags.create({
-        :name => tagname,
-        :user_id => user.id,
-        :map_id => self.id
-      })
-    end
-  end
 
 end

@@ -1,0 +1,43 @@
+<p class='project-description'>
+     <input id="description_field" class='char-limited' type="text_field" name="description" maxlength="550"
+        <% unless @map[:description].nil? || @map[:description].blank? %>
+           placeholder="<%= @map[:description] %>">
+        <%else%>
+          placeholder= "Describe your project here">
+        <% end %>
+    <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+    <!--<btn id="title_submit">Save</btn>-->
+    <script>
+   // $("#title_submit").click(function() {
+    $('#description_field').bind("enterKey",function(e){
+        descriptionf = $("#description_field").val();
+            console.log(name);
+            map_id = $("#mapp_val").val();
+            console.log(map_id)
+            data =  {description: descriptionf};
+           url = "/maps/update_remote/";
+           url = url.concat(map_id);
+            console.log(url);
+            $.ajax({
+                url: url,
+                data:  data,
+                cache: false,
+                type: "post",
+                success: function(data){
+                    console.log("sucess!!")
+                },
+                error: function(){
+                alert("Something went wrong!");
+                 }
+          });
+        })
+    //listens to for enter event on the form field
+    $('#description_field').keyup(function(e){
+    if(e.keyCode == 13){
+      $(this).trigger("enterKey");
+      }
+    });
+   </script>
+
+      <span class='light hidden' data-limit='550'>550</span>
+</p>

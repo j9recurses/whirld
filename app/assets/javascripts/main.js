@@ -26,32 +26,20 @@ function DragDrop(){
   }
   function createPhoto(ui){
     var id = ui.draggable.data('id');
-    var img = ui.draggable;
-        img.draggable( "disable" );
+    var img = ui.draggable.clone();
+        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
     var html = "<div class='photo six columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>";
     var photo = $($.parseHTML(html));
         photo.attr('id', 'photo-'+id);
         photo.find('.img-wrapper').prepend(img);
     return photo;
   } 
-  function markThumbChosen(ui){
-    var id = ui.draggable.data('id');
-    var img = ui.draggable.clone();
-    var preview = $('#preview-'+id);
-        preview.addClass('preview-chosen');
-    var iconHTML = "<i class='fa fa-check-circle h1-size icon-overlay'></i>";
-    var icon = $.parseHTML(iconHTML);
-    var imgWrapper = preview.find('.img-wrapper');
-        imgWrapper.append(icon);
-        imgWrapper.append(img);
-  }
   function initModDrop(mod){
     mod.find('.droppable').droppable({
       accept: '.draggable',
       activeClass: 'drop-active',
       hoverClass: 'drop-target',
       drop: function(e, ui){
-        // markThumbChosen(ui);
         var photoCount = $('.photo').length;
         if(photoCount < 10){
           var dropzone = $(e.target);
@@ -62,16 +50,20 @@ function DragDrop(){
           var photo = createPhoto(ui);
 
           dropzone.append(photo);
+          // initDrag();
           var imgWrapper = photo.find('.img-wrapper');
           imgWrapper.hover(function(){
             var id = $(this).find('img').data('id');
             var button = $(this).find('button')
                 button.toggleClass('hidden');
-            button.on('click', function(){
-              $('#photo-'+id).remove();
-              $('#preview-'+id).removeClass('preview-chosen');
-              $('#preview-'+id).find('.icon-overlay').addClass('hidden');
-            });
+          });
+          imgWrapper.find('.photo-remove').on('click', function(){
+            var photo = $(this).closest('.photo');
+            $(photo).remove();
+            console.log($('.photo').length)
+            if($('.photo').length == 0){
+              $(this).closest('.droppable').addClass('dropzone').html("<p class='caps'>Drop up to ten photos here.</p>");
+            }
           });
           var captionEl = imgWrapper.next('.caption');
           autosize(captionEl);
@@ -85,7 +77,7 @@ function DragDrop(){
     mod.find('.droppable').sortable({
       appendTo: $('.droppable'),
       connectWith: mod.find('.droppable'),
-      containment: mod.find('.droppable'),
+      containment: mod,
       cursor: '-webkit-grab',
       distance: 10,
       handle: '.img-wrapper',
@@ -98,6 +90,7 @@ function DragDrop(){
       // appendTo: '.droppable',
       containment: '#project-creation',
       cursor: '-webkit-grabbing',
+      cursorAt: { top: 0, left: 0 },
       distance: 10,
       helper: 'clone',
       opacity: '.9',
@@ -108,6 +101,12 @@ function DragDrop(){
       snap: true,
       snapMode: 'both',
       snapTolerance: 10,
+      start: function(event, ui){
+        // var img = $(this).clone('true');
+        // var preview = $(this).parent().parent().find('.img-wrapper');
+        // preview.append(img)
+        // console.log(img)
+      },
       zIndex: 100
     });
   }

@@ -8,13 +8,12 @@ $(document).ready(function(){
   var form = new Form();
       form.init();
 
-
   // TEMPORARY
-  $.each($('article.preview'), function(i,el){
-    $(el).attr('id', "preview-"+i);
-    var img = $(el).find('img');
-        img.data('id', i);
-  });
+  // $.each($('article.preview'), function(i,el){
+  //   $(el).attr('id', "preview-"+i);
+  //   var img = $(el).find('img');
+  //       img.data('id', i);
+  // });
 
 });
 
@@ -50,7 +49,6 @@ function DragDrop(){
           var photo = createPhoto(ui);
 
           dropzone.append(photo);
-          // initDrag();
           var imgWrapper = photo.find('.img-wrapper');
           imgWrapper.hover(function(){
             var id = $(this).find('img').data('id');
@@ -59,11 +57,13 @@ function DragDrop(){
           });
           imgWrapper.find('.photo-remove').on('click', function(){
             var photo = $(this).closest('.photo');
-            $(photo).remove();
-            console.log($('.photo').length)
-            if($('.photo').length == 0){
+            var photoCount = $('.photo').length-1;
+            if(photoCount == 0){
               $(this).closest('.droppable').addClass('dropzone').html("<p class='caps'>Drop up to ten photos here.</p>");
+              console.log(photoCount)
             }
+            
+            $(photo).remove();
           });
           var captionEl = imgWrapper.next('.caption');
           autosize(captionEl);
@@ -87,26 +87,17 @@ function DragDrop(){
   }
   function initDrag(){
     $('.draggable').draggable({
-      // appendTo: '.droppable',
       containment: '#project-creation',
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
       distance: 10,
       helper: 'clone',
       opacity: '.9',
-      // refreshPositions,
       revert: true,
       revertDuration: 350,
-      // scope allows you to match certain dropzones with certain sets of draggables
       snap: true,
       snapMode: 'both',
       snapTolerance: 10,
-      start: function(event, ui){
-        // var img = $(this).clone('true');
-        // var preview = $(this).parent().parent().find('.img-wrapper');
-        // preview.append(img)
-        // console.log(img)
-      },
       zIndex: 100
     });
   }

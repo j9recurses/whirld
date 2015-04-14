@@ -24,6 +24,8 @@ log/
 tmp/*
 tmp/**/*
 coverage*
+
+public/uploads/*
 public/warpables/*
 public/images/*
 public/system/*

@@ -1,0 +1,47 @@
+<%= form_for @map, :html => { :class => 'project-create' } do |f| %>
+  <%= render 'layouts/error_messages', object: f.object %>
+  <div class='row group'>
+    <div class='twelve columns'>
+      <h1 class='project-title first-header'>Create a New Project </h1>
+      <h1 class='project-title first-header'>
+        <%=  f.text_field :name,
+                         :id => 'name',
+                         :name => 'name',
+                         :placeholder => 'Title',
+                         :maxlength =>'70'%>
+        <span class='font_small light hidden' data-limit='70'>70</span>
+      </h1>
+    </div>
+  </div>
+
+  <div class='row group'>
+	   <a class='user-meta eight columns' href='/'>
+	      <div class='image profile-thumb'>
+	         <img src='https://s-media-cache-ak0.pinimg.com/avatars/kbasye_1391702042_30.jpg'/>
+		    </div>
+		    <span class='user-meta h3-size'><%=current_user.login%>, Drone Pilot</span>
+      </a>
+      <div class='four columns'>
+        <i class="fa fa-search"></i>
+        <%= f.text_field :location,
+                       :class => 'user-meta h3-size',
+                       :placeholder => 'Project Location' %>
+      </div>
+  </div>
+  <div class='row group'>
+        <%= f.label :latitude %>
+        <%= f.text_field :lat,
+                       :class => 'user-meta h3-size',
+                       :placeholder => 'Latitude'%>
+      <%= f.label :longitude %>
+      <%= f.text_field :lon,
+                       :class => 'user-meta h3-size',
+                       :placeholder => 'Longi' %>
+  </div>
+  <div class='row group'>
+  <button>
+    <i class='h2-size fa fa-newspaper-o'></i>
+  <%= f.submit "Next" %>
+  </button
+  </div>
+<% end %>

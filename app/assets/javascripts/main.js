@@ -1,18 +1,20 @@
 $(document).ready(function(){
-  autosize($('textarea#project-description'));
-  autosize($('textarea#project-title'));
-  creationStickyNav();
-  mainStickyNav();
-  var bb = new ButtonBar({type: 'end'});
-      bb.init();
-  var form = new Form();
-      form.init();
+  //setTimeout(autosize($('textarea#project-description')),500);
+//  setTimeout(autosize($('textarea#project-title')), 500);
+//  creationStickyNav();
+//  mainStickyNav();
+//  var bb = new ButtonBar({type: 'end'});
+//      bb.init();
+//  var form = new Form();
+//      form.init();
 
 
   // Video stuff
   var submit_button = $('#submit_pre_upload_form');
    var video_upload = $('#video_upload');
+
    submit_button.click(function () {
+     console.log("in here")
      $.ajax({
        type: 'POST',
        url: "/videos/videos_get_upload_token",
@@ -31,7 +33,18 @@ $(document).ready(function(){
      });
    });
 
+   $("#map_name,#map_slug").keyup(function() {
+     $("#map_slug").val(string_to_slug($(this).val()))
+   });
+
+   function string_to_slug(text){
+     return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')
+   }
+
 });
+
+
+
 
 
 function ButtonBar(settings){
@@ -51,7 +64,7 @@ function ButtonBar(settings){
   }
   function createBar(){
     var el;
-    if(type == 'end'){ 
+    if(type == 'end'){
       el = $('#end-bar');
     }
     else if(type == 'btw') {
@@ -128,7 +141,7 @@ function Module(option){
 
     var icon = mod.find('.fa-remove')
         icon.attr('id', modid);
-        icon.on('click', function(){ 
+        icon.on('click', function(){
           $('#'+modid).remove();
           $('#btw-bar-'+modid.split('-')[2]).remove();
         })
@@ -171,7 +184,7 @@ function Form(){
           input.val('');
           setTimeout(function() {
              $('#'+tag.id).removeClass('error');
-           }, 600); 
+           }, 600);
         }
         else{
           tagList.append(tag);

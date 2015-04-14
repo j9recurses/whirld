@@ -1,0 +1,34 @@
+<nav id='navbar-main' class='navbar main-nav padding-top'>
+  <div class='row group wrapper'>
+    <h1 id='main-logo' class='logo three columns first-header h5'>
+      <a href='/'>
+        <i class='fa fa-paper-plane'></i> Whirld
+      </a>
+    </h1>
+    <a class='toggle nine columns first-header' href='#'><i class='fa fa-bars h5 pull-right first-header'></i></a>
+    <nav id='left-nav' class='secondary-nav four columns'>
+      <ul class='inline-list'>
+        <li class='item'><a href='/' class=''>About</a></li>
+        <li class='item'><a href='/new' class=''>Create</a></li>
+        <li class "item">
+            <% if user_signed_in? %>
+            <%=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
+            <% else %>
+            <%= link_to "Log in", new_session_path(resource_name) %><br />
+           <% end -%></li>
+      </ul>
+    </nav>
+    <nav id='right-nav' class='secondary-nav five columns'>
+      <ul class='inline-list pull-right'>
+        <li class='item'><a href='/' class=''><i class='fa fa-search'></i></a></li>
+        <li class='item'><a href='/' class=''>
+          <% if user_signed_in? %>
+          <%= current_user.login %>
+          <%else%>
+          <%= 'Not Signed In'%>
+          <%end%>
+        <i class='fa fa-caret-down'></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</nav>

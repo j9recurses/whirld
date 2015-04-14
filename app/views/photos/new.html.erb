@@ -1,0 +1,29 @@
+
+
+<%= form_for [@user_gallery, @photo], :remote => true do %>
+<p id="notice"><%= notice %></p>
+
+		Upload Photos:
+		<input id="fileupload" type="file" name="photo[photo_file]" multiple>
+		<script>
+				$(function () {
+          window.alert("made it here");
+				    $('#fileupload').fileupload({
+				        dataType: 'json',
+				        url: '<%= user_gallery_photos_path(@user_gallery[:id]) %>',
+				        done: function (e, data) {
+				            $.each(data.result, function (index, file) {
+				               $('<li><img src="'+file.thumbnail_url+'"></li>').appendTo('#thumbs');
+				            });
+				        }
+				    });
+				});
+				</script>
+    <ul id="thumbs" class="cf">
+    	<!-- json-ajax response here, see fileupload script above, .appendTo css id:"thumbs"-->
+    		</ul>
+    <% end %>
+
+    <%= javascript_include_tag "/javascripts/jquery-file-upload/vendor/jquery.ui.widget.js" %>
+  	<%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.iframe-transport.js" %>
+  	<%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>

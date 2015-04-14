@@ -51,7 +51,7 @@ Whirld::Application.routes.draw do
   delete 'maps/:map_id/warpables/:id' => 'images#destroy' #legacy, will be resourceful
   delete 'images/:id' => 'images#destroy' #legacy, will be resourceful
 
-  # You can have the root of your site routed with 'root'
+    # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   root :to => 'projects#show'
   get 'new' => 'projects#new'
@@ -87,4 +87,9 @@ Whirld::Application.routes.draw do
   resources :videos, only: [:new, :index]
 
   match "videos/:id/add_comment", :to => "videos#add_comment"
+  get 'maps/map_info/:id', to: 'maps#map_info'
+
+  resources :user_galleries do
+      resources :photos, :except => [:update, :edit]
+    end
 end

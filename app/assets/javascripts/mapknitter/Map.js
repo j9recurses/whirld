@@ -10,16 +10,16 @@ MapKnitter.Map = MapKnitter.Class.extend({
       opacity:0.5
     });
 
-    this._map = L.map('knitter-map-pane', { 
+    this._map = L.map('knitter-map-pane', {
       zoomControl: false,
       layers: [google]
     }).setView(this._latlng, this._zoom);
 
     // make globally accessible map namespace for knitter.js
-    map = this._map
+    map = this.map
 
     if (!options.readOnly) {
-      saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
+      saveBtn = L.easyButton('fa-check-circle fa-green mk-save',
       function() {},
         'Save status',
         this._map,
@@ -39,7 +39,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
         // only already-placed images:
         if (warpable.nodes.length > 0) {
 
-          var corners = [ 
+          var corners = [
                 new L.latLng(warpable.nodes[0].lat,
                              warpable.nodes[0].lon),
                 new L.latLng(warpable.nodes[1].lat,
@@ -52,7 +52,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
           var img = new L.DistortableImageOverlay(
             warpable.srcmedium,
-            { 
+            {
               corners: corners,
               mode: 'lock'
           }).addTo(window.mapKnitter._map);
@@ -64,7 +64,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
           if (!options.readOnly) {
             // img.on('select', function(e){
             // refactor to use on/fire; but it doesn't seem to work
-            // without doing it like this: 
+            // without doing it like this:
             L.DomEvent.on(img._image, 'click', window.mapKnitter.selectImage, img);
             img.on('deselect', window.mapKnitter.saveImageIfChanged, img)
             L.DomEvent.on(img._image, 'dblclick', window.mapKnitter.dblClickImage, img);
@@ -82,7 +82,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
       window.mapKnitter._map.fitBounds(bounds);
     });
 
-    /* Deselect images if you click on the sidebar, 
+    /* Deselect images if you click on the sidebar,
      * otherwise hotkeys still fire as you type. */
     $('.sidebar').click(function(){ $.each(images,function(i,img){ img.editing.disable() }) })
     /* Deselect images if you click on the map. */
@@ -112,8 +112,8 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
   selectImage: function(e){
     var img = this
-    // save state, watch for changes by tracking 
-    // stringified corner positions: 
+    // save state, watch for changes by tracking
+    // stringified corner positions:
     img._corner_state = JSON.stringify(img._corners)
     for (var i in images) {
       if (img._leaflet_id != images[i]._leaflet_id) {
@@ -140,7 +140,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
     }
   },
 
-  dblClickImage: function (e) { 
+  dblClickImage: function (e) {
     var img = this
     window.mapKnitter.selectImage.bind(img)
     img.editing._enableDragging()
@@ -160,7 +160,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
       data: {
         warpable_id: img.warpable_id,
         locked: (img.editing._mode == 'lock'),
-        points: 
+        points:
           img._corners[0].lng+','+img._corners[0].lat+':'+
           img._corners[1].lng+','+img._corners[1].lat+':'+
           img._corners[3].lng+','+img._corners[3].lat+':'+
@@ -178,7 +178,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
     })
   },
 
-  // /maps/newbie/warpables/42, but we'll try /warpables/42 
+  // /maps/newbie/warpables/42, but we'll try /warpables/42
   // as it should also be a valid restful route
   deleteImage: function() {
     var img = this
@@ -214,7 +214,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
       jQuery.getJSON(this._warpablesUrl, function(warpablesData) {
         this._warpables = warpablesData;
         if (callback) { callback(this._warpables); }
-      });  
+      });
     }
   },
 
@@ -246,7 +246,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
     // eventually, annotations
     var overlayMaps = {
     };
-   
+
     var layersControl = new L.Control.Layers(baseMaps,overlayMaps);
     this._map.addControl(layersControl);
 

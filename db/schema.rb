@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150412083828) do
+ActiveRecord::Schema.define(:version => 20150413091331) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -101,10 +101,10 @@ ActiveRecord::Schema.define(:version => 20150412083828) do
   end
 
   create_table "photos", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "text"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "user_gallery_id"
+    t.string   "photo_file"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "taggings", :force => true do |t|
@@ -134,6 +134,14 @@ ActiveRecord::Schema.define(:version => 20150412083828) do
   add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
   add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
   add_index "tags", ["warpable_id"], :name => "index_tags_on_warpable_id"
+
+  create_table "user_galleries", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "map_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

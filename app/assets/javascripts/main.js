@@ -51,7 +51,7 @@ function DragDrop(){
       activeClass: 'drop-active',
       hoverClass: 'drop-target',
       drop: function(e, ui){
-        markThumbChosen(ui);
+        // markThumbChosen(ui);
         var photoCount = $('.photo').length;
         if(photoCount < 10){
           var dropzone = $(e.target);
@@ -61,18 +61,7 @@ function DragDrop(){
           var mod = dropzone.closest('.module');
           var photo = createPhoto(ui);
 
-          if(photoCount % 2 == 0){
-            var row = createPhotoRow();
-                row.append(photo);
-            console.log('first');
-          }
-          else if(photoCount % 2 == 1){
-            var row = $('.photo-row').last();
-                row.append(photo);
-            console.log(row);
-          }
-
-          dropzone.append(row);
+          dropzone.append(photo);
           var imgWrapper = photo.find('.img-wrapper');
           imgWrapper.hover(function(){
             var id = $(this).find('img').data('id');
@@ -92,8 +81,19 @@ function DragDrop(){
       }
     });
   }
-  this.modDD = function(mod){
-    // Temporary draggable. This will get refactored after we are uploading images.
+  function initSort(mod){
+    mod.find('.droppable').sortable({
+      appendTo: $('.droppable'),
+      connectWith: mod.find('.droppable'),
+      containment: mod.find('.droppable'),
+      cursor: '-webkit-grab',
+      distance: 10,
+      handle: '.img-wrapper',
+      opacity: .9,
+      revert: 150
+    });
+  }
+  function initDrag(){
     $('.draggable').draggable({
       // appendTo: '.droppable',
       containment: '#project-creation',
@@ -110,7 +110,11 @@ function DragDrop(){
       snapTolerance: 10,
       zIndex: 100
     });
+  }
+  this.modDD = function(mod){
+    initDrag();
     initModDrop(mod);
+    initSort(mod);
   }
 }
 

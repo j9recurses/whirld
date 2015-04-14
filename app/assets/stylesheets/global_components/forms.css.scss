@@ -106,8 +106,11 @@ button i{ line-height: 0; }
 .error{ color: cornflowerblue; }
 .fa-plus{ line-height: 0;}
 .grabbable{ cursor: -webkit-grab; }
+
 .grid-module .photo{
-  position: relative;
+  width: 48%;
+  float: left;
+  margin: 0 2% 1% 0;
 }
 input{
   background: none;

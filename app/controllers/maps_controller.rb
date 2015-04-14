@@ -95,7 +95,6 @@ class MapsController < ApplicationController
       unless params[:tag_list].nil?
         @map.tag_list.add(params[:tag_list])
         @map.save
-        puts "****"
         puts @map.tag_counts.pluck(:name).join(", ")
         @maptags = @map.tag_counts.pluck(:name).join(", ")
       end

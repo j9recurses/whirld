@@ -26,7 +26,7 @@ class MapsController < ApplicationController
       gallery.user_id = @user.id
       if @map.save && gallery.save
         UserGallery.update(gallery.id, map_id: @map.id)
-        redirect_to "/maps/map_info/#{@map.slug}"
+        redirect_to map_info_path(@map.slug)
       else
         render "new"
       end
@@ -36,8 +36,8 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
-    puts @user_gallery.inspect
     @photo = Photo.new
+    @maptags = @map.tag_counts.pluck(:name).join(", ")
     render "map_info"
   end
 
@@ -67,7 +67,6 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     @map.update_attributes(params[:map])
     # save new tags
-
     if params[:tags]
       params[:tags].gsub(' ', ',').split(',').each do |tagname|
         @map.add_tag(tagname.strip, current_user)
@@ -77,6 +76,39 @@ class MapsController < ApplicationController
     @map.save
     redirect_to :action => "show"
   end
+
+  def update_remote
+      @map = Map.find params[:id]
+      puts @map.inspect
+      #pop unwanted keys off the params hash
+      puts params.inspect
+      params.delete :id
+      params.delete :utf8
+      params.delete :commit
+      params.delete :action
+      params.delete :controller
+      params.delete :_method
+      params.delete :format
+      unless params[:name].nil?
+        params[:slug] = params[:name]
+      end
+      unless params[:tag_list].nil?
+        @map.tag_list.add(params[:tag_list])
+        @map.save
+        puts "****"
+        puts @map.tag_counts.pluck(:name).join(", ")
+        @maptags = @map.tag_counts.pluck(:name).join(", ")
+      end
+      respond_to do |format|
+        if @map.update_attributes(params)
+          format.json { render json: params  }
+        else
+          format.json { render json: "error! something went wrong!!" }
+        end
+      end
+  end
+
+
 
   # used by leaflet to fetch corner coords of each warpable
   def images

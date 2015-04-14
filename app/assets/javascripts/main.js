@@ -9,6 +9,7 @@ $(document).ready(function(){
 //      form.init();
 
 
+
   // Video stuff
   var submit_button = $('#submit_pre_upload_form');
    var video_upload = $('#video_upload');

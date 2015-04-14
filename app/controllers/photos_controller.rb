@@ -35,7 +35,7 @@ class PhotosController < ApplicationController
     puts params
     if @photo.save
       respond_to do |format|
-        format.json { render json: @photo }
+        format.json { render json:  @photo }
       end
     else
         render :json => { "errors" => @photo.errors }

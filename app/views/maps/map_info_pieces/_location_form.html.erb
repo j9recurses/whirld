@@ -1,0 +1,47 @@
+<div class='four columns'>
+
+    <i class="fa fa-search"></i>
+    <input id="location_f" type="text_field" name="location"  class='user-meta h3-size' placeholder=<%=@map[:location]%>>
+    <input id="lat_f" type="text_field" name="lat" class='user-meta h3-size' placeholder=<%=@map[:lat]%>>
+    <input id="lon_f" type="text_field" name="lon" class='user-meta h3-size'  placeholder=<%=@map[:lon]%>>
+    <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+    <!--<btn id="title_submit">Save</btn>-->
+    <script>
+   // $("#title_submit").click(function() {
+    $('#location_f').bind("enterKey",function(e){
+        locationf = $("#location_f").val();
+        latf = $("#lat_f").val();
+        lonf = $("#lon_f").val();
+        console.log(lonf)
+        console.log(locationf);
+        map_id = $("#mapp_val").val();
+        console.log(map_id)
+        data =  {location: locationf, lat:latf, lon:lonf};
+        console.log(data)
+        url = "/maps/update_remote/";
+        url = url.concat(map_id);
+        console.log(url);
+            $.ajax({
+                url: url,
+                data:  data,
+                cache: false,
+                type: "post",
+                success: function(data){
+                    console.log("sucess!!")
+                },
+                error: function(){
+                alert("Something went wrong!");
+                 }
+          });
+        })
+    //listens to for enter event on the form field
+    $('#location_f').keyup(function(e){
+    if(e.keyCode == 13){
+      $(this).trigger("enterKey");
+      }
+    });
+   </script>
+   </form>
+</div>
+<!-- <script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script> -->
+

@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :lockable, :timeoutable and :activatable
 
   has_many :maps
-  has_many :tags
   has_many :comments
   has_many :exports
   has_many :videos

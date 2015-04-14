@@ -1,5 +1,27 @@
+<!--<section id="knitter-map-pane"></section>-->
 <div id='project-creation' class='row group'>
   <section id='photo-manager' class='side-nav four columns'>
-    <%= render "photouploadform" %>
+    <%= render :partial => "maps/map_info_pieces/photoupload_form" %>
   </section>
+  <div id='project-form' class='eight columns'>
+    <section id='project-header'>
+      <div class='wrapper'>
+        <div id='project-create' action=''>
+          <div class='row group'>
+            <%= render :partial => "maps/map_info_pieces/title_form" %>
+          </div>
+          <div class='row group'>
+            <%= render :partial => "maps/map_info_pieces/creatorinfo_form" %>
+            <%= render :partial => "maps/map_info_pieces/location_form" %>
+          </div>
+          <div class='row group'>
+             <%= render :partial => "maps/map_info_pieces/description_form" %>
+          </div>
+          <div class='row group'>
+           <%= render :partial => "maps/map_info_pieces/tags_form" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>

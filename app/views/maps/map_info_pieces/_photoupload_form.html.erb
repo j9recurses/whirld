@@ -11,9 +11,7 @@
 				        dataType: 'json',
 				        url: '<%= user_gallery_photos_path(@user_gallery[:id]) %>',
 				            done: function (e, data) {
-				            	//console.log(data.result.photo_file.thumb.url);
-				            	//var files_returned = data.result.photo_file.thumb.url;
-				           $.each(data.result.photo_file.thumb, function (key, file_path) {
+				                $.each(data.result.photo_file.thumb, function (key, file_path) {
 				            		console.log(file_path);
 				               $('<li><img src="'+file_path+'"></li>').appendTo('#thumbs');
 				            });

@@ -99,10 +99,10 @@ button i{ line-height: 0; }
   border: none;
   color: rgb(243, 247, 255);
 }
-.droppable img.draggable{
+/*.droppable img.draggable{
   max-width: 180px;
   max-height: 180px;
-}
+}*/
 .error{ color: cornflowerblue; }
 .fa-plus{ line-height: 0;}
 .grabbable{ cursor: -webkit-grab; }
@@ -128,10 +128,8 @@ input:focus{ outline: none; }
   height: 290px;
   overflow: hidden;
 }
-.photo .img-wrapper img{
-  height: 100%;
+.module img.draggable {
   width: 100%;
-  overflow: hidden;
 }
 .photo-remove{
   background-color: #333;

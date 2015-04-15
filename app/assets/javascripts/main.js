@@ -33,7 +33,6 @@ function ButtonBar(settings){
       if(e.which == 27){ closeBar(bar); }
     });
   }
-
   function closeBar(bar){
     bar.removeClass('open');
     bar.addClass('closed');
@@ -47,16 +46,13 @@ function ButtonBar(settings){
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
   }
-
   function init(el){
     el.on('click', '.option-toggle', openBar);
     el.on('click', '.option', function(){
       var mod = new Module($(this));
-          mod.create();
       closeBar($(this).parent());
     });
   }
-
   function driver(){
     if(type == 'end'){
       init($('#end-bar'));
@@ -74,57 +70,81 @@ function Module(option){
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
 
-  function comparison(){
-    var html = "<article class='comparison-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-visa'></i><span class='cursor-def'> Comparison</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='dropzone row group wrapper'><p class='caps'>Drop two photos here.</p></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
+  function htmlHeader(icon, type){
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    return html
+  }
+  function htmlDropzone(message){
+    var html = "<div class='dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
     return html;
   }
-  function grid(){
-    var header = "<article class='grid-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-photo'></i><span class='cursor-def'> Photo Grid</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
-    var html = "<div class='dropzone droppable group wrapper'><p class='caps'>Drag up to ten photos here.</p></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
-    return header+html;
+  function htmlTaginput(){
+    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div>";
+    return html
   }
-  function half(){
-    var html = "<article class='half-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-bar-chart'></i><span class='cursor-def'> Photo with Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='droppable dropzone six columns'><p class='caps'>Drag one photo here.</p></div></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
-    return html;
-  }
-  function text(){
-    var html = "<article class='text-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-text'></i><span class='cursor-def'> Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
-    return html;
-  }
-  function video(){
-    var html = "<article class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'> Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
-    return html;
-  }
-  this.create = function(){
-    var html;
-    if(type == 'comparison'){ html = comparison() }
-    else if(type == 'grid'){ html = grid() }
-    else if(type == 'half'){ html = half() }
-    else if(type == 'text'){ html = text() }
-    else if(type == 'video'){ html = video() }
+  function createMod(html){
     var mod = $($.parseHTML(html));
         mod.attr('id', modID);
-
     var icon = mod.find('.fa-remove')
         icon.attr('id', modID);
-        icon.on('click', function(){ 
-          $('#'+modID).remove();
-          $('#btw-bar-'+modID.split('-')[2]).remove();
-        })
-
-    bar.before(mod);
-    new ButtonBar({type: 'btw', mod: mod});
-
-    if(type == 'grid'){
-      var dd = new DragDrop();
-          dd.modDD(mod);
-    }
-    else if(type == 'text' || type == 'half'){
-      new Form($('#'+modID).find('textarea.text-module-body'));
-    }
-    new Form($('#'+modID).find('textarea.caption'));
-    new Form($('#'+modID).find('textarea.tag-input'));
+    icon.on('click', function(){ 
+      $('#'+modID).remove();
+      $('#btw-bar-'+modID.split('-')[2]).remove();
+    });
+    return mod;
   }
+  function createComparison(){
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone('Drag two photos here to compare them.') + htmlTaginput(); + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createGrid(){
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone('Drag up to ten photos here.') + htmlTaginput() +"</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createHalf(){
+    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
+    var photo = "<div class='droppable dropzone six columns'><p class='caps'>Drag one photo here.</p></div>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + text + photo + "</div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createText(){
+    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createVideo(){
+    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function driver(){
+    if(type == 'comparison'){
+      var mod = createComparison();
+    }
+    else if(type == 'grid'){
+      var mod = createGrid();
+      var dd = new DragDrop();
+        dd.modDD(mod);
+    }
+    else if(type == 'half'){
+      var mod = createHalf();
+    }
+    else if(type == 'text'){
+      var mod = createText();
+    }
+    else if(type == 'video'){
+      var mod = createVideo();
+    }
+    bar.before(mod);
+    new ButtonBar({type: 'btw', mod: mod});  
+    new Form($(mod).find('textarea.tag-input'));
+    new Form($(mod).find('textarea.text-module-body'));
+    new Form($(mod).find('textarea.caption'));
+  }
+  driver();
 }
 function DragDrop(){
   function createPhotoRow(){
@@ -279,10 +299,11 @@ function Form(el){
       el.keyup(function(e){ appendTag(e); });
     }
     else if(el.hasClass('text-module-body')){
+      console.log(el)
       autosize(el);
     }
     else {
-      loadDoc()
+      loadDoc();
     }
   }
   driver();

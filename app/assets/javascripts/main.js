@@ -67,7 +67,6 @@ function ButtonBar(settings){
 }
 function Module(option){
   var bar = option.parent();
-  console.log(option)
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
 
@@ -163,9 +162,20 @@ function DragDrop(mod){
   var modType = mod.data('type');
 
   function htmlDefaultMessage(){
-    var html = "";
-    return ($.parseHTML(html));
+    var message;
+    if(modType == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(modType == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(modType == 'half'){
+      message = 'Drag one photo here.';
+    }
+    var html = "<p class='caps'>" + message +"</p>";
+    return $($.parseHTML(html));
   }
+
   function htmlPhoto(){
     var colNum;
     if(modType == 'half'){
@@ -198,7 +208,7 @@ function DragDrop(mod){
       if(photoCount == 1){
         var droppable = $(this).closest('.droppable')
             droppable.addClass('dropzone');
-            // droppable.append()
+            droppable.append(htmlDefaultMessage())
       }
       $(photo).remove();
     });

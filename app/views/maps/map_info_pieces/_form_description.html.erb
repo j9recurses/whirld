@@ -1,11 +1,15 @@
 <p class='project-description'>
-  <textarea id='project-description' class='char-limited' maxlength="550"
+  <label for 'project-description' class='font_small'>Description</label>
+  <textarea id='project-description' class='char-limited' rows='1' maxlength="550" value='project-description'
       <% unless @map[:description].nil? || @map[:description].blank? %>
-         placeholder="<%= @map[:description] %>"
+         placeholder="Describe your project here."
+         >
+<%= @map[:description] %>
       <%else%>
         placeholder= "Describe your project here."
+        >
       <% end %>
-  ></textarea>
+  </textarea>
   <span class='char-limit light hidden' data-limit='550'>550</span>
   <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
 </p>

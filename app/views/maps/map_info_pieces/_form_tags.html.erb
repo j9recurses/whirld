@@ -1,5 +1,6 @@
 <div class='twelve columns'>
-  <textarea id='project-tag-list' class='tag-input' placeholder='#tags' type="text_area" name="tag_list"></textarea>
+  <label for='project-tag-list' class='font_small'>Tags</label>
+  <textarea id='project-tag-list' class='tag-input' placeholder='#tags'></textarea>
 
   <div id='tag-container' class='tag-container'>
     <% unless @maptags.nil? || @maptags.blank? %>
@@ -11,7 +12,6 @@
 
   <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>/>
 </div>
-
 
     <!--<btn id="title_submit">Save</btn>-->
 <!--     <script>

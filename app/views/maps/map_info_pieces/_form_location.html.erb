@@ -1,12 +1,32 @@
-<div class='four columns'>
+<!-- <div class='four columns'>
 
     <input id="project-location" type="text_field" name="location"  class='user-meta h3-size' placeholder=<%=@map[:location]%>>
-<!--     <input id="lat_f" type="text_field" name="lat" class='user-meta h3-size' placeholder=<%=@map[:lat]%>>
-    <input id="lon_f" type="text_field" name="lon" class='user-meta h3-size'  placeholder=<%=@map[:lon]%>> -->
+    <input id="lat_f" type="text_field" name="lat" class='user-meta h3-size' placeholder=<%=@map[:lat]%>>
+    <input id="lon_f" type="text_field" name="lon" class='user-meta h3-size'  placeholder=<%=@map[:lon]%>>
     <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
 
    </form>
+</div> -->
+
+<div class='eight columns'>
+    <label for 'project-location' class='font_small'>Location</label>
+    <input id="project-location" type="text_field" value=<%=@map[:location]%>  class='h3-size' placeholder='Location'>
+
+    <div class='row group'>
+      <div class='six columns'>
+        <label for 'project-lat' class='font_small'>Latitude</label>
+        <input id="project-lat" type="text_field" value=<%=@map[:lat]%> class='font_small' placeholder='Latitude'>
+      </div>
+      <div class='six columns'>
+        <label for 'project-lat' class='font_small'>Longitude</label>
+        <input id="project-long" type="text_field" value=<%=@map[:lon]%> class='font_small'  placeholder='Longitude'>
+        <input type="hidden" id="mapID" value= <%=@map[:id]%>>
+      </div>
+    </div> <!-- end row group -->
+
+   </form>
 </div>
+
     <!--<btn id="title_submit">Save</btn>-->
 <!--     <script>
    // $("#title_submit").click(function() {

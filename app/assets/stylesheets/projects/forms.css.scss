@@ -80,12 +80,6 @@ button i{ line-height: 0; }
 .button-bar-btw .option-toggle button:hover{ opacity: 1; }
 .closed .option, .open .option-toggle { visibility: hidden; }
 .closed .option-toggle, .open .option { visibility: visible; }
-
-.dropped-photo{ position: relative; }
-.dropped-photo .img-container{
-  height: 290px;
-  overflow: hidden;
-}
 .dropzone{
   background-color: rgba(100, 149, 237, 0.34);
   box-sizing: border-box;
@@ -95,6 +89,7 @@ button i{ line-height: 0; }
   height: 290px;
   line-height: 13em;
   overflow: hidden;
+  text-align: center;
 }
 .drop-active{
   border: 3px dotted cornflowerblue;
@@ -104,11 +99,18 @@ button i{ line-height: 0; }
   border: none;
   color: rgb(243, 247, 255);
 }
+/*.droppable img.draggable{
+  max-width: 180px;
+  max-height: 180px;
+}*/
 .error{ color: cornflowerblue; }
 .fa-plus{ line-height: 0;}
 .grabbable{ cursor: -webkit-grab; }
+
 .grid-module .photo{
-  position: relative;
+  width: 48%;
+  float: left;
+  margin: 0 2% 1% 0;
 }
 input{
   background: none;
@@ -121,14 +123,26 @@ input:focus{ outline: none; }
   margin-bottom: 1.45em;
   margin-top: 1.45em;
 }
-  .module.padding-bottom{ padding-bottom: 1em; }
-  .module .wrapper { width: 96%; }
-
-#project-tag-list{
-  resize: none;
-  height: 30px;
+.module.padding-bottom{ padding-bottom: 1em; }
+.module textarea.tag-input{ border-top: 1px solid #e5e5e5; overflow: hidden; }
+.module .wrapper { width: 96%; }
+.photo{ position: relative; }
+.photo .img-wrapper{
+  height: 290px;
+  overflow: hidden;
 }
-#project-tag-list:focus{ outline: none; }
+.module img.ui-draggable-handle {
+  width: 100%;
+}
+.photo-remove{
+  background-color: #333;
+  color: white;
+  height: 22px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 22px;
+}
 .project-tag{ 
   display: inline-block;
   margin: 0 10px 8px 0;
@@ -138,13 +152,29 @@ input:focus{ outline: none; }
 }
 .project-tag.error{ color: cornflowerblue; }
 .project-tag:hover{ text-decoration: line-through; }
-
+.tag-container{ min-height: 29px; }
 textarea{
   background: none;
   border: none;
+  overflow: hidden;
   resize: none;
   vertical-align: top;
-  width: 90%;
+  width: 100%;
 }
-textarea.caption{ height: 30px; }
+textarea.char-limited{ width: 90%; }
 textarea:focus{ outline: none; }
+textarea.tag-input{ height: 19px; }
+textarea.tag-input::-webkit-input-placeholder { /* WebKit browsers */
+  font-size: .75em;
+}
+textarea.tag-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: .75em;
+}
+textarea.tag-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: .75em;
+}
+textarea.tag-input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  font-size: .75em;
+}
+
+

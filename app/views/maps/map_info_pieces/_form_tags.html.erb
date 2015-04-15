@@ -1,13 +1,20 @@
 <div class='twelve columns'>
-    <div id='tag-container' class='tag-container'>
-      <% unless @maptags.nil? || @maptags.blank? %>
-      <%= @maptags %>
+  <textarea id='project-tag-list' class='tag-input' placeholder='#tags' type="text_area" name="tag_list"></textarea>
+
+  <div id='tag-container' class='tag-container'>
+    <% unless @maptags.nil? || @maptags.blank? %>
+      <% @maptags.each do |tag| %>
+        <span class='project-tag cursor-def light font_small'># <%= tag %> </span>
       <% end %>
-    </div>
-     <input id="project-tag-listz" class='tag-input' type="text_area" name="tag_list" placeholder= "#tags">
-    <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+    <% end %>
+  </div>
+
+  <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>/>
+</div>
+
+
     <!--<btn id="title_submit">Save</btn>-->
-    <script>
+<!--     <script>
    // $("#title_submit").click(function() {
     $('#project-tag-listz').bind("enterKey",function(e){
         taglist = $("#project-tag-listz").val();
@@ -43,6 +50,6 @@
       $(this).trigger("enterKey");
       }
     });
-   </script>
+   </script> -->
 
-  </div>
+

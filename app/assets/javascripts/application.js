@@ -17,10 +17,14 @@
 //= require sparklines/source/sparkline.js
 
 
-// Katey's part
-//= autosize/dest/autosize.min
+// Project editor JS:
 
-//for videos
+//= autosize/dest/autosize.min
+//= jquery-ui/jquery-ui.min
+//= jquery-ui/ui/minified/draggable.min
+//= jquery-ui/ui/minified/droppable.min
+
+//for uploading videos
 //= require jquery.turbolinks
 //= require turbolinks
 //= require jquery.placeholder

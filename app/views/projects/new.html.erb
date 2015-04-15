@@ -1,6 +1,7 @@
 <div id='project-creation' class='row group'>
 
-	<section id='photo-manager' class='side-nav four columns'>	
+	<section id='photo-manager' class='side-nav four columns'>
+
 			<nav id='navbar-create'>
 				<nav id='photo-state' class='tab-nav row group padding-top'>
 					<div id='tab-uploaded' class='tab six columns h-centered active' >
@@ -28,108 +29,46 @@
 
 			<section id='uploaded' class='photo-list first-section scrollable'>
 				<div class='photo-row row group wrapper'>
-					<article id='photo-upload' class='preview img-wrapper h-centered six columns'>
-						<i class='fa fa-plus-circle v-centered h1-size'></i>
-					</article>
 
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/comparison-01.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-
-				</div> <!-- end row group -->
-				
-				<div class='photo-row row group wrapper'>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/square.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-				</div> <!-- end row group -->
-				
-				<div class='photo-row row group wrapper'>
-					<article class='preview img-wrapper six columns h-centered'>
-						<div class='img-wrapper v-centered'>
-							<div class='img-wrapper'>
-								<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-							</div>
-						</div>
-					</article>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-				</div> <!-- end row group -->
-
-				<div class='photo-row row group wrapper'>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/project-chosen01.jpg", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/project-chosen02.jpg", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-				</div> <!-- end row group -->
-
-				<div class='photo-row row group wrapper'>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/project-chosen01.jpg", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/project-chosen02.jpg", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-				</div> <!-- end row group -->
-
-				<div class='photo-row row group wrapper'>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/square.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
-					<article class='preview six columns h-centered'>
-							<div class='img-wrapper v-centered'>
-								<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-							</div>
-					</article>
 				</div> <!-- end row group -->
 			</section>
+
 	</section>
 
 	<div id='project-form' class='eight columns'>
 		<section id='project-header'>
 			<div class='wrapper'>
+
 				<form id='project-create' action=''>
 					<div class='row group'>
+
+
 						<div class='twelve columns'>
 							<h1 class='project-title first-header'>
 								<textarea id='project-title' class='char-limited' name='project-title' placeholder='Title' maxlength='70'></textarea>
 								<span class='font_small light hidden' data-limit='70'>70</span>
 							</h1>
 						</div>
+
+
 					</div>
+
+
 					<div class='row group'>
+
+
 						<a class='user-meta eight columns' href='/'>
 							<div class='image profile-thumb'>
 								<img src='https://s-media-cache-ak0.pinimg.com/avatars/kbasye_1391702042_30.jpg'/>
 							</div>
 							<span class='user-meta h3-size'>Juan Doe, Drone Pilot</span>
 						</a>
+
+
 						<div class='four columns'>
+
 							<input class='user-meta h3-size' placeholder='Project Location'>
+
 						</div>
 					</div>
 					<div class='row group'>
@@ -138,13 +77,21 @@
 								<span class='light hidden' data-limit='550'>550</span>
 						</p>
 					</div>
+
+
 					<div class='row group'>
+
 						<div class='twelve columns'>
+
 							<textarea id='project-tag-list' class='tag-input' placeholder='#tags'></textarea>
 							<div id='tag-container' class='tag-container'></div>
+
 						</div>
+
+
 					</div>
 				</form>
+
 			</div>
 		</section>
 
@@ -189,9 +136,4 @@
 			</li>
 		</ul>
 	</div>
-<<<<<<< HEAD
-
 </div>
-=======
-</div>
->>>>>>> ffed9ef24db2eaeca9f50c3de478a70c67fe8cff

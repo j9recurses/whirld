@@ -118,6 +118,12 @@ input{
   width: 100%;
 }
 input:focus{ outline: none; }
+label{
+  color:gray;
+  display: block;
+  font-size: .75em;
+  text-transform: uppercase;
+}
 .module{
   background-color: white;
   margin-bottom: 1.45em;
@@ -142,6 +148,18 @@ input:focus{ outline: none; }
   right: 10px;
   top: 10px;
   width: 22px;
+}
+textarea#project-title::-webkit-input-placeholder { /* WebKit browsers */
+  color: #333;
+}
+textarea#project-title:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #333;
+}
+textarea#project-title::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #333;
+}
+textarea#project-title:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #333;
 }
 .project-tag{ 
   display: inline-block;

@@ -1,8 +1,9 @@
 <div class='twelve columns'>
   <h1 class='project-title first-header'>
-  <textarea id='project-title' class='char-limited' name='project-title' placeholder=<%=@map[:name]%> maxlength='70'></textarea>
-  <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
-  <span class='char-limit font_small light hidden' data-limit='70'>70</span>
+    <label for 'project-title' class='font_small'>Title</label>
+    <textarea id='project-title' class='char-limited' placeholder='Title' maxlength='70'><%=@map[:name]%></textarea>
+    <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+    <span class='char-limit font_small light hidden' data-limit='70'>70</span>
   </h1>
 </div>
     <!--<btn id="title_submit">Save</btn>-->

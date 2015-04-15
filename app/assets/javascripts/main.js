@@ -120,7 +120,7 @@ function Module(option){
     return html;
   }
   function htmlTaginput(){
-    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div>";
+    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
     return html
   }
   function createMod(html){
@@ -313,13 +313,17 @@ function DragDrop(mod){
 
 function Form(el){
   el = el || $(document);
-  function createTag(e){
+
+  function createTagText(e){
     var input = $(e.target);
     var s = input.val().toLowerCase();
-    var tagText = s.replace(/[\.,-\/#!'$?%\^&\*;:{}=\-_`~()]/g,"");
-    if(e.which == 13){
-      tagText = tagText.trim();
-    }
+    var tagText = s.replace(/[\.,-\/#!'$\n?%\^&\*;:{}=\-_`~()]/g,"");
+        tagText = tagText.trim();
+    return tagText;
+  }
+
+  function createTag(e){
+    var tagText = createTagText(e);
     var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
     var tag = $($.parseHTML(tagHTML));
     var tagID = 'tag-' + tagText;
@@ -327,9 +331,10 @@ function Form(el){
         tag.on('click', function(){ $(this).remove(); });
     return tag;
   }
+
   function appendTag(e){
     var input = $(e.target);
-    var tagList = input.next();
+    var tagList = input.nextAll('.tag-container');
     var tag = createTag(e)[0];
     if(e.which == 188 || e.which == 13){
       if(tagList.children('.project-tag').length == 0){
@@ -359,7 +364,7 @@ function Form(el){
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
     input.on('focusout', function(){
-      if(letterCount == 0){ $($(this).next('span')[0]).addClass('hidden'); }
+      if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
     });
   }
   function loadDoc(){
@@ -367,7 +372,7 @@ function Form(el){
     autosize($('textarea#project-description'));
     $('#project-tag-list').keyup(function(e){ appendTag(e); });
     $('#project-title').keyup(function(e){ changeCounter(e); });
-    autosize($('textarea#project-title'));
+    // autosize($('textarea#project-title'));
   }
   function driver(){
     if(el.hasClass('caption')){

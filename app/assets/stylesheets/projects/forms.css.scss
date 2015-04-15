@@ -149,18 +149,6 @@ label{
   top: 10px;
   width: 22px;
 }
-textarea#project-title::-webkit-input-placeholder { /* WebKit browsers */
-  color: #333;
-}
-textarea#project-title:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: #333;
-}
-textarea#project-title::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: #333;
-}
-textarea#project-title:-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: #333;
-}
 .project-tag{ 
   display: inline-block;
   margin: 0 10px 8px 0;

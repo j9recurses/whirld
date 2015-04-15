@@ -1,51 +1,74 @@
 <%= form_for @map, :html => { :id => 'project-create' } do |f| %>
   <%= render 'layouts/error_messages', object: f.object %>
+
   <div class='row group'>
     <div class='twelve columns'>
       <h1 class='project-title first-header'>
-        <%=  f.text_field :name,
-                         :id => 'name',
-                         :name => 'name',
+        <%= f.label :name, 'Title', :class => 'font_small' %>
+        <%=  f.text_area :name,
+                         :rows => '0',
+                         :class => 'char-limited',
+                         :id => 'project-title',
                          :placeholder => 'Title',
                          :maxlength => 70 %>
-        <span class='font_small light hidden' data-limit='70'>70</span>
+        <input type="hidden" name="map_id" id = "mapp_val">
+        <span class='char-limit font_small light hidden' data-limit='70'>70</span>
       </h1>
+    </div>
+  </div> <!-- end project-title -->
+
+  <div class='row group'>
+    <div class='eight columns'>
+      <%= f.label :location, 'Location', :class => 'font_small' %>
+      <%= f.text_field :location,
+               :id => 'project-location',
+               :placeholder => 'Location' %>
+      <div class='row group'>
+        <div class='six columns'>
+          <%= f.label :location, 'Location', :class => 'font_small' %>
+          <%= f.text_field :location,
+            :id => 'project-lat',
+            :placeholder => 'Latitude' %>
+            <input type="hidden" name="map_id" id = "mapp_val">
+        </div>
+        <div class='six columns'>
+          <%= f.label :location, 'Location', :class => 'font_small' %>
+          <%= f.text_field :location,
+            :id => 'project-long',
+            :placeholder => 'Longitude' %>
+          <input type="hidden" name="map_id" id = "mapp_val">
+        </div>
+      </div>
+    </div>
+  </div> <!-- end project-location -->
+
+  <div class='row group'>
+    <p class='project-description'>
+      <%= f.label :title, 'Description', :class => 'font_small' %>
+      <%=  f.text_area :description,
+                       :rows => '0',
+                       :class => 'char-limited',
+                       :id => 'project-description',
+                       :placeholder => 'Description',
+                       :maxlength => 550 %>
+      <span class='char-limit light hidden' data-limit='550'>550</span>
+      <input type="hidden" name="map_id" id = "mapp_val">
+    </p>
+  </div> <!-- end project-description -->
+
+  <div class='row group'>
+    <div class='twelve columns'>
+      <%= f.label :tags, 'Tags', :class => 'font_small' %>
+      <%#=  f.text_field :tags,
+                       :class => 'tag-input',
+                       :id => 'project-tag-list',
+                       :placeholder => '#tags' %>
+      <textarea id='project-tag-list' class='tag-input' placeholder='#tags'></textarea>
+      <div id='tag-container' class='tag-container'></div>
+      <input type="hidden" name="map_id" id = "mapp_val">
     </div>
   </div>
 
-
-  <div class='row group'>
-       <a class='user-meta eight columns' href='users/:id'>
-        <div class='image profile-thumb'>
-           <img src='https://s-media-cache-ak0.pinimg.com/avatars/kbasye_1391702042_30.jpg'/>
-        </div>
-        <span class='user-meta h3-size'>
-          <%=current_user.login%>
-        </span>
-      </a>
-      <div class='four columns'>
-        <%= f.text_field :location,
-                       :class => 'user-meta h3-size',
-                       :placeholder => 'Project Location' %>
-        <%#= f.label :latitude %>
-        <%= f.text_field :lat,
-                       :class => 'user-meta pull-left',
-                       :placeholder => 'Latitude'%>
-        <%#= f.label :longitude %>
-        <%= f.text_field :lon,
-                         :class => 'user-meta pull-right',
-                         :placeholder => 'Longitude' %>
-      </div>
-  </div>
-  <div class='row group'>
-    <p class='project-description'>
-        <%= f.text_field :description,
-                         :class => 'char-limited',
-                         :placeholder => 'Describe your project.',
-                         :maxlength => 550 %>
-        <span class='light hidden' data-limit='550'>550</span>
-    </p>
-  </div>
   <button class='next'>
     <%= f.submit "Next" %>
   </button>

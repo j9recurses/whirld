@@ -67,6 +67,7 @@ function ButtonBar(settings){
 }
 function Module(option){
   var bar = option.parent();
+  console.log(option)
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
 
@@ -74,8 +75,19 @@ function Module(option){
     var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
     return html
   }
-  function htmlDropzone(message){
-    var html = "<div class='dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
+  function htmlDropzone(){
+    var message;
+    if(type == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(type == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(type == 'half'){
+      message = 'Drag one photo here.';
+      return "<p class='caps'>" + message +"</p>";
+    }
+    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
     return html;
   }
   function htmlTaginput(){
@@ -85,8 +97,9 @@ function Module(option){
   function createMod(html){
     var mod = $($.parseHTML(html));
         mod.attr('id', modID);
+        mod.data('type', type)
     var icon = mod.find('.fa-remove')
-        icon.attr('id', modID);
+        icon.data('id', modID);
     icon.on('click', function(){ 
       $('#'+modID).remove();
       $('#btw-bar-'+modID.split('-')[2]).remove();
@@ -94,19 +107,19 @@ function Module(option){
     return mod;
   }
   function createComparison(){
-    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone('Drag two photos here to compare them.') + htmlTaginput(); + "</article>";
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
     var mod = createMod(html);
     return mod;
   }
   function createGrid(){
-    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone('Drag up to ten photos here.') + htmlTaginput() +"</article>";
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
     var mod = createMod(html);
     return mod;
   }
   function createHalf(){
     var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
-    var photo = "<div class='droppable dropzone six columns'><p class='caps'>Drag one photo here.</p></div>";
-    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + text + photo + "</div>" + htmlTaginput() + "</article>";
+    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
     var mod = createMod(html);
     return mod;
   }
@@ -126,8 +139,6 @@ function Module(option){
     }
     else if(type == 'grid'){
       var mod = createGrid();
-      var dd = new DragDrop();
-        dd.modDD(mod);
     }
     else if(type == 'half'){
       var mod = createHalf();
@@ -143,59 +154,83 @@ function Module(option){
     new Form($(mod).find('textarea.tag-input'));
     new Form($(mod).find('textarea.text-module-body'));
     new Form($(mod).find('textarea.caption'));
+    var dd = new DragDrop(mod);
   }
   driver();
 }
-function DragDrop(){
-  function createPhotoRow(){
-    var html="<div class='row group photo-row'></div>";
-    var row = $($.parseHTML(html));
-    return row;
+function DragDrop(mod){
+  var mod = mod;
+  var modType = mod.data('type');
+
+  function htmlDefaultMessage(){
+    var html = "";
+    return ($.parseHTML(html));
+  }
+  function htmlPhoto(){
+    var colNum;
+    if(modType == 'half'){
+      colNum = 'twelve';
+    }
+    else{
+      colNum = 'six';
+    }
+    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>";
   }
   function createPhoto(ui){
     var id = ui.draggable.data('id');
     var img = ui.draggable.clone();
-        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
-    var html = "<div class='photo six columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>";
-    var photo = $($.parseHTML(html));
+        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');    
+    var photo = $($.parseHTML(htmlPhoto()));
         photo.attr('id', 'photo-'+id);
         photo.find('.img-wrapper').prepend(img);
     return photo;
   } 
+  function initPhotoRemovable(photo){
+    var imgWrapper = photo.find('.img-wrapper');
+    imgWrapper.hover(function(){
+      var id = $(this).find('img').data('id');
+      var button = $(this).find('button')
+          button.toggleClass('hidden');
+    });
+    imgWrapper.find('.photo-remove').on('click', function(){
+      var photo = $(this).closest('.photo');
+      var photoCount = $('.photo').length;
+      if(photoCount == 1){
+        var droppable = $(this).closest('.droppable')
+            droppable.addClass('dropzone');
+            // droppable.append()
+      }
+      $(photo).remove();
+    });
+  }
+  function createModDrop(e, ui){
+    var dropzone = $(e.target);
+        dropzone.removeClass('dropzone');
+        dropzone.find('p').remove();
+    var mod = dropzone.closest('.module');
+    var photo = createPhoto(ui);
+
+    dropzone.append(photo);
+    initPhotoRemovable(photo);
+
+    new Form($(photo.find('textarea.caption')));
+    new Form($(mod.find('textarea.tag-input')));
+  }
+  function droppableLimit(){
+    if(modType == 'comparison'){ return 2; }
+    else if(modType == 'grid'){ return 10; }
+    else if(modType == 'half'){ return 1 }
+  }
   function initModDrop(mod){
     mod.find('.droppable').droppable({
       accept: '.draggable',
       activeClass: 'drop-active',
       hoverClass: 'drop-target',
       drop: function(e, ui){
-        var photoCount = $('.photo').length;
-        if(photoCount < 10){
-          var dropzone = $(e.target);
-              dropzone.removeClass('dropzone');
-              dropzone.find('p').remove();
-          
-          var mod = dropzone.closest('.module');
-          var photo = createPhoto(ui);
-
-          dropzone.append(photo);
-          var imgWrapper = photo.find('.img-wrapper');
-          imgWrapper.hover(function(){
-            var id = $(this).find('img').data('id');
-            var button = $(this).find('button')
-                button.toggleClass('hidden');
-          });
-          imgWrapper.find('.photo-remove').on('click', function(){
-            var photo = $(this).closest('.photo');
-            var photoCount = $('.photo').length-1;
-            if(photoCount == 0){
-              $(this).closest('.droppable').addClass('dropzone').html("<p class='caps'>Drop up to ten photos here.</p>");
-              console.log(photoCount)
-            }
-            $(photo).remove();
-          });
-          new Form($(imgWrapper.next('.caption')));
-          new Form($(mod.find('textarea.tag-input')));
-        } // end 10 if
+        var photoCount = mod.find('.photo').length;
+        if(photoCount < droppableLimit()){
+          createModDrop(e, ui);
+        }
       }
     });
   }
@@ -227,11 +262,13 @@ function DragDrop(){
       zIndex: 100
     });
   }
-  this.modDD = function(mod){
+
+  function driver(){
     initDrag();
     initModDrop(mod);
     initSort(mod);
   }
+  driver();
 }
 
 function Form(el){
@@ -299,7 +336,6 @@ function Form(el){
       el.keyup(function(e){ appendTag(e); });
     }
     else if(el.hasClass('text-module-body')){
-      console.log(el)
       autosize(el);
     }
     else {

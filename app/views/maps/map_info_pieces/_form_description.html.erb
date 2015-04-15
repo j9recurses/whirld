@@ -1,13 +1,16 @@
 <p class='project-description'>
-     <input id="description_field" class='char-limited' type="text_field" name="description" maxlength="550"
-        <% unless @map[:description].nil? || @map[:description].blank? %>
-           placeholder="<%= @map[:description] %>">
-        <%else%>
-          placeholder= "Describe your project here">
-        <% end %>
-    <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+  <textarea id='project-description' class='char-limited' maxlength="550"
+      <% unless @map[:description].nil? || @map[:description].blank? %>
+         placeholder="<%= @map[:description] %>"
+      <%else%>
+        placeholder= "Describe your project here."
+      <% end %>
+  ></textarea>
+  <span class='light hidden' data-limit='550'>550</span>
+  <input type="hidden" name="map_id" id = "mapp_val" value= <%=@map[:id]%>>
+</p>
     <!--<btn id="title_submit">Save</btn>-->
-    <script>
+<!--     <script>
    // $("#title_submit").click(function() {
     $('#description_field').bind("enterKey",function(e){
         descriptionf = $("#description_field").val();
@@ -37,7 +40,4 @@
       $(this).trigger("enterKey");
       }
     });
-   </script>
-
-      <span class='light hidden' data-limit='550'>550</span>
-</p>
+   </script> -->

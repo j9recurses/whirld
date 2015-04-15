@@ -8,23 +8,22 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require fontawesome/css/font-awesome.min
+ *= require stickyNavbar.js/animate.min
+ *= require normalize.css/normalize
 
  *= require leaflet-draw/dist/leaflet.draw.css
  *= require leaflet-illustrate/dist/Leaflet.Illustrate.css
  *= require leaflet-toolbar/dist/leaflet.toolbar.css
  *= require leaflet-distortableimage/dist/leaflet.distortableimage.css
 
- *= require stickyNavbar.js/animate.min
- *= require normalize.css/normalize
-
  *= require base/fonts
  *= require base/grid
  *= require base/main
  *= require base/typography
-
  *= require global_components/navbar
- *= require global_components/forms
- *= require projects
+ *= require projects/projects
+ *= require projects/forms
  *= require users
  *= require maps
  *= require_self

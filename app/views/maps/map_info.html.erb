@@ -1,27 +1,33 @@
-<!--<section id="knitter-map-pane"></section>-->
 <div id='project-creation' class='row group'>
   <section id='photo-manager' class='side-nav four columns'>
-    <%= render :partial => "maps/map_info_pieces/photoupload_form" %>
+    <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
   <div id='project-form' class='eight columns'>
     <section id='project-header'>
       <div class='wrapper'>
-        <div id='project-create' action=''>
+
           <div class='row group'>
-            <%= render :partial => "maps/map_info_pieces/title_form" %>
+            <%= render :partial => "maps/map_info_pieces/form_title" %>
           </div>
+
           <div class='row group'>
-            <%= render :partial => "maps/map_info_pieces/creatorinfo_form" %>
-            <%= render :partial => "maps/map_info_pieces/location_form" %>
+            <%= render :partial => "maps/map_info_pieces/form_creatorInfo" %>
+            <%= render :partial => "maps/map_info_pieces/form_location" %>
           </div>
+
           <div class='row group'>
-             <%= render :partial => "maps/map_info_pieces/description_form" %>
+             <%= render :partial => "maps/map_info_pieces/form_description" %>
           </div>
+
           <div class='row group'>
-           <%= render :partial => "maps/map_info_pieces/tags_form" %>
+           <%= render :partial => "maps/map_info_pieces/form_tags" %>
           </div>
-        </div>
+
       </div>
-    </section>
-  </div>
-</div>
+    </section> <!-- end #project-header -->
+
+    <!-- <section id="knitter-map-pane"></section> -->
+  <%= render :partial => "maps/map_info_pieces/buttonBar" %>
+
+  </div> <!-- end #project-form -->
+</div> <!-- end #project-creation -->

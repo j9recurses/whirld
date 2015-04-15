@@ -1,8 +1,4 @@
 $(document).ready(function(){
-  // setTimeout(autosize($('textarea#project-description')),500);
-//  setTimeout(autosize($('textarea#project-title')), 500);
-  autosize($('textarea#project-description'));
-  autosize($('textarea#project-title'));
   creationStickyNav();
   mainStickyNav();
   var bb = new ButtonBar({type: 'end'});
@@ -162,7 +158,7 @@ function Module(option){
     return mod;
   }
   function createVideo(){
-    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
+    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
     var mod = createMod(html);
     return mod;
   }
@@ -218,7 +214,7 @@ function DragDrop(mod){
     else{
       colNum = 'six';
     }
-    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div>";
+    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>";
   }
   function createPhoto(ui){
     var id = ui.draggable.data('id');
@@ -358,7 +354,7 @@ function Form(el){
   function changeCounter(e){
     var input = $(e.target);
     var letterCount = input.val().length;
-    var span = input.next('span')[0];
+    var span = input.nextAll('span.char-limit');
         $(span).removeClass('hidden');
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
@@ -367,10 +363,11 @@ function Form(el){
     });
   }
   function loadDoc(){
-    console.log('loadDoc');
     $('#project-description').keyup(function(e){ changeCounter(e); });
+    autosize($('textarea#project-description'));
     $('#project-tag-list').keyup(function(e){ appendTag(e); });
     $('#project-title').keyup(function(e){ changeCounter(e); });
+    autosize($('textarea#project-title'));
   }
   function driver(){
     if(el.hasClass('caption')){

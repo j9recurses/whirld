@@ -6,14 +6,13 @@ $(document).ready(function(){
   var bb = new ButtonBar({type: 'end'});
       bb.init();
   var form = new Form();
-      form.init();
 
   // TEMPORARY
-  // $.each($('article.preview'), function(i,el){
-  //   $(el).attr('id', "preview-"+i);
-  //   var img = $(el).find('img');
-  //       img.data('id', i);
-  // });
+  $.each($('article.preview'), function(i,el){
+    $(el).attr('id', "preview-"+i);
+    var img = $(el).find('img');
+        img.data('id', i);
+  });
 
 });
 
@@ -62,13 +61,10 @@ function DragDrop(){
               $(this).closest('.droppable').addClass('dropzone').html("<p class='caps'>Drop up to ten photos here.</p>");
               console.log(photoCount)
             }
-            
             $(photo).remove();
           });
-          var captionEl = imgWrapper.next('.caption');
-          autosize(captionEl);
-          var caption = new Form();
-              caption.charCounter(captionEl);
+          new Form($(imgWrapper.next('.caption')));
+          new Form($(mod.find('textarea.tag-input')));
         } // end 10 if
       }
     });
@@ -108,6 +104,81 @@ function DragDrop(){
   }
 }
 
+function Form(el){
+  el = el || $(document);
+  function createTag(e){
+    var input = $(e.target);
+    var s = input.val().toLowerCase();
+    var tagText = s.replace(/[\.,-\/#!'$?%\^&\*;:{}=\-_`~()]/g,"");
+    if(e.which == 13){
+      tagText = tagText.trim();
+    }
+    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
+    var tag = $($.parseHTML(tagHTML));
+    var tagID = 'tag-' + tagText;
+        tag.attr('id', tagID);
+        tag.on('click', function(){ $(this).remove(); });
+    return tag;
+  }
+  function appendTag(e){
+    var input = $(e.target);
+    var tagList = input.next();
+    var tag = createTag(e)[0];
+    if(e.which == 188 || e.which == 13){
+      if(tagList.children('.project-tag').length == 0){
+        tagList.append(tag);
+        input.val('');
+      }
+      else {
+        if($('#'+tag.id).length > 0){
+          $('#'+tag.id).addClass('error');
+          input.val('');
+          setTimeout(function() {
+             $('#'+tag.id).removeClass('error');
+           }, 600); 
+        }
+        else{
+          tagList.append(tag);
+          input.val('');
+        }
+      }
+    }
+  }
+  function changeCounter(e){
+    var input = $(e.target);
+    var letterCount = input.val().length;
+    var span = input.next('span')[0];
+        $(span).removeClass('hidden');
+    var count = $(span).data('limit') - letterCount;
+    $(span).text(count);
+    input.on('focusout', function(){
+      if(letterCount == 0){ $($(this).next('span')[0]).addClass('hidden'); }
+    });
+  }
+  function loadDoc(){
+    $('#project-description').keyup(function(e){ changeCounter(e); });
+    $('#project-tag-list').keyup(function(e){ appendTag(e); });
+    $('#project-title').keyup(function(e){ changeCounter(e); });
+  }
+  function init(){
+    console.log('hello')
+    if(el.hasClass('caption')){
+      el.keyup(function(e){ changeCounter(e); });
+      autosize(el);
+    }
+    else if(el.hasClass('tag-input')){
+      el.keyup(function(e){ appendTag(e); });
+    }
+    else if(el.hasClass('text-module-body')){
+      autosize(el);
+    }
+    else {
+      loadDoc()
+    }
+  }
+  init();
+}
+
 function Module(option){
   var bar = option.parent();
   var type = option.data('module-type');
@@ -123,15 +194,15 @@ function Module(option){
     return header+html;
   }
   function half(){
-    var html = "<article class='half-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-bar-chart'></i><span class='cursor-def'> Photo with Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='text-module h-centered six columns'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='droppable dropzone six columns'><p class='caps'>Drag one photo here.</p></div></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
+    var html = "<article class='half-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-bar-chart'></i><span class='cursor-def'> Photo with Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='droppable dropzone six columns'><p class='caps'>Drag one photo here.</p></div></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
     return html;
   }
   function text(){
-    var html = "<article class='text-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-text'></i><span class='cursor-def'> Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea name='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
+    var html = "<article class='text-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-text'></i><span class='cursor-def'> Text</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
     return html;
   }
   function video(){
-    var html = "<article class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'> Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
+    var html = "<article class='video-module module padding-bottom padding-top'><div class='row group wrapper'><div class='six columns'><i class='fa fa-file-video-o'></i><span class='cursor-def'> Video</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div><div class='row group wrapper'><textarea class='padding-bottom' name='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='font_small light hidden' data-limit='140'>140</span></div><div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div></div></div></article>";
     return html;
   }
   this.create = function(){
@@ -160,9 +231,11 @@ function Module(option){
       var dd = new DragDrop();
           dd.modDD(mod);
     }
-
-    var tagbox = new Form();
-        tagbox.tagBox($('#'+modid).find('textarea'));
+    else if(type == 'text' || type == 'half'){
+      new Form($('#'+modid).find('textarea.text-module-body'));
+    }
+    new Form($('#'+modid).find('textarea.caption'));
+    new Form($('#'+modid).find('textarea.tag-input'));
   }
 }
 
@@ -220,69 +293,6 @@ function ButtonBar(settings){
           mod.create();
       closeBar($(this).parent());
     });
-  }
-}
-
-function Form(){
-  function createTag(e){
-    var input = $(e.target);
-    var s = input.val().toLowerCase();
-    var tagText = s.replace(/[\.,-\/#!'$?%\^&\*;:{}=\-_`~()]/g,"");
-    if(e.which == 13){
-      tagText = tagText.trim();
-    }
-    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
-    var tag = $($.parseHTML(tagHTML));
-    var tagID = 'tag-' + tagText;
-        tag.attr('id', tagID);
-        tag.on('click', function(){ $(this).remove(); });
-    return tag;
-  }
-  function appendTag(e){
-    var input = $(e.target);
-    var tagList = input.next();
-    var tag = createTag(e)[0];
-    if(e.which == 188 || e.which == 13){
-      if(tagList.children('.project-tag').length == 0){
-        tagList.append(tag);
-        input.val('');
-      }
-      else {
-        if($('#'+tag.id).length > 0){
-          $('#'+tag.id).addClass('error');
-          input.val('');
-          setTimeout(function() {
-             $('#'+tag.id).removeClass('error');
-           }, 600); 
-        }
-        else{
-          tagList.append(tag);
-          input.val('');
-        }
-      }
-    }
-  }
-  function changeCounter(e){
-    var input = $(e.target);
-    var letterCount = input.val().length;
-    var span = input.next('span')[0];
-        $(span).removeClass('hidden');
-    var count = $(span).data('limit') - letterCount;
-    $(span).text(count);
-    input.on('focusout', function(){
-      if(letterCount == 0){ $($(this).next('span')[0]).addClass('hidden'); }
-    });
-  }
-  this.charCounter = function(el){
-    el.keyup(function(e){ changeCounter(e); });
-  }
-  this.tagBox = function(el){
-    el.keyup(function(e){ appendTag(e); });
-  }
-  this.init = function(el){
-    $('#project-description').keyup(function(e){ changeCounter(e); });
-    $('#project-tag-list').keyup(function(e){ appendTag(e); });
-    $('#project-title').keyup(function(e){ changeCounter(e); });
   }
 }
 

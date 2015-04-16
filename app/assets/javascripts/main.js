@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  creationStickyNav();
   mainStickyNav();
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
@@ -426,6 +425,8 @@ function Form(el){
           row.append(photo);
           container.append(row);
         }
+        $('#photo-manager').removeClass('default');
+        creationNav();
         $('.temp-preloader').addClass('hidden');
       } // end done
     }); // end fileupload
@@ -459,7 +460,8 @@ function Form(el){
   driver();
 }
 
-var creationStickyNav = function () {
+var creationNav = function () {
+  $('#navbar-create').removeClass('hidden');
   $('#navbar-create').stickyNavbar({
     animDuration: 250,              // Duration of jQuery animation
     startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)

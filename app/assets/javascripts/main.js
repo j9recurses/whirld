@@ -315,7 +315,7 @@ function Form(el){
   el = el || $(document);
 
   function htmlPhotoPrev(result){
-    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_path +"' class='draggable' </div></article>";
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
     return photoPrev;
   }
@@ -381,19 +381,25 @@ function Form(el){
     var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
 
-      var photoCount = 0;
       button.fileupload({
         dataType: 'json',
         url: '/user_galleries/'+user_gal_id+'/photos',
         done: function (e, data) {
-          photoCount += 1;
-          $.each(data.result.photo_file.thumb, function (key, file_path) {
-            htmlPhotoPrev(data.result);
-
-            
-            console.log(photoCount)
-          });
-          
+          var container = $('#photos-uploaded');
+          var lastRow = container.find('.photo-row').last();
+          var photo = htmlPhotoPrev(data.result);
+          var photoCount = lastRow.find('.preview').length;
+          var row;
+          if(photoCount == 1){
+            row = lastRow;
+            row.append(photo);
+          }
+          else{
+            row = htmlPhotoRow();
+            row.append(photo);
+            container.append(row);
+          }
+          console.log(photo)
         } // end done
 
     });

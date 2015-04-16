@@ -77,7 +77,7 @@ function Module(option){
         mod.data('type', type)
     var icon = mod.find('.fa-remove')
         icon.data('id', modID);
-    icon.on('click', function(){ 
+    icon.on('click', function(){
       $('#'+modID).remove();
       $('#btw-bar-'+modID.split('-')[2]).remove();
     });
@@ -127,7 +127,7 @@ function Module(option){
       var mod = createVideo();
     }
     bar.before(mod);
-    new ButtonBar({type: 'btw', mod: mod});  
+    new ButtonBar({type: 'btw', mod: mod});
     new Form($(mod).find('textarea.tag-input'));
     new Form($(mod).find('textarea.text-module-body'));
     new Form($(mod).find('textarea.caption'));
@@ -219,12 +219,12 @@ function DragDrop(mod){
   function createPhoto(ui){
     var id = ui.draggable.data('id');
     var img = ui.draggable.clone();
-        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');    
+        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
     var photo = $($.parseHTML(htmlPhoto()));
         photo.attr('id', 'photo-'+id);
         photo.find('.img-wrapper').prepend(img);
     return photo;
-  } 
+  }
   function initPhotoRemovable(photo){
     var imgWrapper = photo.find('.img-wrapper');
     imgWrapper.hover(function(){
@@ -385,10 +385,19 @@ function Form(el){
         dataType: 'json',
         url: '/user_galleries/'+user_gal_id+'/photos',
         done: function (e, data) {
+        console.log(data.result);
           var container = $('#photos-uploaded');
           var lastRow = container.find('.photo-row').last();
           var photo = htmlPhotoPrev(data.result);
           var photoCount = lastRow.find('.preview').length;
+          var aerial = '';
+          var normal = '';
+          if (data.result.is_aerial){
+            aerial = true;
+          }
+           if (data.result.is_noral){
+            normal = true;
+          }
           var row;
           if(photoCount == 1){
             row = lastRow;

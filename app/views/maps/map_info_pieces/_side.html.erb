@@ -3,17 +3,24 @@
 	<%= render :partial => "maps/map_info_pieces/side_navPhotoCats" %>
 </nav>
 
-<section id='photo-upload-form' class='photo-list first-section scrollable'>
-	<button id='photo-upload' class='photo-upload font_small'>
-		<span>Choose Images to Upload</span>
-		<%= form_for [@user_gallery, @photo], :remote => true do %>
-			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-		<% end %>
-	</button>
-</section>
 
-<section id='photos-uploaded' class='photo-list first-section scrollable'></section>
+<section id='photos-uploaded' class='photo-list first-section scrollable'>
+	<div class='photo-row row group wrapper'>
+
+
+		<article id='photo-upload' class='preview six columns h-centered'>
+			<div class='img-wrapper photo-upload-wrapper v-centered'>
+					<i class='fa fa-plus-circle h1-size'></i>
+			</div>
+			<%= form_for [@user_gallery, @photo], :remote => true do %>
+				<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+		    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+			<% end %>
+		</article>
+
+
+	</div> <!-- end row group -->
+</section>
 
 <section id='photos-saved' class='photo-list first-section scrollable hidden'>
 	<div class='photo-row row group wrapper'>

@@ -17,7 +17,7 @@
             <%#=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
             <% else %>
             <%#= link_to "Log in", new_user_session_path(resource_name) %>
-            <%= link_to "Log in", new_session_path(resource_name) %><br />
+            <%= link_to "Log in",  new_user_session_path %><br />
            <% end -%></li>
       </ul>
     </nav>

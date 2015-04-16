@@ -1,67 +1,19 @@
-<nav id='navbar-create'>
+<nav id='navbar-create' class='hidden'>
 	<%= render :partial => "maps/map_info_pieces/side_navPhotoState" %>
 	<%= render :partial => "maps/map_info_pieces/side_navPhotoCats" %>
 </nav>
-<section id='photos-uploaded' class='photo-list first-section scrollable'>
 
-	<div class='photo-row row group wrapper'>
-		<article class='preview img-wrapper six columns h-centered'>
-			<div class='img-wrapper v-centered'>
-				<div class='img-wrapper'>
-					<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-				</div>
-			</div>
-		</article>
-		<article class='preview six columns h-centered'>
-				<div class='img-wrapper v-centered'>
-					<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
-				</div>
-		</article>
-	</div> <!-- end row group -->
-	<div class='photo-row row group wrapper'>
-		<article class='preview img-wrapper six columns h-centered'>
-			<div class='img-wrapper v-centered'>
-				<div class='img-wrapper'>
-					<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-				</div>
-			</div>
-		</article>
-		<article class='preview six columns h-centered'>
-				<div class='img-wrapper v-centered'>
-					<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
-				</div>
-		</article>
-	</div> <!-- end row group -->
-	<div class='photo-row row group wrapper'>
-		<article class='preview img-wrapper six columns h-centered'>
-			<div class='img-wrapper v-centered'>
-				<div class='img-wrapper'>
-					<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-				</div>
-			</div>
-		</article>
-		<article class='preview six columns h-centered'>
-				<div class='img-wrapper v-centered'>
-					<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
-				</div>
-		</article>
-	</div> <!-- end row group -->
-	<div class='photo-row row group wrapper'>
-		<article class='preview img-wrapper six columns h-centered'>
-			<div class='img-wrapper v-centered'>
-				<div class='img-wrapper'>
-					<%= image_tag("test/vertical.png", :alt => "", :class=>'draggable') %>
-				</div>
-			</div>
-		</article>
-		<article class='preview six columns h-centered'>
-				<div class='img-wrapper v-centered'>
-					<%= image_tag("test/comparison-02.png", :alt => "", :class=>'draggable') %>
-				</div>
-		</article>
-	</div> <!-- end row group -->
-
+<section id='photo-upload-form' class='photo-list first-section scrollable'>
+	<button id='photo-upload' class='photo-upload font_small'>
+		<span>Choose Images to Upload</span>
+		<%= form_for [@user_gallery, @photo], :remote => true do %>
+			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+		<% end %>
+	</button>
 </section>
+
+<section id='photos-uploaded' class='photo-list first-section scrollable'></section>
 
 <section id='photos-saved' class='photo-list first-section scrollable hidden'>
 	<div class='photo-row row group wrapper'>

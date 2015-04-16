@@ -4,12 +4,18 @@ $(document).ready(function(){
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
 
-  // TEMPORARY
-  $.each($('article.preview'), function(i,el){
-    $(el).attr('id', "preview-"+i);
-    var img = $(el).find('img');
-        img.data('id', i);
-  });
+  
+
+
+
+
+
+  // // TEMPORARY
+  // $.each($('article.preview'), function(i,el){
+  //   $(el).attr('id', "preview-"+i);
+  //   var img = $(el).find('img');
+  //       img.data('id', i);
+  // });
 
   // // Video stuff
   // var submit_button = $('#submit_pre_upload_form');

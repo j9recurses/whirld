@@ -7,6 +7,16 @@ $(document).ready(function(){
   
 
 
+  $('#fileupload').fileupload({
+    dataType: 'json',
+    url: '<%= user_gallery_photos_path(@user_gallery[:id]) %>',
+        done: function (e, data) {
+            $.each(data.result.photo_file.thumb, function (key, file_path) {
+            console.log(file_path);
+           $('<li><img src="'+file_path+'"></li>').appendTo('#thumbs');
+        });
+    }
+  });
 
 
 

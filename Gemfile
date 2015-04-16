@@ -61,3 +61,8 @@ gem 'jquery-turbolinks'
 gem "carrierwave", "~> 0.6.2"
 gem "mini_magick", "~> 3.4"
 gem 'jbuilder'
+
+#for deepLearn predicter
+#gem 'delayed_job_active_record'
+#gem 'daemons'
+#gem 'workless'

@@ -36,6 +36,99 @@ $(document).ready(function(){
   //  }
 
 });
+function Module(option){
+  var bar = option.parent();
+  var type = option.data('module-type');
+  var modID = type + "-module-" + $('.module').length;
+
+  function htmlHeader(icon, type){
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    return html
+  }
+  function htmlDropzone(){
+    var message;
+    if(type == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(type == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(type == 'half'){
+      message = 'Drag one photo here.';
+      return "<p class='caps'>" + message +"</p>";
+    }
+    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
+    return html;
+  }
+  function htmlTaginput(){
+    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
+    return html
+  }
+  function createMod(html){
+    var mod = $($.parseHTML(html));
+        mod.attr('id', modID);
+        mod.data('type', type)
+    var icon = mod.find('.fa-remove')
+        icon.data('id', modID);
+    icon.on('click', function(){
+      $('#'+modID).remove();
+      $('#btw-bar-'+modID.split('-')[2]).remove();
+    });
+    return mod;
+  }
+  function createComparison(){
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createGrid(){
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createHalf(){
+    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
+    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createText(){
+    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createVideo(){
+    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function driver(){
+    if(type == 'comparison'){
+      var mod = createComparison();
+    }
+    else if(type == 'grid'){
+      var mod = createGrid();
+    }
+    else if(type == 'half'){
+      var mod = createHalf();
+    }
+    else if(type == 'text'){
+      var mod = createText();
+    }
+    else if(type == 'video'){
+      var mod = createVideo();
+    }
+    bar.before(mod);
+    new ButtonBar({type: 'btw', mod: mod});
+    new Form($(mod).find('textarea.tag-input'));
+    new Form($(mod).find('textarea.text-module-body'));
+    new Form($(mod).find('textarea.caption'));
+    var dd = new DragDrop(mod);
+  }
+  driver();
+}
+
 function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
@@ -146,12 +239,12 @@ function Drop(mod){
   function createPhoto(ui){
     var id = ui.draggable.data('id');
     var img = ui.draggable.clone();
-        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');    
+        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
     var photo = $($.parseHTML(htmlPhoto()));
         photo.attr('id', 'photo-'+id);
         photo.find('.img-wrapper').prepend(img);
     return photo;
-  } 
+  }
   function initPhotoRemovable(photo){
     var imgWrapper = photo.find('.img-wrapper');
     imgWrapper.hover(function(){
@@ -388,34 +481,63 @@ function Form(el){
   function initPhotoUpload(el){
     var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
-    button.fileupload({
-      dataType: 'json',
-      url: '/user_galleries/'+user_gal_id+'/photos',
-      progressall: function(e, data){
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('.temp-preloader').removeClass('hidden');
-        $('.progress-bar').css('width', progress + '%');
-      },
-      done: function (e, data) {
-        var container = $('#photos-uploaded');
-        var lastRow = container.find('.photo-row').last();
-        var photo = htmlPhotoPrev(data.result);
-        var photoCount = lastRow.find('.preview').length;
-        var row;
-        if(photoCount == 1){
-          row = lastRow;
-          row.append(photo);
-        }
-        else{
-          row = htmlPhotoRow();
-          row.append(photo);
-          container.append(row);
-        }
-        $('#photo-manager').removeClass('default');
-        creationNav();
-        $('.temp-preloader').addClass('hidden');
-      } // end done
-    }); // end fileupload
+    // button.fileupload({
+    //   dataType: 'json',
+    //   url: '/user_galleries/'+user_gal_id+'/photos',
+    //   progressall: function(e, data){
+    //     var progress = parseInt(data.loaded / data.total * 100, 10);
+    //     $('.temp-preloader').removeClass('hidden');
+    //     $('.progress-bar').css('width', progress + '%');
+    //   },
+    //   done: function (e, data) {
+    //     var container = $('#photos-uploaded');
+    //     var lastRow = container.find('.photo-row').last();
+    //     var photo = htmlPhotoPrev(data.result);
+    //     var photoCount = lastRow.find('.preview').length;
+    //     var row;
+    //     if(photoCount == 1){
+    //       row = lastRow;
+    //       row.append(photo);
+    //     }
+    //     else{
+    //       row = htmlPhotoRow();
+    //       row.append(photo);
+    //       container.append(row);
+    //     }
+    //     $('#photo-manager').removeClass('default');
+    //     creationNav();
+    //     $('.temp-preloader').addClass('hidden');
+    //   } // end done
+    // }); // end fileupload
+
+    //   button.fileupload({
+    //     dataType: 'json',
+    //     url: '/user_galleries/'+user_gal_id+'/photos',
+    //     done: function (e, data) {
+    //       var container = $('#photos-uploaded');
+    //       var lastRow = container.find('.photo-row').last();
+    //       var photo = htmlPhotoPrev(data.result);
+    //       var photoCount = lastRow.find('.preview').length;
+    //       var aerial = '';
+    //       var normal = '';
+    //       if (data.result.is_aerial){
+    //         aerial = true;
+    //       }
+    //        if (data.result.is_noral){
+    //         normal = true;
+    //       }
+    //       var row;
+    //       if(photoCount == 1){
+    //         row = lastRow;
+    //         row.append(photo);
+    //       }
+    //       else{
+    //         row = htmlPhotoRow();
+    //         row.append(photo);
+    //         container.append(row);
+    //       }
+    //     } // end done
+    //   }); // end fileupload
   }
 
   function loadDoc(){

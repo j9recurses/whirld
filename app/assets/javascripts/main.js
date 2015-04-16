@@ -329,8 +329,13 @@ function Form(el){
   el = el || $(document);
 
   function htmlPhotoPrev(result){
-    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable' data-id='" + result.id +"'</div></article>";
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
+    var img = photoPrev.find('img');
+    new Drag(img);
+    img.on('load', function(){
+      $(this).removeClass('invisible');
+    });
     return photoPrev;
   }
   function htmlPhotoRow(){
@@ -398,11 +403,15 @@ function Form(el){
     button.fileupload({
       dataType: 'json',
       url: '/user_galleries/'+user_gal_id+'/photos',
+      progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.temp-preloader').removeClass('hidden');
+        $('.progress-bar').css('width', progress + '%');
+      },
       done: function (e, data) {
         var container = $('#photos-uploaded');
         var lastRow = container.find('.photo-row').last();
         var photo = htmlPhotoPrev(data.result);
-            new Drag(photo.find('img'));
         var photoCount = lastRow.find('.preview').length;
         var row;
         if(photoCount == 1){
@@ -414,6 +423,7 @@ function Form(el){
           row.append(photo);
           container.append(row);
         }
+        $('.temp-preloader').addClass('hidden');
       } // end done
     }); // end fileupload
   }

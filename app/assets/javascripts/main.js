@@ -40,13 +40,19 @@ function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
 
+  function createBTW(){
+    html = "<ul class='button-bar button-bar-btw closed'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
+    el = $($.parseHTML(html));
+    el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
+    return el
+  }
   function openBar(toggle){
     toggle.addClass('invisible').addClass('hidden');
     var bar = toggle.parent('.button-bar');
     $.each(bar.children('.option'), function(i, option){
       $(option).removeClass('invisible').dequeue();
       $(option).addClass('option-'+i.toString()).dequeue();
-    })
+    });
     bar.children('.option').hover(function(){
       $(this).children('.button-label').toggleClass('invisible');
     })
@@ -59,14 +65,11 @@ function ButtonBar(settings){
     $.each(bar.children('.option'), function(i, option){
       $(option).addClass('invisible').dequeue();
       $(option).removeClass('option-'+i.toString()).dequeue();
-    })
+    });
     toggle.removeClass('hidden').removeClass('invisible');
   }
-  function createBTW(){
-    html = "<ul class='button-bar button-bar-btw closed'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
-    el = $($.parseHTML(html));
-    el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
-    return el
+  function initOptions(bar){
+
   }
   function init(el){
     el.on('click', '.option-toggle', function(){

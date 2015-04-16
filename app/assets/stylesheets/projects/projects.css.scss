@@ -23,7 +23,6 @@
   #project-creation .side-nav .wrapper{
     margin: 0 3%;
   }
-  #project-creation #knitter-map-pane{ height: 300px; }
 #project-form{ margin-top: 73px; }
 .tag-list .project-tags.item.tag { background: none; }
 .preview {
@@ -46,10 +45,7 @@
   /*display: none;*/
 }
 /*===== Project Map =====*/
-/***#project basemap */
-#knitter-map-pane {
-	height: 400px;	/*display: none; */
-}
+/*see maps.css*/
 
 /*===== Project Content =====*/
 
@@ -75,5 +71,4 @@
 @media only screen and (min-width: 1024px) {
   /*#project-header .wrapper { width: 60%; }*/
   /*#project-header { max-height: 200px; }*/
-  #knitter-map-pane { height: 600px; }
 }

@@ -4,12 +4,6 @@ $(document).ready(function(){
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
 
-  // // TEMPORARY
-  // $.each($('article.preview'), function(i,el){
-  //   $(el).attr('id', "preview-"+i);
-  //   var img = $(el).find('img');
-  //       img.data('id', i);
-  // });
 
   // // Video stuff
   // var submit_button = $('#submit_pre_upload_form');
@@ -43,99 +37,6 @@ $(document).ready(function(){
   //  }
 
 });
-function Module(option){
-  var bar = option.parent();
-  var type = option.data('module-type');
-  var modID = type + "-module-" + $('.module').length;
-
-  function htmlHeader(icon, type){
-    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
-    return html
-  }
-  function htmlDropzone(){
-    var message;
-    if(type == 'comparison'){
-      message = 'Drag two photos here to compare them.';
-    }
-    else if(type == 'grid'){
-      message = 'Drag up to ten photos here.';
-    }
-    else if(type == 'half'){
-      message = 'Drag one photo here.';
-      return "<p class='caps'>" + message +"</p>";
-    }
-    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
-    return html;
-  }
-  function htmlTaginput(){
-    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
-    return html
-  }
-  function createMod(html){
-    var mod = $($.parseHTML(html));
-        mod.attr('id', modID);
-        mod.data('type', type)
-    var icon = mod.find('.fa-remove')
-        icon.data('id', modID);
-    icon.on('click', function(){ 
-      $('#'+modID).remove();
-      $('#btw-bar-'+modID.split('-')[2]).remove();
-    });
-    return mod;
-  }
-  function createComparison(){
-    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createGrid(){
-    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createHalf(){
-    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
-    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
-    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createText(){
-    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createVideo(){
-    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function driver(){
-    if(type == 'comparison'){
-      var mod = createComparison();
-    }
-    else if(type == 'grid'){
-      var mod = createGrid();
-    }
-    else if(type == 'half'){
-      var mod = createHalf();
-    }
-    else if(type == 'text'){
-      var mod = createText();
-    }
-    else if(type == 'video'){
-      var mod = createVideo();
-    }
-    bar.before(mod);
-    new ButtonBar({type: 'btw', mod: mod});  
-    new Form($(mod).find('textarea.tag-input'));
-    new Form($(mod).find('textarea.text-module-body'));
-    new Form($(mod).find('textarea.caption'));
-    var dd = new DragDrop(mod);
-  }
-  driver();
-}
-
 function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
@@ -187,7 +88,28 @@ function ButtonBar(settings){
   driver();
 }
 
-function DragDrop(mod){
+function Drag(el){
+  function initDrag(){
+    el.draggable({
+      containment: '#project-creation',
+      cursor: '-webkit-grabbing',
+      cursorAt: { top: 0, left: 0 },
+      distance: 10,
+      helper: 'clone',
+      opacity: '.9',
+      revert: true,
+      revertDuration: 350,
+      snap: true,
+      snapMode: 'both',
+      snapTolerance: 10,
+      zIndex: 100
+    });
+  }
+  function driver(){ initDrag(); }
+  driver();
+}
+
+function Drop(mod){
   var mod = mod;
   var modType = mod.data('type');
 
@@ -286,27 +208,119 @@ function DragDrop(mod){
       revert: 150
     });
   }
-  function initDrag(){
-    $('.draggable').draggable({
-      containment: '#project-creation',
-      cursor: '-webkit-grabbing',
-      cursorAt: { top: 0, left: 0 },
-      distance: 10,
-      helper: 'clone',
-      opacity: '.9',
-      revert: true,
-      revertDuration: 350,
-      snap: true,
-      snapMode: 'both',
-      snapTolerance: 10,
-      zIndex: 100
-    });
-  }
+  // function initDrag(){
+  //   $('.draggable').draggable({
+  //     containment: '#project-creation',
+  //     cursor: '-webkit-grabbing',
+  //     cursorAt: { top: 0, left: 0 },
+  //     distance: 10,
+  //     helper: 'clone',
+  //     opacity: '.9',
+  //     revert: true,
+  //     revertDuration: 350,
+  //     snap: true,
+  //     snapMode: 'both',
+  //     snapTolerance: 10,
+  //     zIndex: 100
+  //   });
+  // }
 
   function driver(){
-    initDrag();
+    // initDrag();
     initModDrop(mod);
     initSort(mod);
+  }
+  driver();
+}
+function Module(option){
+  var bar = option.parent();
+  var type = option.data('module-type');
+  var modID = type + "-module-" + $('.module').length;
+
+  function htmlHeader(icon, type){
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    return html
+  }
+  function htmlDropzone(){
+    var message;
+    if(type == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(type == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(type == 'half'){
+      message = 'Drag one photo here.';
+      return "<p class='caps'>" + message +"</p>";
+    }
+    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
+    return html;
+  }
+  function htmlTaginput(){
+    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
+    return html
+  }
+  function createMod(html){
+    var mod = $($.parseHTML(html));
+        mod.attr('id', modID);
+        mod.data('type', type)
+    var icon = mod.find('.fa-remove')
+        icon.data('id', modID);
+    icon.on('click', function(){ 
+      $('#'+modID).remove();
+      $('#btw-bar-'+modID.split('-')[2]).remove();
+    });
+    return mod;
+  }
+  function createComparison(){
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createGrid(){
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createHalf(){
+    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
+    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createText(){
+    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createVideo(){
+    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function driver(){
+    if(type == 'comparison'){
+      var mod = createComparison();
+    }
+    else if(type == 'grid'){
+      var mod = createGrid();
+    }
+    else if(type == 'half'){
+      var mod = createHalf();
+    }
+    else if(type == 'text'){
+      var mod = createText();
+    }
+    else if(type == 'video'){
+      var mod = createVideo();
+    }
+    bar.before(mod);
+    new ButtonBar({type: 'btw', mod: mod});  
+    new Form($(mod).find('textarea.tag-input'));
+    new Form($(mod).find('textarea.text-module-body'));
+    new Form($(mod).find('textarea.caption'));
+    new Drop(mod);
   }
   driver();
 }
@@ -377,32 +391,33 @@ function Form(el){
       if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
     });
   }
+
   function initPhotoUpload(el){
     var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
-
-      button.fileupload({
-        dataType: 'json',
-        url: '/user_galleries/'+user_gal_id+'/photos',
-        done: function (e, data) {
-          var container = $('#photos-uploaded');
-          var lastRow = container.find('.photo-row').last();
-          var photo = htmlPhotoPrev(data.result);
-          var photoCount = lastRow.find('.preview').length;
-          var row;
-          if(photoCount == 1){
-            row = lastRow;
-            row.append(photo);
-          }
-          else{
-            row = htmlPhotoRow();
-            row.append(photo);
-            container.append(row);
-          }
-        } // end done
-
-    });
+    button.fileupload({
+      dataType: 'json',
+      url: '/user_galleries/'+user_gal_id+'/photos',
+      done: function (e, data) {
+        var container = $('#photos-uploaded');
+        var lastRow = container.find('.photo-row').last();
+        var photo = htmlPhotoPrev(data.result);
+            new Drag(photo.find('img'));
+        var photoCount = lastRow.find('.preview').length;
+        var row;
+        if(photoCount == 1){
+          row = lastRow;
+          row.append(photo);
+        }
+        else{
+          row = htmlPhotoRow();
+          row.append(photo);
+          container.append(row);
+        }
+      } // end done
+    }); // end fileupload
   }
+
   function loadDoc(){
     $('#project-description').keyup(function(e){ changeCounter(e); });
     autosize($('textarea#project-description'));

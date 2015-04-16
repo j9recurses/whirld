@@ -18,7 +18,10 @@ a:hover, .a:hover {
 .first-section { padding-top: 3.813em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
 .h-centered{ text-align: center; }
 .h-righted{ text-align: right; }
-.hidden{ display: none; }
+.hidden{ 
+  display: none;
+  transition: all .2s ease-in-out;
+}
 .icon-overlay{
     position:absolute;
     top:30%;
@@ -44,7 +47,10 @@ img{
 	margin-right: 2em;
 }
 .inline-list .item:last-child{ margin-right: 0; }
-.invisible{ visibility: hidden; }
+.invisible{
+  opacity: 0;
+  transition: all .5s ease-in-out;
+}
 .light{ color: #a9a9a9; }
 .meta { 
   color: gray;

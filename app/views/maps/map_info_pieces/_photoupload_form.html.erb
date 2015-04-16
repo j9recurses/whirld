@@ -9,17 +9,26 @@
 				        dataType: 'json',
 				        url: '<%= user_gallery_photos_path(@user_gallery[:id]) %>',
 				            done: function (e, data) {
+				            		console.log(data);
 				                $.each(data.result.photo_file.thumb, function (key, file_path) {
 				            		console.log(file_path);
-				               $('<li><img src="'+file_path+'"></li>').appendTo('#thumbs');
+				            		if ( data.result.photo_type == "normal") {
+				               $('<li><img src="'+file_path+'"></li>').appendTo('#normal');
+				               	}
+				               if ( data.result.photo_type == "aerial") {
+				               $('<li><img src="'+file_path+'"></li>').appendTo('#aerial');
+				               }
 				            });
 				        }
 				    });
 				});
 				</script>
-    <ul id="thumbs" class="cf">
+		<h2> Aerial Images </h2>
+    <ul id="aerial" class="cf">
     	<!-- json-ajax response here, see fileupload script above, .appendTo css id:"thumbs"-->
     		</ul>
+    <h2> Normal Images </h2>
+    <ul id="normal" class="cf">
     <% end %>
 	<%= javascript_include_tag "/javascripts/jquery-file-upload/vendor/jquery.ui.widget.js" %>
 	<%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.iframe-transport.js" %>

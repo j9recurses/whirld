@@ -1,8 +1,10 @@
 var map
 (function(){
   window.mapKnitter = new MapKnitter.Map({
-    latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
-    zoom:       <%= @map.zoom %>,
+    <!-- latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>), -->
+    <!-- zoom:       <%= @map.zoom %>, -->
+    latlng:     L.latLng(37.8759471, -122.280622),
+    zoom:       13,
     readOnly:   <%= @embed == true %>,
     warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
   });

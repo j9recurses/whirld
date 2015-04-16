@@ -210,23 +210,6 @@ function Drop(mod){
       revert: 150
     });
   }
-  // function initDrag(){
-  //   $('.draggable').draggable({
-  //     containment: '#project-creation',
-  //     cursor: '-webkit-grabbing',
-  //     cursorAt: { top: 0, left: 0 },
-  //     distance: 10,
-  //     helper: 'clone',
-  //     opacity: '.9',
-  //     revert: true,
-  //     revertDuration: 350,
-  //     snap: true,
-  //     snapMode: 'both',
-  //     snapTolerance: 10,
-  //     zIndex: 100
-  //   });
-  // }
-
   function driver(){
     // initDrag();
     initModDrop(mod);
@@ -438,7 +421,7 @@ function Form(el){
     $('#project-tag-list').keyup(function(e){ appendTag(e); });
     $('#project-title').keyup(function(e){ changeCounter(e); });
     autosize($('textarea#project-title'));
-    if($('#project-creation').length > 0){
+    if($('#photo-manager').length > 0){
       initPhotoUpload($('#project-creation'));
     }
   }

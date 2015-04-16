@@ -1,0 +1,26 @@
+[ 2015-04-16 00:45:03.0011 31918/0x7fff7997c300 age/Wat/Main.cpp:1264 ]: Starting PassengerAgent watchdog...
+[ 2015-04-16 00:45:03.0229 31920/0x7fff7997c300 age/Hel/Main.cpp:891 ]: Starting PassengerAgent server...
+[ 2015-04-16 00:45:03.0237 31920/0x7fff7997c300 age/Hel/Main.cpp:234 ]: PassengerAgent server running in multi-application mode.
+[ 2015-04-16 00:45:03.0358 31920/0x7fff7997c300 age/Hel/Main.cpp:645 ]: PassengerAgent server online, PID 31920
+[ 2015-04-16 00:45:03.0534 31922/0x7fff7997c300 age/Log/Main.cpp:439 ]: Starting PassengerAgent logger...
+[ 2015-04-16 00:45:03.0556 31922/0x7fff7997c300 age/Log/Main.cpp:320 ]: PassengerAgent logger online, PID 31922
+2015/04/16 00:45:05 [error] 31925#0: *4 "/Users/j9/railsworkspace/whirld/deepLearn/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+2015/04/16 00:45:09 [error] 31925#0: *5 open() "/Users/j9/railsworkspace/whirld/deepLearn/public/maps/new" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /maps/new HTTP/1.1", host: "localhost:3000"
+2015/04/16 00:45:09 [error] 31925#0: *5 open() "/Users/j9/railsworkspace/whirld/deepLearn/public/favicon.ico" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /favicon.ico HTTP/1.1", host: "localhost:3000"
+2015/04/16 00:45:09 [error] 31925#0: *5 open() "/Users/j9/railsworkspace/whirld/deepLearn/public/favicon.ico" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /favicon.ico HTTP/1.1", host: "localhost:3000"
+2015/04/16 00:45:21 [error] 31925#0: *5 open() "/Users/j9/railsworkspace/whirld/deepLearn/public/maps/new" failed (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /maps/new HTTP/1.1", host: "localhost:3000"
+2015/04/16 00:46:01 [error] 31925#0: *5 "/Users/j9/railsworkspace/whirld/deepLearn/public/maps/map_info/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "GET /maps/map_info/ HTTP/1.1", host: "localhost:3000"
+2015/04/16 01:08:18 [alert] 31924#0: worker process 31925 exited on signal 9
+
+
+[ 2015-04-16 01:08:52.9108 31922/0x1027ce000 age/Log/Main.cpp:346 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-16 01:08:52.9108 31920/0x105c2c000 age/Hel/Main.cpp:455 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2015-04-16 01:08:52.9109 31922/0x7fff7997c300 age/Log/Main.cpp:408 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-16 01:08:52.9109 31920/0x7fff7997c300 age/Hel/Main.cpp:814 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2015-04-16 01:08:52.9109 31920/0x105c2c000 Ser/Server.h:455 ]: [ServerThr.1] Shutdown finished
+[ 2015-04-16 01:08:52.9109 31922/0x1027ce000 Ser/Server.h:455 ]: [LoggerAdminServer] Shutdown finished
+[ 2015-04-16 01:08:52.9109 31920/0x105caf000 Ser/Server.h:455 ]: [ServerThr.2] Shutdown finished
+[ 2015-04-16 01:08:52.9110 31920/0x105d32000 Ser/Server.h:455 ]: [ServerThr.3] Shutdown finished
+[ 2015-04-16 01:08:52.9110 31920/0x105db5000 Ser/Server.h:455 ]: [ServerThr.4] Shutdown finished
+[ 2015-04-16 01:08:52.9111 31922/0x7fff7997c300 age/Log/Main.cpp:433 ]: PassengerAgent logger shutdown finished
+[ 2015-04-16 01:08:52.9111 31920/0x105e38000 Ser/Server.h:455 ]: [AdminServer] Shutdown finished

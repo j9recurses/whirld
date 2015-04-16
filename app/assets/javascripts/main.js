@@ -4,22 +4,6 @@ $(document).ready(function(){
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
 
-  
-
-
-  $('#fileupload').fileupload({
-    dataType: 'json',
-    url: '<%= user_gallery_photos_path(@user_gallery[:id]) %>',
-        done: function (e, data) {
-            $.each(data.result.photo_file.thumb, function (key, file_path) {
-            console.log(file_path);
-           $('<li><img src="'+file_path+'"></li>').appendTo('#thumbs');
-        });
-    }
-  });
-
-
-
   // // TEMPORARY
   // $.each($('article.preview'), function(i,el){
   //   $(el).attr('id', "preview-"+i);
@@ -330,6 +314,16 @@ function DragDrop(mod){
 function Form(el){
   el = el || $(document);
 
+  function htmlPhotoPrev(result){
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_path +"' class='draggable' </div></article>";
+    var photoPrev = $($.parseHTML(html));
+    return photoPrev;
+  }
+  function htmlPhotoRow(){
+    var html = "<div class='photo-row row group wrapper'></div>";
+    var row = $($.parseHTML(html));
+    return row;
+  }
   function createTagText(e){
     var input = $(e.target);
     var s = input.val().toLowerCase();
@@ -383,12 +377,36 @@ function Form(el){
       if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
     });
   }
+  function initPhotoUpload(el){
+    var user_gal_id = el.find('#user-gal-id').attr('value');
+    var button = el.find('#photo-upload-input');
+
+      var photoCount = 0;
+      button.fileupload({
+        dataType: 'json',
+        url: '/user_galleries/'+user_gal_id+'/photos',
+        done: function (e, data) {
+          photoCount += 1;
+          $.each(data.result.photo_file.thumb, function (key, file_path) {
+            htmlPhotoPrev(data.result);
+
+            
+            console.log(photoCount)
+          });
+          
+        } // end done
+
+    });
+  }
   function loadDoc(){
     $('#project-description').keyup(function(e){ changeCounter(e); });
     autosize($('textarea#project-description'));
     $('#project-tag-list').keyup(function(e){ appendTag(e); });
     $('#project-title').keyup(function(e){ changeCounter(e); });
-    // autosize($('textarea#project-title'));
+    autosize($('textarea#project-title'));
+    if($('#project-creation').length > 0){
+      initPhotoUpload($('#project-creation'));
+    }
   }
   function driver(){
     if(el.hasClass('caption')){

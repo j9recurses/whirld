@@ -6,7 +6,7 @@ class PhotoFileUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   def store_dir
-    "#{Rails.root}/public/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "#{Rails.root}/public/uploads/#{model.class.to_s.underscore}/#{model.user_gallery_id}/#{model.id}"
   end
 
   version :thumb do

@@ -31,9 +31,13 @@ class PhotosController < ApplicationController
 
   def create
     @photo = @user_gallery.photos.new(params[:photo])
-    puts "****"
-    puts params
     if @photo.save
+      photo_class_name = @photo.class.to_s.underscore
+      #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
+      @photo = Photo.deepLearnPredict(@photo)
+      puts "***model_results****"
+      @processed_photo = Photo.find(@photo[:id])
+      puts @processed_photo.inspect
       respond_to do |format|
         format.json { render json:  @photo }
       end

@@ -1,18 +1,13 @@
-class Photo < ActiveRecord::Base
-  attr_accessible :photo_file, :user_gallery_id, :is_normal, :is_aerial
-  belongs_to :user_gallery
-  mount_uploader :photo_file, PhotoFileUploader
-
-  def self.deepLearnPredict(photo)
-    photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"
-    #optional ability to filter certain image sizes
-    #filtered_types = "thumb,medium"
+PhotoProcessing = Struct.new(:photo_class_name, :user_gallery_id, :photo_id) do
+  def perform
+    photo_dir = "#{Rails.root}/public/uploads/#{photo_class_name}/#{user_gallery_id}/#{photo_id}"
+    filtered_types = "thumb,medium"
     #cmd_line_args = " -f " + gallery_dir + " -i " + filtered_types + " -o " + gallery_dir
-    path_to_predicter = "#{Rails.root}/zdeepLearn/predict.py"
-    cmd =  'python ' + path_to_predicter+ " -f "+ photo_dir + " -o " + photo_dir
-    puts cmd
+    path_to_predicter = "/Users/j9/pyworkspace/deepLearnFinalProj/deepLearn/predict.py"
+    cmd =  'python ' + path_to_predicter+ " -f "+ photo_dir +" -i " + filtered_types+ " -o " + photo_dir
     result = system(cmd)
     if result
+      photo = Photo.find(photo_id)
       normal_results = File.readlines(photo_dir+"/normal.txt")
       if normal_results.size > 0
         puts "*****normal****"
@@ -32,6 +27,10 @@ class Photo < ActiveRecord::Base
       puts "job failed"
       return "error"
     end
-end
+  end
+
+  def max_attempts
+    1
+  end
 
 end

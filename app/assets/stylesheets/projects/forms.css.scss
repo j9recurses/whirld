@@ -160,6 +160,9 @@ label{
   cursor: pointer;
   font-size: 100px;
 }
+.preview img{
+  transition: opacity 0.5s linear;
+}
 .project-tag{ 
   display: inline-block;
   margin: 0 10px 8px 0;

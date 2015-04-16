@@ -43,58 +43,6 @@ $(document).ready(function(){
   //  }
 
 });
-
-
-function ButtonBar(settings){
-  var mod = settings.mod || '';
-  var type = settings.type;
-
-  function openBar(){
-    var bar = $($(this).parent());
-        bar.addClass('open');
-        bar.removeClass('closed');
-        $.each(bar.children('.option'), function(i, option){
-          $(option).addClass('option-'+i.toString()).dequeue();
-        })
-    bar.children('.option').hover(function(){
-      $(this).children('.button-label').toggleClass('hidden');
-    })
-    bar.closest('html').on('keyup', function(e){
-      if(e.which == 27){ closeBar(bar); }
-    });
-  }
-  function closeBar(bar){
-    bar.removeClass('open');
-    bar.addClass('closed');
-    $.each(bar.children('.option'), function(i, option){
-      $(option).removeClass('option-'+i.toString()).dequeue();
-    })
-  }
-  function createBTW(){
-    html = "<ul class='button-bar button-bar-btw closed'><li class='option item' data-module-type='grid'><button><i class='h2-size fa fa-newspaper-o'></i></button><br><span class='hidden button-label font_small'>Grid</span></li><li class='option item' data-module-type='comparison'><button><i class='h2-size fa fa-cc-visa'></i></button><br><span class='hidden button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item' data-module-type='half'><button><i class='h2-size fa fa-bar-chart'></i></button><br><span class='hidden button-label font_small'>Half</span></li><li class='option item' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='hidden button-label font_small'>Text</span></li><li class='option item' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='hidden button-label font_small'>Video</span></li></ul>";
-    el = $($.parseHTML(html));
-    el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
-    return el
-  }
-  function init(el){
-    el.on('click', '.option-toggle', openBar);
-    el.on('click', '.option', function(){
-      var mod = new Module($(this));
-      closeBar($(this).parent());
-    });
-  }
-  function driver(){
-    if(type == 'end'){
-      init($('#end-bar'));
-    }
-    else if(type == 'btw'){
-      var btw = createBTW();
-      btw.insertBefore(mod);
-      init(btw);
-    }
-  }
-  driver();
-}
 function Module(option){
   var bar = option.parent();
   var type = option.data('module-type');
@@ -187,6 +135,58 @@ function Module(option){
   }
   driver();
 }
+
+function ButtonBar(settings){
+  var mod = settings.mod || '';
+  var type = settings.type;
+
+  function openBar(){
+    var bar = $($(this).parent());
+        bar.addClass('open');
+        bar.removeClass('closed');
+        $.each(bar.children('.option'), function(i, option){
+          $(option).addClass('option-'+i.toString()).dequeue();
+        })
+    bar.children('.option').hover(function(){
+      $(this).children('.button-label').toggleClass('hidden');
+    })
+    bar.closest('html').on('keyup', function(e){
+      if(e.which == 27){ closeBar(bar); }
+    });
+  }
+  function closeBar(bar){
+    bar.removeClass('open');
+    bar.addClass('closed');
+    $.each(bar.children('.option'), function(i, option){
+      $(option).removeClass('option-'+i.toString()).dequeue();
+    })
+  }
+  function createBTW(){
+    html = "<ul class='button-bar button-bar-btw closed'><li class='option item' data-module-type='grid'><button><i class='h2-size fa fa-newspaper-o'></i></button><br><span class='hidden button-label font_small'>Grid</span></li><li class='option item' data-module-type='comparison'><button><i class='h2-size fa fa-cc-visa'></i></button><br><span class='hidden button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item' data-module-type='half'><button><i class='h2-size fa fa-bar-chart'></i></button><br><span class='hidden button-label font_small'>Half</span></li><li class='option item' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='hidden button-label font_small'>Text</span></li><li class='option item' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='hidden button-label font_small'>Video</span></li></ul>";
+    el = $($.parseHTML(html));
+    el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
+    return el
+  }
+  function init(el){
+    el.on('click', '.option-toggle', openBar);
+    el.on('click', '.option', function(){
+      var mod = new Module($(this));
+      closeBar($(this).parent());
+    });
+  }
+  function driver(){
+    if(type == 'end'){
+      init($('#end-bar'));
+    }
+    else if(type == 'btw'){
+      var btw = createBTW();
+      btw.insertBefore(mod);
+      init(btw);
+    }
+  }
+  driver();
+}
+
 function DragDrop(mod){
   var mod = mod;
   var modType = mod.data('type');
@@ -399,7 +399,6 @@ function Form(el){
             row.append(photo);
             container.append(row);
           }
-          console.log(photo)
         } // end done
 
     });

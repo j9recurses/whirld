@@ -41,38 +41,41 @@ function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
 
-  function openBar(){
-    var bar = $($(this).parent());
-        bar.addClass('open');
-        bar.removeClass('closed');
-        $.each(bar.children('.option'), function(i, option){
-          $(option).addClass('option-'+i.toString()).dequeue();
-        })
+  function openBar(toggle){
+    toggle.addClass('invisible').addClass('hidden');
+    var bar = toggle.parent('.button-bar');
+    $.each(bar.children('.option'), function(i, option){
+      $(option).removeClass('invisible').dequeue();
+      $(option).addClass('option-'+i.toString()).dequeue();
+    })
     bar.children('.option').hover(function(){
-      $(this).children('.button-label').toggleClass('hidden');
+      $(this).children('.button-label').toggleClass('invisible');
     })
     bar.closest('html').on('keyup', function(e){
-      if(e.which == 27){ closeBar(bar); }
+      if(e.which == 27){ closeBar(toggle); }
     });
   }
-  function closeBar(bar){
-    bar.removeClass('open');
-    bar.addClass('closed');
+  function closeBar(toggle){
+    var bar = toggle.parent('.button-bar');
     $.each(bar.children('.option'), function(i, option){
+      $(option).addClass('invisible').dequeue();
       $(option).removeClass('option-'+i.toString()).dequeue();
     })
+    toggle.removeClass('hidden').removeClass('invisible');
   }
   function createBTW(){
-    html = "<ul class='button-bar button-bar-btw closed'><li class='option item' data-module-type='grid'><button><i class='h2-size fa fa-newspaper-o'></i></button><br><span class='hidden button-label font_small'>Grid</span></li><li class='option item' data-module-type='comparison'><button><i class='h2-size fa fa-cc-visa'></i></button><br><span class='hidden button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item' data-module-type='half'><button><i class='h2-size fa fa-bar-chart'></i></button><br><span class='hidden button-label font_small'>Half</span></li><li class='option item' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='hidden button-label font_small'>Text</span></li><li class='option item' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='hidden button-label font_small'>Video</span></li></ul>";
+    html = "<ul class='button-bar button-bar-btw closed'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
     el = $($.parseHTML(html));
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
   }
   function init(el){
-    el.on('click', '.option-toggle', openBar);
+    el.on('click', '.option-toggle', function(){
+      openBar($(this));
+    });
     el.on('click', '.option', function(){
       var mod = new Module($(this));
-      closeBar($(this).parent());
+      closeBar($(this).siblings('.option-toggle'));
     });
   }
   function driver(){
@@ -238,7 +241,7 @@ function Module(option){
   var modID = type + "-module-" + $('.module').length;
 
   function htmlHeader(icon, type){
-    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + icon + "'></i><span class='cursor-def'> " + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
     return html
   }
   function htmlDropzone(){
@@ -273,19 +276,19 @@ function Module(option){
     return mod;
   }
   function createComparison(){
-    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('sliders', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
     var mod = createMod(html);
     return mod;
   }
   function createGrid(){
-    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('square', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
     var mod = createMod(html);
     return mod;
   }
   function createHalf(){
     var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
     var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
-    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('star-half', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
     var mod = createMod(html);
     return mod;
   }

@@ -1,4 +1,3 @@
-
 json.array!([@photo]) do |json, photo|
   json.name            	photo.photo_file
   json.size            	photo.photo_file.size

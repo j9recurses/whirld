@@ -1,6 +1,7 @@
 class Photo < ActiveRecord::Base
   attr_accessible :photo_file, :user_gallery_id, :is_normal, :is_aerial
   belongs_to :user_gallery
+  has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
 
   def self.deepLearnPredict(photo)
@@ -32,6 +33,5 @@ class Photo < ActiveRecord::Base
       puts "job failed"
       return "error"
     end
-end
-
+  end
 end

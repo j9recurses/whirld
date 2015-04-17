@@ -37,7 +37,6 @@ class PhotosController < ApplicationController
       @photo = Photo.deepLearnPredict(@photo)
       puts "***model_results****"
       @processed_photo = Photo.find(@photo[:id])
-      puts @processed_photo.inspect
       respond_to do |format|
         format.json { render json:  @photo }
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150415094125) do
+ActiveRecord::Schema.define(:version => 20150417035848) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -116,6 +116,15 @@ ActiveRecord::Schema.define(:version => 20150415094125) do
     t.text     "body"
   end
 
+  create_table "photo_mods", :force => true do |t|
+    t.integer "photo_id"
+    t.text    "caption"
+    t.integer "mod_gallery"
+    t.string  "mod_type"
+  end
+
+  add_index "photo_mods", ["mod_gallery", "mod_type"], :name => "index_photo_mods_on_mod_gallery_and_mod_type"
+
   create_table "photos", :force => true do |t|
     t.integer  "user_gallery_id"
     t.string   "photo_file"
@@ -159,6 +168,27 @@ ActiveRecord::Schema.define(:version => 20150415094125) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "map_id"
+  end
+
+  create_table "user_gallery_comparisons", :force => true do |t|
+    t.integer  "user_gallery_id"
+    t.string   "comparison_photo_order"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "user_gallery_grids", :force => true do |t|
+    t.integer  "user_gallery_id"
+    t.string   "grid_photo_order"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "user_gallery_splits", :force => true do |t|
+    t.integer  "user_gallery_id"
+    t.text     "split_text"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|

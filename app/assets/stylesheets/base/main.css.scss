@@ -10,8 +10,8 @@ a, .a {
 a:hover, .a:hover {
 	opacity: .7;
 }
-.active{ color: white; }
-.active:hover { opacity: 1;cursor: default; }
+.active{ color: white; cursor: default; }
+.active:hover { opacity: 1; cursor: default; }
 .caps{ text-transform: uppercase; }
 .caption{ font-style: italic; }
 .cursor-def{ cursor: default; }
@@ -74,7 +74,8 @@ img{
   right: 5px;
   top: 5px;
 }
-.tag-list .item.tag{
+.tag{
+  cursor: pointer;
   display: inline-block;
   margin: 0 .5em .5em 0;
   padding: 2px 8px;
@@ -82,16 +83,9 @@ img{
   border-radius: 1px;
   color: white;
 }
-  .tag a{
-    color: white;
-  }
-  .tag .fa-remove{
-    border-left: 1px solid white;
-    color: white;
-    margin-left: 5px;
-    padding-left: 4px;
-  }
-  .tag .inactive { color: #333; }
+.tag.active{
+  cursor: default;
+}
 .v-centered {
   position: relative;
   top: 51.5%;

@@ -1,7 +1,13 @@
 /*===== Project Creation =====*/
-#navbar-create{ width: 32.26%; }
-#photo-cat-tags .tag-list .item.tag { margin-right: 2em; }
-#photo-cat-tags, #photo-state{ background-color: black; }
+#navbar-create{ 
+  top: 54px;
+  width: 32.26%;
+  z-index: 9999;
+}
+#photo-cats .tag { margin-right: 2em; background-color: black; }
+#photo-cats .tag.active {  background-color: gray; }
+
+#photo-cats, #photo-state{ background-color: black; }
 .photo-list{
   background-color: black;
   margin-top: 3.5em;
@@ -24,7 +30,7 @@
     margin: 0 3%;
   }
 #project-form{ margin-top: 73px; }
-.tag-list .project-tags.item.tag { background: none; }
+/*.tag-list .project-tags.item.tag { background: none; }*/
 .preview {
   background-color: gray;
   color: white;
@@ -56,7 +62,6 @@
 .comparison img{ width: 100%; }
 
 /*===== Responsive =====*/
-
 /*Bigger than 568px*/
 @media only screen and (min-width: 568px) {
 }

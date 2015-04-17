@@ -1,9 +1,7 @@
 $(document).ready(function(){
-  mainStickyNav();
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
-
-
+  new Nav({type: 'main'});
   // // Video stuff
   // var submit_button = $('#submit_pre_upload_form');
   //  var video_upload = $('#video_upload');
@@ -409,21 +407,6 @@ function Module(option){
 function Form(el){
   el = el || $(document);
 
-  function htmlPhotoPrev(result){
-    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
-    var photoPrev = $($.parseHTML(html));
-    var img = photoPrev.find('img');
-    new Drag(img);
-    img.on('load', function(){
-      $(this).removeClass('invisible');
-    });
-    return photoPrev;
-  }
-  function htmlPhotoRow(){
-    var html = "<div class='photo-row row group wrapper'></div>";
-    var row = $($.parseHTML(html));
-    return row;
-  }
   function createTagText(e){
     var input = $(e.target);
     var s = input.val().toLowerCase();
@@ -477,67 +460,88 @@ function Form(el){
       if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
     });
   }
-
+  function htmlPhotoPrev(result){
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
+    var photoPrev = $($.parseHTML(html));
+    var img = photoPrev.find('img');
+    new Drag(img);
+    img.on('load', function(){
+      $(this).removeClass('invisible');
+    });
+    return photoPrev;
+  }
+  function htmlPhotoRow(){
+    var html = "<div class='photo-row row group wrapper'></div>";
+    var row = $($.parseHTML(html));
+    return row;
+  }
+  function appendPhotos(result){
+    var photo = htmlPhotoPrev(result);
+    var container;
+    if(result.is_aerial){
+      container = $('#photos-aerial');
+      photo.addClass('aerial');
+    }
+    else if(result.is_normal){
+      container = $('#photos-street');
+      photo.addClass('street');
+    }
+    var lastRow = container.find('.photo-row').last();
+    var photoCount = lastRow.find('.preview').length;
+    var row;
+    if(photoCount == 1){
+      row = lastRow;
+      row.append(photo);
+    }
+    else{
+      row = htmlPhotoRow();
+      row.append(photo);
+      container.append(row);
+    }
+  }
+  function countLabels(count){
+    $.each($('#photo-cats').find('.item'), function(i, item){
+      var photoType = $(item).data('type');
+      var photoCount = $('#photos-'+photoType).length;
+      var labelText = photoType.capitalize() + '  (' + count[photoType] + ')';
+      var label = $(item).find('.tag-wrapper');
+          label.text(labelText);
+          label.addClass('on-change');
+          setTimeout(function() {
+            label.removeClass('on-change');
+          }, 200);
+    });
+  }
   function initPhotoUpload(el){
-    var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
-  //   button.fileupload({
-  //     dataType: 'json',
-  //     url: '/user_galleries/'+user_gal_id+'/photos',
-  //     progressall: function(e, data){
-  //       var progress = parseInt(data.loaded / data.total * 100, 10);
-  //       $('.temp-preloader').removeClass('hidden');
-  //       $('.progress-bar').css('width', progress + '%');
-  //     },
-  //     done: function (e, data) {
-  //       var container = $('#photos-uploaded');
-  //       var lastRow = container.find('.photo-row').last();
-  //       var photo = htmlPhotoPrev(data.result);
-  //       var photoCount = lastRow.find('.preview').length;
-  //       var row;
-  //       if(photoCount == 1){
-  //         row = lastRow;
-  //         row.append(photo);
-  //       }
-  //       else{
-  //         row = htmlPhotoRow();
-  //         row.append(photo);
-  //         container.append(row);
-  //       }
-  //       $('#photo-manager').removeClass('default');
-  //       creationNav();
-  //       $('.temp-preloader').addClass('hidden');
-  //     } // end done
-  //   }); // end fileupload
+    var user_gal_id = el.find('#user-gal-id').attr('value');
 
-      button.fileupload({
-        dataType: 'json',
-        url: '/user_galleries/'+user_gal_id+'/photos',
-        done: function (e, data) {
-          var container = $('#photos-uploaded');
-          var lastRow = container.find('.photo-row').last();
-          var photo = htmlPhotoPrev(data.result);
-          var photoCount = lastRow.find('.preview').length;
-          var aerial = '';
-          var normal = '';
-          if (data.result.is_aerial){
-            aerial = true;
-          }
-           if (data.result.is_noral){
-            normal = true;
-          }
-          var row;
-          if(photoCount == 1){
-            row = lastRow;
-            row.append(photo);
-          }
-          else{
-            row = htmlPhotoRow();
-            row.append(photo);
-            container.append(row);
-          }
-        } // end done
-      }); // end fileupload
+    var aerialCount = $('#photos-aerial').find('.photo').length;
+    var streetCount = $('#photos-street').find(('.photo')).length;
+    button.fileupload({
+      dataType: 'json',
+      url: '/user_galleries/' + user_gal_id + '/photos',
+      progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.temp-preloader').removeClass('hidden');
+        $('.progress-bar').css('width', progress + '%');
+      },
+      done: function (e, data) {
+        console.log(data);
+        appendPhotos(data.result);
+        if(data.result.is_aerial){
+          aerialCount += 1;
+        }
+        else if(data.result.is_normal){
+          streetCount += 1;
+        }
+        var photoCount = {aerial: aerialCount, street: streetCount};
+        countLabels(photoCount);
+        $('#photo-manager').removeClass('default');
+        new Nav({type: 'create'});
+        $('.temp-preloader').addClass('hidden');
+      } // end done
+    }); // end fileupload
   }
 
   function loadDoc(){
@@ -568,39 +572,49 @@ function Form(el){
   driver();
 }
 
-var creationNav = function () {
-  $('#navbar-create').removeClass('hidden');
-  $('#navbar-create').stickyNavbar({
-    animDuration: 250,              // Duration of jQuery animation
-    startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
-    easing: "linear",               // Easing type if jqueryEffects = true, use jQuery Easing plugin to extend easing types - gsgd.co.uk/sandbox/jquery/easing
-    animateCSS: true,               // AnimateCSS effect on/off
-    animateCSSRepeat: false,        // Repeat animation everytime user scrolls
-    cssAnimation: "fadeInDown",     // AnimateCSS class that will be added to selector
-    jqueryEffects: false,           // jQuery animation on/off
-    jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
-    mobile: false,                  // If false nav will not stick under 480px width of window
-    mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
-    zindex: 9999,                   // The zindex value to apply to the element: default 9999, other option is "auto"
-    stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
-    unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
-  });
+function Nav(settings){
+  var type = settings.type;
+  function initStickyNav(el){
+    el.stickyNavbar({
+      animDuration: 250,              // Duration of jQuery animation
+      startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
+      easing: "linear",               // Easing type if jqueryEffects = true, use jQuery Easing plugin to extend easing types - gsgd.co.uk/sandbox/jquery/easing
+      animateCSS: true,               // AnimateCSS effect on/off
+      animateCSSRepeat: false,        // Repeat animation everytime user scrolls
+      cssAnimation: "fadeInDown",     // AnimateCSS class that will be added to selector
+      jqueryEffects: false,           // jQuery animation on/off
+      jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
+      mobile: false,                  // If false nav will not stick under 480px width of window
+      mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
+      zindex: 9999,                   // The zindex value to apply to the element: default 9999, other option is "auto"
+      stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
+      unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
+    });
+  }
+  function initTabs(container){
+    container.on('click', '.item', function(){
+      var old = container.find('.active')
+          old.removeClass('active');
+          $('#photos-'+old.data('type')).addClass('hidden');
+      setTimeout(function() {
+        $(this).addClass('active');
+        $('#photos-'+$(this).data('type')).removeClass('hidden');
+      }, 500);
+    });
+  }
+  function driver(){
+    if(type == 'create'){
+      $('#navbar-create').removeClass('hidden');
+      initStickyNav($('#navbar-create'));
+      initTabs($('#photo-cats'));
+    }
+    else if(type == 'main'){
+      initStickyNav($('#navbar-main'));
+    }
+  }
+  driver();
 }
 
-var mainStickyNav = function () {
-    $('#navbar-main').stickyNavbar({
-    animDuration: 250,              // Duration of jQuery animation
-    startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
-    easing: "linear",               // Easing type if jqueryEffects = true, use jQuery Easing plugin to extend easing types - gsgd.co.uk/sandbox/jquery/easing
-    animateCSS: true,               // AnimateCSS effect on/off
-    animateCSSRepeat: false,        // Repeat animation everytime user scrolls
-    cssAnimation: "fadeInDown",     // AnimateCSS class that will be added to selector
-    jqueryEffects: false,           // jQuery animation on/off
-    jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
-    mobile: false,                  // If false nav will not stick under 480px width of window
-    mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
-    zindex: 9999,                   // The zindex value to apply to the element: default 9999, other option is "auto"
-    stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
-    unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
-  });
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }

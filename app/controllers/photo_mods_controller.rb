@@ -27,6 +27,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_grid_delete
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
     @user_gallery_grid.destroy
+    format.json { head :no_content }
   end
 
   ###comparision###
@@ -57,6 +58,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_comparison_delete
     @user_gallery_comparison = UserGalleryComparison.find(params[:mod_gallery])
     @user_gallery_comparison.destroy
+    format.json { head :no_content }
   end
 
   ##split####
@@ -87,6 +89,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_split_delete
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
     @user_gallery_split.destroy
+    format.json { head :no_content }
   end
 
 
@@ -116,5 +119,6 @@ class PhotoModsController < ApplicationController
   def remove_mod_photo
     photo_mod = PhotoMod.find(params[:mod_photo_id])
     photo_mod.destroy
+    format.json { head :no_content }
   end
 end

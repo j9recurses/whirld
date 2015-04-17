@@ -481,34 +481,34 @@ function Form(el){
   function initPhotoUpload(el){
     var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
-    button.fileupload({
-      dataType: 'json',
-      url: '/user_galleries/'+user_gal_id+'/photos',
-      progressall: function(e, data){
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('.temp-preloader').removeClass('hidden');
-        $('.progress-bar').css('width', progress + '%');
-      },
-      done: function (e, data) {
-        var container = $('#photos-uploaded');
-        var lastRow = container.find('.photo-row').last();
-        var photo = htmlPhotoPrev(data.result);
-        var photoCount = lastRow.find('.preview').length;
-        var row;
-        if(photoCount == 1){
-          row = lastRow;
-          row.append(photo);
-        }
-        else{
-          row = htmlPhotoRow();
-          row.append(photo);
-          container.append(row);
-        }
-        $('#photo-manager').removeClass('default');
-        creationNav();
-        $('.temp-preloader').addClass('hidden');
-      } // end done
-    }); // end fileupload
+  //   button.fileupload({
+  //     dataType: 'json',
+  //     url: '/user_galleries/'+user_gal_id+'/photos',
+  //     progressall: function(e, data){
+  //       var progress = parseInt(data.loaded / data.total * 100, 10);
+  //       $('.temp-preloader').removeClass('hidden');
+  //       $('.progress-bar').css('width', progress + '%');
+  //     },
+  //     done: function (e, data) {
+  //       var container = $('#photos-uploaded');
+  //       var lastRow = container.find('.photo-row').last();
+  //       var photo = htmlPhotoPrev(data.result);
+  //       var photoCount = lastRow.find('.preview').length;
+  //       var row;
+  //       if(photoCount == 1){
+  //         row = lastRow;
+  //         row.append(photo);
+  //       }
+  //       else{
+  //         row = htmlPhotoRow();
+  //         row.append(photo);
+  //         container.append(row);
+  //       }
+  //       $('#photo-manager').removeClass('default');
+  //       creationNav();
+  //       $('.temp-preloader').addClass('hidden');
+  //     } // end done
+  //   }); // end fileupload
 
       button.fileupload({
         dataType: 'json',

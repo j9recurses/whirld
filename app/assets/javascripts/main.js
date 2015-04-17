@@ -1,15 +1,8 @@
 $(document).ready(function(){
-  creationStickyNav();
   mainStickyNav();
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
 
-  // // TEMPORARY
-  // $.each($('article.preview'), function(i,el){
-  //   $(el).attr('id', "preview-"+i);
-  //   var img = $(el).find('img');
-  //       img.data('id', i);
-  // });
 
   // // Video stuff
   // var submit_button = $('#submit_pre_upload_form');
@@ -140,38 +133,44 @@ function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
 
-  function openBar(){
-    var bar = $($(this).parent());
-        bar.addClass('open');
-        bar.removeClass('closed');
-        $.each(bar.children('.option'), function(i, option){
-          $(option).addClass('option-'+i.toString()).dequeue();
-        })
-    bar.children('.option').hover(function(){
-      $(this).children('.button-label').toggleClass('hidden');
-    })
-    bar.closest('html').on('keyup', function(e){
-      if(e.which == 27){ closeBar(bar); }
-    });
-  }
-  function closeBar(bar){
-    bar.removeClass('open');
-    bar.addClass('closed');
-    $.each(bar.children('.option'), function(i, option){
-      $(option).removeClass('option-'+i.toString()).dequeue();
-    })
-  }
   function createBTW(){
-    html = "<ul class='button-bar button-bar-btw closed'><li class='option item' data-module-type='grid'><button><i class='h2-size fa fa-newspaper-o'></i></button><br><span class='hidden button-label font_small'>Grid</span></li><li class='option item' data-module-type='comparison'><button><i class='h2-size fa fa-cc-visa'></i></button><br><span class='hidden button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item' data-module-type='half'><button><i class='h2-size fa fa-bar-chart'></i></button><br><span class='hidden button-label font_small'>Half</span></li><li class='option item' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='hidden button-label font_small'>Text</span></li><li class='option item' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='hidden button-label font_small'>Video</span></li></ul>";
+    html = "<ul class='button-bar button-bar-btw closed'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
     el = $($.parseHTML(html));
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
   }
+  function openBar(toggle){
+    toggle.addClass('invisible').addClass('hidden');
+    var bar = toggle.parent('.button-bar');
+    $.each(bar.children('.option'), function(i, option){
+      $(option).removeClass('invisible').dequeue();
+      $(option).addClass('option-'+i.toString()).dequeue();
+    });
+    bar.children('.option').hover(function(){
+      $(this).children('.button-label').toggleClass('invisible');
+    })
+    bar.closest('html').on('keyup', function(e){
+      if(e.which == 27){ closeBar(toggle); }
+    });
+  }
+  function closeBar(toggle){
+    var bar = toggle.parent('.button-bar');
+    $.each(bar.children('.option'), function(i, option){
+      $(option).addClass('invisible').dequeue();
+      $(option).removeClass('option-'+i.toString()).dequeue();
+    });
+    toggle.removeClass('hidden').removeClass('invisible');
+  }
+  function initOptions(bar){
+
+  }
   function init(el){
-    el.on('click', '.option-toggle', openBar);
+    el.on('click', '.option-toggle', function(){
+      openBar($(this));
+    });
     el.on('click', '.option', function(){
       var mod = new Module($(this));
-      closeBar($(this).parent());
+      closeBar($(this).siblings('.option-toggle'));
     });
   }
   function driver(){
@@ -187,7 +186,28 @@ function ButtonBar(settings){
   driver();
 }
 
-function DragDrop(mod){
+function Drag(el){
+  function initDrag(){
+    el.draggable({
+      containment: '#project-creation',
+      cursor: '-webkit-grabbing',
+      cursorAt: { top: 0, left: 0 },
+      distance: 10,
+      helper: 'clone',
+      opacity: '.9',
+      revert: true,
+      revertDuration: 350,
+      snap: true,
+      snapMode: 'both',
+      snapTolerance: 10,
+      zIndex: 100
+    });
+  }
+  function driver(){ initDrag(); }
+  driver();
+}
+
+function Drop(mod){
   var mod = mod;
   var modType = mod.data('type');
 
@@ -286,27 +306,102 @@ function DragDrop(mod){
       revert: 150
     });
   }
-  function initDrag(){
-    $('.draggable').draggable({
-      containment: '#project-creation',
-      cursor: '-webkit-grabbing',
-      cursorAt: { top: 0, left: 0 },
-      distance: 10,
-      helper: 'clone',
-      opacity: '.9',
-      revert: true,
-      revertDuration: 350,
-      snap: true,
-      snapMode: 'both',
-      snapTolerance: 10,
-      zIndex: 100
-    });
-  }
-
   function driver(){
-    initDrag();
+    // initDrag();
     initModDrop(mod);
     initSort(mod);
+  }
+  driver();
+}
+function Module(option){
+  var bar = option.parent();
+  var type = option.data('module-type');
+  var modID = type + "-module-" + $('.module').length;
+
+  function htmlHeader(icon, type){
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + icon + "'></i><span class='cursor-def'> " + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    return html
+  }
+  function htmlDropzone(){
+    var message;
+    if(type == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(type == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(type == 'half'){
+      message = 'Drag one photo here.';
+      return "<p class='caps'>" + message +"</p>";
+    }
+    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
+    return html;
+  }
+  function htmlTaginput(){
+    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
+    return html
+  }
+  function createMod(html){
+    var mod = $($.parseHTML(html));
+        mod.attr('id', modID);
+        mod.data('type', type)
+    var icon = mod.find('.fa-remove')
+        icon.data('id', modID);
+    icon.on('click', function(){ 
+      $('#'+modID).remove();
+      $('#btw-bar-'+modID.split('-')[2]).remove();
+    });
+    return mod;
+  }
+  function createComparison(){
+    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('sliders', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createGrid(){
+    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('square', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createHalf(){
+    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
+    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
+    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('star-half', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createText(){
+    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function createVideo(){
+    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
+    var mod = createMod(html);
+    return mod;
+  }
+  function driver(){
+    if(type == 'comparison'){
+      var mod = createComparison();
+    }
+    else if(type == 'grid'){
+      var mod = createGrid();
+    }
+    else if(type == 'half'){
+      var mod = createHalf();
+    }
+    else if(type == 'text'){
+      var mod = createText();
+    }
+    else if(type == 'video'){
+      var mod = createVideo();
+    }
+    bar.before(mod);
+    new ButtonBar({type: 'btw', mod: mod});  
+    new Form($(mod).find('textarea.tag-input'));
+    new Form($(mod).find('textarea.text-module-body'));
+    new Form($(mod).find('textarea.caption'));
+    new Drop(mod);
   }
   driver();
 }
@@ -315,8 +410,13 @@ function Form(el){
   el = el || $(document);
 
   function htmlPhotoPrev(result){
-    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable' data-id='" + result.id +"'</div></article>";
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
+    var img = photoPrev.find('img');
+    new Drag(img);
+    img.on('load', function(){
+      $(this).removeClass('invisible');
+    });
     return photoPrev;
   }
   function htmlPhotoRow(){
@@ -377,15 +477,43 @@ function Form(el){
       if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
     });
   }
+
   function initPhotoUpload(el){
     var user_gal_id = el.find('#user-gal-id').attr('value');
     var button = el.find('#photo-upload-input');
+    button.fileupload({
+      dataType: 'json',
+      url: '/user_galleries/'+user_gal_id+'/photos',
+      progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.temp-preloader').removeClass('hidden');
+        $('.progress-bar').css('width', progress + '%');
+      },
+      done: function (e, data) {
+        var container = $('#photos-uploaded');
+        var lastRow = container.find('.photo-row').last();
+        var photo = htmlPhotoPrev(data.result);
+        var photoCount = lastRow.find('.preview').length;
+        var row;
+        if(photoCount == 1){
+          row = lastRow;
+          row.append(photo);
+        }
+        else{
+          row = htmlPhotoRow();
+          row.append(photo);
+          container.append(row);
+        }
+        $('#photo-manager').removeClass('default');
+        creationNav();
+        $('.temp-preloader').addClass('hidden');
+      } // end done
+    }); // end fileupload
 
       button.fileupload({
         dataType: 'json',
         url: '/user_galleries/'+user_gal_id+'/photos',
         done: function (e, data) {
-        console.log(data.result);
           var container = $('#photos-uploaded');
           var lastRow = container.find('.photo-row').last();
           var photo = htmlPhotoPrev(data.result);
@@ -409,16 +537,16 @@ function Form(el){
             container.append(row);
           }
         } // end done
-
-    });
+      }); // end fileupload
   }
+
   function loadDoc(){
     $('#project-description').keyup(function(e){ changeCounter(e); });
     autosize($('textarea#project-description'));
     $('#project-tag-list').keyup(function(e){ appendTag(e); });
     $('#project-title').keyup(function(e){ changeCounter(e); });
     autosize($('textarea#project-title'));
-    if($('#project-creation').length > 0){
+    if($('#photo-manager').length > 0){
       initPhotoUpload($('#project-creation'));
     }
   }
@@ -440,7 +568,8 @@ function Form(el){
   driver();
 }
 
-var creationStickyNav = function () {
+var creationNav = function () {
+  $('#navbar-create').removeClass('hidden');
   $('#navbar-create').stickyNavbar({
     animDuration: 250,              // Duration of jQuery animation
     startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)

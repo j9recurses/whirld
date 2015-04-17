@@ -22,20 +22,20 @@
     <div class='eight columns'>
       <%= f.label :location, 'Location', :class => 'font_small' %>
       <%= f.text_field :location,
-               :id => 'project-location',
+               :id => 'map_location',
                :placeholder => 'Location' %>
       <div class='row group'>
         <div class='six columns'>
           <%= f.label :lat, 'Latitude', :class => 'font_small' %>
           <%= f.text_field :lat,
-            :id => 'project-lat',
+            :id => 'map_lat',
             :placeholder => 'Latitude' %>
             <input type="hidden" name="map_id" id = "mapp_val">
         </div>
         <div class='six columns'>
           <%= f.label :lon, 'Longitude', :class => 'font_small' %>
           <%= f.text_field :lon,
-            :id => 'project-long',
+            :id => 'map_lon',
             :placeholder => 'Longitude' %>
           <input type="hidden" name="map_id" id = "mapp_val">
         </div>

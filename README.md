@@ -60,3 +60,45 @@ You'll need at least Ruby v1.9.3 (**v2.1.x** preferred)
 5. Initialize database with `bundle exec rake db:setup`
 7. Install static assets (like external javascript libraries, fonts) with `bower install` .
 8. Start rails with `bundle exec passenger start` from the Rails root and open http://localhost:3000 in a web browser.
+
+##Installation for the Image Classifier
+
+You'll need to set up a numpy/scipy pack on your server box
+Here are some instructions for mac os
+
+1. set up some taps and update brew
+brew tap samueljohn/python
+brew update && brew upgrade
+
+2. install a brewed python
+brew install python
+
+3. Run these commands and check output
+which python
+# should say /usr/local/bin/python
+
+echo $PATH
+# /usr/local/bin should appear in front of /usr/bin
+
+4. check to make sure everything is ok
+brew doctor
+
+5.make sure pip is installed
+$ pip install --upgrade setuptools
+$ pip install --upgrade pip
+
+6.install fortrain nose, pep9, etc
+$ brew install gfortran
+$ pip install nose
+$ pip install pyparsing
+$ pip install python-dateutil
+$ pip install pep8
+
+7.install numpy, scipy, matplotlib
+$ brew install numpy
+$ brew install scipy
+$ brew install matplotlib
+
+8.install theano and pandas
+$ pip install theano
+$ pip install pandas

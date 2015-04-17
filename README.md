@@ -99,6 +99,7 @@ $ brew install numpy
 $ brew install scipy
 $ brew install matplotlib
 
-8.install theano and pandas
+8.install theano, pillow and pandas
+$pip install Pillow
 $ pip install theano
 $ pip install pandas

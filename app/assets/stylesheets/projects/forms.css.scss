@@ -43,21 +43,16 @@ button i{ line-height: 0; }
   width: 40px;
 }
 .button-label{
-  opacity: 1;
-    -webkit-transition: all .5s ease;
-    -moz-transition: all .5s ease;
-    -o-transition: all .5s ease;
-  transition: all .5s ease;
-}
-.button-label.hidden{ 
-  opacity: 0;
-  visibility: visible;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+  transition: all .25s ease;
 }
 .button-bar .option-0, .button-bar .option-1, .button-bar .option-2, .button-bar .option-3, .button-bar .option-4, .button-bar .option-5{
-  -webkit-transition: all .5s ease;
-    -moz-transition: all .5s ease;
-    -o-transition: all .5s ease;
-    transition: all .5s ease;
+  -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: all .25s ease;
   z-index: 1;
 } 
 .button-bar .item{
@@ -78,8 +73,8 @@ button i{ line-height: 0; }
 .button-bar-btw .option-3{left: 235px;}
 .button-bar-btw .option-4{left: 290px;}
 .button-bar-btw .option-toggle button:hover{ opacity: 1; }
-.closed .option, .open .option-toggle { visibility: hidden; }
-.closed .option-toggle, .open .option { visibility: visible; }
+/*.closed .option, .open .option-toggle { visibility: hidden; }*/
+/*.closed .option-toggle, .open .option { visibility: visible; }*/
 .dropzone{
   background-color: rgba(100, 149, 237, 0.34);
   box-sizing: border-box;
@@ -159,6 +154,9 @@ label{
 #photo-upload input{
   cursor: pointer;
   font-size: 100px;
+}
+.preview img{
+  transition: opacity 0.5s linear;
 }
 .project-tag{ 
   display: inline-block;

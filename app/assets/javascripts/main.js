@@ -595,11 +595,9 @@ function Nav(settings){
     container.on('click', '.item', function(){
       var old = container.find('.active')
           old.removeClass('active');
-          $('#photos-'+old.data('type')).addClass('hidden');
-      setTimeout(function() {
-        $(this).addClass('active');
-        $('#photos-'+$(this).data('type')).removeClass('hidden');
-      }, 500);
+          $('#photos-'+old.data('type')).addClass('hidden').addClass('invisible');
+      $(this).addClass('active');
+      $('#photos-'+$(this).data('type')).removeClass('hidden').removeClass('invisible');
     });
   }
   function driver(){

@@ -90,6 +90,28 @@ Whirld::Application.routes.draw do
   get 'maps/map_info/:id', to: 'maps#map_info',  :as => :map_info
   post '/maps/update_remote/:id/' =>'maps#update_remote', :as => :map_update_remote, :defaults => {:format => 'json' }
 
+#project module routes
+  #photo mods
+  post 'photo_mods/place_photo_mods', :to => 'photo_mods#place_photo_mods', :as => 'place_photo_mods'
+  post 'photo_mods/remove_mod_photo/:id', :to => 'photo_mods#remove_mod_photo', :as => 'remove_mod_photo'
+
+  #gallery split
+  post 'photo_mods/user_gallery_split_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_split_delete'
+  post 'photo_mods/user_gallery_split_update/:id', :to => 'photo_mods#user_gallery_split_update', :as => 'user_gallery_split_update'
+  post 'photo_mods/user_gallery_split_create/:id', :to => 'photo_mods#user_gallery_split_create', :as => 'user_gallery_split_create'
+
+#gallery comparison
+  post 'photo_mods/user_gallery_comparison_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_comparison_delete'
+  post 'photo_mods/user_gallery_comparison_update/:id', :to => 'photo_mods#user_gallery_comparison_update', :as => 'user_gallery_comparison_update'
+  post 'photo_mods/user_gallery_comparison_create/:id', :to => 'photo_mods#user_gallery_comparison_create', :as => 'user_gallery_comparison_create'
+
+#grid
+  post 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_grid_delete'
+  post 'photo_mods/user_gallery_grid_update/:id', :to => 'photo_mods#user_gallery_grid_update', :as => 'user_gallery_grid_update'
+  post 'photo_mods/user_gallery_grid_create/:id', :to  => 'photo_mods#user_gallery_grid_create', :as => 'user_gallery_grid_create'
+
+
+
   resources :user_galleries do
       resources :photos, :except => [:update, :edit]
     end

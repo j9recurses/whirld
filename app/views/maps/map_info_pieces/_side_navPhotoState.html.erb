@@ -1,8 +1,8 @@
 <nav id='photo-state' class='tab-nav row group padding-top'>
-	<div id='tab-uploaded' class='tab six columns h-centered active' data-state='uploaded'>
-		<span class='tag-wrapper'><i class='fa fa-upload'></i> Uploaded</span>
+	<div id='tab-uploaded' class='tab item six columns h-centered active' data-type='uploaded'>
+		<span class='tag-wrapper'><i class='fa fa-upload'></i> Current</span>
 	</div>
-	<div id='tab-saved' class='tab six columns h-centered' data-state='saved'>
-		<span class='tag-wrapper'><i class='fa fa-save'></i> Saved</span>
+	<div id='tab-saved' class='tab item six columns h-centered' data-type='saved'>
+		<span class='tag-wrapper'><i class='fa fa-save'></i> Saved (<%= @user_gallery.photos.count%>)</span>
 	</div>
 </nav>

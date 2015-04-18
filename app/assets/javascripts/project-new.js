@@ -504,7 +504,7 @@ function PhotoUpload(el) {
           }, 200);
     });
   }
-  function driver(){
+  function init(){
     var user_gal_id = el.siblings('#user-gal-id').attr('value');
     var aerialCount = $('#photos-aerial').find('.photo').length;
     var streetCount = $('#photos-street').find(('.photo')).length;
@@ -517,6 +517,7 @@ function PhotoUpload(el) {
         $('.progress-bar').css('width', progress + '%');
       },
       done: function (e, data) {
+        console.log('hello')
         appendPhotos(data.result);
         if(data.result.is_aerial){
           aerialCount += 1;
@@ -526,11 +527,12 @@ function PhotoUpload(el) {
         }
         var photoCount = {aerial: aerialCount, street: streetCount};
         countLabels(photoCount);
-        $('.photo-list').removeClass('default');
-        new Nav({type: 'photo-manager'});
         $('.temp-preloader').addClass('hidden');
       } // end done
     }); // end fileupload
+  }
+  function driver(){
+    init();
   }
   driver();
 }
@@ -554,23 +556,41 @@ function Nav(settings) {
       zIndex: z
     });
   }
-  function initTabs(container) {
-    container.on('click', '.item', function() {
-      var old = container.find('.active')
-          old.removeClass('active');
-          $('#photos-'+old.data('type')).addClass('hidden').addClass('invisible');
-      $(this).addClass('active');
-      $('#photos-'+$(this).data('type')).removeClass('hidden').removeClass('invisible');
-    });
+
+  function initPhotoTabs(photoState){
+    photoState.on('click', '.item', function(){
+      // Switch uploaded and saved tab
+      var oldStateTrigger = $(this).siblings('.active');
+          oldStateTrigger.removeClass('active');
+      var newStateTrigger = $(this);
+          newStateTrigger.addClass('active');
+
+      // Show / hide entire uploaded / saved photo sections
+      var stateHide = $('#photos-'+oldStateTrigger.data('type'))
+          stateHide.addClass('hidden').addClass('invisible');
+      var stateShow = $('#photos-'+newStateTrigger.data('type'))
+          stateShow.removeClass('hidden').removeClass('invisible');
+
+      // Within the showing section (uploaded/saved), show / hide aerial and street
+      var photoTypeBar = photoState.siblings('#photo-cats');
+      photoTypeBar.on('click', '.item', function(){
+        var oldCatTrigger = $(this).siblings('.active');
+            oldCatTrigger.removeClass('active');
+        var newCatTrigger = $(this);
+            newCatTrigger.addClass('active');
+
+        var catHide = stateShow.find('#photos-'+oldCatTrigger.data('type'));
+            catHide.addClass('hidden').addClass('invisible');
+        var catShow = stateShow.find('#photos-'+newCatTrigger.data('type'));
+            catShow.removeClass('hidden').removeClass('invisible');
+      });
+    })
   }
   function driver() {
-    if(type == 'photo-manager') {
-      $('#navbar-photo-manager').removeClass('hidden');
-      initStickyNav($('#navbar-photo-manager'), 8);
-      initTabs($('#photo-cats'));
-    }
-    else if(type == 'create') {
+    if(type == 'create') {
       initStickyNav($('#navbar-create'), 9);
+      initStickyNav($('#navbar-photo-manager'), 8);
+      initPhotoTabs($('#photo-state'));
     }
     else if(type == 'main') {
       initStickyNav($('#navbar-main'), 9);
@@ -578,7 +598,6 @@ function Nav(settings) {
   }
   driver();
 }
-
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }

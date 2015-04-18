@@ -1,16 +1,11 @@
 /*===== Project Map =====*/
 
 #knitter-map-pane {
-	height: 400px;	/*display: none; */
+	height: 400px;
+	/*display: none; */
 }
 
 #project-creation-2 #knitter-map-pane{
 	display: none;
 	width: 100%;
-}
-
-
-/*Bigger than 1024px*/
-@media only screen and (min-width: 1024px) {
-  #knitter-map-pane { height: 600px; }
 }

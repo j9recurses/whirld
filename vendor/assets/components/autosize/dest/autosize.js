@@ -49,7 +49,6 @@
 			ta.style.width = width;
 
 			maxHeight = style.maxHeight !== 'none' ? parseFloat(style.maxHeight) : false;
-			
 			if (style.boxSizing === 'content-box') {
 				heightOffset = -(parseFloat(style.paddingTop)+parseFloat(style.paddingBottom));
 			} else {

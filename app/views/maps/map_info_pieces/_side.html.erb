@@ -5,43 +5,72 @@
 	</div>
 </article>
 
-<nav id='navbar-photo-manager' class='sticky-nav hidden'>
+
+<nav id='navbar-photo-manager' class='sticky-nav'>
 	<%= render :partial => "maps/map_info_pieces/side_navPhotoState" %>
 	<%= render :partial => "maps/map_info_pieces/side_navPhotoCats" %>
 </nav>
 
-<section id='photos-uploaded' class='default photo-list first-section scrollable'>
+<section id='photos-uploaded' class='photo-list first-section scrollable'>
+	<article id='photo-upload' class='preview six columns h-centered'>
+		<div class='img-wrapper photo-upload-wrapper v-centered'>
+				<i class='fa fa-plus-circle h1-size'></i>
+		</div>
+		<%= form_for [@user_gallery, @photo], :remote => true do %>
+			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+		<% end %>
+	</article>
 	<div id='photos-aerial'>
 		<div class='photo-row row group wrapper'>
-			<article id='photo-upload' class='preview six columns h-centered'>
-				<div class='img-wrapper photo-upload-wrapper v-centered'>
-						<i class='fa fa-plus-circle h1-size'></i>
-				</div>
-				<%= form_for [@user_gallery, @photo], :remote => true do %>
-					<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-			    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-				<% end %>
-			</article>
 		</div> <!-- end row group -->
 	</div>
 	<div id='photos-street' class='hidden invisible'>
 		<div class='photo-row row group wrapper'>
-			<article id='photo-upload' class='preview six columns h-centered'>
-				<div class='img-wrapper photo-upload-wrapper v-centered'>
-						<i class='fa fa-plus-circle h1-size'></i>
-				</div>
-				<%= form_for [@user_gallery, @photo], :remote => true do %>
-					<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-			    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-				<% end %>
-			</article>
 		</div> <!-- end row group -->
+	</div>
+</section>
+
+
+<section id='photos-saved' class='photo-list first-section scrollable hidden'>
+	<div class='photo-row row group wrapper'>	
+		<article id='photo-upload' class='preview six columns h-centered'>
+		<div class='img-wrapper photo-upload-wrapper v-centered'>
+				<i class='fa fa-plus-circle h1-size'></i>
+		</div>
+		<%= form_for [@user_gallery, @photo], :remote => true do %>
+			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+		<% end %>
+	</article>
+	</div>
+	<% aerial = [] %>
+	<% street = [] %>
+	<% @user_gallery.photos.each do |photo| %>
+		<% if photo.is_aerial %>
+			<% aerial << photo %>
+		<% elsif photo.is_normal %>
+			<% street << photo %>
+		<% end %>
+	<% end %>
+
+	<div id='photos-aerial'>	
+		<div class='photo-row row group wrapper'>	
+			<% aerial.each_with_index do |photo, index| %>
+						<%= render :partial => 'maps/map_info_pieces/side_sortState', :locals => { :photo => photo, :index => index } %>
+			<% end %>
+		</div>
+	</div>
+
+	<div id='photos-street' class='hidden invisible'>	
+		<div class='photo-row row group wrapper'>	
+			<% street.each_with_index do |photo, index| %>
+						<%= render :partial => 'maps/map_info_pieces/side_sortState', :locals => { :photo => photo, :index => index } %>
+			<% end %>
+		</div>
 	</div>
 
 </section>
 
-<section id='photos-saved' class='photo-list first-section scrollable hidden'>
-	<div class='photo-row row group wrapper'>
-	</div> <!-- end row group -->
-</section>
+
 <%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>

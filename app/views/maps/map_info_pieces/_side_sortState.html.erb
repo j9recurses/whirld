@@ -1,0 +1,17 @@
+<% count = index + 1; %>
+<% if count % 2 == 1 %>
+				<article class='preview six columns h-centered'>
+					<div class='img-wrapper v-centered'>
+						<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable') %>
+					</div>
+			</article>
+		
+	<% elsif count % 2 == 0 %>
+			<article class='preview six columns h-centered'>
+				<div class='img-wrapper v-centered'>
+					<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable') %>
+				</div>
+			</article>
+		</div> <!-- end row group -->
+		<div class='photo-row row group wrapper'>	
+<% end %>

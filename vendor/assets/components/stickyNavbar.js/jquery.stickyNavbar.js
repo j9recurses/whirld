@@ -188,7 +188,7 @@
           // add 'sticky' class to this as soon as 'this' is in sticky mode */
           $self.css({
             'position': options.$selfPosition,
-            'zIndex': selfZindex
+            'zIndex': $selfZindex
           }).removeClass(options.stickyModeClass).addClass(' ' + options.unstickyModeClass);
         }
 

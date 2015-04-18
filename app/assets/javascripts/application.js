@@ -20,7 +20,6 @@
 
 // Project editor JS:
 
-//= autosize/dest/autosize.min
 //= jquery-ui/jquery-ui.min
 //= jquery-ui/ui/minified/draggable.min
 //= jquery-ui/ui/minified/droppable.min

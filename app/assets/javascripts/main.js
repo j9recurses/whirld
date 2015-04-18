@@ -3,7 +3,7 @@ $(document).ready(function() {
   new Form();
   new Nav({type: 'main'});
   if($('#project-creation-2').length > 0) {
-    new PhotoUpload($('#project-creation-2'));
+    new PhotoUpload($('#photo-upload-input'));
   }
 });
 function Form(el) {
@@ -100,23 +100,24 @@ function Form(el) {
 
   function appendTag(e) {
     var input = $(e.target);
-    var tagList = input.nextAll('.tag-container');
+    var tagContainer = input.nextAll('.tag-container');
     var tag = htmlTag(e)[0];
     if(e.which == 188 || e.which == 13) {
-      if(tagList.children('.project-tag').length == 0) {
-        tagList.append(tag);
+      if(tagContainer.children('.project-tag').length == 0) {
+        tagContainer.append(tag);
         input.val('');
       }
       else {
-        if($('#'+tag.id).length > 0) {
-          $('#'+tag.id).addClass('error');
+        var tagCheck = tagContainer.find('#'+tag.id);
+        if(tagCheck.length > 0) {
+          tagCheck.addClass('error');
           input.val('');
           setTimeout(function() {
-             $('#'+tag.id).removeClass('error');
+             tagCheck.removeClass('error');
            }, 600);
         }
         else{
-          tagList.append(tag);
+          tagContainer.append(tag);
           input.val('');
         }
       }
@@ -140,7 +141,7 @@ function Form(el) {
   }
   function initFields(){
     if(el.hasClass('caption')){
-      createBasicField(el);
+      createBasicField([el]);
     }
     else if(el.hasClass('tag-input')){
       createTagField(el);
@@ -153,99 +154,6 @@ function Form(el) {
     else {
       initFields();
     }
-  }
-  driver();
-}
-
-function Module(option) { 
-  var bar = option.parent();
-  var type = option.data('module-type');
-  var modID = type + "-module-" + $('.module').length;
-
-  function htmlHeader(icon, type){
-    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-cc-" + icon + "'></i><span class='cursor-def'>" + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
-    return html
-  }
-  function htmlDropzone(){
-    var message;
-    if(type == 'comparison'){
-      message = 'Drag two photos here to compare them.';
-    }
-    else if(type == 'grid'){
-      message = 'Drag up to ten photos here.';
-    }
-    else if(type == 'half'){
-      message = 'Drag one photo here.';
-      return "<p class='caps'>" + message +"</p>";
-    }
-    var html = "<div class='droppable dropzone row group wrapper'><p class='caps'>" + message +"</p></div>";
-    return html;
-  }
-  function htmlTaginput(){
-    var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
-    return html
-  }
-  function createMod(html){
-    var mod = $($.parseHTML(html));
-        mod.attr('id', modID);
-        mod.data('type', type)
-    var icon = mod.find('.fa-remove')
-        icon.data('id', modID);
-    icon.on('click', function(){
-      $('#'+modID).remove();
-      $('#btw-bar-'+modID.split('-')[2]).remove();
-    });
-    return mod;
-  }
-  function createComparison(){
-    var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('cc-visa', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createGrid(){
-    var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('photo', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createHalf(){
-    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
-    var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
-    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('bar-chart', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createText(){
-    var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function createVideo(){
-    var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
-    return mod;
-  }
-  function driver(){
-    if(type == 'comparison'){
-      var mod = createComparison();
-    }
-    else if(type == 'grid'){
-      var mod = createGrid();
-    }
-    else if(type == 'half'){
-      var mod = createHalf();
-    }
-    else if(type == 'text'){
-      var mod = createText();
-    }
-    else if(type == 'video'){
-      var mod = createVideo();
-    }
-    bar.before(mod);
-    new ButtonBar({type: 'btw', mod: mod});
-    new Form($(mod).find('textarea.tag-input'));
-    new Form($(mod).find('textarea.text-module-body'));
-    new Form($(mod).find('textarea.caption'));
-    new DragDrop(mod);
   }
   driver();
 }
@@ -524,6 +432,9 @@ function Module(option) {
   driver();
 }
 function PhotoUpload(el) {
+  console.log(el)
+  var el = el;
+
   function htmlPhotoPrev(result) {
     var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
@@ -576,6 +487,35 @@ function PhotoUpload(el) {
           }, 200);
     });
   }
+  function driver(){
+    var user_gal_id = el.siblings('#user-gal-id').attr('value');
+    var aerialCount = $('#photos-aerial').find('.photo').length;
+    var streetCount = $('#photos-street').find(('.photo')).length;
+    el.fileupload({
+      dataType: 'json',
+      url: '/user_galleries/' + user_gal_id + '/photos',
+      progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.temp-preloader').removeClass('hidden');
+        $('.progress-bar').css('width', progress + '%');
+      },
+      done: function (e, data) {
+        appendPhotos(data.result);
+        if(data.result.is_aerial){
+          aerialCount += 1;
+        }
+        else if(data.result.is_normal){
+          streetCount += 1;
+        }
+        var photoCount = {aerial: aerialCount, street: streetCount};
+        countLabels(photoCount);
+        $('#photo-manager').removeClass('default');
+        new Nav({type: 'create'});
+        $('.temp-preloader').addClass('hidden');
+      } // end done
+    }); // end fileupload
+  }
+  driver();
 }
 function Nav(settings) {
   var type = settings.type;

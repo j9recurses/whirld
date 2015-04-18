@@ -1,54 +1,36 @@
-$(document).ready(function(){
-  var bb = new ButtonBar({type: 'end'});
-  var form = new Form();
+$(document).ready(function() {
+  new ButtonBar({type: 'end'});
+  new Form();
   new Nav({type: 'main'});
-  if($('#project-creation-2').length > 0){
+  if($('#project-creation-2').length > 0) {
     new PhotoUpload($('#project-creation-2'));
   }
-
-  // // Video stuff
-  // var submit_button = $('#submit_pre_upload_form');
-  //  var video_upload = $('#video_upload');
-
-   // // $("#title_submit").click(function() {
-   //  $('#name_field').bind("enterKey",function(e){
-   //      name = $("#name_field").val();
-   //          console.log(name);
-   //          map_id = $("#mapp_val").val();
-   //          console.log(map_id)
-   //          data =  {name: name};
-   //          //url = $(this).attr("action");
-   //         url = "/maps/update_remote/";
-   //         url = url.concat(map_id);
-   //          console.log(url);
-   //          $.ajax({
-   //              url: url,
-   //              data:  data,
-   //              cache: false,
-   //              type: "post",
-   //              success: function(data){
-   //                  console.log("sucess!!")
-   //                  console.log(data.name);
-   //                 // can append the json return data to whereever
-   //                 // $(' <h1 class='project-title first-header'>'+data.name+'"></l===>').appendTo('#thumbs');
-
-   //              },
-   //              error: function(){
-   //              alert("Something went wrong!");
-   //               }
-   //        });
-   //      })
-   //  //listens to for enter event on the form field
-   //  $('#name_field').keyup(function(e){
-   //  if(e.keyCode == 13){
-   //    $(this).trigger("enterKey");
-   //    }
-   //  });
 });
-function Form(el){
-  el = el || $(document);
+function Form(el) {
+  var el = el || '';
+  // Basic field functions: character counting on title, description, and captions.
+  function changeCounter(e) {
+    var input = $(e.target);
+    var letterCount = input.val().length;
+    var span = input.nextAll('span.char-limit');
+        $(span).removeClass('hidden');
+    var count = $(span).data('limit') - letterCount;
+    $(span).text(count);
+    input.on('focusout', function() {
+      if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('hidden'); }
+    });
+  }
 
-  function createTagText(e){
+  function createBasicField(elArray) {
+    console.log(elArray)
+    $.each(elArray, function(i, el) {
+      el.keyup(function(e) { changeCounter(e); });
+      autosize(el);
+    });
+  }
+
+  // Tag field functions
+  function createTagText(e) {
     var input = $(e.target);
     var s = input.val().toLowerCase();
     var tagText = s.replace(/[\.,-\/#!'$\n?%\^&\*;:{}=\-_`~()]/g,"");
@@ -56,27 +38,27 @@ function Form(el){
     return tagText;
   }
 
-  function createTag(e){
+  function createTag(e) {
     var tagText = createTagText(e);
     var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
     var tag = $($.parseHTML(tagHTML));
     var tagID = 'tag-' + tagText;
         tag.attr('id', tagID);
-        tag.on('click', function(){ $(this).remove(); });
+        tag.on('click', function() { $(this).remove(); });
     return tag;
   }
 
-  function appendTag(e){
+  function appendTag(e) {
     var input = $(e.target);
     var tagList = input.nextAll('.tag-container');
     var tag = createTag(e)[0];
-    if(e.which == 188 || e.which == 13){
-      if(tagList.children('.project-tag').length == 0){
+    if(e.which == 188 || e.which == 13) {
+      if(tagList.children('.project-tag').length == 0) {
         tagList.append(tag);
         input.val('');
       }
       else {
-        if($('#'+tag.id).length > 0){
+        if($('#'+tag.id).length > 0) {
           $('#'+tag.id).addClass('error');
           input.val('');
           setTimeout(function() {
@@ -91,66 +73,26 @@ function Form(el){
     }
   }
 
-  function changeCounter(e){
-    var input = $(e.target);
-    var letterCount = input.val().length;
-    var span = input.nextAll('span.char-limit');
-        $(span).removeClass('hidden');
-    var count = $(span).data('limit') - letterCount;
-    $(span).text(count);
-    input.on('focusout', function(){
-      if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
-    });
+  function createTagField(el){
+    el.keyup(function(e) { appendTag(e); });
   }
-  function ajax(el){
-    var project_id = $('#project-id').val();
-    console.log(project_id)
-    el.on('focusout', function(e){
-      var name = el.val();
-      var data = {name: name, id: project_id};
-      $.ajax({
-        url: '/maps/update_remote/' + project_id,
-        data:  data,
-        cache: false,
-        type: 'post',
-        success: function(data){
-           console.log("sucess!!")
-           console.log(data.name);
-        },
-        error: function(){
-          console.log("Something went wrong!");
-        }
-      });
-    }); // end keyup
-  }
-  function loadDoc(){
-    $('#project-description').keyup(function(e){ changeCounter(e); });
-    autosize($('textarea#project-description'));
-    $('#project-tag-list').keyup(function(e){ appendTag(e); });
-    $('#project-title').keyup(function(e){ changeCounter(e); });
-    autosize($('textarea#project-title'));
-  }
+
   function driver(){
-    if(el.hasClass('caption')){
-      el.keyup(function(e){ changeCounter(e); });
-      autosize(el);
+    if(el == ''){
+      createBasicField([ $('#project-description'), $('#project-title')] );
+      createTagField($('#project-tag-list'));
     }
     else if(el.hasClass('tag-input')){
-      el.keyup(function(e){ appendTag(e); });
+      createTagField(el);
     }
-    else if(el.hasClass('text-module-body')){
-      autosize(el);
-    }
-    else{
-      loadDoc();
-    }
-    if($('#project-creation-2').length > 0){
-      ajax($('#project-title'));
+    else if(el.hasClass('caption')){
+      createBasicField(el)
     }
   }
   driver();
 }
-function Module(option){
+
+function Module(option) { 
   var bar = option.parent();
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
@@ -238,11 +180,11 @@ function Module(option){
     new Form($(mod).find('textarea.tag-input'));
     new Form($(mod).find('textarea.text-module-body'));
     new Form($(mod).find('textarea.caption'));
-    var dd = new DragDrop(mod);
+    new DragDrop(mod);
   }
   driver();
 }
-function ButtonBar(settings){
+function ButtonBar(settings) { 
   var mod = settings.mod || '';
   var type = settings.type;
 
@@ -298,8 +240,8 @@ function ButtonBar(settings){
   }
   driver();
 }
-function Drag(el){
-  function initDrag(){
+function Drag(el) {
+  function initDrag() {
     el.draggable({
       containment: '#project-creation-2',
       cursor: '-webkit-grabbing',
@@ -315,10 +257,10 @@ function Drag(el){
       zIndex: 100
     });
   }
-  function driver(){ initDrag(); }
+  function driver() { initDrag(); }
   driver();
 }
-function Drop(mod){
+function Drop(mod) { 
   var mod = mod;
   var modType = mod.data('type');
 
@@ -385,7 +327,7 @@ function Drop(mod){
     initPhotoRemovable(photo);
 
     new Form($(photo.find('textarea.caption')));
-    new Form($(mod.find('textarea.tag-input')));
+    // new Form($(mod.find('textarea.tag-input')));
   }
   function droppableLimit(){
     if(modType == 'comparison'){ return 2; }
@@ -424,7 +366,7 @@ function Drop(mod){
   }
   driver();
 }
-function Module(option){
+function Module(option) { 
   var bar = option.parent();
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
@@ -516,37 +458,37 @@ function Module(option){
   }
   driver();
 }
-function PhotoUpload(el){
-  function htmlPhotoPrev(result){
+function PhotoUpload(el) {
+  function htmlPhotoPrev(result) {
     var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
     var img = photoPrev.find('img');
     new Drag(img);
-    img.on('load', function(){
+    img.on('load', function() {
       $(this).removeClass('invisible');
     });
     return photoPrev;
   }
-  function htmlPhotoRow(){
+  function htmlPhotoRow() {
     var html = "<div class='photo-row row group wrapper'></div>";
     var row = $($.parseHTML(html));
     return row;
   }
-  function appendPhotos(result){
+  function appendPhotos(result) {
     var photo = htmlPhotoPrev(result);
     var container;
-    if(result.is_aerial){
+    if(result.is_aerial) {
       container = $('#photos-aerial');
       photo.addClass('aerial');
     }
-    else if(result.is_normal){
+    else if(result.is_normal) {
       container = $('#photos-street');
       photo.addClass('street');
     }
     var lastRow = container.find('.photo-row').last();
     var photoCount = lastRow.find('.preview').length;
     var row;
-    if(photoCount == 1){
+    if(photoCount == 1) {
       row = lastRow;
       row.append(photo);
     }
@@ -556,8 +498,8 @@ function PhotoUpload(el){
       container.append(row);
     }
   }
-  function countLabels(count){
-    $.each($('#photo-cats').find('.item'), function(i, item){
+  function countLabels(count) {
+    $.each($('#photo-cats').find('.item'), function(i, item) {
       var photoType = $(item).data('type');
       var photoCount = $('#photos-'+photoType).length;
       var labelText = photoType.capitalize() + '  (' + count[photoType] + ')';
@@ -570,9 +512,9 @@ function PhotoUpload(el){
     });
   }
 }
-function Nav(settings){
+function Nav(settings) {
   var type = settings.type;
-  function initStickyNav(el){
+  function initStickyNav(el) {
     el.stickyNavbar({
       animDuration: 250,              // Duration of jQuery animation
       startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
@@ -589,8 +531,8 @@ function Nav(settings){
       unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
     });
   }
-  function initTabs(container){
-    container.on('click', '.item', function(){
+  function initTabs(container) {
+    container.on('click', '.item', function() {
       var old = container.find('.active')
           old.removeClass('active');
           $('#photos-'+old.data('type')).addClass('hidden').addClass('invisible');
@@ -598,13 +540,13 @@ function Nav(settings){
       $('#photos-'+$(this).data('type')).removeClass('hidden').removeClass('invisible');
     });
   }
-  function driver(){
-    if(type == 'create'){
+  function driver() {
+    if(type == 'create') {
       $('#navbar-create').removeClass('hidden');
       initStickyNav($('#navbar-create'));
       initTabs($('#photo-cats'));
     }
-    else if(type == 'main'){
+    else if(type == 'main') {
       initStickyNav($('#navbar-main'));
     }
   }

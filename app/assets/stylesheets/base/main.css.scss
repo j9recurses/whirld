@@ -74,6 +74,9 @@ img{
   right: 5px;
   top: 5px;
 }
+.tab {
+  cursor: pointer;
+}
 .tag{
   cursor: pointer;
   display: inline-block;
@@ -83,7 +86,7 @@ img{
   border-radius: 1px;
   color: white;
 }
-.tag.active{
+.tab.active, .tag.active{
   cursor: default;
 }
 .v-centered {

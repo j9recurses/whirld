@@ -1,17 +1,17 @@
 var geocoder = new google.maps.Geocoder();
 
 jQuery(document).ready(function($) {
-  $('#map_location').submit(function(e) {
+  $('#project-location').submit(function(e) {
     e.preventDefault();
   })
 
   window.mapKnitter.getMap().on('drag',function(e) {
-    $("#map_lat").val(window.mapKnitter.getMap().getCenter().lat);
-    $("#map_lon").val(window.mapKnitter.getMap().getCenter().lng);
+    $("#project-lat").val(window.mapKnitter.getMap().getCenter().lat);
+    $("#project-lon").val(window.mapKnitter.getMap().getCenter().lng);
     $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
   })
 
-  $("#map_location").autocomplete({
+  $("#project-location").autocomplete({
     autoFocus: true,
     //This bit uses the geocoder to fetch address values
     source: function(request, response) {
@@ -30,8 +30,8 @@ jQuery(document).ready(function($) {
     //This bit is executed upon selection of an address
     select: function(event, ui) {
       var b = ui.item.bounds
-      $("#map_lat").val(ui.item.latitude);
-      $("#map_lon").val(ui.item.longitude);
+      $("#project-lat").val(ui.item.latitude);
+      $("#project-lon").val(ui.item.longitude);
       if (b) {
         window.mapKnitter.getMap().fitBounds([
           [b.getNorthEast().lat(), b.getNorthEast().lng()],

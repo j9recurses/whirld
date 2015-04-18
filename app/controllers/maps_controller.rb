@@ -107,8 +107,6 @@ class MapsController < ApplicationController
       end
   end
 
-
-
   # used by leaflet to fetch corner coords of each warpable
   def images
     map = Map.find params[:id]

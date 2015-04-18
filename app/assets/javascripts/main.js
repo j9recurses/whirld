@@ -147,7 +147,7 @@ function Form(el) {
       createTagField(el);
     }
     else if(el.hasClass('text-module-body')){
-      autosize(el);
+      autosize
     }
   }
   function driver(){
@@ -165,7 +165,7 @@ function ButtonBar(settings) {
   var type = settings.type;
 
   function createBTW(){
-    html = "<ul class='button-bar button-bar-btw closed'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
+    html = "<ul class='button-bar button-bar-btw'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
     el = $($.parseHTML(html));
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
@@ -173,6 +173,7 @@ function ButtonBar(settings) {
   function openBar(toggle){
     toggle.addClass('invisible').addClass('hidden');
     var bar = toggle.parent('.button-bar');
+        bar.addClass('open');
     $.each(bar.children('.option'), function(i, option){
       $(option).removeClass('invisible').dequeue();
       $(option).addClass('option-'+i.toString()).dequeue();
@@ -186,14 +187,20 @@ function ButtonBar(settings) {
   }
   function closeBar(toggle){
     var bar = toggle.parent('.button-bar');
+        bar.removeClass('open');
     $.each(bar.children('.option'), function(i, option){
       $(option).addClass('invisible').dequeue();
       $(option).removeClass('option-'+i.toString()).dequeue();
     });
     toggle.removeClass('hidden').removeClass('invisible');
   }
-  function initOptions(bar){
-
+  function closeAllBars(){
+    $.each($('.button-bar'), function(i, bar){
+      if($(bar).hasClass('open')){
+        var toggle = $(bar).find('.option-toggle');
+        closeBar($(toggle));
+      }
+    });
   }
   function init(el){
     el.on('click', '.option-toggle', function(){
@@ -212,6 +219,7 @@ function ButtonBar(settings) {
       var btw = createBTW();
       btw.insertBefore(mod);
       init(btw);
+      closeAllBars();
     }
   }
   driver();
@@ -336,7 +344,6 @@ function Drop(mod) {
     });
   }
   function driver(){
-    // initDrag();
     initModDrop(mod);
     initSort(mod);
   }
@@ -435,7 +442,6 @@ function Module(option) {
   driver();
 }
 function PhotoUpload(el) {
-  console.log(el)
   var el = el;
 
   function htmlPhotoPrev(result) {

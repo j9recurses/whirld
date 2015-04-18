@@ -12,15 +12,7 @@
 </nav>
 
 <section id='photos-uploaded' class='photo-list first-section scrollable'>
-	<article id='photo-upload' class='preview six columns h-centered'>
-		<div class='img-wrapper photo-upload-wrapper v-centered'>
-				<i class='fa fa-plus-circle h1-size'></i>
-		</div>
-		<%= form_for [@user_gallery, @photo], :remote => true do %>
-			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-		<% end %>
-	</article>
+
 	<div id='photos-aerial'>
 		<div class='photo-row row group wrapper'>
 		</div> <!-- end row group -->
@@ -33,17 +25,7 @@
 
 
 <section id='photos-saved' class='photo-list first-section scrollable hidden'>
-	<div class='photo-row row group wrapper'>	
-		<article id='photo-upload' class='preview six columns h-centered'>
-		<div class='img-wrapper photo-upload-wrapper v-centered'>
-				<i class='fa fa-plus-circle h1-size'></i>
-		</div>
-		<%= form_for [@user_gallery, @photo], :remote => true do %>
-			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-		<% end %>
-	</article>
-	</div>
+
 	<% aerial = [] %>
 	<% street = [] %>
 	<% @user_gallery.photos.each do |photo| %>

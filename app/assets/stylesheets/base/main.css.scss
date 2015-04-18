@@ -15,6 +15,7 @@ a:hover, .a:hover {
 .caps{ text-transform: uppercase; }
 .caption{ font-style: italic; }
 .cursor-def{ cursor: default; }
+.cursor-point{ cursor: pointer; }
 .first-section { padding-top: 3.813em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
 .h-centered{ text-align: center; }
 .h-righted{ text-align: right; }
@@ -74,7 +75,7 @@ img{
   right: 5px;
   top: 5px;
 }
-.tab {
+.tab{
   cursor: pointer;
 }
 .tag{
@@ -86,7 +87,7 @@ img{
   border-radius: 1px;
   color: white;
 }
-.tab.active, .tag.active{
+.tab.active, .tag.active, .tab.empty{
   cursor: default;
 }
 .v-centered {

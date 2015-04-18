@@ -1,10 +1,13 @@
 $(document).ready(function() {
-  new ButtonBar({type: 'end'});
-  new Form();
-  new Nav({type: 'main'});
   if($('#project-creation-2').length > 0) {
+    new Nav({type: 'create'});
     new PhotoUpload($('#photo-upload-input'));
   }
+  else{
+    new Nav({type: 'main'});
+  }
+  new ButtonBar({type: 'end'});
+  new Form();
 });
 function Form(el) {
   var el = el || '';
@@ -147,7 +150,7 @@ function Form(el) {
       createTagField(el);
     }
     else if(el.hasClass('text-module-body')){
-      autosize
+      autosize(el);
     }
   }
   function driver(){
@@ -170,6 +173,10 @@ function ButtonBar(settings) {
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
   }
+  function initOpenBar(toggle){
+    var bar = toggle.parent('.button-bar');
+
+  }
   function openBar(toggle){
     toggle.addClass('invisible').addClass('hidden');
     var bar = toggle.parent('.button-bar');
@@ -177,10 +184,10 @@ function ButtonBar(settings) {
     $.each(bar.children('.option'), function(i, option){
       $(option).removeClass('invisible').dequeue();
       $(option).addClass('option-'+i.toString()).dequeue();
+      $(option).hover(function(){
+        $(this).children('.button-label').toggleClass('invisible');
+      });
     });
-    bar.children('.option').hover(function(){
-      $(this).children('.button-label').toggleClass('invisible');
-    })
     bar.closest('html').on('keyup', function(e){
       if(e.which == 27){ closeBar(toggle); }
     });
@@ -193,6 +200,7 @@ function ButtonBar(settings) {
       $(option).removeClass('option-'+i.toString()).dequeue();
     });
     toggle.removeClass('hidden').removeClass('invisible');
+    initOpenBar(toggle);
   }
   function closeAllBars(){
     $.each($('.button-bar'), function(i, bar){
@@ -518,8 +526,8 @@ function PhotoUpload(el) {
         }
         var photoCount = {aerial: aerialCount, street: streetCount};
         countLabels(photoCount);
-        $('#photo-manager').removeClass('default');
-        new Nav({type: 'create'});
+        $('.photo-list').removeClass('default');
+        new Nav({type: 'photo-manager'});
         $('.temp-preloader').addClass('hidden');
       } // end done
     }); // end fileupload
@@ -528,7 +536,8 @@ function PhotoUpload(el) {
 }
 function Nav(settings) {
   var type = settings.type;
-  function initStickyNav(el) {
+
+  function initStickyNav(el, z) {
     el.stickyNavbar({
       animDuration: 250,              // Duration of jQuery animation
       startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
@@ -540,9 +549,9 @@ function Nav(settings) {
       jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
       mobile: false,                  // If false nav will not stick under 480px width of window
       mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
-      zindex: 9999,                   // The zindex value to apply to the element: default 9999, other option is "auto"
       stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
-      unstickyModeClass: "unsticky"   // Class that will be applied to 'this' in non-sticky mode
+      unstickyModeClass: "unsticky",   // Class that will be applied to 'this' in non-sticky mode
+      zIndex: z
     });
   }
   function initTabs(container) {
@@ -555,13 +564,16 @@ function Nav(settings) {
     });
   }
   function driver() {
-    if(type == 'create') {
-      $('#navbar-create').removeClass('hidden');
-      initStickyNav($('#navbar-create'));
+    if(type == 'photo-manager') {
+      $('#navbar-photo-manager').removeClass('hidden');
+      initStickyNav($('#navbar-photo-manager'), 8);
       initTabs($('#photo-cats'));
     }
+    else if(type == 'create') {
+      initStickyNav($('#navbar-create'), 9);
+    }
     else if(type == 'main') {
-      initStickyNav($('#navbar-main'));
+      initStickyNav($('#navbar-main'), 9);
     }
   }
   driver();

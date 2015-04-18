@@ -1,16 +1,11 @@
 /*===== Project Creation =====*/
-#navbar-create{ 
-  top: 54px;
-  width: 32.26%;
-  z-index: 9999;
-}
 #photo-cats .tag { margin-right: 2em; background-color: black; }
 #photo-cats .tag.active {  background-color: gray; }
 
 #photo-cats, #photo-state{ background-color: black; }
 .photo-list{
   background-color: black;
-  margin-top: 3.5em;
+  margin-top: 2em;
 }
   .photo-list img { max-height: 180px; }
   .photo-list.scrollable{

@@ -2,9 +2,22 @@
 .logo a:hover { opacity: 1; }
 nav a { color: azure; }
 .main-nav { 
+	width: 100%;
+}
+.navbar {
 	background-color: gray;
   max-height: 53px;
-	width: 100%;
+}
+#navbar-create{
+	z-index: 9999;
+	top: -13px;
+}
+#navbar-photo-manager{ 
+  background-color: black;
+  padding-top: 43px;
+  top: 0px;
+  width: 32.26%;
+  z-index: 9998;
 }
 .scrollable {
   height: 100%;
@@ -16,8 +29,8 @@ nav a { color: azure; }
 	background-color: black; 
 	margin-top: 51px;
 }
-.side-nav.default{
-	margin-top: -2px;
+.photo-list.default{
+	margin-top: -52px;
 }
 .side-nav .toggle {
 	display: block;
@@ -41,5 +54,5 @@ nav a { color: azure; }
 /*Bigger than 1024px*/
 @media only screen and (min-width: 1024px) {
 	#left-nav{ width: 40.73%; }
-	#main-logo { width: 15.33%; }
+	#navbar-main #main-logo { width: 15.33%; }
 }

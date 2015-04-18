@@ -3,8 +3,7 @@ require 'open3'
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
   before_filter :authenticate_user!,  :except => [:index, :show, :images]
-
-  layout 'map'
+  layout 'layout_map'
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')
@@ -13,6 +12,7 @@ class MapsController < ApplicationController
 
   def new
     @map = Map.new
+    @extra_js = true  # for layout differentiation
   end
 
   def create
@@ -38,6 +38,8 @@ class MapsController < ApplicationController
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @photo = Photo.new
     @maptags = @map.tag_counts.pluck(:name).join(", ")
+    @extra_js = true  # for layout differentiation
+    @photo_manager = true # for layout differentiation
     render "map_info"
   end
 
@@ -72,7 +74,6 @@ class MapsController < ApplicationController
         @map.add_tag(tagname.strip, current_user)
       end
     end
-
     @map.save
     redirect_to :action => "show"
   end

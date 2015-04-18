@@ -24,7 +24,7 @@
 
   'use strict';
 
-  $.fn.stickyNavbar = function(prop) {
+  $.fn.stickyNavbar = function(prop, z) {
 
     // Set default values
     var options = $.extend({
@@ -41,10 +41,10 @@
         selector: 'a', // Selector to which activeClass will be added, either 'a' or 'li'
         mobile: false, // If false, nav will not stick under viewport width of 480px (default) or user defined mobileWidth
         mobileWidth: 480, // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due user usability on mobile)
-        zindex: 9999, // The zindex value to apply to the element: default 9999, other option is 'auto'
+        zindex: z, // The zindex value to apply to the element: default 9999, other option is 'auto'
         stickyModeClass: 'sticky', // Class that will be applied to 'this' in sticky mode
         unstickyModeClass: 'unsticky' // Class that will be applied to 'this' in non-sticky mode
-      }, prop),
+      }, prop, z),
       sections = $('.' + options.sectionSelector);
 
 
@@ -60,7 +60,6 @@
         menuItems = options.selector === 'a' ? $self.find('li a') : $self.find('li'), // Navigation lists or links
         menuItemsHref = $self.find('li a[href*=#]'), // href attributes of navigation links
         windowPosition = $(window).scrollTop();
-
 
       /* Smooth scrolling logic */
       menuItems.click(function(e) {
@@ -152,6 +151,7 @@
           $self.css({
             'position': 'fixed',
             'zIndex': options.zindex
+
           }).stop();
 
           // if jQuery effects are turned on
@@ -188,7 +188,7 @@
           // add 'sticky' class to this as soon as 'this' is in sticky mode */
           $self.css({
             'position': options.$selfPosition,
-            'zIndex': $selfZindex
+            'zIndex': selfZindex
           }).removeClass(options.stickyModeClass).addClass(' ' + options.unstickyModeClass);
         }
 

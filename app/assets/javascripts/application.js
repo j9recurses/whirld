@@ -16,6 +16,7 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
+//= require mapknitter.js
 
 // Project editor JS:
 
@@ -30,5 +31,4 @@
 //= require turbolinks
 //= require jquery.placeholder
 
-
-//= require_tree .
+//= require_self

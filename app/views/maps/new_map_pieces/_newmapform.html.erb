@@ -3,13 +3,13 @@
 
   <div class='row group'>
     <div class='twelve columns'>
-      <h1 class='project-title first-header'>
+      <h1 class='project-name first-header'>
         <%= f.label :name, 'Title', :class => 'font_small' %>
         <%=  f.text_area :name,
                          :name => 'name',
                          :rows => '0',
                          :class => 'char-limited',
-                         :id => 'project-title',
+                         :id => 'project-name',
                          :placeholder => 'Title',
                          :maxlength => 70 %>
         <input type="hidden" name="map_id" id="project-id">
@@ -22,20 +22,20 @@
     <div class='eight columns'>
       <%= f.label :location, 'Location', :class => 'font_small' %>
       <%= f.text_field :location,
-               :id => 'map_location',
+               :id => 'project-location',
                :placeholder => 'Location' %>
       <div class='row group'>
         <div class='six columns'>
           <%= f.label :lat, 'Latitude', :class => 'font_small' %>
           <%= f.text_field :lat,
-            :id => 'map_lat',
+            :id => 'project-lat',
             :placeholder => 'Latitude' %>
             <input type="hidden" name="map_id" id="project-id">
         </div>
         <div class='six columns'>
           <%= f.label :lon, 'Longitude', :class => 'font_small' %>
           <%= f.text_field :lon,
-            :id => 'map_lon',
+            :id => 'project-lon',
             :placeholder => 'Longitude' %>
           <input type="hidden" name="map_id" id="project-id">
         </div>
@@ -64,7 +64,7 @@
                        :class => 'tag-input',
                        :id => 'project-tag-list',
                        :placeholder => '#tags' %>
-      <textarea id='project-tag-list' class='tag-input' placeholder='#tags'></textarea>
+      <textarea id='project-tag_list' class='tag-input' placeholder='#tags'></textarea>
       <div id='tag-container' class='tag-container'></div>
       <input type="hidden" name="map_id" id="project-id">
     </div>

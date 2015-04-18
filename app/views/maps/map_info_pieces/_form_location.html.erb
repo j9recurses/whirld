@@ -1,60 +1,19 @@
 <div class='eight columns'>
     <label for 'project-location' class='font_small'>Location</label>
-    <input id="map_location" type="text_field" value=<%=@map[:location]%>  class='h3-size' placeholder='Location'>
+    <input id="project-location" type="text_field" value=<%=@map[:location]%>  class='h3-size' placeholder='Location'>
 
     <div class='row group'>
       <div class='six columns'>
         <label for 'project-lat' class='font_small'>Latitude</label>
-        <input id="map_lat" type="text_field" value=<%=@map[:lat]%> class='font_small' placeholder='Latitude'>
+        <input id="project-lat" type="text_field" value=<%=@map[:lat]%> class='font_small' placeholder='Latitude'>
       </div>
       <div class='six columns'>
-        <label for 'project-lat' class='font_small'>Longitude</label>
-        <input id="map_lon" type="text_field" value=<%=@map[:lon]%> class='font_small'  placeholder='Longitude'>
-        <input type="hidden" id="mapID" value= <%=@map[:id]%>>
+        <label for 'project-lon' class='font_small'>Longitude</label>
+        <input id="project-lon" type="text_field" value=<%=@map[:lon]%> class='font_small'  placeholder='Longitude'>
+        <input type="hidden" id="project-id" value= <%=@map[:id]%>>
       </div>
     </div> <!-- end row group -->
 
    </form>
 </div>
-
 <script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script>
-
-    <!--<btn id="title_submit">Save</btn>-->
-<!--     <script>
-   // $("#title_submit").click(function() {
-    $('#location_f').bind("enterKey",function(e){
-        locationf = $("#location_f").val();
-        latf = $("#lat_f").val();
-        lonf = $("#lon_f").val();
-        console.log(lonf)
-        console.log(locationf);
-        map_id = $("#mapp_val").val();
-        console.log(map_id)
-        data =  {location: locationf, lat:latf, lon:lonf};
-        console.log(data)
-        url = "/maps/update_remote/";
-        url = url.concat(map_id);
-        console.log(url);
-            $.ajax({
-                url: url,
-                data:  data,
-                cache: false,
-                type: "post",
-                success: function(data){
-                    console.log("sucess!!")
-                },
-                error: function(){
-                alert("Something went wrong!");
-                 }
-          });
-        })
-    //listens to for enter event on the form field
-    $('#location_f').keyup(function(e){
-    if(e.keyCode == 13){
-      $(this).trigger("enterKey");
-      }
-    });
-   </script> -->
-
-<!-- <script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script> -->
-

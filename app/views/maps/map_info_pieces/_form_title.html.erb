@@ -1,48 +1,8 @@
 <div class='twelve columns'>
-  <h1 class='project-title first-header'>
-    <label for 'project-title' class='font_small'>Title</label>
-    <textarea id='project-title' class='char-limited' placeholder='Title' maxlength='70'><%=@map[:name]%></textarea>
+  <h1 class='project-name first-header'>
+    <label for 'project-name' class='font_small'>Title</label>
+    <textarea id='project-name' class='char-limited' placeholder='Title' maxlength='70'><%=@map[:name]%></textarea>
     <input type="hidden" name="project-id" id="project-id" value = <%=@map[:id]%>>
     <span class='char-limit font_small light hidden' data-limit='70'>70</span>
   </h1>
 </div>
-    <!--<btn id="title_submit">Save</btn>-->
-<!--     <script>
-   // $("#title_submit").click(function() {
-    $('#name_field').bind("enterKey",function(e){
-        name = $("#name_field").val();
-            console.log(name);
-            map_id = $("#mapp_val").val();
-            console.log(map_id)
-            data =  {name: name};
-            //url = $(this).attr("action");
-           url = "/maps/update_remote/";
-           url = url.concat(map_id);
-            console.log(url);
-            $.ajax({
-                url: url,
-                data:  data,
-                cache: false,
-                type: "post",
-                success: function(data){
-                    console.log("sucess!!")
-                    console.log(data.name);
-                   // can append the json return data to whereever
-                   // $(' <h1 class='project-title first-header'>'+data.name+'"></l===>').appendTo('#thumbs');
-
-                },
-                error: function(){
-                alert("Something went wrong!");
-                 }
-          });
-        })
-    //listens to for enter event on the form field
-    $('#name_field').keyup(function(e){
-    if(e.keyCode == 13){
-      $(this).trigger("enterKey");
-      }
-    });
-   </script> -->
-
-
-

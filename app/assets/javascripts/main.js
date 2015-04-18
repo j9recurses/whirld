@@ -8,7 +8,36 @@ $(document).ready(function() {
 });
 function Form(el) {
   var el = el || '';
-  // Basic field functions: character counting on title, description, and captions.
+
+  function dataCreate(el){
+    var key = el.attr('id').split('-')[1];
+    var data = {};
+    if(key == 'location'){
+      data = dataLocation(el);
+    }
+    else{
+      data[key] = el.val();
+    }
+    return data;
+  }
+
+  // Common field functions
+  function ajax(el) {
+    var project_id = $('#project-id').val();    
+    $.ajax({
+      url: '/maps/update_remote/' + project_id,
+      data:  dataCreate(el),
+      cache: false,
+      type: 'post',
+      success: function(data) {
+         console.log("sucess!!");
+      },
+      error: function() {
+        console.log("Something went wrong!");
+      }
+    }); // end ajax
+  }
+
   function changeCounter(e) {
     var input = $(e.target);
     var letterCount = input.val().length;
@@ -22,15 +51,36 @@ function Form(el) {
   }
 
   function createBasicField(elArray) {
-    console.log(elArray)
     $.each(elArray, function(i, el) {
       el.keyup(function(e) { changeCounter(e); });
       autosize(el);
     });
   }
 
+  // Location field functions
+  function dataLocation(el){
+    var lat = el.next().find('#project-lat');
+    var lon = el.next().find('#project-lon');
+    var data = {location: el.val(), lat: lat.val(), lon: lon.val()};
+    return data;
+  }
+  function createLocationField(el){
+    var lat = el.next().find('#project-lat');
+    var lon = el.next().find('#project-lon');
+    el.on('focusout', function(e){
+      ajax(el);
+      ajax(lat);
+      ajax(lon);
+    });
+    lat.on('focusout', function(e){
+      ajax($(this));
+    });
+    lon.on('focusout', function(e){
+      ajax($(this));
+    });
+  }
   // Tag field functions
-  function createTagText(e) {
+  function textTag(e) {
     var input = $(e.target);
     var s = input.val().toLowerCase();
     var tagText = s.replace(/[\.,-\/#!'$\n?%\^&\*;:{}=\-_`~()]/g,"");
@@ -38,8 +88,8 @@ function Form(el) {
     return tagText;
   }
 
-  function createTag(e) {
-    var tagText = createTagText(e);
+  function htmlTag(e) {
+    var tagText = textTag(e);
     var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
     var tag = $($.parseHTML(tagHTML));
     var tagID = 'tag-' + tagText;
@@ -51,7 +101,7 @@ function Form(el) {
   function appendTag(e) {
     var input = $(e.target);
     var tagList = input.nextAll('.tag-container');
-    var tag = createTag(e)[0];
+    var tag = htmlTag(e)[0];
     if(e.which == 188 || e.which == 13) {
       if(tagList.children('.project-tag').length == 0) {
         tagList.append(tag);
@@ -77,16 +127,31 @@ function Form(el) {
     el.keyup(function(e) { appendTag(e); });
   }
 
-  function driver(){
-    if(el == ''){
-      createBasicField([ $('#project-description'), $('#project-title')] );
-      createTagField($('#project-tag-list'));
+  // Object logic
+  function loadDoc(){
+    createBasicField([ $('#project-description'), $('#project-name')] );
+    createTagField($('#project-tag_list'));
+    if($('#project-creation-2').length > 0){
+      $('#project-name').on('focusout', function(){ ajax($(this)); });
+      $('#project-description').on('focusout', function(){ ajax($(this)); });
+      $('#project-tag_list').on('focusout', function(){ ajax($(this)); });
+      createLocationField($('#project-location'));
+    }
+  }
+  function initFields(){
+    if(el.hasClass('caption')){
+      createBasicField(el);
     }
     else if(el.hasClass('tag-input')){
       createTagField(el);
     }
-    else if(el.hasClass('caption')){
-      createBasicField(el)
+  }
+  function driver(){
+    if(el == '') {
+      loadDoc();
+    }
+    else {
+      initFields();
     }
   }
   driver();

@@ -12,7 +12,7 @@
                          :id => 'project-title',
                          :placeholder => 'Title',
                          :maxlength => 70 %>
-        <input type="hidden" name="map_id" id = "mapp_val">
+        <input type="hidden" name="map_id" id="project-id">
         <span class='char-limit font_small light hidden' data-limit='70'>70</span>
       </h1>
     </div>
@@ -30,14 +30,14 @@
           <%= f.text_field :lat,
             :id => 'map_lat',
             :placeholder => 'Latitude' %>
-            <input type="hidden" name="map_id" id = "mapp_val">
+            <input type="hidden" name="map_id" id="project-id">
         </div>
         <div class='six columns'>
           <%= f.label :lon, 'Longitude', :class => 'font_small' %>
           <%= f.text_field :lon,
             :id => 'map_lon',
             :placeholder => 'Longitude' %>
-          <input type="hidden" name="map_id" id = "mapp_val">
+          <input type="hidden" name="map_id" id="project-id">
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
                        :placeholder => 'Description',
                        :maxlength => 550 %>
       <span class='char-limit light hidden' data-limit='550'>550</span>
-      <input type="hidden" name="map_id" id = "mapp_val">
+      <input type="hidden" name="map_id" id="project-id">
     </p>
   </div> <!-- end project-description -->
 
@@ -66,7 +66,7 @@
                        :placeholder => '#tags' %>
       <textarea id='project-tag-list' class='tag-input' placeholder='#tags'></textarea>
       <div id='tag-container' class='tag-container'></div>
-      <input type="hidden" name="map_id" id = "mapp_val">
+      <input type="hidden" name="map_id" id="project-id">
     </div>
   </div>
 

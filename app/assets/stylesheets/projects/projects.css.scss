@@ -19,14 +19,14 @@
   .photo-list .preview {
     height: 180px;
   }
-#project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 11em;}
-#project-creation{ 
+.project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 11em;}
+.project-creation{ 
   background-color: #f2f2f2;
   height: 100%;
   min-height: 700px;
  }
-  #project-creation .eight{ width: 64.13%; }
-  #project-creation .side-nav .wrapper{
+  .project-creation .eight{ width: 64.13%; }
+  .project-creation .side-nav .wrapper{
     margin: 0 3%;
   }
 #project-form{ margin-top: 73px; }

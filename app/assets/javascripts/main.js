@@ -2,38 +2,154 @@ $(document).ready(function(){
   var bb = new ButtonBar({type: 'end'});
   var form = new Form();
   new Nav({type: 'main'});
+  if($('#project-creation-2').length > 0){
+    new PhotoUpload($('#project-creation-2'));
+  }
+
   // // Video stuff
   // var submit_button = $('#submit_pre_upload_form');
   //  var video_upload = $('#video_upload');
 
-  //  submit_button.click(function () {
-  //    console.log("in here")
-  //    $.ajax({
-  //      type: 'POST',
-  //      url: "/videos/videos_get_upload_token",
-  //      data: $('#video_pre_upload').serialize(),
-  //      dataType: 'json',
-  //      success: function(response) {
-  //        video_upload.find('#token').val(response.token);
-  //       window.alert(response.token)
-  //        video_upload.attr('action', response.url.replace(/^http:/i, window.location.protocol)).submit();
-  //        submit_button.unbind('click').hide();
-  //        $('.preloader').css('display', 'block');
-  //      },
-  //      error: function(XMLHttpRequest, textStatus, errorThrown) {
-  //        alert(errorThrown);
-  //      }
-  //    });
-  //  });
-  //  $("#map_name,#map_slug").keyup(function() {
-  //    $("#map_slug").val(string_to_slug($(this).val()))
-  //  });
+   // // $("#title_submit").click(function() {
+   //  $('#name_field').bind("enterKey",function(e){
+   //      name = $("#name_field").val();
+   //          console.log(name);
+   //          map_id = $("#mapp_val").val();
+   //          console.log(map_id)
+   //          data =  {name: name};
+   //          //url = $(this).attr("action");
+   //         url = "/maps/update_remote/";
+   //         url = url.concat(map_id);
+   //          console.log(url);
+   //          $.ajax({
+   //              url: url,
+   //              data:  data,
+   //              cache: false,
+   //              type: "post",
+   //              success: function(data){
+   //                  console.log("sucess!!")
+   //                  console.log(data.name);
+   //                 // can append the json return data to whereever
+   //                 // $(' <h1 class='project-title first-header'>'+data.name+'"></l===>').appendTo('#thumbs');
 
-  //  function string_to_slug(text){
-  //    return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')
-  //  }
-
+   //              },
+   //              error: function(){
+   //              alert("Something went wrong!");
+   //               }
+   //        });
+   //      })
+   //  //listens to for enter event on the form field
+   //  $('#name_field').keyup(function(e){
+   //  if(e.keyCode == 13){
+   //    $(this).trigger("enterKey");
+   //    }
+   //  });
 });
+function Form(el){
+  el = el || $(document);
+
+  function createTagText(e){
+    var input = $(e.target);
+    var s = input.val().toLowerCase();
+    var tagText = s.replace(/[\.,-\/#!'$\n?%\^&\*;:{}=\-_`~()]/g,"");
+        tagText = tagText.trim();
+    return tagText;
+  }
+
+  function createTag(e){
+    var tagText = createTagText(e);
+    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
+    var tag = $($.parseHTML(tagHTML));
+    var tagID = 'tag-' + tagText;
+        tag.attr('id', tagID);
+        tag.on('click', function(){ $(this).remove(); });
+    return tag;
+  }
+
+  function appendTag(e){
+    var input = $(e.target);
+    var tagList = input.nextAll('.tag-container');
+    var tag = createTag(e)[0];
+    if(e.which == 188 || e.which == 13){
+      if(tagList.children('.project-tag').length == 0){
+        tagList.append(tag);
+        input.val('');
+      }
+      else {
+        if($('#'+tag.id).length > 0){
+          $('#'+tag.id).addClass('error');
+          input.val('');
+          setTimeout(function() {
+             $('#'+tag.id).removeClass('error');
+           }, 600);
+        }
+        else{
+          tagList.append(tag);
+          input.val('');
+        }
+      }
+    }
+  }
+
+  function changeCounter(e){
+    var input = $(e.target);
+    var letterCount = input.val().length;
+    var span = input.nextAll('span.char-limit');
+        $(span).removeClass('hidden');
+    var count = $(span).data('limit') - letterCount;
+    $(span).text(count);
+    input.on('focusout', function(){
+      if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
+    });
+  }
+  function ajax(el){
+    var project_id = $('#project-id').val();
+    console.log(project_id)
+    el.on('focusout', function(e){
+      var name = el.val();
+      var data = {name: name, id: project_id};
+      $.ajax({
+        url: '/maps/update_remote/' + project_id,
+        data:  data,
+        cache: false,
+        type: 'post',
+        success: function(data){
+           console.log("sucess!!")
+           console.log(data.name);
+        },
+        error: function(){
+          console.log("Something went wrong!");
+        }
+      });
+    }); // end keyup
+  }
+  function loadDoc(){
+    $('#project-description').keyup(function(e){ changeCounter(e); });
+    autosize($('textarea#project-description'));
+    $('#project-tag-list').keyup(function(e){ appendTag(e); });
+    $('#project-title').keyup(function(e){ changeCounter(e); });
+    autosize($('textarea#project-title'));
+  }
+  function driver(){
+    if(el.hasClass('caption')){
+      el.keyup(function(e){ changeCounter(e); });
+      autosize(el);
+    }
+    else if(el.hasClass('tag-input')){
+      el.keyup(function(e){ appendTag(e); });
+    }
+    else if(el.hasClass('text-module-body')){
+      autosize(el);
+    }
+    else{
+      loadDoc();
+    }
+    if($('#project-creation-2').length > 0){
+      ajax($('#project-title'));
+    }
+  }
+  driver();
+}
 function Module(option){
   var bar = option.parent();
   var type = option.data('module-type');
@@ -126,7 +242,6 @@ function Module(option){
   }
   driver();
 }
-
 function ButtonBar(settings){
   var mod = settings.mod || '';
   var type = settings.type;
@@ -183,11 +298,10 @@ function ButtonBar(settings){
   }
   driver();
 }
-
 function Drag(el){
   function initDrag(){
     el.draggable({
-      containment: '#project-creation',
+      containment: '#project-creation-2',
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
       distance: 10,
@@ -204,7 +318,6 @@ function Drag(el){
   function driver(){ initDrag(); }
   driver();
 }
-
 function Drop(mod){
   var mod = mod;
   var modType = mod.data('type');
@@ -403,63 +516,7 @@ function Module(option){
   }
   driver();
 }
-
-function Form(el){
-  el = el || $(document);
-
-  function createTagText(e){
-    var input = $(e.target);
-    var s = input.val().toLowerCase();
-    var tagText = s.replace(/[\.,-\/#!'$\n?%\^&\*;:{}=\-_`~()]/g,"");
-        tagText = tagText.trim();
-    return tagText;
-  }
-
-  function createTag(e){
-    var tagText = createTagText(e);
-    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + tagText + "</span>";
-    var tag = $($.parseHTML(tagHTML));
-    var tagID = 'tag-' + tagText;
-        tag.attr('id', tagID);
-        tag.on('click', function(){ $(this).remove(); });
-    return tag;
-  }
-
-  function appendTag(e){
-    var input = $(e.target);
-    var tagList = input.nextAll('.tag-container');
-    var tag = createTag(e)[0];
-    if(e.which == 188 || e.which == 13){
-      if(tagList.children('.project-tag').length == 0){
-        tagList.append(tag);
-        input.val('');
-      }
-      else {
-        if($('#'+tag.id).length > 0){
-          $('#'+tag.id).addClass('error');
-          input.val('');
-          setTimeout(function() {
-             $('#'+tag.id).removeClass('error');
-           }, 600);
-        }
-        else{
-          tagList.append(tag);
-          input.val('');
-        }
-      }
-    }
-  }
-  function changeCounter(e){
-    var input = $(e.target);
-    var letterCount = input.val().length;
-    var span = input.nextAll('span.char-limit');
-        $(span).removeClass('hidden');
-    var count = $(span).data('limit') - letterCount;
-    $(span).text(count);
-    input.on('focusout', function(){
-      if(letterCount == 0){ $($(this).nextAll('span.char-limit')).addClass('hidden'); }
-    });
-  }
+function PhotoUpload(el){
   function htmlPhotoPrev(result){
     var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
@@ -512,66 +569,7 @@ function Form(el){
           }, 200);
     });
   }
-  function initPhotoUpload(el){
-    var button = el.find('#photo-upload-input');
-    var user_gal_id = el.find('#user-gal-id').attr('value');
-
-    var aerialCount = $('#photos-aerial').find('.photo').length;
-    var streetCount = $('#photos-street').find(('.photo')).length;
-    button.fileupload({
-      dataType: 'json',
-      url: '/user_galleries/' + user_gal_id + '/photos',
-      progressall: function(e, data){
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('.temp-preloader').removeClass('hidden');
-        $('.progress-bar').css('width', progress + '%');
-      },
-      done: function (e, data) {
-        console.log(data);
-        appendPhotos(data.result);
-        if(data.result.is_aerial){
-          aerialCount += 1;
-        }
-        else if(data.result.is_normal){
-          streetCount += 1;
-        }
-        var photoCount = {aerial: aerialCount, street: streetCount};
-        countLabels(photoCount);
-        $('#photo-manager').removeClass('default');
-        new Nav({type: 'create'});
-        $('.temp-preloader').addClass('hidden');
-      } // end done
-    }); // end fileupload
-  }
-
-  function loadDoc(){
-    $('#project-description').keyup(function(e){ changeCounter(e); });
-    autosize($('textarea#project-description'));
-    $('#project-tag-list').keyup(function(e){ appendTag(e); });
-    $('#project-title').keyup(function(e){ changeCounter(e); });
-    autosize($('textarea#project-title'));
-    if($('#photo-manager').length > 0){
-      initPhotoUpload($('#project-creation'));
-    }
-  }
-  function driver(){
-    if(el.hasClass('caption')){
-      el.keyup(function(e){ changeCounter(e); });
-      autosize(el);
-    }
-    else if(el.hasClass('tag-input')){
-      el.keyup(function(e){ appendTag(e); });
-    }
-    else if(el.hasClass('text-module-body')){
-      autosize(el);
-    }
-    else {
-      loadDoc();
-    }
-  }
-  driver();
 }
-
 function Nav(settings){
   var type = settings.type;
   function initStickyNav(el){

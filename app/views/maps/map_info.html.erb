@@ -1,7 +1,16 @@
 <div id='project-creation-2' class='row group project-creation'>
+  
+
+
   <section id='photo-manager' class='side-nav four columns'>
     <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
+  <article class="temp-preloader four columns hidden">
+    <h1 class='h3-size h-centered v-centered'>Uploading...</h1>
+    <div class='progress-bar-wrapper'>
+      <div class='progress-bar'></div>
+    </div>
+  </article>
   <div id='project-form' class='eight columns'>
     <section id='project-header'>
       <div class='wrapper'>

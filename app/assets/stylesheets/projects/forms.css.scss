@@ -169,6 +169,8 @@ label{
 }
 .project-tag.error{ color: cornflowerblue; }
 .project-tag:hover{ text-decoration: line-through; }
+.tab{ cursor: pointer; }
+.tab.empty{ cursor: default; }
 .tag-container{ min-height: 29px; }
 textarea{
   background: none;

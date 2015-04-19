@@ -1,22 +1,8 @@
 .temp-preloader{
-  background-color: aqua;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	transition: all .5s ease-in-out;
-  width: 100%;
+  background-color: darkcyan;
+  height: 105%;
+  left: -18px;
+  position: fixed;
+  top: -14px;
   z-index: 10000;
-}
-.progress-bar-wrapper{
-	border: 1px solid cornflowerblue;
-	height: 40px;
-	left: 25%;
-	position: absolute;
-	top: 60%;
-	width: 50%;
-}
-.progress-bar{
-	background-color: cornflowerblue;
-  height: 100%;
-  width: 0%;
 }

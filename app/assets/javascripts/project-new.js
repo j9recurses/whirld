@@ -2,6 +2,9 @@ $(document).ready(function() {
   if($('#project-creation-2').length > 0) {
     new Nav({type: 'create'});
     new PhotoUpload($('#photo-upload-input'));
+    $.each($('.preview'), function(i, thumb){
+      new Drag($(thumb).find('img'));
+    });
   }
   else{
     new Nav({type: 'main'});
@@ -499,11 +502,12 @@ function PhotoUpload(el) {
       progressall: function(e, data){
         var progress = parseInt(data.loaded / data.total * 100, 10);
         $('.temp-preloader').removeClass('hidden');
-        $('.progress-bar').css('width', progress + '%');
+        $('#photo-manager').addClass('invisible');
       },
       done: function (e, data) {
         appendPhotos(data.result);
         $('.temp-preloader').addClass('hidden');
+        $('#photo-manager').removeClass('invisible');
         new Nav({type: 'reset'});
       } // end done
     }); // end fileupload 
@@ -572,12 +576,17 @@ function Nav(settings) {
         photoSection.siblings('.photo-list').addClass('hidden');
   }
   function initStateBar(bar){
+    if($('#photos-saved').find('.preview').length == 0){
+      $('#tab-saved').addClass('empty');
+    }
     bar.on('click', '.item', function(){
       var tab = $(this);
-      toggleTab(tab);
-      resetCatTabs(tab)
-      toggleStatePhotos(tab);
-      setCatOrigin(tab);
+      if(!tab.hasClass('empty')){
+        toggleTab(tab);
+        resetCatTabs(tab)
+        toggleStatePhotos(tab);
+        setCatOrigin(tab);
+      }
     });
   }
   function initCatBar(bar){
@@ -597,10 +606,6 @@ function Nav(settings) {
     else if(type == 'main') {
       initStickyNav($('#navbar-main'), 9);
     }
-    // else if(type == 'reset'){
-    //   $('#photo-cats').removeClass('hidden');
-    //   $('#tab-uploaded').removeClass('empty');
-    // }
   }
   driver();
 }

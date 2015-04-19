@@ -558,64 +558,73 @@ function Nav(settings) {
   }
 
   // Tab functions for project editor
-  function isEmpty(photoState){
-    var photoSection = $('#photos-saved');
-    if(photoSection.find('.preview').length == 0){
-      $('#tab-saved').addClass('empty');
+  function isEmpty(el){
+    if(el.find('.preview').length == 0){
       return true;
     }
-    else {
+    else{
       return false;
     }
   }
-  function initCatTabs(catTab){
-    var oldCatTrigger = catTab.siblings('.active');
-        oldCatTrigger.removeClass('active');
-    var newCatTrigger = catTab;
-        newCatTrigger.addClass('active');
-
-    var stateShow = $('#photos-'+catTab.closest('#photo-cats').data('origin'));
-
-    var catHide = stateShow.find('#photos-'+oldCatTrigger.data('type'));
-        catHide.addClass('hidden').addClass('invisible');
-    var catShow = stateShow.find('#photos-'+newCatTrigger.data('type'));
-        catShow.removeClass('hidden').removeClass('invisible');
-  }
-  function initStateTabs(stateTab){
-    // Toggle tabs
-    var oldStateTrigger = stateTab.siblings('.active');
-        oldStateTrigger.removeClass('active');
-    var newStateTrigger = stateTab;
-        newStateTrigger.addClass('active');
-    
-    // Toggle etire uploaded / saved photo sections
-    var stateHide = $('#photos-'+oldStateTrigger.data('type'))
-        stateHide.addClass('hidden').addClass('invisible');
-    var stateShow = $('#photos-'+newStateTrigger.data('type'))
-        stateShow.removeClass('hidden').removeClass('invisible');
-    
-    // Within the showing section (uploaded/saved), show / hide aerial and street
-    var photoCatBar = stateTab.parent().siblings('#photo-cats');
-        photoCatBar.data('origin', newStateTrigger.data('type'))
-    photoCatBar.on('click', '.item', function(){
-      initCatTabs($(this));
-    });
-  }
-  function initTabs(photoState){
-    if (isEmpty(photoState)){
-      console.log('empty')
+  function togglePhotoCatBar(tab){
+    if(tab.hasClass('empty')){
+      $('#photo-cats').addClass('hidden');
     }
     else{
-      photoState.on('click', '.item', function(){
-        initStateTabs($(this));
-      })
+      $('#photo-cats').removeClass('hidden');
     }
   }
+  function togglePhotoCatTabs(tab){
+    var origin = $('#photos-'+tab.data('type'));
+    $('#photo-cats').on('click', '.item', function(){
+      var sectionID = $(this).data('type');
+      var section = origin.find('#photos-'+sectionID);
+      if(!$(this).hasClass('active')){
+        $(this).addClass('active');
+        $(this).siblings('.item').removeClass('active');
+        section.removeClass('invisible').removeClass('hidden');
+        section.siblings('.sub-photo-list').addClass('invisible').addClass('hidden');
+      }
+    });
+  }
+  function toggleTab(tab){
+    if(!tab.hasClass('active')){
+      tab.addClass('active');
+      tab.siblings('.item').removeClass('active');
+      var photoSection = $('#photos-'+tab.data('type'));
+          photoSection.siblings('.photo-list').addClass('hidden');
+          photoSection.removeClass('hidden');
+      togglePhotoCatBar(tab);
+      togglePhotoCatTabs(tab);
+    }
+  }
+  function initTab(tab){
+    if(!tab.hasClass('empty') || tab.attr('id') == 'tab-uploaded'){
+      toggleTab(tab);
+    }
+  }
+  function initTabBar(bar){
+    $.each(bar.children('.item'), function(i, tab){
+      var photoSection = $('#photos-'+$(tab).data('type'));
+      if(isEmpty(photoSection)){
+        $(tab).addClass('empty');
+        if($(tab).attr('id') == 'tab-saved'){ $(tab).addClass('cursor-def'); }
+      }
+      else{
+        if($(tab).attr('id') == 'tab-saved'){ $(tab).addClass('cursor-point'); }
+      }
+    });
+    $('#tab-uploaded').addClass('cursor-point');
+    bar.on('click', '.item', function(){
+      initTab($(this));
+    });
+  }
+
   function driver() {
     if(type == 'create') {
       initStickyNav($('#navbar-create'), 9);
       initStickyNav($('#navbar-photo-manager'), 8);
-      initTabs($('#photo-state'));
+      initTabBar($('#photo-state'));
     }
     else if(type == 'main') {
       initStickyNav($('#navbar-main'), 9);

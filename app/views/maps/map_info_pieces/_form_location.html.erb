@@ -1,19 +1,20 @@
-<div class='eight columns'>
-    <label for 'project-location' class='font_small'>Location</label>
-    <input id="project-location" type="text_field" value=<%=@map[:location]%>  class='h3-size' placeholder='Location'>
-
-    <div class='row group'>
-      <div class='six columns'>
-        <label for 'project-lat' class='font_small'>Latitude</label>
-        <input id="project-lat" type="text_field" value=<%=@map[:lat]%> class='font_small' placeholder='Latitude'>
-      </div>
-      <div class='six columns'>
-        <label for 'project-lon' class='font_small'>Longitude</label>
-        <input id="project-lon" type="text_field" value=<%=@map[:lon]%> class='font_small'  placeholder='Longitude'>
-        <input type="hidden" id="project-id" value= <%=@map[:id]%>>
-      </div>
-    </div> <!-- end row group -->
-
-   </form>
+<div class='eight columns'>        
+  <div class='input-wrapper'>
+    <label for 'project-location' class='input-label light'>Location</label>
+    <textarea id="project-location" type="text_field"  class='char-limited font_small'><%=@map[:location]%></textarea>
+  </div>
+</div>
+<div class='four columns offset-two'>
+  <div class='input-wrapper'>
+    <label for 'project-lat' class='input-label light'>Latitude</label>
+    <textarea id="project-lat" type="text_field"  class='char-limited font_small'><%=@map[:lat]%></textarea>
+  </div>
+</div>
+<div class='four columns offset-two'>
+  <div class='input-wrapper'>
+    <label for 'project-lon' class='input-label light'>Longitude</label>
+    <textarea id="project-lon" type="text_field"  class='char-limited font_small'><%=@map[:lon]%></textarea>
+    <input type="hidden" id="project-id" value= <%=@map[:id]%>>
+  </div>
 </div>
 <script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script>

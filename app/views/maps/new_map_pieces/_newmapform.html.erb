@@ -3,14 +3,12 @@
   <div class='row-form row group'>
     <div class='twenty-four columns'>
         <div class='input-wrapper'>
-          <%= f.label :name, 'Title', :class => 'input-label light' %>  
-          <%=  f.text_area :name,
+          <%= f.label :name, 'Title', :class => 'input-label light' %> <%=  f.text_area :name,
                            :name => 'name',
                            :rows => '0',
                            :class => 'char-limited h2-size',
                            :id => 'project-name',
-                           :maxlength => 70 %>
-          <span class='char-limit font_small light invisible' data-limit='70'>70</span>
+                           :maxlength => 70 %><span class='char-limit font_small light invisible' data-limit='70'>70</span>
         </div>
     </div>
   </div> <!-- end row group -->
@@ -43,28 +41,26 @@
   <div class='row-form row group'>
     <div class='twenty-four columns'>
         <div class='input-wrapper'>
-          <%= f.label :title, 'Description', :class => 'input-label light' %>
-          <%=  f.text_area :description,
+          <%= f.label :title, 'Description', :class => 'input-label light' %><%=  f.text_area :description,
                            :rows => '0',
                            :class => 'char-limited',
                            :id => 'project-description',
-                           :maxlength => 550 %>
-          <span class='char-limit light invisible font_small' data-limit='550'>550</span>
+                           :maxlength => 550 %><span class='char-limit light invisible font_small' data-limit='550'>550</span>
         </div>
     </div>
   </div> <!-- end row group -->
 
   <div class='row-form row group'>
     <div class='twenty-four columns'>
-        <div class='input-wrapper'>
-          <%= f.label :tags, 'Tags', :class => 'input-label light' %>
+      <div class='input-wrapper'>
+        <%= f.label :tags, 'Tags', :class => 'input-label light' %>
         <%#=  f.text_field :tags,
                          :class => 'tag-input',
                          :id => 'project-tag-list',
                          :placeholder => '#tags' %>
-          <textarea id='project-tag_list' class='tag-input char-limited'></textarea>
-          <div id='tag-container' class='tag-container'></div>
-        </div>
+        <textarea id='project-tag_list' class='tag-input'></textarea>
+        <div id='tag-container' class='tag-container'></div>
+      </div>
     </div>
   </div> <!-- end row group -->
   <div class='row group'>

@@ -44,7 +44,17 @@ function Form(el) {
       }
     }); // end ajax
   }
-
+  function ajaxAll(elArray){
+    $.each(elArray, function(i, el){
+      $(el).on('focusout', function(){
+        ajax($(this));
+        if($(el).attr('id') == 'project-location'){
+          ajax($('#project-lat')); 
+          ajax($('#project-lon'));
+        }
+      });
+    });
+  }
   function changeCounter(e) {
     var input = $(e.target);
     var letterCount = input.val().length;
@@ -59,12 +69,19 @@ function Form(el) {
   function addFocus(el){
     el.closest('.input-wrapper').addClass('focus-in').addClass('has-text');
   }
+  function checkFocus(elArray){
+    $.each(elArray, function(i, el){
+      if($(el).val().length > 0){
+        $(el).closest('.input-wrapper').addClass('has-text');
+        autosize($(el));
+      }
+    });
+  }
   function removeFocus(el){
     if(el.val().length == 0){
       el.closest('.input-wrapper').removeClass('focus-in').removeClass('has-text');
     }
     else{ 
-      console.log(el.val().length); 
       el.closest('.input-wrapper').removeClass('focus-in');
     }
   }
@@ -89,8 +106,10 @@ function Form(el) {
     return data;
   }
   function createLocationFields(el){
-    $('#project-lat').val('');
-    $('#project-lon').val('');
+    if($('#project-creation-1').length > 1){
+      $('#project-lat').val('');
+      $('#project-lon').val('');
+    }
     el.on('focusin', function(){
       addFocus($(this));
       $(this).on('focusout', function(){
@@ -168,13 +187,12 @@ function Form(el) {
 
   // Object logic
   function loadDoc(){
-    createBasicField([ $('#project-description'), $('#project-name')] );
+    createBasicField( [ $('#project-description'), $('#project-name') ] );
     createTagField($('#project-tag_list'));
     createLocationFields($('#project-location'));
     if($('#project-creation-2').length > 0){
-      $('#project-name').on('focusout', function(){ ajax($(this)); });
-      $('#project-description').on('focusout', function(){ ajax($(this)); });
-      $('#project-tag_list').on('focusout', function(){ ajax($(this)); });
+      ajaxAll( [ $('#project-description'), $('#project-name'), $('#project-location'), $('#project-lat'), $('#project-lon') ] );
+      checkFocus( [ $('#project-description'), $('#project-name'), $('#project-location'), $('#project-lat'), $('#project-lon') ] );
     }
   }
   function initFields(){

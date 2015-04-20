@@ -1,8 +1,8 @@
-<div class='twelve columns'>
-  <h1 class='project-name first-header'>
-    <label for 'project-name' class='font_small'>Title</label>
-    <textarea id='project-name' class='char-limited' placeholder='Title' maxlength='70'><%=@map[:name]%></textarea>
-    <input type="hidden" name="project-id" id="project-id" value = <%=@map[:id]%>>
-    <span class='char-limit font_small light hidden' data-limit='70'>70</span>
-  </h1>
+<div class='twenty columns offset-two'>
+	<div class='input-wrapper'>
+		<label for 'project-name' class='input-label light'>Title</label>
+	  <textarea id='project-name' class='char-limited h2-size' maxlength='70'><%=@map[:name]%></textarea>
+	  <input type="hidden" name="project-id" id="project-id" value = <%=@map[:id]%>>
+	  <span class='char-limit font_small light invisible' data-limit='70'>70</span>
+	</div>
 </div>

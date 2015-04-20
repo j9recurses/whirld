@@ -197,7 +197,10 @@ function Form(el) {
   }
   function initFields(){
     if(el.hasClass('caption')){
-      createBasicField([el]);
+      el.keyup(function(e){
+        changeCounter(e);
+      });
+      autosize(el);
     }
     else if(el.hasClass('tag-input')){
       createTagField(el);
@@ -223,7 +226,7 @@ function ButtonBar(settings) {
   function createBTW(){
     html = "<ul class='button-bar button-bar-btw'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='split'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Split</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
     el = $($.parseHTML(html));
-    el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
+    el.attr('id', "btw-bar-" + mod.data('type') + '-' + mod.data('mod-id'));
     return el
   }
   function initOpenBar(toggle){
@@ -332,7 +335,7 @@ function Drop(mod) {
     else{
       colNum = 'six';
     }
-    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>";
+    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light invisible' data-limit='140'>140</span></div>";
   }
   function createPhoto(ui){
     var id = ui.draggable.data('img-id');
@@ -411,10 +414,11 @@ function Drop(mod) {
   driver();
 }
 function Module(option) { 
-  var bar = option.parent();
+  var originBar = option.parent();
   var type = option.data('module-type');
   var modID = type + "-module-" + $('.module').length;
 
+  // Functions for module html and events
   function htmlHeader(icon, type){
     var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + icon + "'></i><span class='cursor-def'> " + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i><i class='fa fa-save'></i></div></div>";
     return html
@@ -438,103 +442,148 @@ function Module(option) {
     var html = "<div class='row group wrapper'><textarea class='tag-input padding-top' placeholder='#tags'></textarea><div class='tag-container'></div></div>";
     return html
   }
-  function createMod(html){
-    var mod = $($.parseHTML(html));
-        mod.attr('id', modID);
-        mod.data('type', type)
-    var remove = mod.find('.fa-remove')
-        remove.data('id', modID);
-    remove.on('click', function(){ 
-      $('#'+modID).remove();
-      $('#btw-bar-'+modID.split('-')[2]).remove();
-    });
-    var save = mod.find('.fa-save')
-        save.data('id', modID);
-    save.on('click', function(){ 
-      saveMod($('#'+modID));
-    });
-    return mod;
-  }
-  function createComparison(){
+  function htmlComparison(){
     var html = "<article class='comparison-module module padding-bottom padding-top'>" + htmlHeader('sliders', 'Comparison') + htmlDropzone() + htmlTaginput(); + "</article>";
-    var mod = createMod(html);
+    var mod = $($.parseHTML(html));
     return mod;
   }
-  function createGrid(){
+  function htmlGrid(){
     var html = "<article class='grid-module module padding-bottom padding-top'>" + htmlHeader('square', 'Photo Grid') + htmlDropzone() + htmlTaginput() +"</article>";
-    var mod = createMod(html);
+    var mod = $($.parseHTML(html));
     return mod;
   }
-  function createSplit(){
+  function htmlSplit(){
     var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
     var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
     var html = "<article class='split-module module padding-bottom padding-top'>" + htmlHeader('star-half', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
+    var mod = $($.parseHTML(html));
     return mod;
   }
-  function createText(){
+  function htmlText(){
     var html = "<article class='text-module module padding-bottom padding-top'>" + htmlHeader('file-text', 'Text') + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
+    var mod = $($.parseHTML(html));
     return mod;
   }
-  function createVideo(){
+  function htmlVideo(){
     var html = "<article class='video-module module padding-bottom padding-top'>" + htmlHeader('file-video', 'Video') + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea><textarea class='caption char-limited padding-top' placeholder='Add an optional caption.'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>" + htmlTaginput() + "</article>";
-    var mod = createMod(html);
+    var mod = $($.parseHTML(html));
     return mod;
   }
-  function ajax(url, data){
+  function htmlMod(){
+    if(type == 'comparison'){
+      var mod = htmlComparison();
+    }
+    else if(type == 'grid'){
+      var mod = htmlGrid();
+    }
+    else if(type == 'split'){
+      var mod = htmlSplit();
+    }
+    else if(type == 'text'){
+      var mod = htmlText();
+    }
+    else if(type == 'video'){
+      var mod = htmlVideo();
+    }
+    return mod;
+  }
+  // Functions for saving, editing, deleting modules and their assets
+  function getModuleOrder(){
+
+  }
+  function getUserGalleryId(){
+    return $('#project-creation-2').data('user-gallery-id');
+  }
+  function createModPhotos(mod){
+    $.each(mod.find('img'), function(i, img){
+      console.log(img)
+    });
+  }
+  function createMod(){
+    var mod = htmlMod();
+    var url = '/photo_mods/user_gallery_' + type + '_create/' + getUserGalleryId();
+    var data = { user_gallery_id: getUserGalleryId() };
     $.ajax({
       url: url,
       data:  data,
       cache: false,
       type: 'post',
       success: function(data) {
-        console.log("sucess!!");
+        console.log('Success: module created');
+        // Put data in DOM
+        mod.attr('id', 'module-' + type + '-' + data.id);
+        mod.data('type', type);
+        mod.data('mod-id', data.id);
+
+        // Append module before the button bar it came from
+        originBar.before(mod);
+
+        // Give module its own button bar
+        new ButtonBar({type: 'btw', mod: mod});
+
+        // initiate other interactions
+        new Drop(mod);
+        new Form($(mod).find('textarea.tag-input'));
+        new Form($(mod).find('textarea.text-module-body'));
+
+        // initiate other requests
+        initDeleteMod(mod);
+        initUpdateMod(mod);
       },
-      error: function() {
+      error: function(){
         console.log("Something went wrong!");
       }
     }); // end ajax
+    return mod;
   }
-  function saveMod(el) {
-    var mod = el;
-    var modID = mod.attr("id");
-    var url = '/photo_mods/place_mod_photo';
-    // if(type == 'grid' || type == 'comparison' || type == 'split'){
-      mod.find('img').each(function (i, el) {
-        var caption = mod.find('.caption').val();
-        var imgID = $(el).data('img-id');
-        var data = "{mod_gallery:"+ modID + ", mod_type:" + type + ", caption:" + caption +", photo_id:" + imgID + "}";
-        console.log(data)
-        ajax(url, data);
-      });      
-    // }
+  function initDeleteMod(mod){
+    var icon = mod.find('.fa-remove');    
+    icon.on('click', function(){ 
+      var url = '/photo_mods/user_gallery_' + type + '_delete/';
+      var data = { mod_gallery: mod.data('mod-id') };
+      $.ajax({
+        url: url,
+        data: data,
+        cache: false,
+        type: 'delete',
+        success: function(data) {
+          console.log('module deleted!');
+          // delete module photos
+          // delete tags
+        },
+        error: function(){
+          console.log("Something went wrong!");
+        }
+      }); // end ajax
+      $('#btw-bar-' + type + '-' + mod.data('mod-id')).remove();
+      mod.remove();
+    });
+  }
+  function initUpdateMod(mod){
+    var icon = mod.find('.fa-save')
+        icon.data('id', modID);
+    icon.on('click', function(){ 
+      console.log('update ajax goes here')
+      createModPhotos(mod);
+    });    
+  }
+  // function updateMod(el) {
+  //   var mod = el;
+  //   var modID = mod.attr("id");
+  //   console.log(type)
+  //   var url = '/photo_mods/place_mod_photo';
+  //   if(type == 'grid' || type == 'comparison' || type == 'split'){
+  //     mod.find('img').each(function (i, el) {
+  //       var data = {mod_gallery: modID}
 
-  }
-  function driver(){
-    if(type == 'comparison'){
-      var mod = createComparison();
-    }
-    else if(type == 'grid'){
-      var mod = createGrid();
-    }
-    else if(type == 'split'){
-      var mod = createSplit();
-    }
-    else if(type == 'text'){
-      var mod = createText();
-    }
-    else if(type == 'video'){
-      var mod = createVideo();
-    }
-    bar.before(mod);
-    new ButtonBar({type: 'btw', mod: mod});  
-    new Form($(mod).find('textarea.tag-input'));
-    new Form($(mod).find('textarea.text-module-body'));
-    new Form($(mod).find('textarea.caption'));
-    new Drop(mod);
-  }
-  driver();
+  //       // mod_gallery:comparison-module-0, mod_type:comparision, photo_id:213, caption:blah blah blah
+  //     });      
+  //   }
+  //   else{
+  //     console.log('waiting on video and text')
+  //   }
+  // }
+  createMod();
 }
 function PhotoUpload(el) {
   var el = el;

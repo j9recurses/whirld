@@ -101,12 +101,12 @@ Whirld::Application.routes.draw do
   post 'photo_mods/user_gallery_split_create/:id', :to => 'photo_mods#user_gallery_split_create', :as => 'user_gallery_split_create'
 
 #gallery comparison
-  post 'photo_mods/user_gallery_comparison_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_comparison_delete'
+  post 'photo_mods/user_gallery_comparison_delete/:id', :to => 'photo_mods#user_gallery_comparison_delete', :as => 'user_gallery_comparison_delete'
   post 'photo_mods/user_gallery_comparison_update/:id', :to => 'photo_mods#user_gallery_comparison_update', :as => 'user_gallery_comparison_update'
   post 'photo_mods/user_gallery_comparison_create/:id', :to => 'photo_mods#user_gallery_comparison_create', :as => 'user_gallery_comparison_create'
 
 #grid
-  post 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_grid_delete'
+  post 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_grid_delete', :as => 'user_gallery_grid_delete'
   post 'photo_mods/user_gallery_grid_update/:id', :to => 'photo_mods#user_gallery_grid_update', :as => 'user_gallery_grid_update'
   post 'photo_mods/user_gallery_grid_create/:id', :to  => 'photo_mods#user_gallery_grid_create', :as => 'user_gallery_grid_create'
 

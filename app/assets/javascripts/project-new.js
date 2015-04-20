@@ -494,11 +494,7 @@ function Module(option) {
   function getUserGalleryId(){
     return $('#project-creation-2').data('user-gallery-id');
   }
-  function createModPhotos(mod){
-    $.each(mod.find('img'), function(i, img){
-      console.log(img)
-    });
-  }
+  // on click of button bar, create the module and initiate other requests
   function createMod(){
     var mod = htmlMod();
     var url = '/photo_mods/user_gallery_' + type + '_create/' + getUserGalleryId();
@@ -527,8 +523,8 @@ function Module(option) {
         new Form($(mod).find('textarea.text-module-body'));
 
         // initiate other requests
-        initDeleteMod(mod);
         initUpdateMod(mod);
+        initDeleteMod(mod);
       },
       error: function(){
         console.log("Something went wrong!");
@@ -536,14 +532,49 @@ function Module(option) {
     }); // end ajax
     return mod;
   }
+
+  function updateModPhotos(mod){
+    // Pass photo containers to ajax
+    $.each(mod.find('.photo'), function(i, photo){
+      var data = {mod_gallery: mod.data('mod-id'), mod_type: type, caption: $(photo).find('.caption').val(), photo_id: $(photo).find('img').data('img-id')};
+      if($(photo).data('saved')){
+        console.log('saved. An update request should go here.')
+      }
+      else{
+        console.log('not saved. A post request should go here and the data(saved) should be true.')
+      }
+      // $.ajax({
+      //   url: '/photo_mods/place_mod_photo',
+      //   data:  data,
+      //   cache: false,
+      //   type: 'post',
+      //   success: function(data) {
+      //     console.log('Success: photo created');
+      //     $(photo).data('saved', true);
+      //   },
+      //   error: function(){
+      //     console.log("Something went wrong!");
+      //   }
+      // }); // end ajax
+    });
+  }
+  // on click of the module-save button, check if photos have been created. If yes, post. If not, update.
+  function initUpdateMod(mod){
+    var icon = mod.find('.fa-save');
+    icon.on('click', function(){ 
+      if(type == 'grid' || type == 'comparison' || type == 'split'){
+        updateModPhotos(mod)
+        // if photo has not been created, send a post request
+        // else send a put request
+      }
+    }); // end click
+  }
   function initDeleteMod(mod){
     var icon = mod.find('.fa-remove');    
     icon.on('click', function(){ 
-      var url = '/photo_mods/user_gallery_' + type + '_delete/';
-      var data = { mod_gallery: mod.data('mod-id') };
       $.ajax({
-        url: url,
-        data: data,
+        url: '/photo_mods/user_gallery_' + type + '_delete/' + getUserGalleryId(),
+        // data: data,
         cache: false,
         type: 'delete',
         success: function(data) {
@@ -559,30 +590,6 @@ function Module(option) {
       mod.remove();
     });
   }
-  function initUpdateMod(mod){
-    var icon = mod.find('.fa-save')
-        icon.data('id', modID);
-    icon.on('click', function(){ 
-      console.log('update ajax goes here')
-      createModPhotos(mod);
-    });    
-  }
-  // function updateMod(el) {
-  //   var mod = el;
-  //   var modID = mod.attr("id");
-  //   console.log(type)
-  //   var url = '/photo_mods/place_mod_photo';
-  //   if(type == 'grid' || type == 'comparison' || type == 'split'){
-  //     mod.find('img').each(function (i, el) {
-  //       var data = {mod_gallery: modID}
-
-  //       // mod_gallery:comparison-module-0, mod_type:comparision, photo_id:213, caption:blah blah blah
-  //     });      
-  //   }
-  //   else{
-  //     console.log('waiting on video and text')
-  //   }
-  // }
   createMod();
 }
 function PhotoUpload(el) {

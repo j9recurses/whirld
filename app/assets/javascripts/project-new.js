@@ -221,7 +221,7 @@ function ButtonBar(settings) {
   var type = settings.type;
 
   function createBTW(){
-    html = "<ul class='button-bar button-bar-btw'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='half'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Half</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
+    html = "<ul class='button-bar button-bar-btw'><li class='option item invisible' data-module-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-module-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-module-type='split'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Split</span></li><li class='option item invisible' data-module-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-module-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
     el = $($.parseHTML(html));
     el.attr('id', "btw-bar-" + $('.button-bar-btw').length);
     return el
@@ -317,7 +317,7 @@ function Drop(mod) {
     else if(modType == 'grid'){
       message = 'Drag up to ten photos here.';
     }
-    else if(modType == 'half'){
+    else if(modType == 'split'){
       message = 'Drag one photo here.';
     }
     var html = "<p class='caps'>" + message +"</p>";
@@ -326,7 +326,7 @@ function Drop(mod) {
 
   function htmlPhoto(){
     var colNum;
-    if(modType == 'half'){
+    if(modType == 'split'){
       colNum = 'twelve';
     }
     else{
@@ -335,9 +335,10 @@ function Drop(mod) {
     return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light hidden' data-limit='140'>140</span></div>";
   }
   function createPhoto(ui){
-    var id = ui.draggable.data('id');
+    var id = ui.draggable.data('img-id');
     var img = ui.draggable.clone();
         img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
+        img.data('img-id', id);
     var photo = $($.parseHTML(htmlPhoto()));
         photo.attr('id', 'photo-'+id);
         photo.find('.img-wrapper').prepend(img);
@@ -372,12 +373,11 @@ function Drop(mod) {
     initPhotoRemovable(photo);
 
     new Form($(photo.find('textarea.caption')));
-    // new Form($(mod.find('textarea.tag-input')));
   }
   function droppableLimit(){
     if(modType == 'comparison'){ return 2; }
     else if(modType == 'grid'){ return 10; }
-    else if(modType == 'half'){ return 1 }
+    else if(modType == 'split'){ return 1 }
   }
   function initModDrop(mod){
     mod.find('.droppable').droppable({
@@ -416,7 +416,7 @@ function Module(option) {
   var modID = type + "-module-" + $('.module').length;
 
   function htmlHeader(icon, type){
-    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + icon + "'></i><span class='cursor-def'> " + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i></div></div>";
+    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + icon + "'></i><span class='cursor-def'> " + type + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i><i class='fa fa-save'></i></div></div>";
     return html
   }
   function htmlDropzone(){
@@ -427,7 +427,7 @@ function Module(option) {
     else if(type == 'grid'){
       message = 'Drag up to ten photos here.';
     }
-    else if(type == 'half'){
+    else if(type == 'split'){
       message = 'Drag one photo here.';
       return "<p class='caps'>" + message +"</p>";
     }
@@ -442,11 +442,16 @@ function Module(option) {
     var mod = $($.parseHTML(html));
         mod.attr('id', modID);
         mod.data('type', type)
-    var icon = mod.find('.fa-remove')
-        icon.data('id', modID);
-    icon.on('click', function(){ 
+    var remove = mod.find('.fa-remove')
+        remove.data('id', modID);
+    remove.on('click', function(){ 
       $('#'+modID).remove();
       $('#btw-bar-'+modID.split('-')[2]).remove();
+    });
+    var save = mod.find('.fa-save')
+        save.data('id', modID);
+    save.on('click', function(){ 
+      saveMod($('#'+modID));
     });
     return mod;
   }
@@ -460,10 +465,10 @@ function Module(option) {
     var mod = createMod(html);
     return mod;
   }
-  function createHalf(){
+  function createSplit(){
     var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
     var photo = "<div class='droppable dropzone six columns'>" + htmlDropzone() + "</div>";
-    var html = "<article class='half-module module padding-bottom padding-top'>" + htmlHeader('star-half', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
+    var html = "<article class='split-module module padding-bottom padding-top'>" + htmlHeader('star-half', 'Photo with Text') + "<div class='row group wrapper'>" + photo + text + "</div>" + htmlTaginput() + "</article>";
     var mod = createMod(html);
     return mod;
   }
@@ -477,6 +482,34 @@ function Module(option) {
     var mod = createMod(html);
     return mod;
   }
+  function ajax(url, data){
+    $.ajax({
+      url: url,
+      data:  data,
+      cache: false,
+      type: 'post',
+      success: function(data) {
+        console.log(data)
+        console.log("sucess!!");
+      },
+      error: function() {
+        console.log("Something went wrong!");
+      }
+    }); // end ajax
+  }
+  function saveMod(el) {
+    var mod = el;
+    var modID = mod.attr("id");
+    var url = '/photo_mods/place_photo_mods';
+    var data = "{mod_gallery:"+ modID + ", mod_type:" + type + "}";
+    // if(type == 'grid' || type == 'comparison' || type == 'split'){
+      mod.find('img').each(function (i, el) {
+        data['caption'] = mod.find('.caption').val();
+        data['photo_id'] = $(el).data('img-id');
+        ajax(url, data);
+      });      
+    // }
+  }
   function driver(){
     if(type == 'comparison'){
       var mod = createComparison();
@@ -484,8 +517,8 @@ function Module(option) {
     else if(type == 'grid'){
       var mod = createGrid();
     }
-    else if(type == 'half'){
-      var mod = createHalf();
+    else if(type == 'split'){
+      var mod = createSplit();
     }
     else if(type == 'text'){
       var mod = createText();
@@ -506,7 +539,7 @@ function PhotoUpload(el) {
   var el = el;
 
   function htmlPhotoPrev(result) {
-    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-id='" + result.id +"'</div></article>";
+    var html = "<article class='preview six columns h-centered' id='#preview-" + result.id +"'><div class='img-wrapper v-centered'><img src='" + result.photo_file.medium.url +"' class='draggable invisible' data-img-id='" + result.id +"'</div></article>";
     var photoPrev = $($.parseHTML(html));
     var img = photoPrev.find('img');
     new Drag(img);

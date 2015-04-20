@@ -1,15 +1,15 @@
 <% count = index + 1; %>
 <% if count % 2 == 1 %>
-				<article class='preview six columns h-centered'>
+				<article id='preview-<%=photo.id%>' class='preview six columns h-centered'>
 					<div class='img-wrapper v-centered'>
-						<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable') %>
+						<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable', :data => { :img_id => photo.id }) %>
 					</div>
 			</article>
 		
 	<% elsif count % 2 == 0 %>
-			<article class='preview six columns h-centered'>
+			<article id='preview-<%=photo.id%>' class='preview six columns h-centered'>
 				<div class='img-wrapper v-centered'>
-					<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable') %>
+					<%= image_tag(photo.photo_file, :alt => "", :class=>'draggable', :data => { :img_id => photo.id }) %>
 				</div>
 			</article>
 		</div> <!-- end row group -->

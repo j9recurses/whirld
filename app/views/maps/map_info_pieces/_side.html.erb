@@ -19,7 +19,7 @@
 		<div class='photo-row row group wrapper'>
 		</div> <!-- end row group -->
 	</div>
-	<div id='photos-street' class='sub-photo-list hidden invisible'>
+	<div id='photos-street' class='sub-photo-list'>
 		<div class='photo-row row group wrapper'>
 		</div> <!-- end row group -->
 	</div>
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 
-	<div id='photos-street' class='sub-photo-list hidden invisible'>	
+	<div id='photos-street' class='sub-photo-list'>	
 		<div class='photo-row row group wrapper'>	
 			<% street.each_with_index do |photo, index| %>
 						<%= render :partial => 'maps/map_info_pieces/side_sortState', :locals => { :photo => photo, :index => index } %>

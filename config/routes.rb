@@ -92,7 +92,7 @@ Whirld::Application.routes.draw do
 
 #project module routes
   #photo mods
-  post 'photo_mods/place_photo_mods', :to => 'photo_mods#place_photo_mods', :as => 'place_photo_mods'
+  post 'photo_mods/place_mod_photo', :to => 'photo_mods#place_mod_photo', :as => 'place_mod_photo'
   post 'photo_mods/remove_mod_photo/:id', :to => 'photo_mods#remove_mod_photo', :as => 'remove_mod_photo'
 
   #gallery split

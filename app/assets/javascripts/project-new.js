@@ -489,7 +489,6 @@ function Module(option) {
       cache: false,
       type: 'post',
       success: function(data) {
-        console.log(data)
         console.log("sucess!!");
       },
       error: function() {
@@ -500,15 +499,17 @@ function Module(option) {
   function saveMod(el) {
     var mod = el;
     var modID = mod.attr("id");
-    var url = '/photo_mods/place_photo_mods';
-    var data = "{mod_gallery:"+ modID + ", mod_type:" + type + "}";
+    var url = '/photo_mods/place_mod_photo';
     // if(type == 'grid' || type == 'comparison' || type == 'split'){
       mod.find('img').each(function (i, el) {
-        data['caption'] = mod.find('.caption').val();
-        data['photo_id'] = $(el).data('img-id');
+        var caption = mod.find('.caption').val();
+        var imgID = $(el).data('img-id');
+        var data = "{mod_gallery:"+ modID + ", mod_type:" + type + ", caption:" + caption +", photo_id:" + imgID + "}";
+        console.log(data)
         ajax(url, data);
       });      
     // }
+
   }
   function driver(){
     if(type == 'comparison'){

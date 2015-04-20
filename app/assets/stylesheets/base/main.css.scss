@@ -16,7 +16,7 @@ a:hover, .a:hover {
 .caption{ font-style: italic; }
 .cursor-def{ cursor: default; }
 .cursor-point{ cursor: pointer; }
-.first-section { padding-top: 3.813em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
+.first-section { padding-top: 4em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
 .h-centered{ text-align: center; }
 .h-righted{ text-align: right; }
 .hidden{ 
@@ -50,9 +50,9 @@ img{
 .inline-list .item:last-child{ margin-right: 0; }
 .invisible{
   opacity: 0;
-  transition: all .2s linear;
+  transition: all .2s ease-in;
 }
-.light{ color: #a9a9a9; }
+.light{ color: #4A5656; }
 .meta { 
   color: gray;
   font-style: italic;
@@ -87,6 +87,7 @@ img{
 .tab.active, .tag.active{
   cursor: default;
 }
+.ui-helper-hidden-accessible{ display: none; }
 .v-centered {
   position: relative;
   top: 51.5%;

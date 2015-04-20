@@ -1,6 +1,7 @@
 $(document).ready(function() {
   if($('#project-creation-2').length > 0) {
     new Nav({type: 'create'});
+    new OldTab();
     new PhotoUpload($('#photo-upload-input'));
     $.each($('.preview'), function(i, thumb){
       new Drag($(thumb).find('img'));
@@ -48,19 +49,36 @@ function Form(el) {
     var input = $(e.target);
     var letterCount = input.val().length;
     var span = input.nextAll('span.char-limit');
-        $(span).removeClass('hidden');
+        $(span).removeClass('invisible');
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
     input.on('focusout', function() {
-      if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('hidden'); }
+      if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('invisible'); }
     });
   }
-
+  function addFocus(el){
+    el.closest('.input-wrapper').addClass('focus-in').addClass('has-text');
+  }
+  function removeFocus(el){
+    if(el.val().length == 0){
+      el.closest('.input-wrapper').removeClass('focus-in').removeClass('has-text');
+    }
+    else{ 
+      console.log(el.val().length); 
+      el.closest('.input-wrapper').removeClass('focus-in');
+    }
+  }
   function createBasicField(elArray) {
     $.each(elArray, function(i, el) {
       el.keyup(function(e) { changeCounter(e); });
-      autosize(el);
-    });
+      el.on('focusin', function(){
+        addFocus($(this));
+        autosize($(this));
+        $(this).on('focusout', function(){
+          removeFocus($(this));
+        });
+      });
+    }); // end each
   }
 
   // Location field functions
@@ -70,19 +88,27 @@ function Form(el) {
     var data = {location: el.val(), lat: lat.val(), lon: lon.val()};
     return data;
   }
-  function createLocationField(el){
-    var lat = el.next().find('#project-lat');
-    var lon = el.next().find('#project-lon');
-    el.on('focusout', function(e){
-      ajax(el);
-      ajax(lat);
-      ajax(lon);
+  function createLocationFields(el){
+    $('#project-lat').val('');
+    $('#project-lon').val('');
+    el.on('focusin', function(){
+      addFocus($(this));
+      $(this).on('focusout', function(){
+        removeFocus($(this));
+        // $.each([$('#project-lat'), $('#project-lon')], function(i, el){
+        //   if($(el).val().length == 0){ removeFocus($(el)); }
+        // });
+      });
+      addFocus($('#project-lat'));
+      addFocus($('#project-lon'));
     });
-    lat.on('focusout', function(e){
-      ajax($(this));
+    $('#project-lat').on('focusin', function(){
+      addFocus($(this));
+      $(this).on('focusout', function(){ removeFocus($(this)) });
     });
-    lon.on('focusout', function(e){
-      ajax($(this));
+    $('#project-lon').on('focusin', function(){
+      addFocus($(this));
+      $(this).on('focusout', function(){ removeFocus($(this)) });
     });
   }
   // Tag field functions
@@ -132,17 +158,23 @@ function Form(el) {
 
   function createTagField(el){
     el.keyup(function(e) { appendTag(e); });
+    el.on('focusin', function(){
+      addFocus($(this));
+      $(this).on('focusout', function(){
+        removeFocus($(this));
+      });
+    });
   }
 
   // Object logic
   function loadDoc(){
     createBasicField([ $('#project-description'), $('#project-name')] );
     createTagField($('#project-tag_list'));
+    createLocationFields($('#project-location'));
     if($('#project-creation-2').length > 0){
       $('#project-name').on('focusout', function(){ ajax($(this)); });
       $('#project-description').on('focusout', function(){ ajax($(this)); });
       $('#project-tag_list').on('focusout', function(){ ajax($(this)); });
-      createLocationField($('#project-location'));
     }
   }
   function initFields(){
@@ -499,6 +531,9 @@ function PhotoUpload(el) {
     el.fileupload({
       dataType: 'json',
       url: '/user_galleries/' + user_gal_id + '/photos',
+      active: function(e, d){
+        console.log(d)
+      },
       progressall: function(e, data){
         var progress = parseInt(data.loaded / data.total * 100, 10);
         $('.temp-preloader').removeClass('hidden');
@@ -508,7 +543,6 @@ function PhotoUpload(el) {
         appendPhotos(data.result);
         $('.temp-preloader').addClass('hidden');
         $('#photo-manager').removeClass('invisible');
-        new Nav({type: 'reset'});
       } // end done
     }); // end fileupload 
   }
@@ -538,7 +572,24 @@ function Nav(settings) {
       zIndex: z
     });
   }
+  function driver() {
+    if(type == 'create') {
+      initStickyNav($('#navbar-create'), 9);
+      initStickyNav($('#navbar-photo-manager'), 8);
+    }
+    else if(type == 'main') {
+      initStickyNav($('#navbar-main'), 9);
+    }
+  }
+  driver();
+}
+function OldTab(){
 
+  function updateCurrentLabel(tab){
+    if(tab.attr('id') == 'tab-uploaded'){
+      tab.text('Current (' +  $('#photos-uploaded').find('.preview').length +')');
+    }
+  }
   function getCatOrigin(tab){
     return $('#photo-cats').find('.item').data('origin');
   }
@@ -557,6 +608,7 @@ function Nav(settings) {
     if(!tab.hasClass('active')){
       tab.addClass('active');
       tab.siblings('.item').removeClass('active');
+
     }
   }
   function toggleCatPhotos(tab){
@@ -596,17 +648,11 @@ function Nav(settings) {
       toggleCatPhotos(tab);
     });
   }
-  function driver() {
-    if(type == 'create') {
-      initStickyNav($('#navbar-create'), 9);
-      initStickyNav($('#navbar-photo-manager'), 8);
-      initStateBar($('#photo-state'));
-      initCatBar($('#photo-cats'));
-    }
-    else if(type == 'main') {
-      initStickyNav($('#navbar-main'), 9);
-    }
+  function driver(){
+    initStateBar($('#photo-state'));
+    initCatBar($('#photo-cats'));
   }
+
   driver();
 }
 String.prototype.capitalize = function() {

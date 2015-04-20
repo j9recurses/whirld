@@ -1,11 +1,7 @@
-<div id='project-creation-1' class='row group project-creation'>
-    <div id='project-form' class='twelve columns'>
-  		<section id='project-header'>
-  			<div class='wrapper'>
-          <%= render :partial => "maps/new_map_pieces/newmapform" %>
-        </div>
-		  </section>
-		  <section id="knitter-map-pane"></section>
-  </div>
+<div id='project-creation-1' class='row group'>
+	<section class='fourteen columns offset-five first-section'>
+		<h1>Create Your Project</h1>
+		<%= render :partial => "maps/new_map_pieces/newmapform" %>
+	</section>
 </div>
 <script> <%= render :partial => "maps/maps_js_rb/geocoder", :formats => [:js] %> </script>

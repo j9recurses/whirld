@@ -15,7 +15,7 @@
 
 button{
   border: 0;
-  border-radius: 50%;
+  border-radius: 1px;
   line-height: 0;
   margin: 0 auto;
     -webkit-transition: all .2s ease;
@@ -26,6 +26,14 @@ button{
 button:focus{ outline: none; }
 button:hover { opacity: .7; }
 button i{ line-height: 0; }
+.button-next{
+  background-color: cornflowerblue;
+  color: white;
+  font-weight: bold;
+  height: 3em;
+  padding: 0;
+  width: 100%;
+}
 .button-bar{ 
   height: 76px;
   list-style-type: none;
@@ -103,18 +111,46 @@ button i{ line-height: 0; }
   float: left;
   margin: 0 2% 1% 0;
 }
+.has-text .input-label{
+  top: -2em;
+  -webkit-transition: all .25s ease-out;
+  -moz-transition: all .25s ease-out;
+  transition: all .25s ease-out;
+}
+.has-text textarea {
+  -webkit-transition: all .25s ease-out;
+  -moz-transition: all .25s ease-out;
+  transition: all .25s ease-out;
+}
+.focus-in .input-label{
+  color: darkcyan;
+}
+.focus-in textarea{
+  border-bottom: 2px solid darkcyan;
+}
 input{
   background: none;
   border: none;
   width: 100%;
 }
 input:focus{ outline: none; }
-label{
+.input-wrapper{
+  position: relative;
+}
+.input-label{
   color:gray;
   display: block;
-  font-size: .75em;
+  font-weight: bold;
+  pointer-events: none;
+  position: absolute;
   text-transform: uppercase;
+  top: 0;
+  z-index: -1;
 }
+.input-label-large{
+  top: 1.5em;
+}
+
 .module{
   background-color: white;
   margin-bottom: 1.45em;
@@ -160,6 +196,9 @@ label{
 .preview img{
   transition: opacity 0.5s linear;
 }
+#project-create-form{
+  margin-top: 3em;
+}
 .project-tag{ 
   display: inline-block;
   margin: 0 10px 8px 0;
@@ -169,31 +208,51 @@ label{
 }
 .project-tag.error{ color: cornflowerblue; }
 .project-tag:hover{ text-decoration: line-through; }
+.row-form{ margin-bottom: 2em; }
+.save-module{
+  height: 40px;
+  width: 40px;
+}
 .tab{ cursor: pointer; }
 .tab.empty{ cursor: default; }
 .tag-container{ min-height: 29px; }
 textarea{
   background: none;
   border: none;
+  border-bottom: 1px solid gray;
+  height: 2em;
   overflow: hidden;
   resize: none;
   vertical-align: top;
   width: 100%;
+  -webkit-transition: all .25s ease-out;
+  -moz-transition: all .25s ease-out;
+  transition: all .25s ease-out;
 }
-textarea.char-limited{ width: 90%; }
+/*textarea.char-limited{ width: 90%; }*/
 textarea:focus{ outline: none; }
-textarea.tag-input{ height: 19px; }
-textarea.tag-input::-webkit-input-placeholder { /* WebKit browsers */
-  font-size: .75em;
+.ui-draggable-handle{
+  z-index: 100000;
 }
-textarea.tag-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  font-size: .75em;
+.ui-autocomplete{
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+  -moz-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+  box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+  font-size: 1em;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
 }
-textarea.tag-input::-moz-placeholder { /* Mozilla Firefox 19+ */
-  font-size: .75em;
+.ui-autocomplete .ui-menu-item{
+  border-top: 1px solid cadetblue;
+  border-top: 1px solid cadetblue;
+  color: darkcyan;
+  cursor: default;
+  padding: 1em .5em;
 }
-textarea.tag-input:-ms-input-placeholder { /* Internet Explorer 10+ */
-  font-size: .75em;
+.ui-autocomplete .ui-menu-item.ui-state-focus{
+  background-color: cadetblue;
+  color: white;
 }
-
-

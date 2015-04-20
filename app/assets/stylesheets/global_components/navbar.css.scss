@@ -1,16 +1,16 @@
 /*===== Navbar =====*/
 .logo a:hover { opacity: 1; }
 nav a { color: azure; }
-.main-nav { 
-	width: 100%;
-}
 .navbar {
 	background-color: gray;
-  max-height: 53px;
+  max-height: 3em;
 }
 #navbar-create{
 	z-index: 9999;
 	top: -13px;
+}
+#navbar-main {
+
 }
 #navbar-photo-manager{ 
   background-color: black;

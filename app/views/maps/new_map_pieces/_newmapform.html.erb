@@ -1,77 +1,78 @@
-<%= form_for @map, :html => { :id => 'project-create' } do |f| %>
-  <%= render 'layouts/error_messages', object: f.object %>
-
-  <div class='row group'>
-    <div class='twelve columns'>
-      <h1 class='project-name first-header'>
-        <%= f.label :name, 'Title', :class => 'font_small' %>
-        <%=  f.text_area :name,
-                         :name => 'name',
-                         :rows => '0',
-                         :class => 'char-limited',
-                         :id => 'project-name',
-                         :placeholder => 'Title',
-                         :maxlength => 70 %>
-        <input type="hidden" name="map_id" id="project-id">
-        <span class='char-limit font_small light hidden' data-limit='70'>70</span>
-      </h1>
+<%= form_for @map, :html => { :id => 'project-create-form' } do |f| %>
+  <%= render 'layouts/error_messages', object: f.object %>  
+  <div class='row-form row group'>
+    <div class='twenty-four columns'>
+        <div class='input-wrapper'>
+          <%= f.label :name, 'Title', :class => 'input-label light' %>  
+          <%=  f.text_area :name,
+                           :name => 'name',
+                           :rows => '0',
+                           :class => 'char-limited h2-size',
+                           :id => 'project-name',
+                           :maxlength => 70 %>
+          <span class='char-limit font_small light invisible' data-limit='70'>70</span>
+        </div>
     </div>
-  </div> <!-- end project-title -->
-
-  <div class='row group'>
-    <div class='eight columns'>
-      <%= f.label :location, 'Location', :class => 'font_small' %>
-      <%= f.text_field :location,
-               :id => 'project-location',
-               :placeholder => 'Location' %>
-      <div class='row group'>
-        <div class='six columns'>
-          <%= f.label :lat, 'Latitude', :class => 'font_small' %>
-          <%= f.text_field :lat,
-            :id => 'project-lat',
-            :placeholder => 'Latitude' %>
-            <input type="hidden" name="map_id" id="project-id">
+  </div> <!-- end row group -->
+  <div class='row-form row group'>
+    <div class='ten columns'>        
+        <div class='input-wrapper'>
+          <%= f.label :location, 'Location', :class => 'input-label light' %>
+          <%= f.text_area :location,
+                           :id => 'project-location',
+                           :class => 'char-limited font_small' %>
         </div>
-        <div class='six columns'>
-          <%= f.label :lon, 'Longitude', :class => 'font_small' %>
-          <%= f.text_field :lon,
-            :id => 'project-lon',
-            :placeholder => 'Longitude' %>
-          <input type="hidden" name="map_id" id="project-id">
-        </div>
+    </div>
+    <div class='six columns offset-one'>
+      <div class='input-wrapper'>
+          <%= f.label :lat, 'Latitude', :class => 'input-label light' %>
+          <%= f.text_area :lat,
+                            :id => 'project-lat',
+                            :class => 'char-limited font_small' %>
       </div>
     </div>
-  </div> <!-- end project-location -->
+    <div class='six columns offset-one'>
+      <div class='input-wrapper'>
+          <%= f.label :lon, 'Longitude', :class => 'input-label light' %>
+          <%= f.text_area :lon,
+                            :id => 'project-lon',
+                            :class => 'char-limited font_small' %>
+      </div>
+    </div>
+  </div> <!-- end row group -->
+  <div class='row-form row group'>
+    <div class='twenty-four columns'>
+        <div class='input-wrapper'>
+          <%= f.label :title, 'Description', :class => 'input-label light' %>
+          <%=  f.text_area :description,
+                           :rows => '0',
+                           :class => 'char-limited',
+                           :id => 'project-description',
+                           :maxlength => 550 %>
+          <span class='char-limit light invisible font_small' data-limit='550'>550</span>
+        </div>
+    </div>
+  </div> <!-- end row group -->
 
+  <div class='row-form row group'>
+    <div class='twenty-four columns'>
+        <div class='input-wrapper'>
+          <%= f.label :tags, 'Tags', :class => 'input-label light' %>
+        <%#=  f.text_field :tags,
+                         :class => 'tag-input',
+                         :id => 'project-tag-list',
+                         :placeholder => '#tags' %>
+          <textarea id='project-tag_list' class='tag-input char-limited'></textarea>
+          <div id='tag-container' class='tag-container'></div>
+        </div>
+    </div>
+  </div> <!-- end row group -->
   <div class='row group'>
-    <p class='project-description'>
-      <%= f.label :title, 'Description', :class => 'font_small' %>
-      <%=  f.text_area :description,
-                       :rows => '0',
-                       :class => 'char-limited',
-                       :id => 'project-description',
-                       :placeholder => 'Description',
-                       :maxlength => 550 %>
-      <span class='char-limit light hidden' data-limit='550'>550</span>
-      <input type="hidden" name="map_id" id="project-id">
-    </p>
-  </div> <!-- end project-description -->
-
-  <div class='row group'>
-    <div class='twelve columns'>
-      <%= f.label :tags, 'Tags', :class => 'font_small' %>
-      <%#=  f.text_field :tags,
-                       :class => 'tag-input',
-                       :id => 'project-tag-list',
-                       :placeholder => '#tags' %>
-      <textarea id='project-tag_list' class='tag-input' placeholder='#tags'></textarea>
-      <div id='tag-container' class='tag-container'></div>
-      <input type="hidden" name="map_id" id="project-id">
+    <div class='four columns pull-right h-righted'>
+        <button class='button-next'>
+          <%= f.submit "Next" %>
+        </button>
     </div>
   </div>
-
-  <button class='next'>
-    <%= f.submit "Next" %>
-  </button>
-
 <% end %>
+<section id="knitter-map-pane" class='hidden'></section>

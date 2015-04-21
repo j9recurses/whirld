@@ -92,6 +92,38 @@ class PhotoModsController < ApplicationController
     format.json { head :no_content }
   end
 
+  ##text blocks
+  def user_gallery_bloctext_create
+    @user_gallery_bloc_txt = UserGalleryBlocText.new
+    @user_gallery_bloc_txt[:user_gallery_id] = params[:user_gallery_id]
+    respond_to do |format|
+      if @user_gallery_bloc_txt.save
+        format.json { render json:  @user_gallery_bloc_txt}
+      else
+        render :json => { "errors" => @user_gallery_bloc_txt.errors }
+      end
+    end
+  end
+
+  def user_gallery_bloctext_update
+    @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
+    @user_gallery_bloc_txt[:bloc_text] = params[:bloc_text]
+    respond_to do |format|
+      if @user_gallery_bloc_txt.save
+        format.json { render json:  @user_gallery_bloc_txt}
+      else
+        render :json => { "errors" => @user_gallery_bloc_txt.errors }
+      end
+    end
+  end
+
+
+  def user_gallery_bloctext_delete
+    @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
+    @user_gallery_bloc_txt.destroy
+    format.json { head :no_content }
+  end
+
 
   ####photo mod###
   def place_mod_photo

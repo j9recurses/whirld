@@ -106,9 +106,14 @@ Whirld::Application.routes.draw do
   post 'photo_mods/user_gallery_comparison_create/:id', :to => 'photo_mods#user_gallery_comparison_create', :as => 'user_gallery_comparison_create'
 
 #grid
-  post 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_split_delete', :as => 'user_gallery_grid_delete'
+  post 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_grid_delete', :as => 'user_gallery_grid_delete'
   post 'photo_mods/user_gallery_grid_update/:id', :to => 'photo_mods#user_gallery_grid_update', :as => 'user_gallery_grid_update'
   post 'photo_mods/user_gallery_grid_create/:id', :to  => 'photo_mods#user_gallery_grid_create', :as => 'user_gallery_grid_create'
+
+#bloc_text
+  post 'photo_mods/user_gallery_bloctext_delete/:id', :to => 'photo_mods#user_gallery_bloctext_delete', :as => 'user_gallery_bloctext_delete'
+  post 'photo_mods/user_gallery_bloctext_update/:id', :to => 'photo_mods#user_gallery_bloctext_update', :as => 'user_gallery_bloctext_update'
+  post 'photo_mods/user_gallery_bloctext_create/:id', :to  => 'photo_mods#user_gallery_bloctext_create', :as => 'user_gallery_bloctext_create'
 
 
 

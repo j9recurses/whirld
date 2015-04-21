@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150417035848) do
+ActiveRecord::Schema.define(:version => 20150420235342) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -168,6 +168,11 @@ ActiveRecord::Schema.define(:version => 20150417035848) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "map_id"
+  end
+
+  create_table "user_gallery_bloc_texts", :force => true do |t|
+    t.integer "user_gallery_id"
+    t.text    "bloc_text"
   end
 
   create_table "user_gallery_comparisons", :force => true do |t|

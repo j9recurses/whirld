@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150420235342) do
+ActiveRecord::Schema.define(:version => 20150421042248) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(:version => 20150420235342) do
     t.string   "export_type",  :default => "normal", :null => false
     t.integer  "user_id",      :default => 0
   end
+
+  create_table "friendly_id_slugs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.integer  "sluggable_id",                 :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
+  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "maps", :force => true do |t|
     t.string   "name",                                             :default => ""
@@ -134,33 +145,14 @@ ActiveRecord::Schema.define(:version => 20150420235342) do
     t.boolean  "is_normal",       :default => false
   end
 
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       :limit => 128
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.string   "user_id"
-    t.integer  "map_id"
-    t.integer  "warpable_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "taggings_count", :default => 0
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
-
-  add_index "tags", ["map_id"], :name => "index_tags_on_map_id"
-  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
-  add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
-  add_index "tags", ["warpable_id"], :name => "index_tags_on_warpable_id"
 
   create_table "user_galleries", :force => true do |t|
     t.string   "name"

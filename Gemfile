@@ -9,8 +9,7 @@ gem "friendly_id"
 
 gem "omniauth-google-oauth2"
 gem 'youtube_it', github: 'bodrovis/youtube_it'
-gem 'acts_as_commentable', '3.0.1'
-gem 'acts-as-taggable-on', '~> 3.4'
+
 
 # dependencies
 group :dependencies do
@@ -61,7 +60,6 @@ gem 'jquery-turbolinks'
 gem "carrierwave", "~> 0.6.2"
 gem "mini_magick", "~> 3.4"
 gem 'jbuilder'
-
 #for deepLearn predicter
 #gem 'delayed_job_active_record'
 #gem 'daemons'

@@ -115,6 +115,10 @@ Whirld::Application.routes.draw do
   post 'photo_mods/user_gallery_bloctext_update/:id', :to => 'photo_mods#user_gallery_bloctext_update', :as => 'user_gallery_bloctext_update'
   post 'photo_mods/user_gallery_bloctext_create/:id', :to  => 'photo_mods#user_gallery_bloctext_create', :as => 'user_gallery_bloctext_create'
 
+#taggings
+ post 'photo_mods/create_taggings', :to => 'photo_mods#create_taggings', :as => 'create_taggings'
+ post 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
+
 
 
   resources :user_galleries do

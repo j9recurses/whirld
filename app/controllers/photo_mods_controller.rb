@@ -1,4 +1,5 @@
 class PhotoModsController < ApplicationController
+  include ApplicationHelper
 
   def user_gallery_grid_create
     @user_gallery_grid = UserGalleryGrid.new
@@ -48,6 +49,7 @@ class PhotoModsController < ApplicationController
     @user_gallery_comparison[:comparison_photo_order] = params[:photo_order]
     respond_to do |format|
       if @user_gallery_comparison.save
+
         format.json { render json:  @user_gallery_comparison}
       else
         render :json => { "errors" => @user_gallery_comparison.errors }
@@ -153,4 +155,41 @@ class PhotoModsController < ApplicationController
     photo_mod.destroy
     format.json { head :no_content }
   end
+
+  #taggings
+  def create_taggings
+    @item = ''
+    if params[:modtype] = "grid"
+      @item = UserGalleryGrid.find(params[:mod_gallery])
+    elsif params[:modtype] = "comparision"
+      @item = UserGalleryComparison.find(params[:mod_gallery])
+    elsif params[:modtype] = "split"
+      @item = UserGallerySplit.find(params[:mod_gallery])
+    elsif params[:modtype] = "bloc_text"
+      @item = UserGalleryBlocText.find(params[:mod_gallery])
+    elsif params[:modtype] = "map"
+      @item = Map.find(params[:mod_gallery])
+    end
+    unless @item.nil?
+      alltags = parse_taglist(params[:taglist])
+      alltags.each do |tag|
+        @item.tags.create(name: tag)
+      end
+      respond_to do |format|
+        unless @item.errors?
+          format.json { render json:@item}
+        else
+          render :json => { "errors" => @item.errors }
+        end
+      end
+    end
+  end
+
+  def delete_tagings
+    tag_item = Tag.find(params[:tag_id])
+    tag_item.destroy
+    format.json { head :no_content }
+  end
+
+
 end

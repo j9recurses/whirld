@@ -9,10 +9,10 @@ class NotAtOriginValidator < ActiveModel::Validator
 end
 
 class Map < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :name, :use => [:slugged, :static]
 
-  acts_as_taggable
+ extend FriendlyId
+  friendly_id :name
+  trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
   attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
@@ -26,8 +26,8 @@ class Map < ActiveRecord::Base
 #  validates_format_of :tile_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
   validates_with NotAtOriginValidator
 
+  has_many :tags, :as => :taggable
   has_many :exports
-  has_many :tags
   has_many :comments
   has_many :annotations
   belongs_to :user

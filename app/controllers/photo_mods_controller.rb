@@ -92,7 +92,6 @@ class PhotoModsController < ApplicationController
     format.json { head :no_content }
   end
 
-
   ####photo mod###
   def place_mod_photo
     #check to see if the photo exists, and if not create it.

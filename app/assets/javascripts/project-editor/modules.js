@@ -313,22 +313,22 @@ function Module(option) {
     console.log('update tags')
     console.log('update order')
     console.log('update module')
-    
-    // var data = {user_gallery_id: user_gallery_id, grid_photo_order: 1}
-    
-    // $.ajax({
-    //   url: '/photo_mods/user_gallery_' + type + '_update/' + mod.data('mod-id'),
-    //   data: data,
-    //   cache: false,
-    //   type: 'put',
-    //   success: function(data) {
-    //     console.log('module updated!');
-    //   },
-    //   error: function(data){
-    //     console.log("Something went wrong!");
-    //     console.log(data);
-    //   }
-    // }); // end ajax
+
+    var data = {mod_gallery: mod.data('mod-id'), grid_photo_order: 1}
+
+    $.ajax({
+      url: '/photo_mods/user_gallery_' + type + '_update/',
+      data: data,
+      cache: false,
+      type: 'put',
+      success: function(data) {
+        console.log('module updated!');
+      },
+      error: function(data){
+        console.log("Something went wrong!");
+        console.log(data);
+      }
+    }); // end ajax
     
     // now update photos
     $.each(mod.find('.photo'), function(i, photo){
@@ -355,7 +355,7 @@ function Module(option) {
     console.log('delete mod')
     var data = {mod_gallery: mod.data('mod-id')}
     $.ajax({
-      url: '/photo_mods/user_gallery_' + type + '_delete/' + user_gallery_id,
+      url: '/photo_mods/user_gallery_' + type + '_delete/',
       data: data,
       cache: false,
       type: 'delete',

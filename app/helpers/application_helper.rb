@@ -27,6 +27,11 @@ module ApplicationHelper
     html
   end
 
+  def parse_taglist(taglist)
+    newtaglist =  taglist.split(",")
+    return newtaglist
+  end
+
   # polyfill for jquery-ujs in rails 2.x
   # see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2
 

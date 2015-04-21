@@ -1,5 +1,5 @@
 require 'open3'
-
+include ApplicationHelper
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
   before_filter :authenticate_user!,  :except => [:index, :show, :images]
@@ -37,7 +37,7 @@ class MapsController < ApplicationController
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @photo = Photo.new
-    @maptags = @map.tag_counts.pluck(:name).join(", ")
+    #@maptags = @map.tag_counts.pluck(:name).join(", ")
     @extra_js = true  # for layout differentiation
     @photo_manager = true # for layout differentiation
     render "map_info"
@@ -79,6 +79,7 @@ class MapsController < ApplicationController
   end
 
   def update_remote
+      puts params.inspect
       @map = Map.find params[:id]
       puts @map.inspect
       #pop unwanted keys off the params hash
@@ -93,12 +94,16 @@ class MapsController < ApplicationController
       unless params[:name].nil?
         params[:slug] = params[:name]
       end
-      unless params[:tag_list].nil?
-        @map.tag_list.add(params[:tag_list])
-        @map.save
-        puts @map.tag_counts.pluck(:name).join(", ")
-        @maptags = @map.tag_counts.pluck(:name).join(", ")
-      end
+      #need to add tagging params
+     # unless params[:tag_list].nil?
+      #  puts "********"
+      #  newtaglist = parse_taglist(params[:tag_list])
+      #  puts newtaglist.inspect
+       # @map.tag_list.add(params[:tag_list])
+     #   @map.save
+      #  puts @map.tag_counts.pluck(:name).join(", ")
+      #  @maptags = @map.tag_counts.pluck(:name).join(", ")
+      #end
       respond_to do |format|
         if @map.update_attributes(params)
           format.json { render json: params  }

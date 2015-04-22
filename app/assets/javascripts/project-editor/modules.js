@@ -211,6 +211,8 @@ function Module(option) {
       success: function(data){
         console.log('Success: photo is associated')
         $(photo).data('img-saved', true);
+        console.log(data.id)
+        $(photo).data('association-id', data.id);
         mod.addClass('saved');
       },
       error: function(){
@@ -250,10 +252,11 @@ function Module(option) {
     var data = {
             mod_gallery: parseInt(mod.data('mod-id')),
             mod_type: mod.data('type'),
-            id: parseInt($(photo).find('img').data('img-id')),
+            // id: photo.data('association-id')
+            photo_id: parseInt($(photo).find('img').data('img-id')),
           }
       $.ajax({
-        url: '/photo_mods/remove_mod_photo/',
+        url: '/photo_mods/remove_mod_photo/'+photo.data('association-id'),
         data: data,
         cache: false,
         type: 'delete',
@@ -416,8 +419,8 @@ function Module(option) {
               droppable.addClass('dropzone');
               droppable.append(htmlDefaultMessage())
         }
+        deletePhoto(mod, photo)
         $(photo).remove();
-        deletePhoto(mod, $(photo));
       });
     }
     function initModDrop(mod){

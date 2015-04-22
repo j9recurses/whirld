@@ -1,6 +1,6 @@
 class UserGallery < ActiveRecord::Base
   attr_accessible :name, :map_id, :user_id
-  belongs_to :map, :dependent => :destroy
+  belongs_to :map
   has_many :photos, :dependent => :destroy
   has_many :user_gallery_grids, dependent: :destroy
   has_many :user_gallery_splits,  dependent: :destroy

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150421042248) do
+ActiveRecord::Schema.define(:version => 20150422030556) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -130,11 +130,11 @@ ActiveRecord::Schema.define(:version => 20150421042248) do
   create_table "photo_mods", :force => true do |t|
     t.integer "photo_id"
     t.text    "caption"
-    t.integer "mod_gallery"
-    t.string  "mod_type"
+    t.integer "mod_gallery_id"
+    t.string  "mod_gallery_type"
   end
 
-  add_index "photo_mods", ["mod_gallery", "mod_type"], :name => "index_photo_mods_on_mod_gallery_and_mod_type"
+  add_index "photo_mods", ["mod_gallery_id", "mod_gallery_type"], :name => "index_photo_mods_on_mod_gallery_and_mod_type"
 
   create_table "photos", :force => true do |t|
     t.integer  "user_gallery_id"

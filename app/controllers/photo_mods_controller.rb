@@ -27,8 +27,13 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_grid_delete
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
-    @user_gallery_grid.destroy
-    format.json { head :no_content }
+    respond_to do |format|
+      if @user_gallery_grid.destroy
+          format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @user_gallery_grid.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   ###comparision###
@@ -49,7 +54,6 @@ class PhotoModsController < ApplicationController
     @user_gallery_comparison[:comparison_photo_order] = params[:photo_order]
     respond_to do |format|
       if @user_gallery_comparison.save
-
         format.json { render json:  @user_gallery_comparison}
       else
         render :json => { "errors" => @user_gallery_comparison.errors }
@@ -59,8 +63,13 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_comparison_delete
     @user_gallery_comparison = UserGalleryComparison.find(params[:mod_gallery])
-    @user_gallery_comparison.destroy
-    format.json { head :no_content }
+     respond_to do |format|
+      if @user_gallery_comparison.destroy
+          format.json { head :no_content, status: :ok }
+      else
+        format.json { render json:  @user_gallery_comparison.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   ##split####
@@ -90,24 +99,29 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_split_delete
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
-    @user_gallery_split.destroy
-    format.json { head :no_content }
-  end
-
-  ##text blocks
-  def user_gallery_bloctext_create
-    @user_gallery_bloc_txt = UserGalleryBlocText.new
-    @user_gallery_bloc_txt[:user_gallery_id] = params[:user_gallery_id]
     respond_to do |format|
-      if @user_gallery_bloc_txt.save
-        format.json { render json:  @user_gallery_bloc_txt}
+      if  @user_gallery_split.destroy
+          format.json { head :no_content, status: :ok }
       else
-        render :json => { "errors" => @user_gallery_bloc_txt.errors }
+        format.json { render json: @user_gallery_split.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  def user_gallery_bloctext_update
+  ##text blocks
+  def user_gallery_text_create
+    @user_gallery_text = UserGalleryBlocText.new
+    @user_gallery_text[:user_gallery_id] = params[:user_gallery_id]
+    respond_to do |format|
+      if @user_gallery_text.save
+        format.json { render json:  @user_gallery_text}
+      else
+        render :json => { "errors" => @user_gallery_text.errors }
+      end
+    end
+  end
+
+  def user_gallery_text_update
     @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
     @user_gallery_bloc_txt[:bloc_text] = params[:bloc_text]
     respond_to do |format|
@@ -120,26 +134,37 @@ class PhotoModsController < ApplicationController
   end
 
 
-  def user_gallery_bloctext_delete
+  def user_gallery_text_delete
     @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
-    @user_gallery_bloc_txt.destroy
-    format.json { head :no_content }
+    respond_to do |format|
+      if @user_gallery_bloc_txt.destroy
+          format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @user_gallery_bloc_txt.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 
   ####photo mod###
   def place_mod_photo
     #check to see if the photo exists, and if not create it.
-    @photo_mod = PhotoMod.where(photo_id: params[:photo_id], mod_gallery: params[:mod_gallery])
+    @photo_mod = PhotoMod.where(photo_id: params[:photo_id], mod_gallery_id: params[:mod_gallery])
     unless @photo_mod.empty?
       @photo_mod = PhotoMod.find(@photo_mod[:id])
       @photo_mod[:caption] = params[:caption]
     else
       @photo_mod = PhotoMod.new
       @photo_mod[:photo_id] = params[:photo_id]
-      @photo_mod[:mod_gallery] = params[:mod_gallery]
+      @photo_mod[:mod_gallery_id] = params[:mod_gallery]
       @photo_mod[:caption] = params[:caption]
-      @photo_mod[:mod_type] = params[:modtype]
+      if params[:modtype] = 'grid'
+        @photo_mod[:mod_gallery_type] = 'UserGalleryGrid'
+      elsif params[:modtype] = 'split'
+        @photo_mod[:mod_gallery_type] = 'UserGallerySplit'
+      elsif params[:modtype] = 'comparision'
+        @photo_mod[:mod_gallery_type] = 'UserGalleryComparison'
+      end
     end
     respond_to do |format|
       if @photo_mod.save
@@ -151,13 +176,19 @@ class PhotoModsController < ApplicationController
   end
 
   def remove_mod_photo
-    photo_mod = PhotoMod.find(params[:mod_photo_id])
-    photo_mod.destroy
-    format.json { head :no_content }
+    @photo_mod = PhotoMod.find(params[:mod_photo_id])
+    respond_to do |format|
+      if @photo_mod.destroy
+          format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @photo_mod.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   #taggings
   def create_taggings
+    puts params.inspect
     @item = ''
     if params[:modtype] = "grid"
       @item = UserGalleryGrid.find(params[:mod_gallery])
@@ -165,7 +196,7 @@ class PhotoModsController < ApplicationController
       @item = UserGalleryComparison.find(params[:mod_gallery])
     elsif params[:modtype] = "split"
       @item = UserGallerySplit.find(params[:mod_gallery])
-    elsif params[:modtype] = "bloc_text"
+    elsif params[:modtype] = "text"
       @item = UserGalleryBlocText.find(params[:mod_gallery])
     elsif params[:modtype] = "map"
       @item = Map.find(params[:mod_gallery])
@@ -175,20 +206,23 @@ class PhotoModsController < ApplicationController
       alltags.each do |tag|
         @item.tags.create(name: tag)
       end
+      @item[:taglist] = @item.tags
+      puts @item.inspect
       respond_to do |format|
-        unless @item.errors?
           format.json { render json:@item}
-        else
-          render :json => { "errors" => @item.errors }
-        end
       end
     end
   end
 
   def delete_tagings
-    tag_item = Tag.find(params[:tag_id])
-    tag_item.destroy
-    format.json { head :no_content }
+    @tag_item = Tag.find(params[:tag_id])
+    respond_to do |format|
+      if @tag_item.destroy
+          format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @tag_item.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 

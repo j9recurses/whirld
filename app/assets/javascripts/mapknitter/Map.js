@@ -1,13 +1,16 @@
 MapKnitter.Map = MapKnitter.Class.extend({
 
+//draggable
+
   initialize: function(options) {
     this._zoom = options.zoom || 0;
     this._latlng = L.latLng(options.latlng);
 
     /* Initialize before map in order to add to layers; probably it can be done later too */
     var google = new L.Google("SATELLITE",{
-      maxZoom: 24,
-      opacity:0.5
+      maxZoom: 20,
+      opacity:0.5,
+      minZoom: 0
     });
 
     this._map = L.map('knitter-map-pane', {
@@ -232,16 +235,35 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
     //L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/anishshah101.ipm9j6em/{z}/{x}/{y}.png', {
-      maxZoom: 24,
+      maxZoom: 20,
+     //minZoom: 0,
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="http://mapbox.com">Mapbox</a>',
       id: 'examples.map-i86knfo3'
     })
 
+     basemapDetails = {
+      subdomains: ['','a.','b.','c.','d.'],
+      minZoom: 0,
+      maxZoom: 20,
+      type: 'png',
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
+       };
+
+      var watercolor = L.tileLayer("http://{s}tile.stamen.com/watercolor/{z}/{x}/{y}.png", basemapDetails);
+      var toner = L.tileLayer("http://{s}tile.stamen.com/toner/{z}/{x}/{y}.png", basemapDetails);
+      var toner_lite = L.tileLayer("http://{s}tile.stamen.com/toner-lite/{z}/{x}/{y}.png", basemapDetails);
+      var toner_background = L.tileLayer("http://{s}tile.stamen.com/toner-background/{z}/{x}/{y}.png", basemapDetails);
+
+      //Mapknitter has Google Satellite as well. Keep that one.
     var baseMaps = {
         "OpenStreetMap": mapbox,
-        "Google Satellite": google
+        "Google Satellite": google,
+        "Watercolor": watercolor,
+        "Toner": toner,
+        "Toner-Lite": toner_lite,
+         "Toner-Background": toner_background
     };
     // eventually, annotations
     var overlayMaps = {

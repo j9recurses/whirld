@@ -14,6 +14,33 @@ $(document).ready(function() {
   }
   new ButtonBar({type: 'end'});
   new Form();
+
+  $('#project-finish').on({
+    click: function(){
+      var modIds = '';
+      $.each($('.module'), function(i, mod){ modIds += $(mod).data('mod-id') + ','; });
+      console.log(modIds);
+      
+      // DATA HERE. Probably need to change param names, but this is how you get the values
+      var data = {
+          map_id: $('#project-creation-2').data('map-id'),
+          mod_order: modIds
+      }
+      $.ajax({
+        url: 'update_remote',// URL HERE,
+        data: data,
+        cach: false,
+        type: 'put',
+        success: function(data){
+          console.log('Success: module order updated');
+        },
+        error: function(data){
+          console.log('Something went wrong.')
+        }
+      }); // end ajax
+    } // end click
+  });
+
 });
 
 String.prototype.capitalize = function() {

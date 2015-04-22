@@ -1,4 +1,4 @@
-<div id='project-creation-2' class='row group' data-user-gallery-id = '<%=@user_gallery.id%>'>
+<div id='project-creation-2' class='row group' data-user-gallery-id = '<%=@user_gallery.id%>' data-map-id = '<%=@map.id%>'>
   <section id='photo-manager' class='side-nav eight columns'>
     <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
@@ -34,6 +34,13 @@
 
 
     <%= render :partial => "maps/map_info_pieces/buttonBar" %>
+
+    <div class='row group'>
+        <button id='project-finish' class='finish two columns pull-right'>Finish</button>
+        <button id='project-cancel' class='cancel two columns pull-right'>Cancel</button>
+    </div>
+
+
   </div> <!-- end #project-form -->
 </div> <!-- end #project-creation -->
 

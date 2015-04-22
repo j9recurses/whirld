@@ -279,28 +279,24 @@ function Module(option) {
   }
   // Functions for saving, editing, deleting modules and their assets. These have to be initiated within the createMod function.
   function updateOrCreateTags(mod, taglist){
-    console.log('update tags! in here!!!');
     var data = {
       mod_gallery: parseInt(mod.data('mod-id')),
       mod_type: mod.data('type'),
       taglist: taglist
     }
-    console.log(data);
-    console.log('create tags')
-      $.ajax({
-        url: '/photo_mods/create_taggings',
-        data: data,
-        cache: false,
-        type: 'post',
-        success: function(data){
-          console.log('Success!! tags were uploaded')
-        },
-        error: function(){
-          console.log('something went wrong')
-        }
-      }); // end ajax
+    $.ajax({
+      url: '/photo_mods/create_taggings',
+      data: data,
+      cache: false,
+      type: 'post',
+      success: function(data){
+        console.log('Success: tags were created')
+      },
+      error: function(){
+        console.log('something went wrong')
+      }
+    }); // end ajax
   }
-
   // For every photo, check if it's saved. If yes, update it. If not, create it.
   function updateOrCreatePhoto(mod, photo){
     console.log('update or create one photo');
@@ -310,43 +306,33 @@ function Module(option) {
                 photo_id: parseInt($(photo).find('img').data('img-id')),
                 caption: $(photo).find('.caption').val()
               }
-    if($(photo).data('img-saved') == true){
-      console.log('update photo')
-    }
-    else{
-      console.log('create photo')
-      $.ajax({
-        url: '/photo_mods/place_mod_photo',
-        data: data,
-        cache: false,
-        type: 'post',
-        success: function(data){
-          console.log('Success: photo is associated')
-          $(photo).data('img-saved', true);
-          mod.addClass('saved');
-        },
-        error: function(){
-          console.log('something went wrong')
-        }
-      }); // end ajax
-    }
+    $.ajax({
+      url: '/photo_mods/place_mod_photo',
+      data: data,
+      cache: false,
+      type: 'post',
+      success: function(data){
+        console.log('Success: photo is associated')
+        $(photo).data('img-saved', true);
+        mod.addClass('saved');
+      },
+      error: function(){
+        console.log('something went wrong')
+      }
+    }); // end ajax
   }
   function updateMod(mod){
-    console.log('update tags')
-    console.log('update order')
-    console.log('update module')
     var data = {mod_gallery: mod.data('mod-id'), grid_photo_order: 1}
-
     $.ajax({
       url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
       data: data,
       cache: false,
       type: 'put',
       success: function(data) {
-        console.log('module updated!');
+        console.log('Success: module updated!');
       },
       error: function(data){
-        console.log("Something went wrong!");
+        console.log("Error: module not updated");
         console.log(data);
       }
     }); // end ajax
@@ -361,16 +347,11 @@ function Module(option) {
       var tagval =  $(tag).text()
       taglist.push(tagval);
     });
-    console.log(taglist)
     var taglist_str = taglist.join(",")
     updateOrCreateTags(mod, taglist_str)
 
   }
-
-
-
   function deletePhoto(mod){
-    console.log('delete one photo');
     var data = {mod_gallery: mod.data('mod-id')}
       $.ajax({
         url: '/photo_mods/remove_mod_photo/' + user_gallery_id,
@@ -378,7 +359,7 @@ function Module(option) {
         cache: false,
         type: 'delete',
         success: function(data){
-          console.log('photo is disassociated')
+          console.log('Success: photo is disassociated');
         },
         error: function(){
           console.log('something went wrong')
@@ -386,10 +367,9 @@ function Module(option) {
       }); // end ajax
   }
   function deleteMod(mod){
-    console.log('delete mod')
     var data = {mod_gallery: mod.data('mod-id')}
     $.ajax({
-      url: '/photo_mods/user_gallery_' + type + '_delete/' + mod.data('mod-id'),
+      url: '/photo_mods/user_gallery_' + type + '_delete/'  + mod.data('mod-id'),
       data: data,
       cache: false,
       type: 'post',
@@ -398,15 +378,15 @@ function Module(option) {
          xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
       },
       success: function(data) {
-        console.log('module has been deleted!');
-        console.log('disassociate tags');
-        console.log('update all mod orders')
+        console.log('Success: module deleted!');
+        console.log('NEED: disassociate tags');
+        console.log('NEED: module orders deleted')
         $.each(mod.find('.photo'), function(){
           deletePhoto(mod);
         });
       },
       error: function(){
-        console.log("Something went wrong!");
+        console.log("Error: module not deleted");
       }
     }); // end ajax
     $('#btw-bar-' + type + '-' + mod.data('mod-id')).remove();
@@ -454,7 +434,7 @@ function Module(option) {
             });
       },
       error: function(){
-        console.log("Something went wrong!");
+        console.log("Error: module not created");
       }
     }); // end ajax
     return mod;

@@ -1,3 +1,4 @@
+
 class PhotoModsController < ApplicationController
   include ApplicationHelper
 
@@ -149,9 +150,9 @@ class PhotoModsController < ApplicationController
   ####photo mod###
   def place_mod_photo
     #check to see if the photo exists, and if not create it.
-    @photo_mod = PhotoMod.where(photo_id: params[:photo_id], mod_gallery_id: params[:mod_gallery])
+    @photo_mod = PhotoMod.where("photo_id = ? and mod_gallery_id = ?",  params[:photo_id], params[:mod_gallery] )
     unless @photo_mod.empty?
-      @photo_mod = PhotoMod.find(@photo_mod[:id])
+      @photo_mod = PhotoMod.find(@photo_mod[0][:id])
       @photo_mod[:caption] = params[:caption]
     else
       @photo_mod = PhotoMod.new
@@ -176,7 +177,9 @@ class PhotoModsController < ApplicationController
   end
 
   def remove_mod_photo
-    @photo_mod = PhotoMod.find(params[:mod_photo_id])
+    puts "*****"
+    puts params
+    @photo_mod = PhotoMod.find(params[:id])
     respond_to do |format|
       if @photo_mod.destroy
           format.json { head :no_content, status: :ok }

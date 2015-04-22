@@ -3,7 +3,7 @@
 	<%#= render :partial => "maps/map_info_pieces/side_navPhotoCats" %>
 </nav>
 
-<section id='photos-uploaded' class='photo-list first-section scrollable hidden'>
+<section id='photos-uploaded' class='photo-list first-section scrollable'>
 
 	<article id='photo-upload' class='twelve h-centered'>
 		<div class='img-wrapper photo-upload-wrapper v-centered'>
@@ -25,7 +25,7 @@
 	</div>
 </section>
 
-<section id='photos-saved' class='photo-list first-section scrollable'>
+<section id='photos-saved' class='photo-list first-section scrollable hidden'>
 
 	<% aerial = [] %>
 	<% street = [] %>
@@ -37,16 +37,16 @@
 		<% end %>
 	<% end %>
 
-	<div id='photos-aerial' class='sub-photo-list'>	
-		<div class='photo-row row group wrapper'>	
+	<div id='photos-aerial' class='sub-photo-list'>
+		<div class='photo-row row group wrapper'>
 			<% aerial.each_with_index do |photo, index| %>
 						<%= render :partial => 'maps/map_info_pieces/side_sortState', :locals => { :photo => photo, :index => index } %>
 			<% end %>
 		</div>
 	</div>
 
-	<div id='photos-street' class='sub-photo-list'>	
-		<div class='photo-row row group wrapper'>	
+	<div id='photos-street' class='sub-photo-list'>
+		<div class='photo-row row group wrapper'>
 			<% street.each_with_index do |photo, index| %>
 						<%= render :partial => 'maps/map_info_pieces/side_sortState', :locals => { :photo => photo, :index => index } %>
 			<% end %>

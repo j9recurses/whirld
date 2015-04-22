@@ -248,7 +248,6 @@ function Module(option) {
     });
     var taglist_str = taglist.join(",")
     updateOrCreateTags(mod, taglist_str)
-
   }
   function deletePhoto(mod, photo){
     var data = {

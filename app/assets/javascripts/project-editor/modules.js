@@ -250,10 +250,10 @@ function Module(option) {
     var data = {
             mod_gallery: parseInt(mod.data('mod-id')),
             mod_type: mod.data('type'),
-            mod_photo_id: parseInt($(photo).find('img').data('img-id')),
+            photo_id: parseInt($(photo).find('img').data('img-id')),
           }
       $.ajax({
-        url: '/photo_mods/remove_mod_photo/',
+        url: '/photo_mods/remove_mod_photo/'+$(photo).find('img').data('img-id'),
         data: data,
         cache: false,
         type: 'delete',

@@ -252,8 +252,7 @@ function Module(option) {
     var data = {
             mod_gallery: parseInt(mod.data('mod-id')),
             mod_type: mod.data('type'),
-            // id: photo.data('association-id')
-            photo_id: parseInt($(photo).find('img').data('img-id')),
+            photo_id: parseInt($(photo).find('img').data('img-id'))
           }
       $.ajax({
         url: '/photo_mods/remove_mod_photo/'+photo.data('association-id'),
@@ -281,9 +280,6 @@ function Module(option) {
       },
       success: function(data) {
         console.log('Success: module deleted!');
-        $.each(mod.find('.photo'), function(i, photo){
-          deletePhoto(mod, photo);
-        });
       },
       error: function(){
         console.log("Error: module not deleted");

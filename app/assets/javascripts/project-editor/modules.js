@@ -349,8 +349,8 @@ function Module(option) {
     });
     var taglist_str = taglist.join(",")
     updateOrCreateTags(mod, taglist_str)
-
   }
+
   function deletePhoto(mod){
     var data = {mod_gallery: mod.data('mod-id')}
       $.ajax({

@@ -90,6 +90,9 @@ Whirld::Application.routes.draw do
   get 'maps/map_info/:id', to: 'maps#map_info',  :as => :map_info
   post '/maps/update_remote/:id/' =>'maps#update_remote', :as => :map_update_remote, :defaults => {:format => 'json' }
 
+# module orders
+# post 'photo_mods/mod_order/:id...id is Map id. params are '
+
 #project module routes
   #photo mods
   post 'photo_mods/place_mod_photo', :to => 'photo_mods#place_mod_photo', :as => 'place_mod_photo'

@@ -167,15 +167,6 @@ function Module(option) {
     return mod;
   }
   // Functions for saving, editing, deleting modules and their assets. These have to be initiated within the createMod function.
-  function updateOrder(el, type){
-    console.log('Success: order updated');
-    if(type == 'module'){
-      return parseInt($('.module').index(el));
-    }
-    else if(type == 'img'){
-      return parseInt($('.photo').index(el));
-    }
-  }
   function updateOrCreateTags(mod, taglist){
     var data = {
       mod_gallery: parseInt(mod.data('mod-id')),
@@ -211,16 +202,42 @@ function Module(option) {
       success: function(data){
         console.log('Success: photo is associated')
         $(photo).data('img-saved', true);
-        console.log(data.id)
         $(photo).data('association-id', data.id);
+        $(photo).attr('id', 'photo-'+data.id);
         mod.addClass('saved');
+
+        // run diffrent AJAX call with the orders of the photos because in UpdateMod / updateOrCreatePhoto, the .photo hasn't been appended yet.
+        updatePhotoOrders(mod);
       },
       error: function(){
         console.log('something went wrong')
       }
     }); // end ajax
   }
+  // this is an AJAX call to the UserGallery + type url that is called inside of updateOrCreatePhoto
+  function updatePhotoOrders(mod){
+    var photoIds = '';
+    $.each(mod.find('.photo'), function(i, photo){
+      photoIds += $(photo).data('association-id') + ',';
+    });
+    var data = { mod_gallery: mod.data('mod-id') };
+        data[type + '_photo_order'] = photoIds;
+    console.log(photoIds);
+    $.ajax({
+      url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
+      data: data,
+      cache: false,
+      type: 'put',
+      success: function(data){
+        console.log('Success: order updated');
+      },
+      error: function(data){
+        console.log('Something went wrong');
+      }
+    }); // end ajax
+  }
   function updateMod(mod){
+
     var data = { mod_gallery: mod.data('mod-id') };
     $.ajax({
       url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
@@ -372,9 +389,8 @@ function Module(option) {
       var id = ui.draggable.data('img-id');
       var img = ui.draggable.clone();
           img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
-          img.data('img-saved', false);
+          img.data('img-id', id);
       var photo = $($.parseHTML(htmlPhoto()));
-          photo.attr('id', 'photo-'+id);
           photo.find('.img-wrapper').prepend(img);
       return photo;
     }
@@ -415,6 +431,7 @@ function Module(option) {
               droppable.addClass('dropzone');
               droppable.append(htmlDefaultMessage())
         }
+        mod.removeClass('saved');
         deletePhoto(mod, photo)
         $(photo).remove();
       });

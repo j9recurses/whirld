@@ -91,118 +91,7 @@ function Drag(el) {
   function driver() { initDrag(); }
   driver();
 }
-function Drop(mod) {
-  var mod = mod;
-  var modType = mod.data('type');
 
-  // functions for on-drop DOM photo creation
-  function htmlDefaultMessage(){
-    var message;
-    if(modType == 'comparison'){
-      message = 'Drag two photos here to compare them.';
-    }
-    else if(modType == 'grid'){
-      message = 'Drag up to ten photos here.';
-    }
-    else if(modType == 'split'){
-      message = 'Drag one photo here.';
-    }
-    var html = "<p class='caps'>" + message +"</p>";
-    return $($.parseHTML(html));
-  }
-  function htmlPhoto(){
-    var colNum;
-    if(modType == 'split'){
-      colNum = 'twenty-four';
-    }
-    else{
-      colNum = 'twelve';
-    }
-    return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light invisible' data-limit='140'>140</span></div>";
-  }
-  function createPhoto(ui){ // add .photo data and states here.
-    var id = ui.draggable.data('img-id');
-    var img = ui.draggable.clone();
-        img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
-        img.data('img-id', id);
-        img.data('img-saved', false);
-    var photo = $($.parseHTML(htmlPhoto()));
-        photo.attr('id', 'photo-'+id);
-        photo.find('.img-wrapper').prepend(img);
-    return photo;
-  }
-  function createDropZone(e, ui){
-    var dropzone = $(e.target);
-        dropzone.removeClass('dropzone');
-        dropzone.find('p').remove();
-    var mod = dropzone.closest('.module');
-        mod.removeClass('saved');
-    var photo = createPhoto(ui);
-
-    dropzone.append(photo);
-    initPhotoRemovable(photo);
-
-    new Form($(photo.find('textarea.caption')));
-  }
-
-  function droppableLimit(){
-    if(modType == 'comparison'){ return 2; }
-    else if(modType == 'grid'){ return 10; }
-    else if(modType == 'split'){ return 1 }
-  }
-
-  // event handlers
-  function initPhotoRemovable(photo){
-    var imgWrapper = photo.find('.img-wrapper');
-    imgWrapper.hover(function(){
-      var id = $(this).find('img').data('id');
-      var button = $(this).find('button')
-          button.toggleClass('hidden');
-    });
-    imgWrapper.find('.photo-remove').on('click', function(){
-      var photo = $(this).closest('.photo');
-      var photoCount = $('.photo').length;
-      if(photoCount == 1){
-        var droppable = $(this).closest('.droppable')
-            droppable.addClass('dropzone');
-            droppable.append(htmlDefaultMessage())
-      }
-      $(photo).remove();
-    });
-  }
-  function initModDrop(mod){
-    mod.find('.droppable').droppable({
-      accept: '.draggable',
-      activeClass: 'drop-active',
-      hoverClass: 'drop-target',
-      drop: function(e, ui){
-        var photoCount = mod.find('.photo').length;
-        if(photoCount < droppableLimit()){
-          createDropZone(e, ui);
-        }
-      }
-    });
-  }
-  function initSort(mod){
-    mod.find('.droppable').sortable({
-      appendTo: $('.droppable'),
-      connectWith: mod.find('.droppable'),
-      containment: mod,
-      cursor: '-webkit-grab',
-      distance: 10,
-      handle: '.img-wrapper',
-      opacity: .9,
-      revert: 150
-    });
-  }
-
-  // object logic
-  function driver(){
-    initModDrop(mod);
-    initSort(mod);
-  }
-  driver();
-}
 function Module(option) {
   var originBar = option.parent();
   var type = option.data('module-type');
@@ -278,6 +167,15 @@ function Module(option) {
     return mod;
   }
   // Functions for saving, editing, deleting modules and their assets. These have to be initiated within the createMod function.
+  function updateOrder(el, type){
+    console.log('Success: order updated');
+    if(type == 'module'){
+      return $('.module').index(el);
+    }
+    else if(type == 'img'){
+      return $('.photo').index(el);
+    }
+  }
   function updateOrCreateTags(mod, taglist){
     var data = {
       mod_gallery: parseInt(mod.data('mod-id')),
@@ -297,7 +195,6 @@ function Module(option) {
       }
     }); // end ajax
   }
-  // For every photo, check if it's saved. If yes, update it. If not, create it.
   function updateOrCreatePhoto(mod, photo){
     console.log('update or create one photo');
     var data = {
@@ -322,7 +219,8 @@ function Module(option) {
     }); // end ajax
   }
   function updateMod(mod){
-    var data = {mod_gallery: mod.data('mod-id'), grid_photo_order: 1}
+
+    var data = {mod_gallery: mod.data('mod-id') }
     $.ajax({
       url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
       data: data,
@@ -330,6 +228,7 @@ function Module(option) {
       type: 'put',
       success: function(data) {
         console.log('Success: module updated!');
+        updateOrder(mod, 'module');
       },
       error: function(data){
         console.log("Error: module not updated");
@@ -351,10 +250,14 @@ function Module(option) {
     updateOrCreateTags(mod, taglist_str)
 
   }
-  function deletePhoto(mod){
-    var data = {mod_gallery: mod.data('mod-id')}
+  function deletePhoto(mod, photo){
+    var data = {
+            mod_gallery: parseInt(mod.data('mod-id')),
+            mod_type: mod.data('type'),
+            mod_photo_id: parseInt($(photo).find('img').data('img-id')),
+          }
       $.ajax({
-        url: '/photo_mods/remove_mod_photo/' + user_gallery_id,
+        url: '/photo_mods/remove_mod_photo/',
         data: data,
         cache: false,
         type: 'delete',
@@ -380,9 +283,9 @@ function Module(option) {
       success: function(data) {
         console.log('Success: module deleted!');
         console.log('NEED: disassociate tags');
-        console.log('NEED: module orders deleted')
-        $.each(mod.find('.photo'), function(){
-          deletePhoto(mod);
+        console.log('NEED: module orders updated')
+        $.each(mod.find('.photo'), function(i, photo){
+          deletePhoto(mod, photo);
         });
       },
       error: function(){
@@ -432,6 +335,9 @@ function Module(option) {
             remove.on({
               click: function(){ deleteMod(mod) }
             });
+
+        // update order
+        updateOrder(mod, 'module');
       },
       error: function(){
         console.log("Error: module not created");
@@ -441,4 +347,119 @@ function Module(option) {
   }
 
   createMod();
+
+  //inside of Module for now
+  function Drop(mod) {
+    var mod = mod;
+    var modType = mod.data('type');
+
+    // functions for on-drop DOM photo creation
+    function htmlDefaultMessage(){
+      var message;
+      if(modType == 'comparison'){
+        message = 'Drag two photos here to compare them.';
+      }
+      else if(modType == 'grid'){
+        message = 'Drag up to ten photos here.';
+      }
+      else if(modType == 'split'){
+        message = 'Drag one photo here.';
+      }
+      var html = "<p class='caps'>" + message +"</p>";
+      return $($.parseHTML(html));
+    }
+    function htmlPhoto(){
+      var colNum;
+      if(modType == 'split'){
+        colNum = 'twenty-four';
+      }
+      else{
+        colNum = 'twelve';
+      }
+      return html = "<div class='photo " + colNum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div><textarea class='caption char-limited padding-top' placeholder='Add an optional caption'></textarea><span class='char-limit font_small light invisible' data-limit='140'>140</span></div>";
+    }
+    function createPhoto(ui){ // add .photo data and states here.
+      var id = ui.draggable.data('img-id');
+      var img = ui.draggable.clone();
+          img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
+          img.data('img-id', id);
+          img.data('img-saved', false);
+      var photo = $($.parseHTML(htmlPhoto()));
+          photo.attr('id', 'photo-'+id);
+          photo.find('.img-wrapper').prepend(img);
+      return photo;
+    }
+    function createDropZone(e, ui){
+      var dropzone = $(e.target);
+          dropzone.removeClass('dropzone');
+          dropzone.find('p').remove();
+      var mod = dropzone.closest('.module');
+          mod.removeClass('saved');
+      var photo = createPhoto(ui);
+
+      dropzone.append(photo);
+      initPhotoRemovable(photo);
+
+      new Form($(photo.find('textarea.caption')));
+    }
+
+    function droppableLimit(){
+      if(modType == 'comparison'){ return 2; }
+      else if(modType == 'grid'){ return 10; }
+      else if(modType == 'split'){ return 1 }
+    }
+
+    // event handlers
+    function initPhotoRemovable(photo){
+      var imgWrapper = photo.find('.img-wrapper');
+      imgWrapper.hover(function(){
+        var button = $(this).find('button')
+            button.toggleClass('hidden');
+      });
+      imgWrapper.find('.photo-remove').on('click', function(){
+        var photo = $(this).closest('.photo');
+        var photoCount = $('.photo').length;
+        if(photoCount == 1){
+          var droppable = $(this).closest('.droppable')
+              droppable.addClass('dropzone');
+              droppable.append(htmlDefaultMessage())
+        }
+        $(photo).remove();
+        deletePhoto(mod, $(photo));
+      });
+    }
+    function initModDrop(mod){
+      mod.find('.droppable').droppable({
+        accept: '.draggable',
+        activeClass: 'drop-active',
+        hoverClass: 'drop-target',
+        drop: function(e, ui){
+          var photoCount = mod.find('.photo').length;
+          if(photoCount < droppableLimit()){
+            createDropZone(e, ui);
+          }
+        }
+      });
+    }
+    function initSort(mod){
+      mod.find('.droppable').sortable({
+        appendTo: $('.droppable'),
+        connectWith: mod.find('.droppable'),
+        containment: mod,
+        cursor: '-webkit-grab',
+        distance: 10,
+        handle: '.img-wrapper',
+        opacity: .9,
+        revert: 150
+      });
+    }
+
+    // object logic
+    function driver(){
+      initModDrop(mod);
+      initSort(mod);
+    }
+    driver();
+  }
+
 }

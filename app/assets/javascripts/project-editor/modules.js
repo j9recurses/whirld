@@ -170,10 +170,10 @@ function Module(option) {
   function updateOrder(el, type){
     console.log('Success: order updated');
     if(type == 'module'){
-      return $('.module').index(el);
+      return parseInt($('.module').index(el));
     }
     else if(type == 'img'){
-      return $('.photo').index(el);
+      return parseInt($('.photo').index(el));
     }
   }
   function updateOrCreateTags(mod, taglist){
@@ -219,8 +219,7 @@ function Module(option) {
     }); // end ajax
   }
   function updateMod(mod){
-
-    var data = {mod_gallery: mod.data('mod-id') }
+    var data = { mod_gallery: mod.data('mod-id') };
     $.ajax({
       url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
       data: data,
@@ -228,26 +227,24 @@ function Module(option) {
       type: 'put',
       success: function(data) {
         console.log('Success: module updated!');
-        updateOrder(mod, 'module');
+        // now update photos
+        $.each(mod.find('.photo'), function(i, photo){
+          updateOrCreatePhoto(mod, photo);
+        });
+        //now get the tags
+        var taglist = []
+         $.each(mod.find('.project-tag'), function(i, tag){
+          var tagval =  $(tag).text()
+          taglist.push(tagval);
+        });
+        var taglist_str = taglist.join(",")
+        updateOrCreateTags(mod, taglist_str)
       },
       error: function(data){
         console.log("Error: module not updated");
         console.log(data);
       }
     }); // end ajax
-
-    // now update photos
-    $.each(mod.find('.photo'), function(i, photo){
-      updateOrCreatePhoto(mod, photo);
-    });
-    //now get the tags
-    var taglist = []
-     $.each(mod.find('.project-tag'), function(i, tag){
-      var tagval =  $(tag).text()
-      taglist.push(tagval);
-    });
-    var taglist_str = taglist.join(",")
-    updateOrCreateTags(mod, taglist_str)
   }
   function deletePhoto(mod, photo){
     var data = {
@@ -281,8 +278,6 @@ function Module(option) {
       },
       success: function(data) {
         console.log('Success: module deleted!');
-        console.log('NEED: disassociate tags');
-        console.log('NEED: module orders updated')
         $.each(mod.find('.photo'), function(i, photo){
           deletePhoto(mod, photo);
         });
@@ -334,9 +329,6 @@ function Module(option) {
             remove.on({
               click: function(){ deleteMod(mod) }
             });
-
-        // update order
-        updateOrder(mod, 'module');
       },
       error: function(){
         console.log("Error: module not created");
@@ -381,7 +373,6 @@ function Module(option) {
       var id = ui.draggable.data('img-id');
       var img = ui.draggable.clone();
           img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
-          img.data('img-id', id);
           img.data('img-saved', false);
       var photo = $($.parseHTML(htmlPhoto()));
           photo.attr('id', 'photo-'+id);
@@ -400,6 +391,8 @@ function Module(option) {
       initPhotoRemovable(photo);
 
       new Form($(photo.find('textarea.caption')));
+
+      mod.removeClass('saved');
     }
 
     function droppableLimit(){

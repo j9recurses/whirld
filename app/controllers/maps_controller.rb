@@ -47,6 +47,7 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     @map_tags = @map.tags
     @map.zoom ||= 12
+    @user = @map.user
   end
 
   def embed

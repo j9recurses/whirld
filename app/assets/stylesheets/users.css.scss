@@ -3,7 +3,7 @@
 }
 .profile-thumb {
   background-size: 22px 22px;
-  border-radius: 11px;
+  border-radius: 2px;
   -webkit-box-shadow: 0 0 2px #616161 inset;
   box-shadow: 0 0 2px #616161 inset;
   float: left;
@@ -13,9 +13,10 @@
   width: 22px;
 }
 .user-meta {
-  white-space: nowrap;
+  border-right: 2px solid black;
+/*  white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  display: block;
+  display: block;*/
 }

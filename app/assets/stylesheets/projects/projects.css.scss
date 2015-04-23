@@ -1,59 +1,56 @@
-/*===== Project Creation =====*/
-#photo-cats .tag { margin-right: 2em; background-color: black; }
-#photo-cats .tag.active {  background-color: gray; }
-
-#photo-cats, #photo-state{ background-color: black; }
-.photo-list{
-  background-color: black;
-  margin-top: 30px;
-}
-  .photo-list img { max-height: 180px; }
-  .photo-list.scrollable{
-    width: 32.26%;
-  }
-  .photo-list .preview {
-    height: 180px;
-  }
-.project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 11em;}
-.project-creation{ 
-  background-color: #f2f2f2;
-  height: 100%;
-  min-height: 700px;
- }
-  .project-creation .eight{ width: 64.13%; }
-  .project-creation .side-nav .wrapper{
-    margin: 0 3%;
-  }
-#project-form{ margin-top: 53px; }
-.preview {
-  background-color: gray;
-  color: white;
-}
-.preview-chosen { opacity: .5; cursor: default; }
-.preview:hover{
-  opacity: .5;
-    -webkit-transition: all .25s ease;
-    -moz-transition: all .25s ease;
-    -o-transition: all .25s ease;
-  transition: all .25s ease;
-}
-/*===== Project Header =====*/
-#project-header{
-	background-color: rgb(242, 242, 242);
-	/*max-height: 200px;*/
-  /*overflow: hidden;*/
-  /*display: none;*/
-}
-/*===== Project Map =====*/
-/*see maps.css*/
-
-/*===== Project Content =====*/
-
-/*===== Project Comparison =====*/
 .comparison {
   overflow: hidden;
 }
 .comparison img{ width: 100%; }
+.project-footer {
+  background:black;
+  bottom:0px;
+  color: white;
+  height:3.5em;
+  left:0px;
+  position:fixed;
+  width: 100%;
+}
+/* IE 6 */
+* html .project-footer {
+   position:absolute;
+}
+.project-footer a{ color: white; }
+.project-header{
+  background-color: chartreuse;
+  height: 100%;
+  position: fixed;
+  top: 3.5em;
+  z-index: -1;
+}
+.first-column{
+  margin-top: 0;
+}
+.tag{
+  cursor: pointer;
+  display: inline-block;
+  padding: .25em .5em .25em 0.5em;
+  background-color: #9b9b9b;
+  border-radius: 1px;
+}
+.tag a{
+  color: white;
+}
+.tag-icon{
+  color: #c5c5c5;
+}
+.tag-list{
+  max-height: 3em;
+  overflow: hidden;
+  position: relative;
+}
+.tags-more{
+  color: #c5c5c5;
+  position: absolute;
+  right: 0;
+}
+/*===== Project Map =====*/
+/*see maps.css*/
 
 /*===== Responsive =====*/
 /*Bigger than 568px*/

@@ -1,4 +1,44 @@
-/*Animations and JS states*/
+/*===== Project Creation =====*/
+#photo-cats .tag { margin-right: 2em; background-color: black; }
+#photo-cats .tag.active {  background-color: gray; }
+
+#photo-cats, #photo-state{ background-color: black; }
+.photo-list{
+  background-color: black;
+  margin-top: 30px;
+}
+  .photo-list img { max-height: 180px; }
+  .photo-list.scrollable{
+    width: 32.26%;
+  }
+  .photo-list .preview {
+    height: 180px;
+  }
+.project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 11em;}
+.project-creation{ 
+  background-color: #f2f2f2;
+  height: 100%;
+  min-height: 700px;
+ }
+  .project-creation .eight{ width: 64.13%; }
+  .project-creation .side-nav .wrapper{
+    margin: 0 3%;
+  }
+#project-form{ margin-top: 53px; }
+.preview {
+  background-color: gray;
+  color: white;
+}
+.preview-chosen { opacity: .5; cursor: default; }
+.preview:hover{
+  opacity: .5;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+
 .item, .item button{
   -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;

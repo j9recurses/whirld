@@ -2,7 +2,7 @@
 var ButtonBar = function(options){
   this.options = $.extend({
     barType: 'end',
-    barClassName: 'button-bar',
+    barClassName: 'button-bar-btw',
     barLabelClassName: 'button-label',
     barToggleClassName: 'option-toggle'
   }, options);
@@ -30,6 +30,7 @@ ButtonBar.prototype = {
       return barId;
     }
     else{
+      var count = $('.' + barClassName).length;
       return barId += '-' + $('.' + this.options.barClassName).length;
     }
   },

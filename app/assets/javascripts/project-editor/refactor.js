@@ -151,6 +151,8 @@ Module.prototype = {
 
     // append new bar before module
     this.modEl.before(this.newBar.barEl);
+    console.log(this.originBar)
+    console.log(this.newBar)
 
     // preserve context for events
     var self = this;

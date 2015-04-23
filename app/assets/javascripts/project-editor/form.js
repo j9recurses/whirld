@@ -51,6 +51,7 @@ function Form(el, modId) {
       if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('invisible'); }
     });
     $(e.target).closest('.module').removeClass('saved');
+    $(e.target).closest('.module').data('saved', false);
   }
   function addFocus(el){
     el.closest('.input-wrapper').addClass('focus-in').addClass('has-text');
@@ -165,6 +166,7 @@ function Form(el, modId) {
     el.keyup(function(e) { 
       appendTag(e); 
       $(e.target).closest('.module').removeClass('saved'); 
+      $(e.target).closest('.module').data('saved', false);
     });
     el.on('focusin', function(){
       addFocus($(this));
@@ -195,6 +197,10 @@ function Form(el, modId) {
       createTagField(el);
     }
     else if(el.hasClass('text-module-body')){
+      el.keyup(function(e){
+        $(e.target).closest('.module').removeClass('saved'); 
+        $(e.target).closest('.module').data('saved', false);
+      });
       autosize(el);
     }
   }

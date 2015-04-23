@@ -18,9 +18,12 @@ $(document).ready(function() {
   $('#project-finish').on({
     click: function(){
       var modIds = '';
-      $.each($('.module'), function(i, mod){ modIds += $(mod).data('mod-id') + ','; });
+      $.each($('.module'), function(i, mod){ 
+        if($(mod).find('.photo').length > 0){
+          modIds += $(mod).data('mod-id') + ',';
+        } 
+      });
       console.log(modIds);
-      
       // DATA HERE. Probably need to change param names, but this is how you get the values
       var data = {
           map_id: $('#project-creation-2').data('map-id'),

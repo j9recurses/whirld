@@ -167,6 +167,14 @@ function Module(option) {
     return mod;
   }
   // Functions for saving, editing, deleting modules and their assets. These have to be initiated within the createMod function.
+  function markSaved(mod){
+    mod.addClass('saved');
+    mod.data('saved', true);
+  }
+  function markUnSaved(mod){
+    mod.removeClass('saved');
+    mod.data('saved', false);
+  }
   function updateOrCreateTags(mod, taglist){
     var data = {
       mod_gallery: parseInt(mod.data('mod-id')),
@@ -204,7 +212,7 @@ function Module(option) {
         $(photo).data('img-saved', true);
         $(photo).data('association-id', data.id);
         $(photo).attr('id', 'photo-'+data.id);
-        mod.addClass('saved');
+        markSaved(mod);
 
         // run diffrent AJAX call with the orders of the photos because in UpdateMod / updateOrCreatePhoto, the .photo hasn't been appended yet.
         updatePhotoOrders(mod);
@@ -239,6 +247,7 @@ function Module(option) {
   function updateMod(mod){
 
     var data = { mod_gallery: mod.data('mod-id') };
+    if(type == 'text'){ data['bloc_text'] = mod.find('.text-module-body').val() }
     $.ajax({
       url: '/photo_mods/user_gallery_' + type + '_update/'  + mod.data('mod-id'),
       data: data,
@@ -247,9 +256,11 @@ function Module(option) {
       success: function(data) {
         console.log('Success: module updated!');
         // now update photos
-        $.each(mod.find('.photo'), function(i, photo){
-          updateOrCreatePhoto(mod, photo);
-        });
+        if(type == 'grid' || type == 'split' || type == 'comparison'){
+          $.each(mod.find('.photo'), function(i, photo){
+            updateOrCreatePhoto(mod, photo);
+          });
+        }
         //now get the tags
         var taglist = []
          $.each(mod.find('.project-tag'), function(i, tag){
@@ -323,7 +334,7 @@ function Module(option) {
         mod.data('type', type);
         mod.data('mod-id', data.id);
         mod.data('saved', true);
-        mod.addClass('saved');
+        markSaved(mod);
 
         // Append module before the button bar it came from
         originBar.before(mod);
@@ -399,7 +410,6 @@ function Module(option) {
           dropzone.removeClass('dropzone');
           dropzone.find('p').remove();
       var mod = dropzone.closest('.module');
-          mod.removeClass('saved');
       var photo = createPhoto(ui);
 
       dropzone.append(photo);
@@ -407,7 +417,7 @@ function Module(option) {
 
       new Form($(photo.find('textarea.caption')));
 
-      mod.removeClass('saved');
+      markUnSaved(mod);
     }
 
     function droppableLimit(){
@@ -431,7 +441,7 @@ function Module(option) {
               droppable.addClass('dropzone');
               droppable.append(htmlDefaultMessage())
         }
-        mod.removeClass('saved');
+        markUnSaved(mod);
         deletePhoto(mod, photo)
         $(photo).remove();
       });
@@ -458,7 +468,10 @@ function Module(option) {
         distance: 10,
         handle: '.img-wrapper',
         opacity: .9,
-        revert: 150
+        revert: 150,
+        deactivate: function(e, ui){
+          markUnSaved(mod);
+        }
       });
     }
 

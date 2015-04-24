@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150422030556) do
+ActiveRecord::Schema.define(:version => 20150424000951) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20150422030556) do
     t.integer  "user_id",                                          :default => 0
     t.boolean  "anon_annotatable",                                 :default => false
     t.string   "slug"
+    t.boolean  "finished",                                         :default => true
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true
@@ -170,9 +171,10 @@ ActiveRecord::Schema.define(:version => 20150422030556) do
   create_table "user_galleries", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "map_id"
+    t.string   "module_order"
   end
 
   create_table "user_gallery_bloc_texts", :force => true do |t|

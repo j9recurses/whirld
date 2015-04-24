@@ -23,14 +23,17 @@ class Map < ActiveRecord::Base
                         :with => /^[\w-]*$/,
                         :message => " must not include spaces and must be alphanumeric, as it'll be used in the URL of your map, like: http://mapknitter.org/maps/your-map-name. You may use dashes and underscores.",
                         :on => :create
-#  validates_format_of :tile_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
   validates_with NotAtOriginValidator
 
-  has_many :tags, :as => :taggable
-  has_many :exports
-  has_many :comments
-  has_many :annotations
+  has_many :tags, :as => :taggable, :dependent => :destroy
   belongs_to :user
+  has_one :user_galleries, :dependent => :destroy
+
+  #has_many :exports
+  #has_many :comments
+ # has_many :annotations
+
+
 
   has_many :warpables do
     def public_filenames

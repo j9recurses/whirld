@@ -27,9 +27,29 @@ module ApplicationHelper
     html
   end
 
-  def parse_taglist(taglist)
+  #parse the tags in the form, see if they exist; if not create then,  or delete tags no longer in tagging list
+  def parse_taglist(taglist, mod_type, mod_gallery_id)
+    if mod_type == "grid"
+      item = UserGalleryGrid.find(mod_gallery_id)
+    elsif mod_type.eql?("comparison")
+      item = UserGalleryComparison.find(mod_gallery_id)
+    elsif mod_type.eql?("split")
+      item = UserGallerySplit.find(mod_gallery_id)
+    elsif mod_type.eql?("text")
+      item = UserGalleryBlocText.find(mod_gallery_id)
+    elsif mod_type.eql?("map")
+      item = Map.find(mod_gallery_id)
+    end
     newtaglist =  taglist.split(",")
-    return newtaglist
+    modtag_ids = item.tags.pluck(:id)
+    unless modtag_ids.blank?
+      Tag.destroy(modtag_ids)
+    end
+    newtaglist.each do |tag|
+        item.tags.create(name: tag, user_id:current_user[:id])
+    end
+    item[:taglist] = item.tags
+    return item
   end
 
   # polyfill for jquery-ujs in rails 2.x

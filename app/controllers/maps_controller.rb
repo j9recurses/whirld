@@ -43,6 +43,15 @@ class MapsController < ApplicationController
     render "map_info"
   end
 
+
+  def map_info_finish
+    @map = Map.find params[:id]
+    @map[:finished] = true
+    user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
+    @user_gallery = UserGallery.find(user_gallery_id[0])
+    @user_gallery[:module_order] = params[]
+  end
+
   def show
     @map = Map.find params[:id]
     @map_tags = @map.tags

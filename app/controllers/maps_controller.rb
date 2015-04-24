@@ -37,7 +37,6 @@ class MapsController < ApplicationController
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @photo = Photo.new
-    #@maptags = @map.tag_counts.pluck(:name).join(", ")
     @extra_js = true  # for layout differentiation
     @photo_manager = true # for layout differentiation
     render "map_info"
@@ -49,7 +48,12 @@ class MapsController < ApplicationController
     @map[:finished] = true
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
-    @user_gallery[:module_order] = params[]
+    @user_gallery[:module_order] = params[:mod_order]
+    if @user_gallery.save && @map.save
+      render :js => "window.location = '/maps/#{@map[:id]}'"
+    else
+      flash[:notice] = "Error! Could not save project!"
+    end
   end
 
   def show

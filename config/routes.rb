@@ -88,6 +88,8 @@ Whirld::Application.routes.draw do
 
   match "videos/:id/add_comment", :to => "videos#add_comment"
   get 'maps/map_info/:id', to: 'maps#map_info',  :as => :map_info
+  put 'maps/map_info_finish/:id',  to: 'maps#map_info_finish',  :as => :map_info_finish
+
   post '/maps/update_remote/:id/' =>'maps#update_remote', :as => :map_update_remote, :defaults => {:format => 'json' }
 
 # module orders

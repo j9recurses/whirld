@@ -66,51 +66,59 @@ You'll need at least Ruby v1.9.3 (**v2.1.x** preferred)
 You'll need to set up a numpy/scipy pack on your server box
 Here are some instructions for mac os
 
-* set up some taps and update brew
+1. set up some taps and update brew
 
-`brew tap samueljohn/python`
+* `brew tap samueljohn/python`
 
-`brew update && brew upgrade`
+* `brew update && brew upgrade`
 
-* install a brewed python
+2. install a brewed python
 
-`brew install python`
+* `brew install python`
 
-* Run these commands and check output
+3. Run these commands and check output
 
-`which python`
+*`which python`
 
- should say /usr/local/bin/python
+* should say /usr/local/bin/python
 `echo $PATH`
 
-`/usr/local/bin should appear in front of /usr/bin`
+* `/usr/local/bin should appear in front of /usr/bin`
 
-* check to make sure everything is ok
+4. check to make sure everything is ok
 
-`brew doctor`
+* `brew doctor`
 
-* make sure pip is installed
+5. Make sure pip is installed
 
-`$ pip install --upgrade setuptools`
+* `pip install --upgrade setuptools`
 
-`$ pip install --upgrade pip`
+* `pip install --upgrade pip`
 
-* install fortrain nose, pep9, etc
+6. install fortrain nose, pep9, etc
 
-`$ brew install gfortran`
+* `brew install gfortran`
 
-`$ pip install nose`
+* `pip install nose`
 
-$ pip install pyparsing
-$ pip install python-dateutil
-$ pip install pep8
+* `pip install pyparsing`
 
-7.install numpy, scipy, matplotlib
-$ brew install numpy
-$ brew install scipy
-$ brew install matplotlib
+* `pip install python-dateutil`
 
-8.install theano, pillow and pandas
-$pip install Pillow
-$ pip install theano
-$ pip install pandas
+* `pip install pep8`
+
+7. Install numpy, scipy, matplotlib
+
+* `brew install numpy`
+
+* `brew install scipy`
+
+* `brew install matplotlib`
+
+8. Install theano, pillow and pandas
+
+* `pip install Pillow`
+
+* `pip install theano`
+
+* `pip install pandas`

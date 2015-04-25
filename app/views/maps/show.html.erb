@@ -1,106 +1,66 @@
-<section class='project-header row group'>
-	<div class='two columns first-section first-column'>
+<div id='project-show'>
+	<section class='project-header slide row group'>
+		<div class='project-info-wrapper nine columns column-top column-first'>
+			<div class='row group'>
+				<h1 class='project-name twenty-four columns bold caps'><%=@map.name%></h1>
+			</div> <!-- end row group -->
 
-	</div>
-	<div class='nine columns first-section first-column'>
-		<div class='row group'>
-			<h1 class='project-name twenty-four columns bold caps'><%=@map.name%></h1>
-		</div> <!-- end row group -->
+			<div class='row group push-down'>
+				<h2 class='user-meta five columns h5-size bold'>
 
-		<div class='row group push-down'>
-			<h2 class='user-meta five columns h5-size bold'>
+					<!-- NEED: user profile path-->
+					<a href='' class=''><%=@user.login%></a>
+				</h2>
 
-				<!-- NEED: user profile path-->
-				<a href='' class=''><%=@user.login%></a>
-			</h2>
+				<h2 class='sixteen offset-two columns h5-size bold'><%=@map.location%></h2>
 
-			<h2 class='sixteen offset-two columns h5-size bold'><%=@map.location%></h2>
+			</div> <!-- end row group -->
 
-		</div> <!-- end row group -->
+			<div class='row group'>
+				<%= render :partial => "maps/show_pieces/project_taglist" %>
+			</div> <!-- end row group -->
 
-		<div class='row group'>
-			<div class='twenty-four columns'>
-				<ul class='tag-list inline-list font_small'>
+			<div class='row group'>
+				<p class='twenty-four columns'><%=@map.description%></p>
+			</div> <!-- end row group -->	
 
-					<li class='tags-more item h3-size v-centered'><i class='fa fa-angle-double-right'></i></li>
-					<li class='tag-icon item h3-size'>
-						<i class='fa fa-tag'></i></li>
+		</div>
+		<div class='map-wrapper twelve columns column-top pull-right'>
+			<div id='knitter-map-pane'></div>
+		</div>
 
-					<!-- NEED: Tag paths and names -->
-					<li class='tag item push-down'>
-						<a href='/'>california</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>drought</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>bay</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>djiphantom</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>aerialimagery</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>forest</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>nowater</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>dronesareawesome</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>stresstesting</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>thisdesign</a>
-					</li>
-				</ul>
-
+		<div id='project-action-bar' class='row group invisible'>
+			<div id='favorited' class='four columns column-first'>
+				<!-- NEED: favorites or votes -->
+				<span class='caps'>Favorited 1,822 times</span>
 			</div>
-		</div> <!-- end row group -->	
+			<div id='project-edit' class='four columns'>
+			 <!-- NEED: edit or request to edit path -->
+				<span class='caps'><a href='/'>Edit Projects</a></span>
+			</div>
+			<div id='project-like-share' class='fourteen columns h-righted'>
 
-		<div class='row group'>
-			<p class='twenty-four columns'><%=@map.description%></p>
-		</div> <!-- end row group -->	
+				<!-- NEED: like or vote path -->
+				<i class='fa fa-heart-o cursor-point h4-size'></i>
 
-	</div>
-	<div class='twelve columns first-column pull-right'>
-		<div id='knitter-map-pane'></div>
-	</div>
-</section>
-
-<footer class='project-footer row group'>
-	<div class='wrapper'>
-		<div class='four columns offset-two'>
-			<!-- NEED: favorites or votes -->
-			<p class='caps v-centered'>Favorited 1,822 times</p>
+				<!-- NEED: share path -->
+				<i class='fa fa-share-square-o cursor-point h4-size'></i>
+			</div>
 		</div>
-		<div class='four columns offset-two'>
-		 <!-- NEED: edit or request to edit path -->
-			<p class='caps v-centered'><a href='/'>Edit Project</a></p>
-		</div>
-	</div>
-</footer>
+	</section>
+	<%= render :partial => "maps/show_pieces/module_grid"%>
+	<%= render :partial => "maps/show_pieces/module_text"%>
+	<%= render :partial => "maps/show_pieces/module_split"%>
+	<%= render :partial => "maps/show_pieces/module_comparison"%>
 
 
-<!-- NEED: Grid module w/phtos, and tags -->
 
-<!-- NEED: SPlit module w/photos, and tags -->
 
-<!-- NEED: Comparison module w/photos, and tags -->
+	<!-- NEED: Grid module w/phtos, and tags -->
 
-<!-- NEED: Text module with tags -->
+	<!-- NEED: SPlit module w/photos, and tags -->
 
-<!-- 
-<section>
-	<p>Small batch duis do tousled, butcher health goth biodiesel Brooklyn brunch lumbersexual selfies irony chambray iPhone. Tousled meggings organic Banksy, fugiat ad ut. Master cleanse cardigan et, mollit sapiente eu deserunt art party. Post-ironic tattooed Helvetica health goth. Bushwick incididunt exercitation, iPhone twee 8-bit meditation migas shabby chic literally food truck retro cronut brunch scenester. Tote bag pariatur locavore, pour-over do organic ea exercitation YOLO kitsch consectetur Helvetica Pinterest quis. Tofu skateboard selvage mixtape lumbersexual irony.</p>
+	<!-- NEED: Comparison module w/photos, and tags -->
 
-	<p>Messenger bag stumptown farm-to-table, Schlitz quis aliquip chambray nesciunt fingerstache. Occupy proident delectus fingerstache. Hoodie ethical farm-to-table squid locavore messenger bag, food truck next level dreamcatcher magna Portland asymmetrical wolf cold-pressed. Nostrud hashtag cillum ennui, duis placeat velit sunt YOLO. Banh mi swag umami deserunt, eiusmod photo booth semiotics esse mumblecore letterpress PBR. Nihil pickled culpa, aliquip sriracha elit ennui. Eiusmod PBR pour-over, kitsch farm-to-table assumenda ugh forage selvage cillum Brooklyn.</p>
-
-	<p>Leggings meh pour-over, elit skateboard eu deserunt. Brooklyn meditation YOLO, vegan kogi squid shabby chic disrupt nostrud delectus minim tilde scenester. Occaecat squid ethical migas Godard, id wolf ex. Pitchfork Pinterest High Life Helvetica typewriter 3 wolf moon. Intelligentsia taxidermy aesthetic umami nulla. Nisi pariatur qui mustache fingerstache Neutra, cardigan aliquip seitan bitters pickled occaecat sriracha retro. Chia anim mlkshk synth quinoa vegan.</p>
-
-	<p>+1 shabby chic master cleanse elit, art party kitsch pug. Food truck nostrud cred crucifix, Williamsburg Banksy cupidatat ennui adipisicing roof party exercitation. Portland craft beer sint est McSweeney's actually sustainable anim next level quinoa, 90's enim taxidermy. Etsy qui odio elit, lo-fi High Life banh mi dreamcatcher. Wolf nulla cronut chia. Aute elit brunch, Neutra officia master cleanse cliche mixtape. Et master cleanse elit fanny pack slow-carb ugh.</p>
-</section> -->
+	<!-- NEED: Text module with tags -->
+</div>

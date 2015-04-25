@@ -25,6 +25,13 @@
 }
 .columns:first-child { margin-left: 0; }
 
+.columns.column-first{
+  margin-left: 7.41666666667%;
+}
+.column-top{
+  margin-top: 0;
+}
+
 .group:before,
 .group:after { content:""; display:table; }
 .group:after { clear:both;}
@@ -39,13 +46,15 @@
 .two {
     width:7.41666666667%;
 }
-.offset-two, .offset-two.columns:first-child{ margin-left: 7.41666666667%; }
+.offset-two { margin-left: 7.41666666667%; }
+
 .three {
     width:11.625%;
 }
 .four {
     width:15.8333333333%;
 }
+  .columns.offset-four{ margin-left: 15.8333333333%; }
 .five {
     width:20.0416666667%;
 }

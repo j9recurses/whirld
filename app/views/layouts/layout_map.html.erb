@@ -25,6 +25,11 @@
 	<%= javascript_include_tag "project-editor/modules.js" %>
 	<%= javascript_include_tag "project-editor/project-new.js" %>
 	<!-- put new javascript files here -->
+<% else %>
+	<%= javascript_include_tag "isotope/dist/isotope.pkgd.js" %>
+	<%= javascript_include_tag "isotope-packery/packery-mode.pkgd.js" %>
+	<%= javascript_include_tag "juxtapose/build/js/juxtapose.js" %>
+	<%= javascript_include_tag "project-show.js" %>
 <% end %>
 
 </body>

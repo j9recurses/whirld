@@ -1,53 +1,92 @@
-.comparison {
-  overflow: hidden;
+.grid-sizer, .grid-photo{
+  width: 50%;
 }
-.comparison img{ width: 100%; }
-.project-footer {
+.module-split-wrapper{
+  height: 100%;
+}
+.module-split .columns.img-wrapper{
+  background-color: gray;
+  height: 99%;
+  margin-top: 0;
+}
+#project-action-bar {
   background:black;
-  bottom:0px;
+  bottom: 0;
   color: white;
-  height:3.5em;
-  left:0px;
-  position:fixed;
+  height: 10%;
+  line-height: 2em;
+  position: absolute;
+    -webkit-transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+  transition: all .2s ease-in;
   width: 100%;
 }
 /* IE 6 */
-* html .project-footer {
+* html #project-action-bar {
    position:absolute;
 }
-.project-footer a{ color: white; }
-.project-header{
-  background-color: chartreuse;
+#project-action-bar a{ color: white; }
+#project-action-bar i{
+  margin-left: .2em;
+}
+#project-action-bar.after-scroll{
+  line-height: 3em;
+  width: 24.25%;
+}
+  #project-action-bar.after-scroll #favorited.four{
+    width: 100%;
+  }
+#project-action-bar .columns{
   height: 100%;
-  position: fixed;
-  top: 3.5em;
-  z-index: -1;
 }
-.first-column{
-  margin-top: 0;
+.project-header{
+  margin-top: 5.5%;
 }
-.tag{
+.project-info-wrapper{
+  padding-top: 3em;
+}
+.project-tag{
   cursor: pointer;
   display: inline-block;
   padding: .25em .5em .25em 0.5em;
   background-color: #9b9b9b;
   border-radius: 1px;
 }
-.tag a{
+.project-tag a{
   color: white;
 }
-.tag-icon{
+.project-tag-icon{
   color: #c5c5c5;
 }
-.tag-list{
+.project-tag-list{
   max-height: 3em;
   overflow: hidden;
-  position: relative;
+  max-width: 90%;
 }
-.tags-more{
+.project-tags-more{
   color: #c5c5c5;
   position: absolute;
-  right: 0;
+  right: 4%;
+}
+.project-tags-more:hover{
+  color: red;
+  opacity: .5;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -o-transition: all .2s linear;
+  transition: all .2s linear;
+}
+.project-tag-wrapper{
+  position: relative;
+}
+.slide{
+  min-height: 91%;
+  position: relative;
+  width: 100%;
+}
+.slide.module-split{
+  height: 91%;
 }
 /*===== Project Map =====*/
 /*see maps.css*/

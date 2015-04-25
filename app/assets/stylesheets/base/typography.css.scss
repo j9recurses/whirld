@@ -1,5 +1,7 @@
 /*===== Typography =====*/
-html {font-size: 1em;}
+html {
+  font-size: 1em;
+}
 
 body {
   background-color: #f6f6f6;
@@ -37,8 +39,10 @@ h5, .h5 {font-size: 1em;}
 
 small, .font_small {font-size: 0.75em;}
 
-.first-header{ margin-top: 0; }
-.last-header{ margin-bottom: 0; }
+#main-logo{
+  font-size: 1em;
+}
+
 
 /*Bigger than 768px*/
 @media only screen and (min-width: 768px) {
@@ -52,4 +56,9 @@ small, .font_small {font-size: 0.75em;}
   h4, .h4-size {font-size: 1.333em;}
 
   h5, .h5-size {font-size: 1em;}
+
+  #main-logo{ font-size: 1.333em; }
+}
+@media only screen and (min-width: 1200px) {
+  #main-logo{ font-size: 2.369em; } 
 }

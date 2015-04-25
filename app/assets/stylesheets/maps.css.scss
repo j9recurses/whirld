@@ -11,9 +11,10 @@
 	width: 100%;
 }
 
-.map-wrapper{
-	height: 100%;
+#project-map-wrapper{
+	/*height: 100%;*/
 	margin-bottom: 0;
+	overflow: hidden;
 	position: relative;
 	z-index: -100;
 }

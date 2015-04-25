@@ -65,6 +65,7 @@
 	</div>
 </section>
 
+
 <footer class='project-footer row group'>
 	<div class='wrapper'>
 		<div class='four columns offset-two'>
@@ -78,6 +79,14 @@
 	</div>
 </footer>
 
+<!-- All the MODULE stuff is in here! -->
+
+<% @gallery_mod_items.each do |k,v| %>
+<div id ="moduletype"> type: <%= k %> </div>
+<div id ="moduleitems"> items: </br><%= v.inspect %> </p>
+<%  end %>
+
+<!-- but we'll need the decorating html to add to it -->
 
 <!-- NEED: Grid module w/phtos, and tags -->
 

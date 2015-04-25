@@ -87,9 +87,6 @@ class PhotoModsController < ApplicationController
   end
 
   def user_gallery_split_update
-    puts "******params*******"
-    puts params
-    puts "******"
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
     respond_to do |format|
       if @user_gallery_split.save

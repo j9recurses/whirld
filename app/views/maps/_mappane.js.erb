@@ -1,8 +1,5 @@
 $('#knitter-map-pane').css('height', $(this).height() * .9 );
 $('#knitter-map-pane').css('display', 'block');
-
-setTimeout(function(){
-
 	var map
 	(function(){
 	  window.mapKnitter = new MapKnitter.Map({
@@ -12,5 +9,3 @@ setTimeout(function(){
 	    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
 	  });
 	 })();
-
-}, 1000);

@@ -1,3 +1,14 @@
+.expanded #project-tags-more{
+  top: .6em; 
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -o-transition: all .1s linear;
+  transition: all .1s linear;
+}
+.expanded .project-tag-list{
+  max-height: 24em;
+}
+
 .grid-sizer, .grid-photo{
   width: 50%;
 }
@@ -15,7 +26,6 @@
   color: white;
   height: 10%;
   line-height: 2em;
-  position: absolute;
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;
@@ -40,7 +50,17 @@
 #project-action-bar .columns{
   height: 100%;
 }
-.project-header{
+#project-description{ 
+  overflow: hidden;
+  top: 3.5em; 
+  z-index: -1;
+}
+
+
+.pos-abs{ position: absolute; }
+.pos-rel{ position: relative; }
+
+#project-header{
   margin-top: 5.5%;
 }
 .project-info-wrapper{
@@ -63,23 +83,24 @@
   max-height: 3em;
   overflow: hidden;
   max-width: 90%;
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    -o-transition: all .25s linear;
+  transition: all .25s linear;
 }
-.project-tags-more{
+#project-tags-more{
   color: #c5c5c5;
-  position: absolute;
   right: 4%;
+  top: .6em; 
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    -o-transition: all .25s linear;
+  transition: all .25s linear;
 }
-.project-tags-more:hover{
-  color: red;
+#project-tags-more:hover{
   opacity: .5;
-    -webkit-transition: all .2s linear;
-    -moz-transition: all .2s linear;
-    -o-transition: all .2s linear;
-  transition: all .2s linear;
 }
-.project-tag-wrapper{
-  position: relative;
-}
+
 .slide{
   min-height: 91%;
   position: relative;
@@ -98,7 +119,7 @@
 
 /*Bigger than 768px*/
 @media only screen and (min-width: 768px) {
-	#project-header .project-name { font-size: 1.777em; }
+	/*#project-header .project-name { font-size: 1.777em; }*/
   /*#project-header .wrapper { width: 80%; }*/
 }
 

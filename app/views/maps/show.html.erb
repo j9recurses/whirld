@@ -1,6 +1,6 @@
 <div id='project-show'>
-	<section class='project-header slide row group'>
-		<div class='project-info-wrapper nine columns column-top column-first'>
+	<section id='project-header' class='slide row group'>
+		<div class='project-info-wrapper ten columns column-top column-first'>
 			<div class='row group'>
 				<h1 class='project-name twenty-four columns bold caps'><%=@map.name%></h1>
 			</div> <!-- end row group -->
@@ -16,20 +16,23 @@
 
 			</div> <!-- end row group -->
 
-			<div class='row group'>
+			<div class='row group pos-rel'>
 				<%= render :partial => "maps/show_pieces/project_taglist" %>
+				<p id='project-description' class='pos-abs'><%=@map.description%></p>
+
 			</div> <!-- end row group -->
 
-			<div class='row group'>
-				<p class='twenty-four columns'><%=@map.description%></p>
-			</div> <!-- end row group -->	
+			<!-- <div class='row group pos-rel'> -->
+				
+			<!-- </div> end row group	 -->
 
-		</div>
+		</div> <!-- end project-info-wrapper -->
+
 		<div class='map-wrapper twelve columns column-top pull-right'>
 			<div id='knitter-map-pane'></div>
 		</div>
 
-		<div id='project-action-bar' class='row group invisible'>
+		<div id='project-action-bar' class='row group invisible pos-abs'>
 			<div id='favorited' class='four columns column-first'>
 				<!-- NEED: favorites or votes -->
 				<span class='caps'>Favorited 1,822 times</span>

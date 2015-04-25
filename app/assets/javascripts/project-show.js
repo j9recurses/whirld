@@ -1,4 +1,30 @@
 $(document).ready(function(){
+	var tagWrapper = $('#project-tag-wrapper');
+	var projDesc = $('#project-description');
+	$('#project-tags-more').off().on({
+		click: function(){
+			$(this).find('i').toggleClass('fa-angle-double-right').toggleClass('fa-angle-double-down');
+			
+			projDesc.addClass('invisible');
+
+			setTimeout(function(){
+				tagWrapper.toggleClass('expanded');
+	
+				var actionBarTop = $('#project-action-bar').offset().top;
+				setTimeout(function(){
+					var descTop = tagWrapper.height();
+					var descBottom = tagWrapper.offset().top + descTop;
+					var descHeight = actionBarTop - descBottom;
+
+					projDesc.css('top', descTop)
+									.css('height', descHeight - 16);
+					projDesc.removeClass('invisible');
+				}, 300);
+
+			}, 100);
+		}
+	});
+
 	// Packery
   $('.module-grid-wrapper').isotope({
 		layoutMode: 'packery',
@@ -41,4 +67,4 @@ $(document).ready(function(){
 		$('#project-like-share').removeClass('hidden');	
 	}
 
-});
+}); // end document.ready

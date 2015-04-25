@@ -1,1 +1,65 @@
-<h1><%=@map.name%></h1>
+<div id='project-show'>
+	<section id='project-header' class='slide row group'>
+		<div class='project-info-wrapper ten columns column-top column-first'>
+			<div class='row group'>
+				<h1 class='project-name twenty-four columns bold caps'><%=@map.name%></h1>
+			</div> <!-- end row group -->
+
+			<div class='row group push-down'>
+				<h2 class='user-meta five columns h5-size bold'>
+
+					<!-- NEED: user profile path-->
+					<a href='' class=''><%=@user.login%></a>
+				</h2>
+
+				<h2 class='sixteen offset-two columns h5-size bold'><%=@map.location%></h2>
+
+			</div> <!-- end row group -->
+
+			<div class='row group pos-rel'>
+				<%= render :partial => "maps/show_pieces/project_taglist" %>
+				<p id='project-description' class='pos-abs'><%=@map.description%></p>
+
+			</div> <!-- end row group -->
+
+			<!-- <div class='row group pos-rel'> -->
+				
+			<!-- </div> end row group	 -->
+
+		</div> <!-- end project-info-wrapper -->
+
+		<div id='project-map-wrapper' class='twelve columns column-top pull-right'>
+			<div id='knitter-map-pane'></div>
+		</div>
+
+		<div id='project-action-bar' class='row group invisible pos-abs'>
+			<div id='favorited' class='four columns column-first'>
+				<!-- NEED: favorites or votes -->
+				<span class='caps'>Favorited 1,822 times</span>
+			</div>
+			<div id='project-edit' class='four columns'>
+			 <!-- NEED: edit or request to edit path -->
+				<span class='caps'><a href='/'>Edit Projects</a></span>
+			</div>
+			<div id='project-like-share' class='fourteen columns h-righted'>
+
+				<!-- NEED: like or vote path -->
+				<i class='fa fa-heart-o cursor-point h4-size'></i>
+
+				<!-- NEED: share path -->
+				<i class='fa fa-share-square-o cursor-point h4-size'></i>
+			</div>
+		</div>
+	</section>
+	<%= render :partial => "maps/show_pieces/module_grid"%>
+	<%= render :partial => "maps/show_pieces/module_text"%>
+	<%= render :partial => "maps/show_pieces/module_split"%>
+	<%= render :partial => "maps/show_pieces/module_comparison"%>
+<!-- All the MODULE stuff is in here! -->
+
+<%# @gallery_mod_items.each do |k,v| %>
+<!-- <div id ="moduletype"> type: <%#= k %> </div> -->
+<!-- <div id ="moduleitems"> items: </br><%#= v.inspect %> </p> -->
+<%#  end %>
+
+<!-- but we'll need the decorating html to add to it -->

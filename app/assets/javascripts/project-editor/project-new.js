@@ -18,19 +18,22 @@ $(document).ready(function() {
   $('#project-finish').on({
     click: function(){
       var modIds = '';
-      $.each($('.module'), function(i, mod){ 
+      $.each($('.module'), function(i, mod){
         if($(mod).find('.photo').length > 0){
           modIds += $(mod).data('mod-id') + ',';
-        } 
+        }
       });
       console.log(modIds);
+      var map_id =  $('#project-creation-2').data('map-id');
+      console.log(map_id);
       // DATA HERE. Probably need to change param names, but this is how you get the values
       var data = {
-          map_id: $('#project-creation-2').data('map-id'),
+          map_id: map_id,
           mod_order: modIds
       }
+      console.log(data);
       $.ajax({
-        url: 'update_remote',// URL HERE,
+        url: '/maps/map_info_finish/'+ map_id,// URL HERE,
         data: data,
         cach: false,
         type: 'put',

@@ -12,11 +12,22 @@ a:hover, .a:hover {
 }
 .active{ color: white; cursor: default; }
 .active:hover { opacity: 1; cursor: default; }
+.block{ display: block; }
+.bold{ font-weight: bold; }
 .caps{ text-transform: uppercase; }
 .caption{ font-style: italic; }
 .cursor-def{ cursor: default; }
-.cursor-point{ cursor: pointer; }
-.first-section { padding-top: 4em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
+.cursor-point{ 
+  cursor: pointer;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+.cursor-point:hover{ 
+  opacity: .7;
+}
+.first-section { padding-top: 2em; /* 0.5em for style + 3.313em/53px for pushing down past sticky nav */ }
 .h-centered{ text-align: center; }
 .h-righted{ text-align: right; }
 .hidden{ 
@@ -45,7 +56,7 @@ img{
 }
 .inline-list .item {
 	display: inline-block;
-	margin-right: 2em;
+	margin-right: .25em;
 }
 .inline-list .item:last-child{ margin-right: 0; }
 .invisible{
@@ -66,6 +77,7 @@ img{
 .padding-top{ padding-top: .5em; }
 .pull-right{ float: right; }
 .pull-left{ float: left; }
+.push-down{ margin-bottom: .5em; }
 .remove-photo{
   width: 25px;
   height: 25px;
@@ -74,15 +86,6 @@ img{
   position: absolute;
   right: 5px;
   top: 5px;
-}
-.tag{
-  cursor: pointer;
-  display: inline-block;
-  margin: 0 .5em .5em 0;
-  padding: 2px 8px;
-  background-color: gray;
-  border-radius: 1px;
-  color: white;
 }
 .tab.active, .tag.active{
   cursor: default;
@@ -101,6 +104,6 @@ img{
 }
 
 /*Bigger than 768px*/
-@media only screen and (min-width: 768px) {
-  .wrapper{ width: 90%; }
-}
+/*@media only screen and (min-width: 768px) {
+  .wrapper{ width: 96%; }
+}*/

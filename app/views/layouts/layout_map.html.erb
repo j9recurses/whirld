@@ -27,6 +27,11 @@
 	<%= javascript_include_tag "project-editor/refactor.js" %>
 	<%= javascript_include_tag "project-editor/button-bar.js" %>
 	<!-- put new javascript files here -->
+<% else %>
+	<%= javascript_include_tag "isotope/dist/isotope.pkgd.js" %>
+	<%= javascript_include_tag "isotope-packery/packery-mode.pkgd.js" %>
+	<%= javascript_include_tag "juxtapose/build/js/juxtapose.js" %>
+	<%= javascript_include_tag "project-show.js" %>
 <% end %>
 
 </body>

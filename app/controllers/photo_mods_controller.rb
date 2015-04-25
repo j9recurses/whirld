@@ -16,7 +16,7 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_grid_update
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
-    @user_gallery_grid[:grid_photo_order] = params[:photo_order]
+    @user_gallery_grid[:grid_photo_order] =  params[:grid_photo_order]
     respond_to do |format|
       if @user_gallery_grid.save
         format.json { render json:  @user_gallery_grid}
@@ -52,7 +52,7 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_comparison_update
     @user_gallery_comparison = UserGalleryComparison.find(params[:mod_gallery])
-    @user_gallery_comparison[:comparison_photo_order] = params[:photo_order]
+    @user_gallery_comparison[:comparison_photo_order] = params[:comparison_photo_order]
     respond_to do |format|
       if @user_gallery_comparison.save
         format.json { render json:  @user_gallery_comparison}
@@ -88,7 +88,6 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_split_update
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
-    @user_gallery_split[:split_photo_order] = params[:photo_order]
     respond_to do |format|
       if @user_gallery_split.save
         format.json { render json:  @user_gallery_split}
@@ -177,8 +176,6 @@ class PhotoModsController < ApplicationController
   end
 
   def remove_mod_photo
-    puts "*****"
-    puts params
     @photo_mod = PhotoMod.find(params[:id])
     respond_to do |format|
       if @photo_mod.destroy
@@ -191,29 +188,10 @@ class PhotoModsController < ApplicationController
 
   #taggings
   def create_taggings
-    puts params.inspect
-    @item = ''
-    if params[:modtype] = "grid"
-      @item = UserGalleryGrid.find(params[:mod_gallery])
-    elsif params[:modtype] = "comparision"
-      @item = UserGalleryComparison.find(params[:mod_gallery])
-    elsif params[:modtype] = "split"
-      @item = UserGallerySplit.find(params[:mod_gallery])
-    elsif params[:modtype] = "text"
-      @item = UserGalleryBlocText.find(params[:mod_gallery])
-    elsif params[:modtype] = "map"
-      @item = Map.find(params[:mod_gallery])
-    end
-    unless @item.nil?
-      alltags = parse_taglist(params[:taglist])
-      alltags.each do |tag|
-        @item.tags.create(name: tag)
-      end
-      @item[:taglist] = @item.tags
-      puts @item.inspect
-      respond_to do |format|
-          format.json { render json:@item}
-      end
+    @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
+    puts @item.inspect
+    respond_to do |format|
+        format.json { render json:@item}
     end
   end
 

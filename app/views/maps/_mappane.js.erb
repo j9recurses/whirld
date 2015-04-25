@@ -1,9 +1,17 @@
-var map
-(function(){
-  window.mapKnitter = new MapKnitter.Map({
-    latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
-    zoom:       <%= @map.zoom %>,
-    readOnly:   <%= @embed == true %>,
-    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
-  });
- })();
+var mapWrapperHeight = $(this).height() - $('#project-action-bar').height()-10;
+$('#project-map-wrapper').css('height',  mapWrapperHeight);
+
+$('#knitter-map-pane').css('height', mapWrapperHeight)
+											.css('display', 'block');
+
+setTimeout(function(){
+	var map
+	(function(){
+	  window.mapKnitter = new MapKnitter.Map({
+	    latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
+	    zoom:       <%= @map.zoom %>,
+	    readOnly:   <%= @embed == true %>,
+	    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
+	  });
+	 })();
+}, 1000);

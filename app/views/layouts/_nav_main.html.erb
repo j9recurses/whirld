@@ -1,36 +1,24 @@
-<nav id='navbar-main' class='navbar twenty-four sticky-nav padding-top'>
+<nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav'>
   <div class='row group wrapper'>
-    <h1 id='main-logo' class='logo five columns first-header h5'>
+    <h1 id='main-logo' class='logo four columns'>
       <a href='/'>
+        <i class='fa fa-plane'></i>
         Whirld
       </a>
     </h1>
-    <nav id='left-nav' class='secondary-nav fourteen columns'>
-      <ul class='inline-list'>
-        <li class='item'><a href='/' class=''>About</a></li>
-        <li class='item'>
-          <%= link_to("Create", new_map_path) %>
-        </li>
-        <li class "item">
-            <% if user_signed_in? %>
-            <%#=link_to "Sign out", destroy_user_session_path, :method=> :delete %>
-            <% else %>
-            <%#= link_to "Log in", new_user_session_path(resource_name) %>
-            <%= link_to "Log in",  new_user_session_path %><br />
-           <% end -%></li>
-      </ul>
-    </nav>
-    <nav id='right-nav' class='secondary-nav five columns pull-right'>
-      <ul class='inline-list pull-right'>
-        <li class='item'><a href='/' class=''><i class='fa fa-search'></i></a></li>
-        <li class='item'><a href='/' class=''>
-          <% if user_signed_in? %>
-          <%= current_user.login %>
-          <%else%>
-          <%= 'Not Signed In'%>
-          <%end%>
-        <i class='fa fa-caret-down'></i></a></li>
-      </ul>
-    </nav>
+    <a href='about/' class='three columns block menu-item h-centered h4-size'>About</a>
+    <%= link_to('Create', maps_new_path , :class => 'three columns block menu-item h-centered h4-size') %>
+
+    <% if user_signed_in? %>
+      <%=link_to "Sign out", destroy_user_session_path, :method=> :delete, :class => 'block menu-item h-centered h4-size three columns pull-right'%>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path, :class => 'block menu-item h-centered h4-size three columns pull-right' %>
+    <% end %>
+
+    <!-- NEED: search path -->
+    <a href='search' class='block menu-item h-centered h4-size two columns pull-right'>
+      <i class='fa fa-search'></i>
+    </a>
+
   </div>
 </nav>

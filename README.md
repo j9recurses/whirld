@@ -66,40 +66,58 @@ You'll need at least Ruby v1.9.3 (**v2.1.x** preferred)
 You'll need to set up a numpy/scipy pack on your server box
 Here are some instructions for mac os
 
-1. set up some taps and update brew
-brew tap samueljohn/python
-brew update && brew upgrade
+###### Set up some taps and update brew
 
-2. install a brewed python
-brew install python
+* `brew tap samueljohn/python`
+
+* `brew update && brew upgrade`
+
+###### Install a brewed python
+
+* `brew install python`
 
 3. Run these commands and check output
-which python
-# should say /usr/local/bin/python
 
-echo $PATH
-# /usr/local/bin should appear in front of /usr/bin
+* `which python`
 
-4. check to make sure everything is ok
-brew doctor
+* should say /usr/local/bin/python
 
-5.make sure pip is installed
-$ pip install --upgrade setuptools
-$ pip install --upgrade pip
+* `echo $PATH` => `/usr/local/bin should appear in front of /usr/bin`
 
-6.install fortrain nose, pep9, etc
-$ brew install gfortran
-$ pip install nose
-$ pip install pyparsing
-$ pip install python-dateutil
-$ pip install pep8
+###### Check to make sure everything is ok
 
-7.install numpy, scipy, matplotlib
-$ brew install numpy
-$ brew install scipy
-$ brew install matplotlib
+* `brew doctor`
 
-8.install theano, pillow and pandas
-$pip install Pillow
-$ pip install theano
-$ pip install pandas
+###### Make sure pip is installed
+
+* `pip install --upgrade setuptools`
+
+* `pip install --upgrade pip`
+
+###### install fortrain nose, pep9, etc
+
+* `brew install gfortran`
+
+* `pip install nose`
+
+* `pip install pyparsing`
+
+* `pip install python-dateutil`
+
+* `pip install pep8`
+
+###### Install numpy, scipy, matplotlib
+
+* `brew install numpy`
+
+* `brew install scipy`
+
+* `brew install matplotlib`
+
+###### Install theano, pillow and pandas
+
+* `pip install Pillow`
+
+* `pip install theano`
+
+* `pip install pandas`

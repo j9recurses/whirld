@@ -1,46 +1,9 @@
-/*===== Grid =====*/
-/*  rows  */
-
-
-/*  COLUMN SETUP  */
-
-/*  GRID OF TWELVE  */
-/*.twelve { width: 100%; }
-
-.eleven {width: 91.53%;}
-.ten {width: 83.06%;}
-
-.nine {width: 74.6%;}
-
-.eight {width: 66.13%;}
-
-.seven {width: 57.66%;}
-
-.six {width: 49.2%;}
-
-.five {width: 40.73%;}
-
-.four {width: 32.26%;}
-
-.three {width: 23.8%;}
-
-.two {width: 15.33%;}
-
-.one {width: 6.866%;}*/
-
-/*Bigger than 768px*/
-/*@media only screen and (min-width: 768px) {
-	.columns{margin: 1% 0 1% 1.6%;}
-}*/
-
-
 /*!
  * Gridpak Beta CSS
  *
  * Generator - http://gridpak.com/
  * Created by @erskinedesign
  */
- 
 
 /* Reusable column setup */
 
@@ -62,11 +25,17 @@
 }
 .columns:first-child { margin-left: 0; }
 
+.columns.column-first{
+  margin-left: 7.41666666667%;
+}
+.column-top{
+  margin-top: 0;
+}
+
 .group:before,
 .group:after { content:""; display:table; }
 .group:after { clear:both;}
 .group { zoom:1;} /* For IE 6/7  } */
-
 
 .one {
     width:3.20833333333%;
@@ -77,13 +46,15 @@
 .two {
     width:7.41666666667%;
 }
-.offset-two{ margin-left: 7.41666666667%; }
+.offset-two { margin-left: 7.41666666667%; }
+
 .three {
     width:11.625%;
 }
 .four {
     width:15.8333333333%;
 }
+  .columns.offset-four{ margin-left: 15.8333333333%; }
 .five {
     width:20.0416666667%;
 }

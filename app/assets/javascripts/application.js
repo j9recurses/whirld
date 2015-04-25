@@ -30,4 +30,6 @@
 //= require turbolinks
 //= require jquery.placeholder
 
+// Project Show JS:
+
 //= require_self

@@ -24,11 +24,10 @@ class Map < ActiveRecord::Base
                         :message => " must not include spaces and must be alphanumeric, as it'll be used in the URL of your map, like: http://mapknitter.org/maps/your-map-name. You may use dashes and underscores.",
                         :on => :create
   validates_with NotAtOriginValidator
-
-  has_many :tags, :as => :taggable, :dependent => :destroy
+  has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
   has_one :user_galleries, :dependent => :destroy
-
+  attr_accessor :taglist
   #has_many :exports
   #has_many :comments
  # has_many :annotations
@@ -49,6 +48,7 @@ class Map < ActiveRecord::Base
       filenames
     end
   end
+
 
   def validate
     self.name != 'untitled'

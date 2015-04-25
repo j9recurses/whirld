@@ -12,13 +12,13 @@
     <% if user_signed_in? %>
       <%=link_to "Sign out", destroy_user_session_path, :method=> :delete, :class => 'block menu-item h-centered h4-size three columns pull-right'%>
     <% else %>
-      <%= link_to "Log in", new_user_session_path(resource_name), :class => 'block menu-item h-centered h4-size three columns pull-right' %>
+      <%= link_to "Log in", new_user_session_path, :class => 'block menu-item h-centered h4-size three columns pull-right' %>
     <% end %>
 
     <!-- NEED: search path -->
     <a href='search' class='block menu-item h-centered h4-size two columns pull-right'>
       <i class='fa fa-search'></i>
     </a>
-  
+
   </div>
 </nav>

@@ -16,7 +16,7 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_grid_update
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
-    @user_gallery_grid[:grid_photo_order] = params[:grid_photo_order]
+    @user_gallery_grid[:grid_photo_order] =  params[:grid_photo_order]
     respond_to do |format|
       if @user_gallery_grid.save
         format.json { render json:  @user_gallery_grid}

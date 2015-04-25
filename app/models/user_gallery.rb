@@ -14,4 +14,13 @@ class UserGallery < ActiveRecord::Base
     self.photos.present?
   end
 
+  def self.gather_gallery_mods(map_id)
+    puts "*****in here*****"
+    user_gallery = UserGallery.where(['map_id = ?', map_id]).first
+    #block text mods
+    block_texts  = UserGalleryBlocText.gather_bloc_texts(user_gallery[:id])
+    #gallery_grids = UserGalleryGrid.gather_gallery_grids(user_gallery[:id])
+    puts block_texts.inspect
+  end
+
 end

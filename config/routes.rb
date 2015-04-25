@@ -1,13 +1,12 @@
 Whirld::Application.routes.draw do
 
   # redirect legacy route:
-  get 'tag/:id', to: redirect('/tags/%{id}')
-  get 'tags/:id' => 'tags#show'
+  #get 'tag/:id', to: redirect('/tags/%{id}')
+  #get 'tags/:id' => 'tags#show'
 
   # Registered user pages:
-  get 'profile' => 'users#profile', :id => 0
-  get 'profile/:id' => 'users#profile'
-  get 'dashboard' => 'users#dashboard'
+  #get 'profile' => 'users#profile', :id => 0
+   #get 'dashboard' => 'users#dashboard'
 
   get 'feeds/all' => 'feeds#all', :format => 'rss'
   get 'feeds/license/:id' => 'feeds#license', :format => 'rss'
@@ -125,6 +124,8 @@ Whirld::Application.routes.draw do
  delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
 
 
+#users
+ get 'users/profile/:id' => 'users#profile', :as => "user_profile"
 
   resources :user_galleries do
       resources :photos, :except => [:update, :edit]

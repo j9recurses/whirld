@@ -11,7 +11,7 @@
 			<h2 class='user-meta five columns h5-size bold'>
 
 				<!-- NEED: user profile path-->
-				<a href='' class=''><%=@user.login%></a>
+				<a href='<%=user_profile_path(@map[:id])%>' class=''><%=@user.login%></a>
 			</h2>
 
 			<h2 class='sixteen offset-two columns h5-size bold'><%=@map.location%></h2>
@@ -25,20 +25,13 @@
 					<li class='tags-more item h3-size v-centered'><i class='fa fa-angle-double-right'></i></li>
 					<li class='tag-icon item h3-size'>
 						<i class='fa fa-tag'></i></li>
-
 					<!-- NEED: Tag paths and names -->
-					<li class='tag item push-down'>
-						<a href='/'>california</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>drought</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>bay</a>
-					</li>
-					<li class='tag item push-down'>
-						<a href='/'>djiphantom</a>
-					</li>
+
+					<!--decorator/presenter for the project level tags -->
+					<% @map_presenter.taglist_show.each do |tag |%>
+ 					<%= tag.html_safe %>
+ 					<%end%>
+ 					<!--decorator/presenter for the project level tags -->
 					<li class='tag item push-down'>
 						<a href='/'>aerialimagery</a>
 					</li>
@@ -60,11 +53,11 @@
 				</ul>
 
 			</div>
-		</div> <!-- end row group -->	
+		</div> <!-- end row group -->
 
 		<div class='row group'>
 			<p class='twenty-four columns'><%=@map.description%></p>
-		</div> <!-- end row group -->	
+		</div> <!-- end row group -->
 
 	</div>
 	<div class='twelve columns first-column pull-right'>
@@ -94,7 +87,7 @@
 
 <!-- NEED: Text module with tags -->
 
-<!-- 
+<!--
 <section>
 	<p>Small batch duis do tousled, butcher health goth biodiesel Brooklyn brunch lumbersexual selfies irony chambray iPhone. Tousled meggings organic Banksy, fugiat ad ut. Master cleanse cardigan et, mollit sapiente eu deserunt art party. Post-ironic tattooed Helvetica health goth. Bushwick incididunt exercitation, iPhone twee 8-bit meditation migas shabby chic literally food truck retro cronut brunch scenester. Tote bag pariatur locavore, pour-over do organic ea exercitation YOLO kitsch consectetur Helvetica Pinterest quis. Tofu skateboard selvage mixtape lumbersexual irony.</p>
 

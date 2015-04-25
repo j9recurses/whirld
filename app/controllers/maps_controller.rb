@@ -62,6 +62,7 @@ class MapsController < ApplicationController
     # @gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
     # @map_presenter = MapPresenter.new(@map)
     @map.zoom ||= 12
+    @embed = true
     @user = @map.user
   end
 

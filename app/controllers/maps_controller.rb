@@ -37,15 +37,30 @@ class MapsController < ApplicationController
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @photo = Photo.new
-    #@maptags = @map.tag_counts.pluck(:name).join(", ")
     @extra_js = true  # for layout differentiation
     @photo_manager = true # for layout differentiation
     render "map_info"
   end
 
+
+  def map_info_finish
+    @map = Map.find params[:id]
+    @map[:finished] = true
+    user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
+    @user_gallery = UserGallery.find(user_gallery_id[0])
+    @user_gallery[:module_order] = params[:mod_order]
+    if @user_gallery.save && @map.save
+      render :js => "window.location = '/maps/#{@map[:slug]}'"
+    else
+      flash[:notice] = "Error! Could not save project!"
+    end
+  end
+
   def show
     @map = Map.find params[:id]
-    @map_tags = @map.tags
+    @map[:taglist] = @map.tags.pluck([:name])
+    # @gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
+    # @map_presenter = MapPresenter.new(@map)
     @map.zoom ||= 12
     @user = @map.user
   end
@@ -95,16 +110,6 @@ class MapsController < ApplicationController
       unless params[:name].nil?
         params[:slug] = params[:name]
       end
-      #need to add tagging params
-     # unless params[:tag_list].nil?
-      #  puts "********"
-      #  newtaglist = parse_taglist(params[:tag_list])
-      #  puts newtaglist.inspect
-       # @map.tag_list.add(params[:tag_list])
-     #   @map.save
-      #  puts @map.tag_counts.pluck(:name).join(", ")
-      #  @maptags = @map.tag_counts.pluck(:name).join(", ")
-      #end
       respond_to do |format|
         if @map.update_attributes(params)
           format.json { render json: params  }

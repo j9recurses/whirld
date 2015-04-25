@@ -24,7 +24,6 @@
 				<p class='twenty-four columns'><%=@map.description%></p>
 			</div> <!-- end row group -->	
 
-		</div>
 		<div class='map-wrapper twelve columns column-top pull-right'>
 			<div id='knitter-map-pane'></div>
 		</div>
@@ -48,19 +47,14 @@
 			</div>
 		</div>
 	</section>
-	<%= render :partial => "maps/show_pieces/module_grid"%>
-	<%= render :partial => "maps/show_pieces/module_text"%>
-	<%= render :partial => "maps/show_pieces/module_split"%>
-	<%= render :partial => "maps/show_pieces/module_comparison"%>
+
+<!-- All the MODULE stuff is in here! -->
+
+<!-- but we'll need the decorating html to add to it -->
+
+<%= render :partial => "maps/show_pieces/module_grid"%>
+<%= render :partial => "maps/show_pieces/module_text"%>
+<%= render :partial => "maps/show_pieces/module_split"%>
+<%= render :partial => "maps/show_pieces/module_comparison"%>
 
 
-
-
-	<!-- NEED: Grid module w/phtos, and tags -->
-
-	<!-- NEED: SPlit module w/photos, and tags -->
-
-	<!-- NEED: Comparison module w/photos, and tags -->
-
-	<!-- NEED: Text module with tags -->
-</div>

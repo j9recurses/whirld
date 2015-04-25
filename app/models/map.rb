@@ -14,7 +14,7 @@ class Map < ActiveRecord::Base
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug
@@ -23,14 +23,16 @@ class Map < ActiveRecord::Base
                         :with => /^[\w-]*$/,
                         :message => " must not include spaces and must be alphanumeric, as it'll be used in the URL of your map, like: http://mapknitter.org/maps/your-map-name. You may use dashes and underscores.",
                         :on => :create
-#  validates_format_of :tile_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
   validates_with NotAtOriginValidator
-
-  has_many :tags, :as => :taggable
-  has_many :exports
-  has_many :comments
-  has_many :annotations
+  has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
+  has_one :user_galleries, :dependent => :destroy
+  attr_accessor :taglist
+  #has_many :exports
+  #has_many :comments
+ # has_many :annotations
+
+
 
   has_many :warpables do
     def public_filenames
@@ -46,6 +48,7 @@ class Map < ActiveRecord::Base
       filenames
     end
   end
+
 
   def validate
     self.name != 'untitled'

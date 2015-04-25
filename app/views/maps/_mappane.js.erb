@@ -1,10 +1,19 @@
-var mapWrapperHeight = $(this).height() - $('#project-action-bar').height()-10;
-$('#project-map-wrapper').css('height',  mapWrapperHeight);
-
-$('#knitter-map-pane').css('height', mapWrapperHeight)
-											.css('display', 'block');
-
-setTimeout(function(){
+if($('#project-show').length > 0){
+	$('#knitter-map-pane').css('height', $(this).height() * .9 );
+	$('#knitter-map-pane').css('display', 'block');
+	setTimeout(function(){
+		var map
+		(function(){
+		  window.mapKnitter = new MapKnitter.Map({
+		    latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
+		    zoom:       <%= @map.zoom %>,
+		    readOnly:   <%= @embed == true %>,
+		    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
+		  });
+		 })();
+	}, 1000)
+}
+else{
 	var map
 	(function(){
 	  window.mapKnitter = new MapKnitter.Map({
@@ -14,4 +23,5 @@ setTimeout(function(){
 	    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
 	  });
 	 })();
-}, 1000);
+}
+

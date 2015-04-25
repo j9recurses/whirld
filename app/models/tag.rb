@@ -16,8 +16,6 @@ class Tag < ActiveRecord::Base
 
   def self.gather_tag(item)
     itemtags =  item.tags.pluck([:name])
-    itemh = item.attributes
-    itemh[:taglist] = itemtags
-    return itemh
+    return itemtags
   end
 end

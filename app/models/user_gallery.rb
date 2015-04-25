@@ -19,8 +19,10 @@ class UserGallery < ActiveRecord::Base
     user_gallery = UserGallery.where(['map_id = ?', map_id]).first
     #block text mods
     block_texts  = UserGalleryBlocText.gather_bloc_texts(user_gallery[:id])
-    #gallery_grids = UserGalleryGrid.gather_gallery_grids(user_gallery[:id])
-    puts block_texts.inspect
+    gallery_grids = UserGalleryGrid.gather_gallery_grids(user_gallery[:id])
+    gallery_comparisons = UserGalleryComparison.gather_gallery_comparisions(user_gallery[:id])
+    gallery_splits = UserGallerySplit.gather_gallery_splits(user_gallery[:id])
+    puts  gallery_splits.inspect
   end
 
 end

@@ -66,36 +66,35 @@ You'll need at least Ruby v1.9.3 (**v2.1.x** preferred)
 You'll need to set up a numpy/scipy pack on your server box
 Here are some instructions for mac os
 
-1. set up some taps and update brew
+###### Set up some taps and update brew
 
 * `brew tap samueljohn/python`
 
 * `brew update && brew upgrade`
 
-2. install a brewed python
+###### Install a brewed python
 
 * `brew install python`
 
 3. Run these commands and check output
 
-*`which python`
+* `which python`
 
 * should say /usr/local/bin/python
-`echo $PATH`
 
-* `/usr/local/bin should appear in front of /usr/bin`
+* `echo $PATH` => `/usr/local/bin should appear in front of /usr/bin`
 
-4. check to make sure everything is ok
+###### Check to make sure everything is ok
 
 * `brew doctor`
 
-5. Make sure pip is installed
+###### Make sure pip is installed
 
 * `pip install --upgrade setuptools`
 
 * `pip install --upgrade pip`
 
-6. install fortrain nose, pep9, etc
+###### install fortrain nose, pep9, etc
 
 * `brew install gfortran`
 
@@ -107,7 +106,7 @@ Here are some instructions for mac os
 
 * `pip install pep8`
 
-7. Install numpy, scipy, matplotlib
+###### Install numpy, scipy, matplotlib
 
 * `brew install numpy`
 
@@ -115,7 +114,7 @@ Here are some instructions for mac os
 
 * `brew install matplotlib`
 
-8. Install theano, pillow and pandas
+###### Install theano, pillow and pandas
 
 * `pip install Pillow`
 

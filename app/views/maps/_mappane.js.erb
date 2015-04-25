@@ -1,9 +1,9 @@
-var mapWrapperHeight = $(this).height() - $('#project-action-bar').height();
+var mapWrapperHeight = $(this).height() - $('#project-action-bar').height()-10;
 $('#project-map-wrapper').css('height',  mapWrapperHeight);
 
-$('#knitter-map-pane').css('height', mapWrapperHeight - $('#project-action-bar').height())
+$('#knitter-map-pane').css('height', mapWrapperHeight)
 											.css('display', 'block');
-											
+
 setTimeout(function(){
 	var map
 	(function(){

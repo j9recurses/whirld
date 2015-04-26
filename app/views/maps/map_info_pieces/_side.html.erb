@@ -9,7 +9,7 @@
 		<div class='img-wrapper photo-upload-wrapper v-centered'>
 				<i class='fa fa-plus-circle h1-size'></i>
 		</div>
-		<%= form_for [@user_gallery, @photo], :remote => true do %>
+		<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
 			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
 	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 		<% end %>

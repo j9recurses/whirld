@@ -30,13 +30,22 @@ class PhotosController < ApplicationController
 
 
   def create
+    puts "***************params**************"
+    puts params
     @photo = @user_gallery.photos.new(params[:photo])
     if @photo.save
       photo_class_name = @photo.class.to_s.underscore
+      cool = Photo.make_warpable(@photo)
       #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
       @photo = Photo.deepLearnPredict(@photo)
-      puts "***model_results****"
-      @processed_photo = Photo.find(@photo[:id])
+      #puts "***model_results****"
+      #@processed_photo = Photo.find(@photo[:id])
+      #@warpable = Warpable.new
+      #@warpable[:image_file_name] = @photo.photo_file
+      #@warpable[:image_content_type] = @photo.content_type
+      #@warpable[:]
+      #@warpable.map_id = map.id
+
       respond_to do |format|
         format.json { render json:  @photo }
       end

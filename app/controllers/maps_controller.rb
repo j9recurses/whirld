@@ -65,12 +65,7 @@ class MapsController < ApplicationController
     @user = @map.user
   end
 
-  def embed
-    @map = Map.find params[:id]
-    @map.zoom ||= 12
-    @embed = true
-    render :template => 'maps/show'
-  end
+
 
   def annotate
     @map = Map.find params[:id]

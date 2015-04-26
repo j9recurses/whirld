@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150424000951) do
+ActiveRecord::Schema.define(:version => 20150425235336) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -144,6 +144,10 @@ ActiveRecord::Schema.define(:version => 20150424000951) do
     t.datetime "updated_at",                         :null => false
     t.boolean  "is_aerial",       :default => false
     t.boolean  "is_normal",       :default => false
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "content_type"
+    t.integer  "file_size"
   end
 
   create_table "taggings", :force => true do |t|

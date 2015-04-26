@@ -4,6 +4,18 @@ class Photo < ActiveRecord::Base
   has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
 
+  def self.make_warpable(photo)
+    photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"
+    file_path = photo_dir.to_s + "/"+ photo[:photo_file].to_s
+    warpable =Warpable.new
+    warp_file = File.open(file_path)
+    warpable.image = warp_file
+    warp_file.close
+    gallery = UserGallery.find(photo[:user_gallery_id])
+    warpable.map_id = gallery[:map_id]
+    warpable.save!
+  end
+
   def self.deepLearnPredict(photo)
     photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"
     #optional ability to filter certain image sizes

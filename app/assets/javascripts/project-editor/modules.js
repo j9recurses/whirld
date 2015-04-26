@@ -82,10 +82,47 @@ ModuleHtml.prototype = {
   }
 }
 
+var Droppable = function(options){
+  this.options = $.extend({
+    dropZoneClassName: 'droppable',
+    modId: 'mod',
+    photoLimit: 1
+  }, options);
+  this.modEl = $('#'+this.options.modId);
+  this.photoCount = 0;
+
+}
+
+Droppable.prototype = {
+  setDropEl: function(){
+    console.log(this.modEl.find('.' + this.options.dropZoneClassName))
+  },
+  setPhotoCount: function(){
+    return this.photoCount += 1;
+  },
+  init: function(){
+    console.log("Initiated: droppable");
+    this.modEl.find('.droppable').droppable({
+      accept: '.draggable',
+      activeClass: 'drop-active',
+      hoverClass: 'drop-target',
+      activate: function(e, ui){
+        console.log('Activated: droppable')
+      },
+      drop: function(e, ui){
+        this.setPhotoCount();
+        if(this.photoCount < this.photoLimit){
+          console.log('Photo dropped')
+          // new Photo({  });
+        }
+      }
+    });
+  }
+}
+
 // Constructor for module logic, ajax
 var Module = function(options){
   this.options = $.extend({
-    dropZoneClassName: 'droppable',
     modType: 'grid',
     modClassName: 'module',
     originBarId: 'end-bar',
@@ -94,8 +131,7 @@ var Module = function(options){
   }, options);
 
 
-  // attributes set with initBar()
-  this.dropZone = null;
+  // attributes set with initMod()
   this.id = null;
   this.modEl = null;
   this.newBar = null;
@@ -122,9 +158,6 @@ Module.prototype = {
   setOriginBar: function(){
     return $('#' + this.options.originBarId);
   },
-  setPhotoCount: function(){
-    return this.photoCount += 1;
-  },
   setData: function(){
     if(this.options.modType == 'grid'){
       this.photoLimit = 10;
@@ -142,26 +175,6 @@ Module.prototype = {
     this.saveButton = this.modEl.find('.' + this.options.saveButtonClassName);
     this.dropZone = this.modEl.find('.' + this.options.dropZoneClassName);
   },
-  setDrop: function(){
-    this.dropZone = $('#'+this.modEl.attr('id')).find('.'+this.options.dropZoneClassName);
-    console.log(this)
-
-    this.dropZone.droppable({
-      accept: '.draggable',
-      activeClass: 'drop-active',
-      hoverClass: 'drop-target',
-      activate: function(e, ui){
-        console.log('Initiated: droppable')
-      },
-      drop: function(e, ui){
-        this.setPhotoCount();
-        if(this.photoCount < this.photoLimit){
-          console.log('Photo dropped')
-          // new Photo({  });
-        }
-      }
-    });
-  },
   setSort: function(){
     this.dropZone.sortable({
       appendTo: $('.' + this.options.dropZoneClassName),
@@ -177,7 +190,7 @@ Module.prototype = {
       }
     });
   },
-  initBar: function(){
+  initMod: function(){
     // after things are appended to the DOM, set the information and identify its parts
     this.setData();
     this.setParts();
@@ -197,23 +210,6 @@ Module.prototype = {
         console.log('save module')
       }
     });
-
-    this.dropZone.droppable({
-      accept: '.draggable',
-      activeClass: 'drop-active',
-      hoverClass: 'drop-target',
-      activate: function(e, ui){
-        console.log('Initiated: droppable')
-      },
-      drop: function(e, ui){
-        this.setPhotoCount();
-        if(this.photoCount < this.photoLimit){
-          console.log('Photo dropped')
-          // new Photo({  });
-        }
-      }
-    });
-
   },
   create: function(){
     var self = this;
@@ -239,13 +235,17 @@ Module.prototype = {
         self.newBar.barEl.insertBefore(self.modEl);
 
         // initiate drop here because it needs to have its id
-
+        var drop = new Droppable({
+          modId: self.modEl.attr('id'),
+          photoLimit: self.photoLimit
+        });
+        drop.init();
       },
       error: function(){
         console.log("Error: module not created");
       }
     }); // end ajax
-    this.initBar();
+    this.initMod();
   },
   delete: function(){
     var self = this;
@@ -290,3 +290,4 @@ Module.prototype = {
     }); // end ajax
   }
 }
+

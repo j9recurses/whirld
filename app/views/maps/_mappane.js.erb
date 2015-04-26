@@ -1,9 +1,19 @@
-console.log('showing map container')
-
-$('#knitter-map-pane').css('height', $(this).height() * .9 );
-$('#knitter-map-pane').css('display', 'block');
-
-
+if($('#project-show').length > 0){
+	$('#knitter-map-pane').css('height', $(this).height() * .9 );
+	$('#knitter-map-pane').css('display', 'block');
+	setTimeout(function(){
+		var map
+		(function(){
+		  window.mapKnitter = new MapKnitter.Map({
+		    latlng:     L.latLng(<%= @map.lat %>, <%= @map.lon %>),
+		    zoom:       <%= @map.zoom %>,
+		    readOnly:   <%= @embed == true %>,
+		    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
+		  });
+		 })();
+	}, 1000)
+}
+else{
 	var map
 	(function(){
 	  window.mapKnitter = new MapKnitter.Map({
@@ -13,4 +23,4 @@ $('#knitter-map-pane').css('display', 'block');
 	    warpablesUrl:   "<%= url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>"
 	  });
 	 })();
-
+}

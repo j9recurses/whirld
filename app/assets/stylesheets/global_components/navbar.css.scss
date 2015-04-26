@@ -19,7 +19,8 @@
 	z-index: 100;
 }
 #navbar-create{
-	top: -13px;
+	height: 10%;
+	top: -12px;
 	z-index: 9999;
 }
 .navbar-main{
@@ -39,9 +40,10 @@
 }
 #navbar-photo-manager{ 
   background-color: black;
-  padding-top: 43px;
+  color: white;
+  height: 10%;
+  padding: 7% 0  1% 0;
   top: 0px;
-  width: 32.26%;
   z-index: 9998;
 }
 #main-logo{
@@ -53,21 +55,6 @@
   overflow: overlay;
   position: fixed;
 }
-/*.secondary-nav { display: none; }*/
-.side-nav { 
-	background-color: black; 
-	margin-top: 51px;
-}
-.photo-list.default{
-	margin-top: -18px;
-}
-.side-nav .toggle {
-	display: block;
-}
-.tab:first-child{ border-right: 1px solid white; }
-.tab a { color: #999; }
-.tab.active a{ color: white; }
-.tab.six{ width: 49%; }
 
 /*Bigger than 568px*/
 @media only screen and (min-width: 568px) {

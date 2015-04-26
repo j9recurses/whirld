@@ -4,7 +4,8 @@ var ButtonBar = function(options){
     barType: 'end',
     barClassName: 'button-bar-btw',
     barLabelClassName: 'button-label',
-    barToggleClassName: 'option-toggle'
+    barToggleClassName: 'option-toggle',
+    modId: 'btw-bar-module-grid-1'
   }, options);
 
   // attributes set with initBar()
@@ -12,6 +13,7 @@ var ButtonBar = function(options){
   this.barEl = null;
   this.toggle = null;
   this.label = null;
+  this.modId = null
 
   // utility classes
   this.hide = function(el){ el.addClass('hidden'); }
@@ -30,8 +32,7 @@ ButtonBar.prototype = {
       return barId;
     }
     else{
-      var count = $('.' + barClassName).length;
-      return barId += '-' + $('.' + this.options.barClassName).length;
+      return barId += '-' + this.modId;
     }
   },
   setBar: function(){
@@ -41,9 +42,9 @@ ButtonBar.prototype = {
       return bar;
     }
     else{
-      bar = this.htmlBar();
-      bar.attr('id', this.id);
-      return bar;
+      barEl = this.htmlBar();
+      barEl.attr('id', this.id);
+      return barEl;
     }
   },
   setLabel: function(){
@@ -69,7 +70,6 @@ ButtonBar.prototype = {
   // event listeners
   open:function(){
     console.log('open bar');
-    console.log(this)
     var self = this;
     $.each(this.barEl.children('.option'), function(i, option){
       self.visible($(option));
@@ -81,6 +81,7 @@ ButtonBar.prototype = {
                                   originBarId: self.id
                                 });
               mod.create();
+          self.close();
         },
         mouseenter: function(){
           self.visible($(this).find('.button-label'));
@@ -121,9 +122,9 @@ ButtonBar.prototype = {
 
   // run after instantiation
   initBar: function(){
+    console.log('Initated: button bar');
     // after things are appended to the DOM, set the information
     this.setData();
-
     // preserve context for events
     var self = this;
 
@@ -147,5 +148,9 @@ ButtonBar.prototype = {
         if(e.which == 27){ self.close(); }
       }
     });
+  },
+  createBtw: function(modId){
+    this.modId = modId;
+    this.initBar();
   }
 };

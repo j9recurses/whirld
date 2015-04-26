@@ -1,58 +1,9 @@
 /*===== Project Creation =====*/
 #project-creation-2{
-  #photo-cats .tag { margin-right: 2em; background-color: black; }
-  #photo-cats .tag.active {  background-color: gray; }
 
-  #photo-cats, #photo-state{ background-color: black; }
-  .photo-list{
-    background-color: black;
-    margin-top: 30px;
-  }
-    .photo-list img { max-height: 180px; }
-    .photo-list.scrollable{
-      width: 32.26%;
-    }
-    .photo-list .preview {
-      height: 180px;
-    }
-  .project-creation .side-nav .photo-row.wrapper:nth-last-of-type(1){margin-bottom: 11em;}
-  .project-creation{ 
-    background-color: #f2f2f2;
-    height: 100%;
-    min-height: 700px;
-   }
-    .project-creation .eight{ width: 64.13%; }
-    .project-creation .side-nav .wrapper{
-      margin: 0 3%;
-    }
-  #project-form{ margin-top: 53px; }
-  .preview {
-    background-color: gray;
-    color: white;
-  }
-  .preview-chosen { opacity: .5; cursor: default; }
-  .preview:hover{
-    opacity: .5;
-      -webkit-transition: all .25s ease;
-      -moz-transition: all .25s ease;
-      -o-transition: all .25s ease;
-    transition: all .25s ease;
-  }
-
-
-  .item, .item button{
-    -webkit-transition: all .5s ease;
-      -moz-transition: all .5s ease;
-      transition: all .5s ease;
-  }
-
-  /*Styles*/
-  #end-bar button{
-    background-color: cornflowerblue;
-    color: white;
-    height: 75px;
-    width: 75px;
-  }
+  background-color: #f2f2f2;
+  height: 100%;
+  min-height: 700px;
 
   button{
     border: 0;
@@ -144,10 +95,21 @@
     border: none;
     color: rgb(243, 247, 255);
   }
+  #end-bar button{
+    background-color: cornflowerblue;
+    color: white;
+    height: 75px;
+    width: 75px;
+  }
   .error{ color: coral; }
   .fa-plus{ line-height: 0;}
+  .focus-in .input-label{
+    color: darkcyan;
+  }
+  .focus-in textarea{
+    border-bottom: 2px solid darkcyan;
+  }
   .grabbable{ cursor: -webkit-grab; }
-
   .grid-module .photo{
     width: 48%;
     float: left;
@@ -163,12 +125,6 @@
     -webkit-transition: all .25s ease-out;
     -moz-transition: all .25s ease-out;
     transition: all .25s ease-out;
-  }
-  .focus-in .input-label{
-    color: darkcyan;
-  }
-  .focus-in textarea{
-    border-bottom: 2px solid darkcyan;
   }
   input{
     background: none;
@@ -192,7 +148,11 @@
   .input-label-large{
     top: 1.5em;
   }
-
+  .item, .item button{
+    -webkit-transition: all .5s ease;
+      -moz-transition: all .5s ease;
+      transition: all .5s ease;
+  }
   .module{
     background-color: white;
     margin-bottom: 1.45em;
@@ -201,20 +161,39 @@
   .module.padding-bottom{ padding-bottom: 1em; }
   .module textarea.tag-input{ border-top: 1px solid #e5e5e5; overflow: hidden; }
   .module .wrapper { width: 96%; }
+  .module img.ui-draggable-handle {
+    width: 100%;
+  }
+
+  #navbar-create{
+    height: 10%;
+    top: -12px;
+    z-index: 9999;
+  }
+  #navbar-photo-manager{ 
+    background-color: black;
+    color: white;
+    height: 10%;
+    padding: 7% 0  1% 0;
+    top: 0px;
+    z-index: 9998;
+  }
   .photo{ position: relative; }
   .photo .img-wrapper{
     height: 290px;
     overflow: hidden;
   }
-  .module img.ui-draggable-handle {
-    width: 100%;
+  .photo-list{
+    background-color: black;
+    height: 100%;
+    padding-top: 14.67%;
+    top: 0;
   }
-  .on-change {
-    color: cadetblue;
-    -webkit-transition: all .1s linear;
-    -moz-transition: all .1s linear;
-    transition: all .1s linear;
-  }
+    .photo-list img { max-height: 180px; }
+
+    .photo-list .preview {
+      height: 180px;
+    }
   .photo-remove{
     background-color: #333;
     color: white;
@@ -224,7 +203,11 @@
     top: 10px;
     width: 22px;
   }
-  #photo-upload{ position: relative; }
+  #photo-upload{ 
+    background: antiquewhite;
+    height: 180px;
+    position: relative;
+  }
   #photo-upload form {
     opacity: 0;
     overflow: hidden;
@@ -234,6 +217,26 @@
   #photo-upload input{
     cursor: pointer;
     font-size: 100px;
+  }
+  .preview {
+    background-color: gray;
+    color: white;
+    margin: 0 0 2% 0;
+    width: 47.2%;
+  }
+  .preview:last-of-type{
+    margin-bottom: 12em;
+  }
+  .preview:nth-child(odd){
+    margin-right: 2%;
+  }
+  .preview-chosen { opacity: .5; cursor: default; }
+  .preview:hover{
+    opacity: .5;
+      -webkit-transition: all .25s ease;
+      -moz-transition: all .25s ease;
+      -o-transition: all .25s ease;
+    transition: all .25s ease;
   }
   .preview img{
     transition: opacity 0.5s linear;
@@ -248,6 +251,7 @@
       -moz-transition: all .25s linear;
       transition: all .25s linear;
   }
+  #project-form{ margin-top: 53px; }
   .project-tag.error{ color: cornflowerblue; }
   .project-tag:hover{ text-decoration: line-through; }
   .row-form{ margin-bottom: 2em; }
@@ -255,6 +259,26 @@
   .save-module{
     height: 40px;
     width: 40px;
+  }
+    .on-change {
+    color: cadetblue;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    transition: all .1s linear;
+  }
+  .scrollable {
+    height: 100%;
+    overflow: overlay;
+    position: fixed;
+  }
+
+  select{
+    background: white;
+    border: none;
+    color: black;
+    height: 2em;
+    margin-bottom: 1em;
+    width: 75%;
   }
   .tab{ cursor: pointer; }
   .tab.empty{ cursor: default; }

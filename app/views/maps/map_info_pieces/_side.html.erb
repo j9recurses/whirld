@@ -37,12 +37,13 @@
 	<% @user_gallery.photos.each do |photo| %>
 		<% if photo.is_aerial %>
 			<% type = 'aerial' %>
-			<article class='preview h-centered pull-left aerial' id='#preview-<%=photo.id%>'>
+			<article class='preview h-centered pull-left aerial' id='preview-<%=photo.id%>'>
 		<% elsif photo.is_normal %>
 			<% type = 'normal' %>
-			<article class='preview h-centered pull-left normal' id='#preview-<%=photo.id%>'>
+			<article class='preview h-centered pull-left normal' id='preview-<%=photo.id%>'>
 		<% end %>
 			<div class='img-wrapper v-centered'>
+				<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
 				<%= image_tag(photo.photo_file, :class => 'draggable', :data => {:img_id => photo.id, :img_type => type }) %>
 			</article>
 	<% end %>

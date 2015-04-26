@@ -52,6 +52,7 @@ var Image = function(options){
   }, options);
   
   this.id = this.options.id;
+  this.img = null;
   this.thumbEl = null;
   this.photoType = this.setPhotoType();
   this.removeButton = null;
@@ -71,6 +72,7 @@ Image.prototype = {
   },
   setData: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
+    this.img = this.thumbEl.find('img');
   },
   setUploadedData: function(){
     this.thumbEl = this.htmlThumb();
@@ -79,7 +81,7 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
-    this.thumbEl.draggable({
+    this.img.draggable({
       containment: '#' + this.options.dragContainerId,
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
@@ -91,7 +93,7 @@ Image.prototype = {
       snap: true,
       snapMode: 'both',
       snapTolerance: 10,
-      zIndex: 100
+      zIndex: 1000
     });
   },
   append: function(){

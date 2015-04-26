@@ -240,6 +240,7 @@
   }
   .preview img{
     transition: opacity 0.5s linear;
+    display: inline-block;
   }
   #project-create-form{
     margin-top: 3em;

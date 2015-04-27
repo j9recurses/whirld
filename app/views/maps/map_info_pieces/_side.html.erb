@@ -1,12 +1,17 @@
 <nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
-	<select id='photo-state'>
-	  <option value="uploaded" selected='selected'>Current Photos</option>
-	  <option value="saved" >Saved (<%= @user_gallery.photos.count%>)</option>
-	</select>
-	<ul id='photo-types' class='inline-list'>
-		<li id='aerial' class='item'>Aerial</li>
-		<li id='normal' class='item'>Street</li>
-	</ul>
+	<div class='photo-state-wrapper'>
+		<select id='photo-state'>
+		  <option value="uploaded" selected='selected'>Current Photos</option>
+		  <option value="saved" >Saved (<%= @user_gallery.photos.count%>)</option>
+		</select>
+	</div>
+	<div id='photo-types' class='photo-types-wrapper'>
+			<input id="aerial" type="radio" name="photo-type" value="aerial">
+		  <label for="aerial">Aerial</label>
+
+			<input id="normal" type="radio" name="photo-type" value="normal">
+		  <label for="normal">Street View</label>
+	</div>
 </nav>
 
 <section id='photos-uploaded' class='photo-list first-section scrollable eight'>
@@ -22,14 +27,14 @@
 
 </section>
 
-<section id='photos-saved' class='photo-list first-section scrollable eight hidden'>
+<section id='photos-saved' class='photo-list first-section scrollable eight hidden invisible'>
 	<% @user_gallery.photos.each do |photo| %>
 		<% if photo.is_aerial %>
 			<% type = 'aerial' %>
 			<article class='preview h-centered pull-left aerial' id='preview-<%=photo.id%>'>
 		<% elsif photo.is_normal %>
 			<% type = 'normal' %>
-			<article class='preview h-centered pull-left normal' id='preview-<%=photo.id%>'>
+			<article class='preview h-centered pull-left normal hidden invisible' id='preview-<%=photo.id%>'>
 		<% end %>
 			<div class='img-wrapper v-centered'>
 				<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>

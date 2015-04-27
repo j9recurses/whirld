@@ -282,20 +282,62 @@ Form.prototype = {
   },
 
   // functions for photo manager controls
-  photoSelectField: function(){
-    var photoContainers = {
-      uploaded: $('#photos-uploaded'),
-      saved: $('#photos-saved')
-    }
-    var el = $('#photo-state');
-        el.on({
-          change: function(){
-            // photoContainers[$(this).val()].toggleClass('hidden');
-            $.each(photoContainers, function(option, container){
-              container.toggleClass('hidden');
-            })
+  photoSelectFields: function(){
+    var photoContainers = { uploaded: $('#photos-uploaded'), saved: $('#photos-saved') };
+    var photoTypes = { aerial: $('.preview.aerial'), normal: $('preview.normal') };
+
+    $('#aerial').prop('disabled', true);
+    $('#normal').prop('disabled', true);
+
+    $('#photo-state').on({
+      change: function(){
+        $.each(photoContainers, function(option, container){
+          container.toggleClass('hidden');
+          container.toggleClass('invisible');
+        }); // end each
+        if($('#photo-state').val() == 'uploaded'){
+          if( $('#photos-uploaded').find('#aerial').length > 0){
+            $('#aerial').prop('checked', 'checked');
+            $('#photos-uploaded').find('.aerial').removeClass('hidden');
           }
+          else{
+            if($('#photos-uploaded').find('.normal').length > 0){
+              $('#normal').prop('checked', 'checked');
+              $('#photos-uploaded').find('.normal').removeClass('hidden');
+            }
+            else{
+              $('#aerial').prop('checked', false);
+              $('#normal').prop('checked', false);
+            }
+          }
+        } // end if uploaded
+        else if($('#photo-state').val() == 'saved'){
+          if( $('#photos-saved').find('.aerial').length > 0){
+              $('#aerial').prop('disabled', false);
+              $('#aerial').prop('checked', 'checked');
+              $('#photos-saved').find('.aerial').removeClass('hidden');
+          }
+          else{
+            if($('#photos-saved').find('.normal').length > 0){
+              $('#normal').prop('checked', 'checked');
+              $('#photos-saved').find('.normal').removeClass('hidden');
+            }
+            else{
+              $('#normal').prop('disabled', true).addClass('cursor-def');
+            }
+          }
+        } // end else if saved
+      }
+    });
+
+    $('#photo-types').on({
+      change: function(){
+        $.each(photoTypes, function(type, photos){
+          photos.toggleClass('hidden');
+          photos.toggleClass('invisible');
         });
+      }
+    })
   }
 
 } // end Form Prototype

@@ -171,7 +171,7 @@
     z-index: 9999;
   }
   #navbar-photo-manager{ 
-    background-color: black;
+    background-color: #333;
     color: white;
     height: 10%;
     padding: 6% 0  1% 0;
@@ -184,10 +184,13 @@
     overflow: hidden;
   }
   .photo-list{
-    background-color: black;
+    background-color: #333;
     height: 100%;
     padding-top: 14.67%;
     top: 0;
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    transition: all .25s linear;
   }
     .photo-list img { max-height: 180px; }
 
@@ -201,11 +204,35 @@
     width: 22px;
   }
   #photo-types{
-    background: black;
+    background-color: #333;
     padding-bottom: 1em;
   }
+  .photo-types-wrapper input[type='radio']{
+    display: none;
+  }
+  .photo-types-wrapper input[type="radio"]:checked+label {
+    color: aquamarine;
+    cursor: default;
+    -webkit-transition: all .1s linear;
+      -moz-transition: all .1s linear;
+      transition: all .1s linear;
+  }
+  .photo-types-wrapper input[type="radio"]:disabled+label{
+    cursor: default;
+  }
+  .photo-types-wrapper label{
+    color: #999;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 1em;
+    position: relative;
+    padding-left: 1.5em;
+  }
+  .photo-types-wrapper label:nth-of-type(1){
+    margin-right: 2em;
+  }
   #photo-upload{ 
-    background: antiquewhite;
+    background: #999;
     height: 180px;
     float: left;
     margin: 0 2% 2% 0;
@@ -238,10 +265,10 @@
   .preview-chosen { opacity: .5; cursor: default; }
   .preview:hover{
     opacity: .5;
-      -webkit-transition: all .25s ease;
-      -moz-transition: all .25s ease;
-      -o-transition: all .25s ease;
-    transition: all .25s ease;
+      -webkit-transition: all .25s linear;
+      -moz-transition: all .25s linear;
+      -o-transition: all .25s linear;
+    transition: all .25s linear;
   }
   .preview img{
     transition: opacity 0.5s linear;
@@ -249,6 +276,14 @@
   }
   #project-create-form{
     margin-top: 3em;
+  }
+  .photo-state-wrapper{
+     background: #999;
+     border: 1px solid #999;
+     height: 2em;
+     margin: 0 auto 1em auto;
+     overflow: hidden;
+     width: 75%;
   }
   .project-tag{ 
     display: inline-block;
@@ -279,12 +314,12 @@
   }
 
   select{
-    background: white;
+    background: transparent;
     border: none;
     color: black;
     height: 2em;
-    margin-bottom: 1em;
     width: 75%;
+    -webkit-appearance: none;
   }
   .tab{ cursor: pointer; }
   .tab.empty{ cursor: default; }

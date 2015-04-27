@@ -12,7 +12,7 @@ $(document).ready(function(){
       lon.lonField();    
 
   var photosel = new Form();
-      photosel.photoSelectField();
+      photosel.photoSelectFields();
 
   // initiate button bar
   var bb = new ButtonBar();

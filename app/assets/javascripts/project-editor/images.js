@@ -33,7 +33,12 @@ ImageUploader.prototype = {
             path: data.result.url
         });
         img.initUploaded();
-      } // end done
+      }, // end done
+      fail: function (e, data) {
+        console.log(data.errorThrown)
+        console.log(data.textStatus);
+        console.log(data.jqXHR);
+      }
     }); // end fileupload 
   }
 }
@@ -68,7 +73,12 @@ Image.prototype = {
   },
   htmlThumb: function(){
     var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable invisible " + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
-    return $(html);
+    var el = $(html)
+    if(this.is_normal){
+      el.addClass('hidden');
+      el.addClass('invisible');
+    }
+    return el;
   },
   setData: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);

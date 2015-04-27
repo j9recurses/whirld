@@ -280,6 +280,42 @@ Form.prototype = {
       }
     });
   },
+  // functions for finish button
+  finishButton: function(){
+    $('#project-finish').on({
+        click: function(){
+          var modIds = '';
+          $.each($('.module'), function(i, mod){
+            if($(mod).find('.photo').length > 0){
+              modIds += $(mod).data('mod-id') + ',';
+            }
+            else{ modIds = null }
+          });
+          console.log(modIds);
+          var map_id =  $('#project-creation-2').data('map-id');
+          console.log(map_id);
+          // DATA HERE. Probably need to change param names, but this is how you get the values
+          var data = {
+              map_id: map_id,
+              mod_order: modIds
+          }
+          console.log(data);
+          $.ajax({
+            url: '/maps/map_info_finish/'+ map_id,// URL HERE,
+            data: data,
+            cach: false,
+            type: 'put',
+            success: function(data){
+              console.log('Success: module order updated');
+            },
+            error: function(data){
+              console.log('Something went wrong.')
+              console.log(data)
+            }
+          }); // end ajax
+        } // end click
+    });
+  },
 
   // functions for photo manager controls
   photoSelectFields: function(){

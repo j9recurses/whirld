@@ -12,6 +12,7 @@ var ModPhoto = function(options){
   }, options);
 
   // Mod Photo attributes
+  this.createUrl = '/photo_mods/place_mod_photo';
   this.id = this.options.id;
   this.modPhotoEl = null;
   this.colnum = null;
@@ -54,7 +55,6 @@ ModPhoto.prototype = {
   },
   setParts: function(){
     this.modPhotoEl = this.htmlPhoto();
-    this.setImg();
     this.modPhotoEl.find('.img-wrapper').prepend(this.img);
     this.removeButton = this.modPhotoEl.find('.' + this.options.removeButtonClassName);
   },
@@ -80,19 +80,20 @@ ModPhoto.prototype = {
         self.remove();
       }
     })
-
   },
   create: function(){
-    // Set parts
-
+    // need this for image id
+    this.setImg();
+    
+    // prepare for AJAX
     var self = this;
-    var url = '/photo_mods/place_mod_photo';
+    var url = this.createUrl;
     var data = {
-            mod_gallery: parseInt(self.modId),
-            mod_type: self.modType,
-            photo_id: self.imgId,
-            caption: ''
+            mod_gallery: parseInt(this.options.modId),
+            mod_type: this.options.modType,
+            photo_id: this.imgId
           };
+    console.log(data)      
     $.ajax({
       url: url,
       data: data,
@@ -116,15 +117,6 @@ ModPhoto.prototype = {
       }
     }); // end ajax
   },
-  remove: function(){
-    console.log(this.options.modId)
-    var mod = new Module({
-      id: this.options.modId,
-      modType: this.options.modType
-    });
-    this.modPhotoEl.remove();
-    mod.resetDropzone();  
-  },
   delete: function(){
     var data = {
         mod_gallery: this.options.modId,
@@ -143,5 +135,13 @@ ModPhoto.prototype = {
         console.log('something went wrong')
       }
     }); // end ajax
-  }
+  },
+  remove: function(){
+    var mod = new Module({
+        id: this.options.modId,
+        modType: this.options.modType
+    });
+    this.modPhotoEl.remove();
+    mod.resetDropzone();  
+  },
 }

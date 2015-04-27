@@ -195,7 +195,7 @@ class PhotoModsController < ApplicationController
     end
   end
 
-  def delete_tagings
+  def delete_taggings
     @tag_item = Tag.find(params[:tag_id])
     respond_to do |format|
       if @tag_item.destroy

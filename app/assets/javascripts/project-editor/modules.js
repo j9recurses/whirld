@@ -265,6 +265,10 @@ Module.prototype = {
           self.setSort();          
         }
 
+        // initiate the form fields
+        var tf = new Form({ modAttrId: self.modEl.attr('id') })
+            tf.modTagField();
+
       },
       error: function(){
         console.log("Error: module not created");
@@ -285,6 +289,9 @@ Module.prototype = {
       },
       success: function(data){
         console.log('Success: module deleted');
+
+        var tf = new Form({ modAttrId: self.modEl.attr('id') });
+            tf.tagSave();
       },
       error: function(){
         console.log("Error: module not deleted");
@@ -332,7 +339,6 @@ Module.prototype = {
     this.setData();
     var photoCount = this.modEl.find('.photo').length;
     if(photoCount == 0){
-
       this.dropzone = this.modEl.find('.droppable');
       this.dropzone.addClass('dropzone').append(this.defaultMesage);
     }

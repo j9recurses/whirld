@@ -90,7 +90,7 @@ ModPhoto.prototype = {
     var url = this.createUrl;
     var data = {
             mod_gallery: parseInt(this.options.modId),
-            mod_type: this.options.modType,
+            modtype: this.options.modType,
             photo_id: this.imgId
           };
     console.log(data)      

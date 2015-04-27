@@ -154,15 +154,17 @@ class PhotoModsController < ApplicationController
       @photo_mod = PhotoMod.find(@photo_mod[0][:id])
       @photo_mod[:caption] = params[:caption]
     else
+      print "ALSDJFALSDKFJLKJ"
+      print params[:modtype]
       @photo_mod = PhotoMod.new
       @photo_mod[:photo_id] = params[:photo_id]
       @photo_mod[:mod_gallery_id] = params[:mod_gallery]
       @photo_mod[:caption] = params[:caption]
-      if params[:modtype] = 'grid'
+      if params[:modtype] == 'grid'
         @photo_mod[:mod_gallery_type] = 'UserGalleryGrid'
-      elsif params[:modtype] = 'split'
+      elsif params[:modtype] == 'split'
         @photo_mod[:mod_gallery_type] = 'UserGallerySplit'
-      elsif params[:modtype] = 'comparision'
+      elsif params[:modtype] == 'comparison'
         @photo_mod[:mod_gallery_type] = 'UserGalleryComparison'
       end
     end

@@ -309,10 +309,14 @@ Module.prototype = {
           photo.delete();
     });
   },
-  update: function(){
+  update: function(order){
     var self = this;
-    var url = '/photo_mods/user_gallery_' + this.options.modType + '_delete/'  + this.id;
+    var url = '/photo_mods/user_gallery_' + this.options.modType + '_update/'  + this.id;
     var data = {mod_gallery: this.id};
+    if(order){
+      data['grid_photo_order'] = order;
+    }
+    console.log(data)
     $.ajax({
       url: url,
       data: data,

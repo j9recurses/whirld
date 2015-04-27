@@ -111,6 +111,8 @@ ModPhoto.prototype = {
         // Append module photo to dropzone
         self.options.dropzone.append(self.modPhotoEl)
 
+        // update orders of all photos in module
+        self.updateOrder();
       },
       error: function(){
         console.log('something went wrong')
@@ -118,6 +120,7 @@ ModPhoto.prototype = {
     }); // end ajax
   },
   delete: function(){
+    var self = this;
     var data = {
         mod_gallery: this.options.modId,
         mod_type: this.options.modType,
@@ -130,6 +133,9 @@ ModPhoto.prototype = {
       type: 'delete',
       success: function(data){
         console.log('Success: photo is disassociated');
+
+        // update orders of all photos in module
+        self.updateOrder();
       },
       error: function(){
         console.log('something went wrong')
@@ -144,4 +150,16 @@ ModPhoto.prototype = {
     this.modPhotoEl.remove();
     mod.resetDropzone();  
   },
+  updateOrder: function(){
+    var mod = new Module({
+      id: this.options.modId,
+      modType: this.options.modType
+    })
+    var ids = '';
+    $.each($('#' + this.options.modAttrId).find('.photo'), function(i, modphoto){
+      ids += $(modphoto).data('mod-photo-id') + ',';
+    });
+    console.log(ids)
+    mod.update(ids)
+  }
 }

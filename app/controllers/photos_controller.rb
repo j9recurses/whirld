@@ -38,8 +38,8 @@ class PhotosController < ApplicationController
       @photo = Photo.deepLearnPredict(@photo)
       @photo[:warpable_id] = @warpable.id
       @warpable_attr =   @warpable.fup_json
-      @photo[:warpable_url] = @warpable.image.url(:medium)
-      @photo[:warpable_thumb_url] = @warpable.image.url(:thumb)
+      @photo[:warpable_url] =  @warpable.image.url(:medium)
+      @photo[:warpable_thumb_url] =  @warpable.image.url(:thumb)
       respond_to do |format|
         format.json { render json:  @photo }
       end
@@ -57,6 +57,8 @@ class PhotosController < ApplicationController
     end
   end
 end
+
+
 
 private
 

@@ -11,8 +11,8 @@
   </article>
 
 
-  <div id='project-form-create' class='sixteen columns'>
-    <section class='twenty-two columns offset-one first-section'>
+  <div id='project-form-map-info' class='sixteen columns'>
+    <section class='twenty-two columns offset-one'>
 
     <div class='row-form row group'>
       <%= render :partial => "maps/map_info_pieces/form_title" %>
@@ -30,14 +30,19 @@
      <%= render :partial => "maps/map_info_pieces/form_tags" %>
     </div>
     
-    <!-- <section id="knitter-map-pane"></section> -->
+    <h2 class='input-label'>Map Knitter</h2>
+    <section id="knitter-map-pane"></section>
 
 
     <%= render :partial => "maps/map_info_pieces/buttonBar" %>
 
     <div class='row group'>
-        <button id='project-finish' class='finish two columns pull-right'>Finish</button>
-        <button id='project-cancel' class='cancel two columns pull-right'>Cancel</button>
+      <div class='three columns pull-right'>
+        <button id='project-finish' class='button-action button-finish'>Finish</button>
+      </div>
+      <div class='three columns pull-right'>
+        <button id='project-cancel' class='button-action button-cancel two columns pull-right'>Cancel</button>
+      </div>
     </div>
 
 

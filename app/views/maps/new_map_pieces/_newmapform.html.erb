@@ -1,4 +1,4 @@
-<%= form_for @map, :html => { :id => 'project-create-form' } do |f| %>
+<%= form_for @map, :html => { :id => 'project-form-new' } do |f| %>
   <%= render 'layouts/error_messages', object: f.object %>  
   <div class='row-form row group'>
     <div class='twenty-four columns'>
@@ -6,7 +6,7 @@
           <%= f.label :name, 'Title', :class => 'input-label light' %> <%=  f.text_area :name,
                            :name => 'name',
                            :rows => '0',
-                           :class => 'char-limited h2-size',
+                           :class => 'char-limited h3-size',
                            :id => 'project-name',
                            :maxlength => 70 %><span class='char-limit font_small light invisible' data-limit='70'>70</span>
         </div>
@@ -65,7 +65,7 @@
   </div> <!-- end row group -->
   <div class='row group'>
     <div class='four columns pull-right h-righted'>
-        <button class='button-next'>
+        <button class='button-action button-next'>
           <%= f.submit "Next" %>
         </button>
     </div>

@@ -256,6 +256,14 @@ table .btn {
 
 .public-lab-primary button { background-color: #f8e4e4; }
 
+
+.fa-green {
+  color:green;
+}
+.fa-red {
+  color:red;
+}
+
 /* autocomplete styling for jquery-ui widget */
 .ui-autocomplete {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -280,11 +288,4 @@ table .btn {
   background-image: none;
   color: #666;
   font-weight:normal;
-}
-
-.fa-green {
-  color:green;
-}
-.fa-red {
-  color:red;
 }

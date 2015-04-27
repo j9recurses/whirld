@@ -5,7 +5,7 @@
 	height: 100%;
 	margin-bottom: 0;
 	margin-top: 0;
-	padding-top: 1.1em;
+	line-height: 3em;
 }
 .menu-item:nth-of-type(2){
 	margin-left: 0;
@@ -17,11 +17,6 @@
 .navbar {
 	background-color: #dee3e7;
 	z-index: 100;
-}
-#navbar-create{
-	height: 10%;
-	top: -12px;
-	z-index: 9999;
 }
 .navbar-main{
 	background-color: #dee3e7;

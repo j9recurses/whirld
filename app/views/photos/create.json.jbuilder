@@ -10,4 +10,7 @@ json.array!([@photo]) do |json, photo|
   if photo.is_normal
     json.photo_type       "normal"
   end
+  json.warpable_id    photo.warpable_id
+  json.warpable_url   photo.warpable_url
+  json.warpable_thumb_url  photo.warpable_thumb_url
 end

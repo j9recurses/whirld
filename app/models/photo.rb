@@ -14,6 +14,7 @@ class Photo < ActiveRecord::Base
     gallery = UserGallery.find(photo[:user_gallery_id])
     warpable.map_id = gallery[:map_id]
     warpable.save!
+    return warpable
   end
 
   def self.deepLearnPredict(photo)

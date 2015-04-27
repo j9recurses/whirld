@@ -59,8 +59,8 @@ class MapsController < ApplicationController
   def show
     @map = Map.find params[:id]
     @map[:taglist] = @map.tags.pluck([:name])
-    # @gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
-    # @map_presenter = MapPresenter.new(@map)
+    @gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
+    @mappresenter = MapPresenter.new(@map)
     @map.zoom ||= 12
     @embed = true
     @user = @map.user

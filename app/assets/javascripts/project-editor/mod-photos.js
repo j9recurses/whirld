@@ -1,5 +1,9 @@
 var ModPhoto = function(options){
   this.options = $.extend({
+    id: null,
+    imgId: null,
+    modId: null,
+    modType: null,
     modAttrId: null,
     dropzone: null,
     modType: 'grid',
@@ -7,13 +11,13 @@ var ModPhoto = function(options){
     removeButtonClassName: 'photo-remove'
   }, options);
 
-  this.id = null;
-  this.modEl = $('#' + this.options.modAttrId);
+  // Mod Photo attributes
+  this.id = this.options.id;
   this.modPhotoEl = null;
   this.colnum = null;
   this.ui = this.options.ui;
   this.img = null;
-  this.imgId = null;
+  this.imgId = this.options.imgId;
   this.imgWrapper = null;
   this.removeButton = null;
 }
@@ -113,15 +117,31 @@ ModPhoto.prototype = {
     }); // end ajax
   },
   remove: function(){
+    console.log(this.options.modId)
     var mod = new Module({
-      id: this.options.modAttrId.split('-')[2],
-      modType: this.options.modAttrId.split('-')[1]
+      id: this.options.modId,
+      modType: this.options.modType
     });
-    mod.resetDropzone();
     this.modPhotoEl.remove();
+    mod.resetDropzone();  
   },
   delete: function(){
-    // ajax
-    console.log('Sucess: deleting photos');
+    var data = {
+        mod_gallery: this.options.modId,
+        mod_type: this.options.modType,
+        photo_id: this.imgId
+      }
+    $.ajax({
+      url: '/photo_mods/remove_mod_photo/'+this.id,
+      data: data,
+      cache: false,
+      type: 'delete',
+      success: function(data){
+        console.log('Success: photo is disassociated');
+      },
+      error: function(){
+        console.log('something went wrong')
+      }
+    }); // end ajax
   }
 }

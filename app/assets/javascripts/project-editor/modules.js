@@ -98,6 +98,7 @@ var Module = function(options){
   this.defaultMesage = null;
   this.dropzone = null;
   this.id = this.options.id;
+  this.isPhotoMod = this.setIsPhotoMod();
   this.modEl = null;
   this.newBar = null;
   this.originBar = null;
@@ -110,6 +111,10 @@ var Module = function(options){
 
 }
 Module.prototype = {
+  setIsPhotoMod: function(){
+    if(this.options.modType == 'grid' || this.options.modType == 'split' || this.options.modType == 'comparison'){ return true }
+      else{ return false }
+  },
   setId: function(id){ // called inside ajax
     this.id = id;
     this.modEl.attr('id', 'module-' + this.options.modType + '-' + this.id);
@@ -174,6 +179,8 @@ Module.prototype = {
           self.mod = self.dropzone.closest('.module');
 
           var photo = new ModPhoto({
+            modId: self.id,
+            modType: self.options.modType,
             modAttrId: self.modEl.attr('id'),
             dropzone: self.dropzone,
             modType: self.options.modType,
@@ -216,6 +223,7 @@ Module.prototype = {
       click: function(){
         self.delete();
         self.newBar.barEl.remove();
+        self.deletePhotos();
         self.modEl.remove();
       }
     });
@@ -251,9 +259,11 @@ Module.prototype = {
         self.setNewBar();
         self.newBar.barEl.insertBefore(self.modEl);
 
-        // initiate drag and sort
-        self.setDrop();
-        self.setSort();
+        // initiate drag and sort if it's a module with photos
+        if(self.isPhotoMod){
+          self.setDrop();
+          self.setSort();          
+        }
 
       },
       error: function(){
@@ -281,6 +291,20 @@ Module.prototype = {
       }
     }); // end ajax
   },
+  deletePhotos: function(){
+    var self = this;
+    $.each(this.modEl.find('.photo'), function(i, p){
+      var options = {
+        modId: self.id,
+        modType: self.options.modType,
+        modAttrId: self.modEl.attr('id'),
+        imgId: $(p).find('img').data('img-id'),
+        id: $(p).data('mod-photo-id')
+      }
+      var photo = new ModPhoto(options);
+          photo.delete();
+    });
+  },
   update: function(){
     var self = this;
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_delete/'  + this.id;
@@ -307,7 +331,8 @@ Module.prototype = {
     this.modEl = $('#' + 'module-' + this.options.modType + '-' + this.id);
     this.setData();
     var photoCount = this.modEl.find('.photo').length;
-    if(photoCount == 1 ){
+    if(photoCount == 0){
+
       this.dropzone = this.modEl.find('.droppable');
       this.dropzone.addClass('dropzone').append(this.defaultMesage);
     }

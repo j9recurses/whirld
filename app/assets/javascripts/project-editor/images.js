@@ -82,7 +82,7 @@ Image.prototype = {
   },
   setDrag: function(){
     this.img.draggable({
-      containment: '#' + this.options.dragContainerId,
+      // containment: '#' + this.options.dragContainerId,
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
       distance: 10,

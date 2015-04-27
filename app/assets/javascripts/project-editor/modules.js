@@ -84,47 +84,63 @@ ModuleHtml.prototype = {
 
 var Droppable = function(options){
   this.options = $.extend({
-
+    mod: null,
+    photoLimit: null
   }, options);
+
+  this.dropzone = null;
+  this.mod = this.options.mod;
+  this.photoLimit = this.options.photoLimit;
 }
 
 Droppable.prototype = {
   initDrop: function(){
     var self = this;
-    this.dropZone.droppable({
+    this.mod.find('.droppable').droppable({
       accept: '.draggable',
       activeClass: 'drop-active',
       hoverClass: 'drop-target',
-      activate: function(e, ui){
-        console.log('Activated: droppable')
-      },
       drop: function(e, ui){
-        self.setPhotoCount();
-        if(self.photoCount < self.photoLimit){
-          var mp = new ModPhoto({ 
-              modAttrId: self.modEl.attr('id'),
-              ui: ui
-            });
-          mp.create();
+        var photoCount = self.mod.find('.photo').length;
+        if(photoCount < self.photoLimit){
+          
+          self.dropzone = $(e.target);
+          self.dropzone.removeClass('dropzone');
+          self.dropzone.find('p').remove();
 
-          // self.dropZone.removeClass('dropzone');
-          // self.dropZone.find('p').remove();
-          // self.dropZone.append(mp.modPhotoEl);
+          self.mod = self.dropzone.closest('.module');
+
+          var photo = new ModPhoto({
+            modAttrId: self.mod.attr('id'),
+            ui: ui
+          });
+          photo.create();
+          self.dropzone.append(photo.modPhotoEl);
+
         }
       }
     });
   },
   initSort: function(){
-    this.dropZone.sortable({
+    var self = this;
+    this.mod.find('.droppable').sortable({
       appendTo: $('.droppable'),
-      connectWith: self.dropZone,
-      containment: self.modEl,
+      connectWith: self.mod.find('.droppable'),
+      containment: self.mod,
       cursor: '-webkit-grab',
       distance: 10,
       handle: '.img-wrapper',
       opacity: .9,
-      revert: 50
+      revert: 150,
+      deactivate: function(e, ui){
+        console.log('Sorting finished');
+        // markUnSaved(mod);
+      }
     });
+  },
+  init: function(){
+    this.initDrop();
+    this.initSort();
   }
 }
 
@@ -140,7 +156,7 @@ var Module = function(options){
 
 
   // attributes set with initMod()
-  this.dropZone = null;
+  this.dropzone = null;
   this.id = null;
   this.modEl = null;
   this.newBar = null;
@@ -187,6 +203,50 @@ Module.prototype = {
     this.removeButton = this.modEl.find('.' + this.options.removeButtonClassName);
     this.saveButton = this.modEl.find('.' + this.options.saveButtonClassName);
   },
+  setDrop: function(){
+    var self = this;
+    this.modEl.find('.droppable').droppable({
+      accept: '.draggable',
+      activeClass: 'drop-active',
+      hoverClass: 'drop-target',
+      drop: function(e, ui){
+        var photoCount = self.modEl.find('.photo').length;
+        if(photoCount < self.photoLimit){
+          
+          self.dropzone = $(e.target);
+          self.dropzone.removeClass('dropzone');
+          self.dropzone.find('p').remove();
+
+          self.mod = self.dropzone.closest('.module');
+
+          var photo = new ModPhoto({
+            modAttrId: self.mod.attr('id'),
+            ui: ui
+          });
+          photo.create();
+          console.log(photo.modPhotoEl)
+          self.dropzone.append(photo.modPhotoEl);
+        }
+      }
+    });
+  },
+  setSort: function(){
+    var self = this;
+    this.modEl.find('.droppable').sortable({
+      appendTo: $('.droppable'),
+      connectWith: self.modEl.find('.droppable'),
+      containment: self.modEl,
+      cursor: '-webkit-grab',
+      distance: 10,
+      handle: '.img-wrapper',
+      opacity: .9,
+      revert: 150,
+      deactivate: function(e, ui){
+        console.log('Sorting finished');
+        // markUnSaved(mod);
+      }
+    });
+  },
   initMod: function(){
     // after things are appended to the DOM, set the information and identify its parts
     this.setData();
@@ -221,6 +281,7 @@ Module.prototype = {
       success: function(data) {
         console.log('Success: module created');
 
+        // Set parts, data, initiate events
         self.initMod();
 
         // Set ID
@@ -233,6 +294,10 @@ Module.prototype = {
         // create a new button bar and append it before the module element
         self.setNewBar();
         self.newBar.barEl.insertBefore(self.modEl);
+
+        // initiate drag and sort
+        self.setDrop();
+        self.setSort();
 
       },
       error: function(){

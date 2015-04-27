@@ -1,4 +1,4 @@
-<nav id='navbar-photo-manager' class='sticky-nav eight h-centered hidden'>
+<nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
 	<select id='photo-state'>
 	  <option value="current" >Current</option>
 	  <option value="saved" selected='selected'>Saved (<%= @user_gallery.photos.count%>)</option>
@@ -11,7 +11,7 @@
 
 <section id='photos-uploaded' class='photo-list first-section scrollable eight hidden'>
 
-	<article id='photo-upload' class='twelve h-centered'>
+	<article id='photo-upload' class='h-centered'>
 		<div class='img-wrapper photo-upload-wrapper v-centered'>
 				<i class='fa fa-plus-circle h1-size'></i>
 		</div>
@@ -20,15 +20,6 @@
 	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 		<% end %>
 	</article>
-
-	<!-- <div id='photos-aerial' class='sub-photo-list'> -->
-		<!-- <div class='photo-row row group wrapper'> -->
-		<!-- </div> end row group -->
-	<!-- </div> -->
-	<!-- <div id='photos-street' class='sub-photo-list'> -->
-		<!-- <div class='photo-row row group wrapper'> -->
-		<!-- </div> end row group -->
-	<!-- </div> -->
 
 </section>
 

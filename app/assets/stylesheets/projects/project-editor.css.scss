@@ -191,9 +191,6 @@
   }
     .photo-list img { max-height: 180px; }
 
-    .photo-list .preview {
-      height: 180px;
-    }
   .photo-remove{
     background-color: #333;
     color: white;
@@ -206,7 +203,10 @@
   #photo-upload{ 
     background: antiquewhite;
     height: 180px;
+    float: left;
+    margin: 0 2% 2% 0;
     position: relative;
+    width: 47.2%;
   }
   #photo-upload form {
     opacity: 0;
@@ -221,6 +221,7 @@
   .preview {
     background-color: gray;
     color: white;
+    height: 180px;
     margin: 0 0 2% 0;
     width: 47.2%;
   }

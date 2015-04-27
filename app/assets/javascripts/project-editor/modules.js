@@ -20,7 +20,7 @@ ModuleHtml.prototype = {
       this.label = 'Photo Grid';
     }
     else if(this.options.modType == 'split'){
-      this.emptyMessage = "<p class='caps'>Drag up to ten photos here.</p>";
+      this.emptyMessage = "<p class='caps'>Drag one photo here.</p>";
       this.iconClass = 'star-half';
       this.label = 'Text With Photo';
     }
@@ -63,8 +63,8 @@ ModuleHtml.prototype = {
     return $(html);
   },
   split: function(){
-    var text = "<div class='text-module h-centered six columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
-    var photo = "<div class='droppable dropzone six columns'>" + this.htmlDropzone() + "</div>";
+    var text = "<div class='text-module h-centered twelve columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
+    var photo = "<div class='droppable dropzone twelve columns'>" + this.emptyMessage + "</div>";
     var html = "<article class='split-module module padding-bottom padding-top'>" + this.htmlHeader() + "<div class='row group wrapper'>" + photo + text + "</div>" + this.htmlTaginput() + "</article>";
     return $(html);
   },
@@ -82,71 +82,10 @@ ModuleHtml.prototype = {
   }
 }
 
-var Droppable = function(options){
-  this.options = $.extend({
-    mod: null,
-    photoLimit: null
-  }, options);
-
-  this.dropzone = null;
-  this.mod = this.options.mod;
-  this.photoLimit = this.options.photoLimit;
-}
-
-Droppable.prototype = {
-  initDrop: function(){
-    var self = this;
-    this.mod.find('.droppable').droppable({
-      accept: '.draggable',
-      activeClass: 'drop-active',
-      hoverClass: 'drop-target',
-      drop: function(e, ui){
-        var photoCount = self.mod.find('.photo').length;
-        if(photoCount < self.photoLimit){
-          
-          self.dropzone = $(e.target);
-          self.dropzone.removeClass('dropzone');
-          self.dropzone.find('p').remove();
-
-          self.mod = self.dropzone.closest('.module');
-
-          var photo = new ModPhoto({
-            modAttrId: self.mod.attr('id'),
-            ui: ui
-          });
-          photo.create();
-          self.dropzone.append(photo.modPhotoEl);
-
-        }
-      }
-    });
-  },
-  initSort: function(){
-    var self = this;
-    this.mod.find('.droppable').sortable({
-      appendTo: $('.droppable'),
-      connectWith: self.mod.find('.droppable'),
-      containment: self.mod,
-      cursor: '-webkit-grab',
-      distance: 10,
-      handle: '.img-wrapper',
-      opacity: .9,
-      revert: 150,
-      deactivate: function(e, ui){
-        console.log('Sorting finished');
-        // markUnSaved(mod);
-      }
-    });
-  },
-  init: function(){
-    this.initDrop();
-    this.initSort();
-  }
-}
-
 // Constructor for module logic, ajax
 var Module = function(options){
   this.options = $.extend({
+    id: null,
     modType: 'grid',
     modClassName: 'module',
     originBarId: 'end-bar',
@@ -156,8 +95,9 @@ var Module = function(options){
 
 
   // attributes set with initMod()
+  this.defaultMesage = null;
   this.dropzone = null;
-  this.id = null;
+  this.id = this.options.id;
   this.modEl = null;
   this.newBar = null;
   this.originBar = null;
@@ -183,6 +123,23 @@ Module.prototype = {
   setOriginBar: function(){
     return $('#' + this.options.originBarId);
   },
+  setDefaultMessage: function(){
+    var message;
+    if(this.options.modType == 'comparison'){
+      message = 'Drag two photos here to compare them.';
+    }
+    else if(this.options.modType == 'grid'){
+      message = 'Drag up to ten photos here.';
+    }
+    else if(this.options.modType == 'split'){
+      message = 'Drag one photo here.';
+    }
+    var html = "<p class='caps'>" + message +"</p>";
+    this.defaultMesage = $(html);
+  },
+  setModEl: function(){
+    this.modEl = new ModuleHtml({ modType: this.options.modType }).html();
+  },
   setData: function(){
     if(this.options.modType == 'grid'){
       this.photoLimit = 10;
@@ -193,12 +150,9 @@ Module.prototype = {
     else if(this.options.modType == 'comparison'){
       this.photoLimit = 2;
     }
-  },
-  setPhotoCount: function(){
-    return this.photoCount += 1;
+    this.setDefaultMessage();
   },
   setParts: function(){
-    this.modEl = new ModuleHtml({ modType: this.options.modType }).html();
     this.modEl.data('mod-type', this.options.modType);
     this.removeButton = this.modEl.find('.' + this.options.removeButtonClassName);
     this.saveButton = this.modEl.find('.' + this.options.saveButtonClassName);
@@ -220,12 +174,14 @@ Module.prototype = {
           self.mod = self.dropzone.closest('.module');
 
           var photo = new ModPhoto({
-            modAttrId: self.mod.attr('id'),
+            modAttrId: self.modEl.attr('id'),
+            dropzone: self.dropzone,
+            modType: self.options.modType,
             ui: ui
           });
           photo.create();
-          console.log(photo.modPhotoEl)
-          self.dropzone.append(photo.modPhotoEl);
+          // console.log(photo)
+          // self.dropzone.append(photo.modPhotoEl);
         }
       }
     });
@@ -248,7 +204,7 @@ Module.prototype = {
     });
   },
   initMod: function(){
-    // after things are appended to the DOM, set the information and identify its parts
+    this.setModEl();
     this.setData();
     this.setParts();
 
@@ -346,6 +302,15 @@ Module.prototype = {
         console.log("Error: module not updated");
       }
     }); // end ajax
+  },
+  resetDropzone: function(){
+    this.modEl = $('#' + 'module-' + this.options.modType + '-' + this.id);
+    this.setData();
+    var photoCount = this.modEl.find('.photo').length;
+    if(photoCount == 1 ){
+      this.dropzone = this.modEl.find('.droppable');
+      this.dropzone.addClass('dropzone').append(this.defaultMesage);
+    }
   }
 }
 

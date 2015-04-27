@@ -1,15 +1,15 @@
 var ModPhoto = function(options){
   this.options = $.extend({
-    modAttrId: 'mod',
+    modAttrId: null,
+    dropzone: null,
+    modType: 'grid',
     ui: null,
     removeButtonClassName: 'photo-remove'
   }, options);
 
   this.id = null;
-  this.modEl = $('#'+this.options.modAttrId);
+  this.modEl = $('#' + this.options.modAttrId);
   this.modPhotoEl = null;
-  this.modType = this.modEl.data('mod-type');
-  this.modId = this.modEl.data('mod-id');
   this.colnum = null;
   this.ui = this.options.ui;
   this.img = null;
@@ -19,7 +19,7 @@ var ModPhoto = function(options){
 }
 ModPhoto.prototype = {
   setColnum: function(){
-    if(this.modType == 'split'){
+    if(this.options.modType == 'split'){
       this.colnum = 'twenty-four';
     }
     else{
@@ -42,27 +42,44 @@ ModPhoto.prototype = {
     img.data('img-id', this.imgId);
     this.img = img;
   },
+  setRemoveButton: function(){
+    this.removeButton = this.modPhotoEl.find('.'+this.options.removeButtonClassName);
+  },
   setData: function(){
     this.setColnum();
   },
   setParts: function(){
     this.modPhotoEl = this.htmlPhoto();
     this.setImg();
-    this.imgWrapper = this.modPhotoEl.find('.img-wrapper');
-    this.imgWrapper.prepend(this.img);
-  },
-  setRemoveButton: function(){
-    this.removeButton = this.modPhotoEl.find('.'+this.options.removeButtonClassName);
+    this.modPhotoEl.find('.img-wrapper').prepend(this.img);
+    this.removeButton = this.modPhotoEl.find('.' + this.options.removeButtonClassName);
   },
   initModPhoto: function(){
-    console.log(this)
+    this.setData();
+    this.setParts();
+
     var self = this;
+
+    // initiate events
+    this.modPhotoEl.find('.img-wrapper').on({
+      mouseenter: function(){
+        self.removeButton.removeClass('hidden');
+      },
+      mouseleave: function(){
+        self.removeButton.addClass('hidden');
+      }
+    });
+
+    this.removeButton.on({
+      click: function(){
+        self.delete();
+        self.remove();
+      }
+    })
 
   },
   create: function(){
     // Set parts
-    this.setData();
-    this.setParts();
 
     var self = this;
     var url = '/photo_mods/place_mod_photo';
@@ -80,14 +97,14 @@ ModPhoto.prototype = {
       success: function(data){
         console.log('Success: photo is associated')
 
-        // Set ID's
+        // Set parts, data, initiate events
+        self.initModPhoto();
+
+        // Set ID
         self.setId(data.id);
 
-
-        console.log(self.imgWrapper)
-        self.imgWrapper.on('hover', function(){
-          console.log('hello')
-        })
+        // Append module photo to dropzone
+        self.options.dropzone.append(self.modPhotoEl)
 
       },
       error: function(){
@@ -95,7 +112,16 @@ ModPhoto.prototype = {
       }
     }); // end ajax
   },
+  remove: function(){
+    var mod = new Module({
+      id: this.options.modAttrId.split('-')[2],
+      modType: this.options.modAttrId.split('-')[1]
+    });
+    mod.resetDropzone();
+    this.modPhotoEl.remove();
+  },
   delete: function(){
     // ajax
+    console.log('Sucess: deleting photos');
   }
 }

@@ -8,6 +8,7 @@ $(document).ready(function() {
       new Drag($(thumb).find('img'));
     });
     // new MapDrop({ whatever options or info you need from global space })
+
   }
   else{
     new Nav({type: 'main'});

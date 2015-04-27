@@ -226,6 +226,8 @@ Form.prototype = {
   tagField: function(){
 
   },
+
+  // functions for creating text fields
   textField: function(){
     autosize(this.modEl.find('.text-module-body'));
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
@@ -277,5 +279,23 @@ Form.prototype = {
         self.save();
       }
     });
+  },
+
+  // functions for photo manager controls
+  photoSelectField: function(){
+    var photoContainers = {
+      uploaded: $('#photos-uploaded'),
+      saved: $('#photos-saved')
+    }
+    var el = $('#photo-state');
+        el.on({
+          change: function(){
+            // photoContainers[$(this).val()].toggleClass('hidden');
+            $.each(photoContainers, function(option, container){
+              container.toggleClass('hidden');
+            })
+          }
+        });
   }
-}
+
+} // end Form Prototype

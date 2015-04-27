@@ -2,7 +2,6 @@ $(document).ready(function(){
   // initiate form fields
   var desc = new Form();
       desc.descriptionField();
-
   var title = new Form();
       desc.titleField();
   var loc = new Form();
@@ -11,6 +10,9 @@ $(document).ready(function(){
       lat.latField(); 
   var lon = new Form();
       lon.lonField();    
+
+  var photosel = new Form();
+      photosel.photoSelectField();
 
   // initiate button bar
   var bb = new ButtonBar();
@@ -63,6 +65,7 @@ $(document).ready(function(){
 //     } // end click
 //   });
 
+
   $('#navbar-create').stickyNavbar({
     animDuration: 250,              // Duration of jQuery animation
     startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
@@ -94,3 +97,4 @@ $(document).ready(function(){
     zIndex: 10
   });
 });
+

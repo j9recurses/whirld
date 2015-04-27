@@ -1,7 +1,7 @@
 <nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
 	<select id='photo-state'>
-	  <option value="current" >Current</option>
-	  <option value="saved" selected='selected'>Saved (<%= @user_gallery.photos.count%>)</option>
+	  <option value="uploaded" selected='selected'>Current Photos</option>
+	  <option value="saved" >Saved (<%= @user_gallery.photos.count%>)</option>
 	</select>
 	<ul id='photo-types' class='inline-list'>
 		<li id='aerial' class='item'>Aerial</li>
@@ -9,7 +9,7 @@
 	</ul>
 </nav>
 
-<section id='photos-uploaded' class='photo-list first-section scrollable eight hidden'>
+<section id='photos-uploaded' class='photo-list first-section scrollable eight'>
 	<article id='photo-upload' class='h-centered'>
 		<div class='img-wrapper photo-upload-wrapper v-centered'>
 				<i class='fa fa-plus-circle h1-size'></i>
@@ -22,7 +22,7 @@
 
 </section>
 
-<section id='photos-saved' class='photo-list first-section scrollable eight'>
+<section id='photos-saved' class='photo-list first-section scrollable eight hidden'>
 	<% @user_gallery.photos.each do |photo| %>
 		<% if photo.is_aerial %>
 			<% type = 'aerial' %>

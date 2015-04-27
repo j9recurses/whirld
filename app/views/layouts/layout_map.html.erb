@@ -18,19 +18,19 @@
 <%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
 <%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
 
+<!-- JS for project editor -->
 <% if @extra_js %>
 	<%= javascript_include_tag "autosize/dest/autosize.js" %>
-	<%#= javascript_include_tag "project-editor/form.js" %>
 	<%#= javascript_include_tag "project-editor/nav.js" %>
 	
-	<%#= javascript_include_tag "project-editor/project-new.js" %>
-	<%= javascript_include_tag "project-editor/refactor.js" %>
 	<%= javascript_include_tag "project-editor/modules.js" %>
 	<%= javascript_include_tag "project-editor/button-bar.js" %>
 	<%= javascript_include_tag "project-editor/images.js" %>
 	<%= javascript_include_tag "project-editor/mod-photos.js" %>
-	<!-- put new javascript files here -->
+	<%= javascript_include_tag "project-editor/forms.js" %>
+	<%= javascript_include_tag "project-editor/project-new.js" %>
 <% else %>
+	<!-- JS for read pages -->
 	<%= javascript_include_tag "isotope/dist/isotope.pkgd.js" %>
 	<%= javascript_include_tag "isotope-packery/packery-mode.pkgd.js" %>
 	<%= javascript_include_tag "juxtapose/build/js/juxtapose.js" %>

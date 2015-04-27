@@ -1,68 +1,3 @@
-$(document).ready(function(){
-  // initiate form fields
-  var desc = new Form();
-      desc.descriptionField();
-
-  var title = new Form();
-      desc.titleField();
-
-  var loc = new Form();
-      loc.locationField(); 
-  var lat = new Form();
-      lat.latField(); 
-  var lon = new Form();
-      lon.lonField();    
-
-  // initiate button bar
-  var bb = new ButtonBar();
-      bb.initBar();
-
-  // initiate photo uploader
-  var p = new ImageUploader();
-      p.init();
-
-  //initiate draggable for all the saved images already loaded
-  $.each($('.preview').find('img'), function(i, thumb){
-    var t = new Image({
-      id: $(thumb).data('img-id'),
-      is_aerial: $(thumb).data('img_type') == 'aerial',
-      is_normal: $(thumb).data('img_type') == 'normal',
-    });
-    t.initSaved();
-  });
-
-  $('#navbar-create').stickyNavbar({
-    animDuration: 250,              // Duration of jQuery animation
-    startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
-    easing: "linear",               // Easing type if jqueryEffects = true, use jQuery Easing plugin to extend easing types - gsgd.co.uk/sandbox/jquery/easing
-    animateCSS: true,               // AnimateCSS effect on/off
-    animateCSSRepeat: false,        // Repeat animation everytime user scrolls
-    cssAnimation: "fadeInDown",     // AnimateCSS class that will be added to selector
-    jqueryEffects: false,           // jQuery animation on/off
-    jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
-    mobile: false,                  // If false nav will not stick under 480px width of window
-    mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
-    stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
-    unstickyModeClass: "unsticky",   // Class that will be applied to 'this' in non-sticky mode
-    zIndex: 10
-  });
-  $('#navbar-photo-manager').stickyNavbar({
-    animDuration: 250,              // Duration of jQuery animation
-    startAt: 0,                     // Stick the menu at XXXpx from the top of the this() (nav container)
-    easing: "linear",               // Easing type if jqueryEffects = true, use jQuery Easing plugin to extend easing types - gsgd.co.uk/sandbox/jquery/easing
-    animateCSS: true,               // AnimateCSS effect on/off
-    animateCSSRepeat: false,        // Repeat animation everytime user scrolls
-    cssAnimation: "fadeInDown",     // AnimateCSS class that will be added to selector
-    jqueryEffects: false,           // jQuery animation on/off
-    jqueryAnim: "slideDown",        // jQuery animation type: fadeIn, show or slideDown
-    mobile: false,                  // If false nav will not stick under 480px width of window
-    mobileWidth: 480,               // The viewport width (without scrollbar) under which stickyNavbar will not be applied (due usability on mobile devices)
-    stickyModeClass: "sticky",      // Class that will be applied to 'this' in sticky mode
-    unstickyModeClass: "unsticky",   // Class that will be applied to 'this' in non-sticky mode
-    zIndex: 10
-  });
-});
-
 var Form = function(options){
   this.options = $.extend({
     modAttrId: null
@@ -71,7 +6,7 @@ var Form = function(options){
   // what it needs to know to save with modules
   this.modEl = $('#'+ this.options.modAttrId);
   this.modId = this.modEl.data('mod-id');
-  this.modId = this.modEl.data('mod-type');
+  this.modType = this.modEl.data('mod-type');
 
   // what it needs to know for itself
   this.mapId = $('#project-creation-2').data('data-map-id');
@@ -132,11 +67,11 @@ Form.prototype = {
   },
   // functions for creating the description field
   descriptionField: function(){
+    autosize($('#project-description'));
     var self = this;
     $('#project-description').on({
       keyup: function(e){
         self.eTarget = $(e.target);
-        autosize(self.eTarget)
         self.changeCounter(e);
       },
       focusout: function(e){
@@ -270,12 +205,50 @@ Form.prototype = {
   tagField: function(){
 
   },
+  textField: function(){
+    autosize(this.modEl.find('.text-module-body'));
+    var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
+    var data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType
+      }
+    
+    // set params
+    var modText;
+    if(this.modType == 'text'){ 
+      modText = 'bloc_text' 
+    }
+    else if(this.modType == 'split'){
+      modText == 'split_text'
+    }
+    
+    // Update mod
+    this.modEl.find('.text-module-body').on({
+      focusout: function(e){
+        self.eTarget = $(e.target);
+        data[modText] = self.eTarget.val();
+        console.log(data)
+        $.ajax({
+          url: url,
+          data: data,
+          cache: false,
+          type: 'put',
+          success: function(data){
+            console.log('Success: text field was updated');
+          },
+          error: function(){
+            console.log('Error: text field was not updated');
+          }
+        }); // end ajax
+      }
+    });
+  },
   titleField: function(){
+    autosize($('#project-name'));
     var self = this;
     $('#project-name').on({
       keyup: function(e){
         self.eTarget = $(e.target);
-        autosize(self.eTarget)
         self.changeCounter(e);
       },
       focusout: function(e){

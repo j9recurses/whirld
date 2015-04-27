@@ -47,7 +47,7 @@ ModuleHtml.prototype = {
     return html;
   },
   htmlHeader: function(){
-    var html = "<div class='row group wrapper'><div class='six columns'><i class='fa fa-" + this.icon + "'></i><span class='cursor-def'> " + this.options.modType + "</span></div><div class='six columns h-righted'><i class='fa fa-remove a'></i><i class='fa fa-save'></i></div></div>";
+    var html = "<div class='row group wrapper'><div class='twelve columns'><i class='fa fa-" + this.icon + "'></i><span class='cursor-def'> " + this.options.modType + "</span></div><div class='twelve columns h-righted'><i class='fa fa-remove a'></i></div></div>";
     return html
   },
   htmlTaginput: function(){
@@ -89,8 +89,7 @@ var Module = function(options){
     modType: 'grid',
     modClassName: 'module',
     originBarId: 'end-bar',
-    removeButtonClassName: 'fa-remove',
-    saveButtonClassName: 'fa-save'
+    removeButtonClassName: 'fa-remove'
   }, options);
 
 
@@ -105,7 +104,6 @@ var Module = function(options){
   this.photoCount = 0;
   this.photoLimit = null;
   this.removeButton = null;
-  this.saveButton = null;
   this.taglist = null;
   this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
 
@@ -160,7 +158,6 @@ Module.prototype = {
   setParts: function(){
     this.modEl.data('mod-type', this.options.modType);
     this.removeButton = this.modEl.find('.' + this.options.removeButtonClassName);
-    this.saveButton = this.modEl.find('.' + this.options.saveButtonClassName);
   },
   setDrop: function(){
     var self = this;
@@ -227,11 +224,6 @@ Module.prototype = {
         self.modEl.remove();
       }
     });
-    this.saveButton.on({
-      click: function(){
-        console.log('save module')
-      }
-    });
   },
   create: function(){
     var self = this;
@@ -268,6 +260,11 @@ Module.prototype = {
         // initiate the form fields
         var tf = new Form({ modAttrId: self.modEl.attr('id') })
             tf.modTagField();
+
+        if(self.options.modType == 'split' || self.options.modType == 'text'){
+          txtField = new Form({ modAttrId: self.modEl.attr('id') });
+          txtField.textField();
+        }
 
       },
       error: function(){

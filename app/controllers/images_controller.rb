@@ -1,3 +1,4 @@
+
 require 'open-uri'
 class ImagesController < ApplicationController
   # avoid raising exceptions for common errors (e.g. file not found)
@@ -14,7 +15,7 @@ class ImagesController < ApplicationController
     @map = Map.find params[:id]
     @warpable = Warpable.new
     respond_to do |format|
-     #format.html { render :template => 'legacy/new', :layout => false } 
+     #format.html { render :template => 'legacy/new', :layout => false }
      format.json { render :json => @warpable }
     end
   end

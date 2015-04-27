@@ -5,7 +5,6 @@ $(document).ready(function(){
 
   var title = new Form();
       desc.titleField();
-
   var loc = new Form();
       loc.locationField(); 
   var lat = new Form();

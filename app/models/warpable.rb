@@ -1,6 +1,6 @@
 class Warpable < ActiveRecord::Base
- 
-  attr_accessible :image
+
+  attr_accessible :image, :photo
   attr_accessor :src, :srcmedium # for json generation
 
   # Paperclip; config and production/development specific configs
@@ -10,6 +10,7 @@ class Warpable < ActiveRecord::Base
       :medium=> "500x375",
       :small=> "240x180",
       :thumb =>   "100x100>" }
+
 
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
@@ -35,12 +36,12 @@ class Warpable < ActiveRecord::Base
   def fup_error_json
    {"name" => read_attribute(:image_filename),
     "size" => read_attribute(:image_size),
-    "error" => self.errors["base"]}                      
+    "error" => self.errors["base"]}
   end
 
   after_save :save_dimensions
 
-  # this runs each time warpable is moved/distorted, 
+  # this runs each time warpable is moved/distorted,
   # to calculate resolution
   def save_dimensions
     if Rails.env.production?
@@ -85,7 +86,7 @@ class Warpable < ActiveRecord::Base
       end
       scale = 20037508.34
       # inefficient but workable, we don't use this that often:
- 
+
           nodey = Cartagen.spherical_mercator_lat_to_y(node.lat,scale)
           nodex = Cartagen.spherical_mercator_lon_to_x(node.lon,scale)
           lasty = Cartagen.spherical_mercator_lat_to_y(last.lat,scale)
@@ -97,7 +98,7 @@ class Warpable < ActiveRecord::Base
     (area/2).abs
   end
 
-  # crude measure based on image width, as resolution can vary 
+  # crude measure based on image width, as resolution can vary
   # across image if it's not flat on the earth
   def get_cm_per_pixel
     unless self.width.nil? || self.nodes == ''
@@ -147,11 +148,11 @@ class Warpable < ActiveRecord::Base
     self.uploaded_data = io
   end
 
-  # pixels per meter = pxperm 
+  # pixels per meter = pxperm
   def generate_perspectival_distort(pxperm,path)
     require 'net/http'
-    
-    # everything in -working/ can be deleted; 
+
+    # everything in -working/ can be deleted;
     # this is just so we can use the files locally outside of s3
     working_directory = self.working_directory(path)
     Dir.mkdir(working_directory) unless (File.exists?(working_directory) && File.directory?(working_directory))
@@ -184,8 +185,8 @@ class Warpable < ActiveRecord::Base
     end
 
     # puts northmost.to_s+','+southmost.to_s+','+westmost.to_s+','+eastmost.to_s
-    
-    scale = 20037508.34    
+
+    scale = 20037508.34
     y1 = pxperm*Cartagen.spherical_mercator_lat_to_y(northmost,scale)
     x1 = pxperm*Cartagen.spherical_mercator_lon_to_x(westmost,scale)
     y2 = pxperm*Cartagen.spherical_mercator_lat_to_y(southmost,scale)
@@ -210,8 +211,8 @@ class Warpable < ActiveRecord::Base
     maskpoints = ""
     coordinates = ""
     first = true
- 
-#EXIF orientation values: 
+
+#EXIF orientation values:
 #Value  0th Row  0th Column
 #1  top  left side
 #2  top  right side
@@ -221,8 +222,8 @@ class Warpable < ActiveRecord::Base
 #6  right side  top
 #7  right side  bottom
 #8  left side  bottom
-  
-  rotation = (`identify -format %[exif:Orientation] #{local_location}`).to_i  
+
+  rotation = (`identify -format %[exif:Orientation] #{local_location}`).to_i
   #stdin, stdout, stderr = Open3.popen3('identify -format %[exif:Orientation] #{local_location}')
   #rotation = stdout.readlines.first.to_s.to_i
   #puts stderr.readlines
@@ -248,7 +249,7 @@ class Warpable < ActiveRecord::Base
       ny1 = corner[1]
       nx2 = -x1+(pxperm*Cartagen.spherical_mercator_lon_to_x(node.lon,scale))
       ny2 = y1-(pxperm*Cartagen.spherical_mercator_lat_to_y(node.lat,scale))
- 
+
       points = points + '  ' unless first
       maskpoints = maskpoints + ' ' unless first
       points = points + nx1.to_s + ',' + ny1.to_s + ' ' + nx2.to_i.to_s + ',' + ny2.to_i.to_s
@@ -256,7 +257,7 @@ class Warpable < ActiveRecord::Base
       first = false
       # we need to find an origin; find northwestern-most point
       coordinates = coordinates+' -gcp '+nx2.to_s+', '+ny2.to_s+', '+node.lon.to_s + ', ' + node.lat.to_s
-      
+
       # identify largest dimension to set canvas size for ImageMagick:
       maxdimension = nx1.to_i if maxdimension < nx1.to_i
       maxdimension = ny1.to_i if maxdimension < ny1.to_i
@@ -275,7 +276,7 @@ class Warpable < ActiveRecord::Base
 
   # http://www.imagemagick.org/discourse-server/viewtopic.php?f=1&t=11319
   # http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=8764
-  # read about equalization 
+  # read about equalization
   # -equalize
   # -contrast-stretch 0
 
@@ -320,7 +321,7 @@ class Warpable < ActiveRecord::Base
     gdal_translate = "gdal_translate -of GTiff -a_srs EPSG:4326 "+coordinates+'  -co "TILED=NO" '+masked_local_location+' '+geotiff_location
     puts gdal_translate
   system(Gdal.ulimit+gdal_translate)
- 
+
     #gdalwarp = 'gdalwarp -srcnodata "255" -dstnodata 0 -cblend 30 -of GTiff -t_srs EPSG:4326 '+geotiff_location+' '+warped_geotiff_location
     gdalwarp = 'gdalwarp -of GTiff -t_srs EPSG:4326 '+geotiff_location+' '+warped_geotiff_location
     puts gdalwarp
@@ -352,7 +353,7 @@ class Warpable < ActiveRecord::Base
 
   private
 
-  # adjust filename behavior of Paperclip after migrating from attachment_fu 
+  # adjust filename behavior of Paperclip after migrating from attachment_fu
   Paperclip.interpolates :custom_filename do |attachment, style|
     if style == :original
       custom_filename = basename(attachment,style) # generate hash path here

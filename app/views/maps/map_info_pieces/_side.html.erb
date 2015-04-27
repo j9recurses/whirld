@@ -10,12 +10,11 @@
 </nav>
 
 <section id='photos-uploaded' class='photo-list first-section scrollable eight hidden'>
-
 	<article id='photo-upload' class='h-centered'>
 		<div class='img-wrapper photo-upload-wrapper v-centered'>
 				<i class='fa fa-plus-circle h1-size'></i>
 		</div>
-		<%= form_for [@user_gallery, @photo], :remote => true do %>
+		<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
 			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
 	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 		<% end %>
@@ -24,7 +23,6 @@
 </section>
 
 <section id='photos-saved' class='photo-list first-section scrollable eight'>
-
 	<% @user_gallery.photos.each do |photo| %>
 		<% if photo.is_aerial %>
 			<% type = 'aerial' %>

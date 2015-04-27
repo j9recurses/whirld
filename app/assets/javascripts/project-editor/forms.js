@@ -150,7 +150,8 @@ Form.prototype = {
   tagAppend: function(e){
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
-    if(e.which == 188 || e.which == 13) {
+    console.log(e.which)
+    if(e.which == 188 || e.which == 13 || e.which == 1) {
       if(tagContainer.children('.project-tag').length == 0) {
         tagContainer.append(tag);
         this.eTarget.val('');
@@ -184,9 +185,29 @@ Form.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: tags were created');
+        console.log(data)
       },
       error: function(){
         console.log('Error: tags were not created');
+      }
+    }); // end ajax
+  },
+  tagDelete: function(){
+    var data = {
+      mod_gallery: this.modId,
+      mod_type: this.modType,
+      taglist: this.tagList()
+    }
+    $.ajax({
+      url: '/photo_mods/delete_taggings',
+      data: data,
+      cache: false,
+      type: 'post',
+      success: function(data){
+        console.log('Success: tags were deleted');
+      },
+      error: function(){
+        console.log('Error: tags were not deleted');
       }
     }); // end ajax
   },

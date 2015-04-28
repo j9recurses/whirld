@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<%=raw csrf_meta_tags %>
-	<title>Whirld: Search %></title>
+	<title>Whirld: Search</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<%= render :partial => 'layouts/css_all' %>
@@ -18,11 +18,10 @@
 
 <%= render :partial => 'layouts/js_all' %>
 
+<!-- Temporary data link -->
+ <script src="javascripts/test_data.geojson" type="text/javascript"></script>
 
-<%= javascript_include_tag "isotope/dist/isotope.pkgd.js" %>
-<%= javascript_include_tag "isotope-packery/packery-mode.pkgd.js" %>
-<%= javascript_include_tag "juxtapose/build/js/juxtapose.js" %>
-<%= javascript_include_tag "project-show.js" %>
+<%= javascript_include_tag "project-search.js" %>
 
 </body>
 </html>

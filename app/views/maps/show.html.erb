@@ -1,23 +1,15 @@
 <div id='project-show'>
-	<section id='project-header' class='slide row group'>
-		<div class='project-info-wrapper ten columns column-top column-first'>
+	<section id='project-header' class='first-slide slide row group'>
+
+		<div class='header-wrapper ten columns column-top column-first'>
 			<div class='row group'>
 				<h1 class='project-name twenty-four columns bold caps'><%=@map.name%></h1>
 			</div> <!-- end row group -->
 
-			<div class='row group push-down'>
-				<h2 class='user-meta five columns h5-size bold'>
-
-					<!-- NEED: user profile path-->
-					<a href='' class=''><%=@user.login%></a>
-				</h2>
-
-				<h2 class='sixteen offset-two columns h5-size bold'><%=@map.location%></h2>
-
-			</div> <!-- end row group -->
+			<%=render :partial => 'maps/read_pieces/project_meta' %>
 
 			<div class='row group pos-rel'>
-				<%= render :partial => "maps/show_pieces/project_taglist" %>
+				<%= render :partial => "maps/read_pieces/project_taglist" %>
 				<p id='project-description' class='pos-abs'><%=@map.description%></p>
 
 			</div> <!-- end row group -->
@@ -51,10 +43,10 @@
 			</div>
 		</div>
 	</section>
-	<%= render :partial => "maps/show_pieces/module_grid"%>
-	<%= render :partial => "maps/show_pieces/module_text"%>
-	<%= render :partial => "maps/show_pieces/module_split"%>
-	<%= render :partial => "maps/show_pieces/module_comparison"%>
+	<%= render :partial => "maps/read_pieces/module_grid"%>
+	<%= render :partial => "maps/read_pieces/module_text"%>
+	<%= render :partial => "maps/read_pieces/module_split"%>
+	<%= render :partial => "maps/read_pieces/module_comparison"%>
 <!-- All the MODULE stuff is in here! -->
 
 <%# @gallery_mod_items.each do |k,v| %>

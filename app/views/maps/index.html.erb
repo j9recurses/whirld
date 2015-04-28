@@ -1,4 +1,25 @@
-<br>
-<br>
-<br>
-<h1>hello</h1>
+<div id='project-search'>
+	<section id='search-results-list' class='first-slide slide row group'>
+
+		<div id='search-results' class='twelve columns column-top'>
+			
+			<div id='search-summary' class='row group h-centered header-wrapper'>
+				<h1 class='search-results-wrapper h5-size'>1,333 <span class='search-highlight'>projects</span> tagged <span class='search-highlight'>tragic</span> near <span class='search-highlight'>Bay Area, CA'</span></h1>
+			</div>
+
+			<div class='search-card row group search-results-wrapper'>
+				<h1 class='h2-size'>
+					<a href='/'>The Day the Drone Died</a>
+				</h1>
+				<%=render :partial => 'maps/read_pieces/project_meta' %>
+				<%= image_tag("test/grid-09.png") %>
+			</div>
+
+
+		</div> 
+
+		<div id='project-map-wrapper' class='twelve columns column-top pull-right'>
+			<div id='search-map-pane'></div>
+		</div>
+	</section>
+</div>

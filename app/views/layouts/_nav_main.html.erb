@@ -1,12 +1,12 @@
-<nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav <%=className%>'>
-  <div class='row group wrapper'>
-    <h1 id='main-logo' class='logo four columns'>
+<nav id='navbar-main' class='navbar-main navbar twenty-four sticky-nav <%=className%>'>
+  <div class='row group'>
+    <h1 id='main-logo' class='logo three offset-one columns'>
       <a href='/'>
         <i class='fa fa-plane'></i>
         Whirld
       </a>
     </h1>
-    <a id='about' href='about/' class='three columns block menu-item h-centered h4-size'>About</a>
+    <a id='about' href='about/' class='three columns block menu-item h-centered h4-size offset-two'>About</a>
     <%= link_to('Create', maps_new_path , :class => 'three columns block menu-item h-centered h4-size', :id => 'create') %>
 
     <% if user_signed_in? %>

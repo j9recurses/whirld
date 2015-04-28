@@ -1,6 +1,7 @@
 $(document).ready(function(){
   if($('#project-creation-1').length > 0){
-
+    var tf = new Form();
+        tf.projectTagField();
   }
   if($('#project-creation-2').length > 0){
     var pe = new ProjectEditor();

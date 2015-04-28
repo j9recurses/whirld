@@ -1,5 +1,4 @@
 class PhotosController < ApplicationController
-  decorates_assigned :photo
   before_filter :the_gallery
 
   def index

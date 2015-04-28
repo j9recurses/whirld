@@ -85,8 +85,6 @@ class MapsController < ApplicationController
     @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
     @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
     puts @comps.inspect
-    #@gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
-    #@mappresenter = MapPresenter.new(@map)
     @map.zoom ||= 12
     @embed = true
     @user = @map.user

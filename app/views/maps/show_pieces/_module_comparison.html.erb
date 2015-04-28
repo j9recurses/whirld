@@ -1,9 +1,13 @@
 <!-- NEED Module ID -->
-<section id='module-comparison-1' class='slide module module-comparison'>
+<section id='module-comparison-<%=comp.id%>' class='slide module module-comparison'>
 	<div class='row group'>
 		<div class='juxtapose'>
-			<%= image_tag("test/comparison-02.png", :class => '') %>
-			<%= image_tag("test/comparison-01.png", :class => '') %>
+		  <% unless comp.photos.blank? %>
+      <% comp.photos.each do |photo| %>
+      <% photo_d = PhotoDecorator.decorate(photo[0]) %>
+          <%=image_tag(photo_d.img_href, :class => '') %>
+      <%end%>
+     <%end%>
 		</div>
 	</div>
 </section>

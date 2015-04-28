@@ -296,10 +296,6 @@ Form.prototype = {
             data.push(obj);
           });
 
-          console.log(data);
-
-// mod_order = [ [12(modgallery_id), "grid"], [14, "split"], [14, "text"]
-
           $.ajax({
             url: '/maps/map_info_finish/'+ map_id,// URL HERE,
             data: JSON.stringify(data),
@@ -318,60 +314,83 @@ Form.prototype = {
   },
 
   // functions for photo manager controls
+  isEmpty: function(trigger, type){
+    return $('#photos-'+trigger).find('.' + type).length == 0;
+  },
+  setDisabled: function(type){
+    $('#' + type).prop('checked', false);
+    $('#' + type).prop('disabled', true);
+  },
+  setEnabled: function(type){
+    $('#' + type).prop('disabled', false);
+  },
+  setAbility: function(trigger){
+    var self = this;
+    $.each([ 'aerial', 'normal' ], function(i, type){
+      if(self.isEmpty(trigger, type)){
+        self.setDisabled(type);
+      }
+      else{
+        self.setEnabled(type);
+      }
+    });
+  }, 
+  setChecked: function(option){
+    var self = this;
+    if(self.isEmpty(option, 'aerial') == false){
+      $('#aerial').prop('checked', true);
+      self.showPhotos(option, 'aerial');
+    }
+    else if(self.isEmpty(option, 'normal') == false){
+      $('#normal').prop('checked', true);
+      self.showPhotos(option, 'normal');
+    }
+  },
+  hidePhotos: function(trigger, type){
+    $('#photos-'+trigger).find('.'+type).addClass('invisible').addClass('hidden');
+  },
+  showPhotos: function(trigger, type){
+    $('#photos-'+trigger).find('.'+type).removeClass('hidden').removeClass('invisible');
+  },
   photoSelectFields: function(){
+    var self = this;
     var photoContainers = { uploaded: $('#photos-uploaded'), saved: $('#photos-saved') };
-    var photoTypes = { aerial: $('.preview.aerial'), normal: $('preview.normal') };
 
+    // disable uploaded tabs
     $('#aerial').prop('disabled', true);
     $('#normal').prop('disabled', true);
 
+    // when the drop down changes
     $('#photo-state').on({
       change: function(){
+        // toggle the whole containers
         $.each(photoContainers, function(option, container){
           container.toggleClass('hidden');
           container.toggleClass('invisible');
         }); // end each
-        if($('#photo-state').val() == 'uploaded'){
-          if( $('#photos-uploaded').find('#aerial').length > 0){
-            $('#aerial').prop('checked', 'checked');
-            $('#photos-uploaded').find('.aerial').removeClass('hidden');
-          }
-          else{
-            if($('#photos-uploaded').find('.normal').length > 0){
-              $('#normal').prop('checked', 'checked');
-              $('#photos-uploaded').find('.normal').removeClass('hidden');
-            }
-            else{
-              $('#aerial').prop('checked', false);
-              $('#normal').prop('checked', false);
-            }
-          }
-        } // end if uploaded
-        else if($('#photo-state').val() == 'saved'){
-          if( $('#photos-saved').find('.aerial').length > 0){
-              $('#aerial').prop('disabled', false);
-              $('#aerial').prop('checked', 'checked');
-              $('#photos-saved').find('.aerial').removeClass('hidden');
-          }
-          else{
-            if($('#photos-saved').find('.normal').length > 0){
-              $('#normal').prop('checked', 'checked');
-              $('#photos-saved').find('.normal').removeClass('hidden');
-            }
-            else{
-              $('#normal').prop('disabled', true).addClass('cursor-def');
-            }
-          }
-        } // end else if saved
-      }
-    });
-
+        // determine whether aerial and normal should be clicked on or not
+        var option = $('#photo-state option:selected').val()
+        self.setAbility(option);
+        self.setChecked(option);
+      } // end change
+    }); 
+    // toggle aerial or normal
     $('#photo-types').on({
       change: function(){
-        $.each(photoTypes, function(type, photos){
-          photos.toggleClass('hidden');
-          photos.toggleClass('invisible');
+        var trigger = $('#photo-state option:selected').val();
+
+        // show the photos of the selected
+        var type = $('#photo-types input:checked').val();
+        self.showPhotos(trigger, type);
+
+        // hide the photos of the other
+        var other;
+        $.each($('#photo-types input'), function(i, el){
+          if($(el).val() != type){
+            other = $(el).val();
+          }
         });
+        self.hidePhotos(trigger, other);
       }
     })
   }

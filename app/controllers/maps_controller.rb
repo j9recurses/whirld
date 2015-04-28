@@ -9,7 +9,7 @@ class MapsController < ApplicationController
     case action_name
     when "new", "create", "map_info"
       "layout_create"
-    when "index, show"
+    when "index", "show"
       "layout_read"
     when "search"
       "layout_search"

@@ -76,7 +76,7 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable" + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
+    var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
     if(this.is_normal){
       el.addClass('hidden');

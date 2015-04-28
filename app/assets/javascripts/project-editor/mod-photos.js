@@ -101,7 +101,7 @@ ModPhoto.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: photo is associated')
-
+        console.log('This is the ID that should be changing: ' + data.id)
         // Set parts, data, initiate events
         self.initModPhoto();
 

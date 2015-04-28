@@ -25,6 +25,8 @@ ProjectEditor.prototype = {
         lat.latField(); 
     var lon = new Form();
         lon.lonField();    
+    var ptf = new Form();
+        ptf.projectTagField();
 
     var photosel = new Form();
         photosel.photoSelectFields();

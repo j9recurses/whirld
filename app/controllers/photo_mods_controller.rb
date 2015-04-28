@@ -30,7 +30,7 @@ class PhotoModsController < ApplicationController
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
     respond_to do |format|
       if @user_gallery_grid.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: @user_gallery_grid.errors, status: :unprocessable_entity }
       end
@@ -64,9 +64,9 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_comparison_delete
     @user_gallery_comparison = UserGalleryComparison.find(params[:mod_gallery])
-     respond_to do |format|
+    respond_to do |format|
       if @user_gallery_comparison.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json:  @user_gallery_comparison.errors, status: :unprocessable_entity }
       end
@@ -101,7 +101,7 @@ class PhotoModsController < ApplicationController
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
     respond_to do |format|
       if  @user_gallery_split.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: @user_gallery_split.errors, status: :unprocessable_entity }
       end
@@ -138,7 +138,7 @@ class PhotoModsController < ApplicationController
     @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
     respond_to do |format|
       if @user_gallery_bloc_txt.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: @user_gallery_bloc_txt.errors, status: :unprocessable_entity }
       end
@@ -181,7 +181,7 @@ class PhotoModsController < ApplicationController
     @photo_mod = PhotoMod.find(params[:id])
     respond_to do |format|
       if @photo_mod.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: @photo_mod.errors, status: :unprocessable_entity }
       end
@@ -193,7 +193,7 @@ class PhotoModsController < ApplicationController
     @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
     puts @item.inspect
     respond_to do |format|
-        format.json { render json:@item}
+      format.json { render json:@item}
     end
   end
 
@@ -201,7 +201,7 @@ class PhotoModsController < ApplicationController
     @tag_item = Tag.find(params[:tag_id])
     respond_to do |format|
       if @tag_item.destroy
-          format.json { head :no_content, status: :ok }
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: @tag_item.errors, status: :unprocessable_entity }
       end

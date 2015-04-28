@@ -116,7 +116,7 @@ Form.prototype = {
       }
     });
   },
-  
+
   // functions for creating tag fields
   tagText: function(){
     var s = this.eTarget.val().toLowerCase();
@@ -131,26 +131,24 @@ Form.prototype = {
     var tag = $(tagHTML);
     var tagID = 'tag-' + t;
         tag.attr('id', tagID);
-        tag.on('click', function() { 
-          $(this).remove(); 
-          self.tagSave();
+        tag.on('click', function() {
+          $(this).remove();
+          self.tagSave(null, self.tagList());
         });
     return tag;
   },
   tagList: function(){
     var taglist = []
      $.each(this.modEl.find('.project-tag'), function(i, tag){
-      var tagval =  $(tag).text()
+      var tagval =  $(tag).text().split('#')[1];
       taglist.push(tagval);
     });
-    var taglist_str = taglist.join(",")
-    console.log(taglist.length)
+    var taglist_str = taglist.join(",");
     return taglist_str;
   },
   tagAppend: function(e){
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
-    console.log(e.which)
     if(e.which == 188 || e.which == 13 || e.which == 1) {
       if(tagContainer.children('.project-tag').length == 0) {
         tagContainer.append(tag);
@@ -172,12 +170,15 @@ Form.prototype = {
       }
     }
   },
-  tagSave: function(){
+  tagSave: function(map_id, taglist){
+    console.log(map_id)
     var data = {
       mod_gallery: this.modId,
       mod_type: this.modType,
-      taglist: this.tagList()
+      taglist: taglist,
     }
+    if(map_id){ data['map_id'] = map_id }
+
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -192,25 +193,6 @@ Form.prototype = {
       }
     }); // end ajax
   },
-  tagDelete: function(){
-    var data = {
-      mod_gallery: this.modId,
-      mod_type: this.modType,
-      taglist: this.tagList()
-    }
-    $.ajax({
-      url: '/photo_mods/delete_taggings',
-      data: data,
-      cache: false,
-      type: 'post',
-      success: function(data){
-        console.log('Success: tags were deleted');
-      },
-      error: function(){
-        console.log('Error: tags were not deleted');
-      }
-    }); // end ajax
-  },
   modTagField: function(){
     var self = this;
     this.modEl.find('.tag-input').on({
@@ -219,12 +201,31 @@ Form.prototype = {
         self.tagAppend(e);
       },
       focusout: function(){
-        self.tagSave();
+        self.tagSave(null, self.tagList());
       }
     })
   },
-  tagField: function(){
-
+  projectTagList: function(){
+    var project_tags = $('#project-tag_list').next().find('.project-tag');
+    var taglist = []
+     $.each(project_tags, function(i, tag){
+      var tagval =  $(tag).text().split('#')[1];
+      taglist.push(tagval);
+    });
+    var taglist_str = taglist.join(",");
+    return taglist_str;
+  },
+  projectTagField: function(){
+    var self = this;
+    $('#project-tag_list').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.tagAppend(e);
+      },
+      focusout: function(){
+        self.tagSave($('#project-creation-2').data('map-id'), self.projectTagList());
+      }
+    })
   },
 
   // functions for creating text fields
@@ -235,16 +236,16 @@ Form.prototype = {
         mod_gallery: this.modId,
         mod_type: this.modType
       }
-    
+
     // set params
     var modText;
-    if(this.modType == 'text'){ 
-      modText = 'bloc_text' 
+    if(this.modType == 'text'){
+      modText = 'bloc_text'
     }
     else if(this.modType == 'split'){
       modText == 'split_text'
     }
-    
+
     // Update mod
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
@@ -282,27 +283,22 @@ Form.prototype = {
   },
   // functions for finish button
   finishButton: function(){
+    var map_id = $('#project-creation-2').data('map-id');
     $('#project-finish').on({
         click: function(){
-          var modIds = '';
+          var data = [
+                { map_id: map_id }
+              ];
+
           $.each($('.module'), function(i, mod){
-            if($(mod).find('.photo').length > 0){
-              modIds += $(mod).data('mod-id') + ',';
-            }
-            else{ modIds = null }
+            var obj = {};
+            obj[$(mod).data('mod-id')] = $(mod).data('mod-type');
+            data.push(obj);
           });
-          console.log(modIds);
-          var map_id =  $('#project-creation-2').data('map-id');
-          console.log(map_id);
-          // DATA HERE. Probably need to change param names, but this is how you get the values
-          var data = {
-              map_id: map_id,
-              mod_order: modIds
-          }
-          console.log(data);
+
           $.ajax({
             url: '/maps/map_info_finish/'+ map_id,// URL HERE,
-            data: data,
+            data: JSON.stringify(data),
             cach: false,
             type: 'put',
             success: function(data){
@@ -318,60 +314,83 @@ Form.prototype = {
   },
 
   // functions for photo manager controls
+  isEmpty: function(trigger, type){
+    return $('#photos-'+trigger).find('.' + type).length == 0;
+  },
+  setDisabled: function(type){
+    $('#' + type).prop('checked', false);
+    $('#' + type).prop('disabled', true);
+  },
+  setEnabled: function(type){
+    $('#' + type).prop('disabled', false);
+  },
+  setAbility: function(trigger){
+    var self = this;
+    $.each([ 'aerial', 'normal' ], function(i, type){
+      if(self.isEmpty(trigger, type)){
+        self.setDisabled(type);
+      }
+      else{
+        self.setEnabled(type);
+      }
+    });
+  }, 
+  setChecked: function(option){
+    var self = this;
+    if(self.isEmpty(option, 'aerial') == false){
+      $('#aerial').prop('checked', true);
+      self.showPhotos(option, 'aerial');
+    }
+    else if(self.isEmpty(option, 'normal') == false){
+      $('#normal').prop('checked', true);
+      self.showPhotos(option, 'normal');
+    }
+  },
+  hidePhotos: function(trigger, type){
+    $('#photos-'+trigger).find('.'+type).addClass('invisible').addClass('hidden');
+  },
+  showPhotos: function(trigger, type){
+    $('#photos-'+trigger).find('.'+type).removeClass('hidden').removeClass('invisible');
+  },
   photoSelectFields: function(){
+    var self = this;
     var photoContainers = { uploaded: $('#photos-uploaded'), saved: $('#photos-saved') };
-    var photoTypes = { aerial: $('.preview.aerial'), normal: $('preview.normal') };
 
+    // disable uploaded tabs
     $('#aerial').prop('disabled', true);
     $('#normal').prop('disabled', true);
 
+    // when the drop down changes
     $('#photo-state').on({
       change: function(){
+        // toggle the whole containers
         $.each(photoContainers, function(option, container){
           container.toggleClass('hidden');
           container.toggleClass('invisible');
         }); // end each
-        if($('#photo-state').val() == 'uploaded'){
-          if( $('#photos-uploaded').find('#aerial').length > 0){
-            $('#aerial').prop('checked', 'checked');
-            $('#photos-uploaded').find('.aerial').removeClass('hidden');
-          }
-          else{
-            if($('#photos-uploaded').find('.normal').length > 0){
-              $('#normal').prop('checked', 'checked');
-              $('#photos-uploaded').find('.normal').removeClass('hidden');
-            }
-            else{
-              $('#aerial').prop('checked', false);
-              $('#normal').prop('checked', false);
-            }
-          }
-        } // end if uploaded
-        else if($('#photo-state').val() == 'saved'){
-          if( $('#photos-saved').find('.aerial').length > 0){
-              $('#aerial').prop('disabled', false);
-              $('#aerial').prop('checked', 'checked');
-              $('#photos-saved').find('.aerial').removeClass('hidden');
-          }
-          else{
-            if($('#photos-saved').find('.normal').length > 0){
-              $('#normal').prop('checked', 'checked');
-              $('#photos-saved').find('.normal').removeClass('hidden');
-            }
-            else{
-              $('#normal').prop('disabled', true).addClass('cursor-def');
-            }
-          }
-        } // end else if saved
-      }
-    });
-
+        // determine whether aerial and normal should be clicked on or not
+        var option = $('#photo-state option:selected').val()
+        self.setAbility(option);
+        self.setChecked(option);
+      } // end change
+    }); 
+    // toggle aerial or normal
     $('#photo-types').on({
       change: function(){
-        $.each(photoTypes, function(type, photos){
-          photos.toggleClass('hidden');
-          photos.toggleClass('invisible');
+        var trigger = $('#photo-state option:selected').val();
+
+        // show the photos of the selected
+        var type = $('#photo-types input:checked').val();
+        self.showPhotos(trigger, type);
+
+        // hide the photos of the other
+        var other;
+        $.each($('#photo-types input'), function(i, el){
+          if($(el).val() != type){
+            other = $(el).val();
+          }
         });
+        self.hidePhotos(trigger, other);
       }
     })
   }

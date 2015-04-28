@@ -30,20 +30,20 @@ class MapsController < ApplicationController
   end
 
   def create
-      @user = current_user
-      @map = @user.maps.new(params[:map])
-      @map.author = @user.login
-      @map.name = params[:name]
-      @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
-      gallery = UserGallery.new()
-      gallery.name = @map.slug
-      gallery.user_id = @user.id
-      if @map.save && gallery.save
-        UserGallery.update(gallery.id, map_id: @map.id)
-        redirect_to map_info_path(@map.slug)
-      else
-        render "new"
-      end
+    @user = current_user
+    @map = @user.maps.new(params[:map])
+    @map.author = @user.login
+    @map.name = params[:name]
+    @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
+    gallery = UserGallery.new()
+    gallery.name = @map.slug
+    gallery.user_id = @user.id
+    if @map.save && gallery.save
+      UserGallery.update(gallery.id, map_id: @map.id)
+      redirect_to map_info_path(@map.slug)
+    else
+      render "new"
+    end
   end
 
   def map_info
@@ -105,28 +105,29 @@ class MapsController < ApplicationController
   end
 
   def update_remote
-      puts params.inspect
-      @map = Map.find params[:id]
-      puts @map.inspect
-      #pop unwanted keys off the params hash
-      puts params.inspect
-      params.delete :id
-      params.delete :utf8
-      params.delete :commit
-      params.delete :action
-      params.delete :controller
-      params.delete :_method
-      params.delete :format
-      unless params[:name].nil?
-        params[:slug] = params[:name]
+    puts "*****"
+    puts params.inspect
+    @map = Map.find params[:id]
+    puts @map.inspect
+    #pop unwanted keys off the params hash
+    puts params.inspect
+    params.delete :id
+    params.delete :utf8
+    params.delete :commit
+    params.delete :action
+    params.delete :controller
+    params.delete :_method
+    params.delete :format
+    unless params[:name].nil?
+      params[:slug] = params[:name]
+    end
+    respond_to do |format|
+      if @map.update_attributes(params)
+        format.json { render json: params  }
+      else
+        format.json { render json: "error! something went wrong!!" }
       end
-      respond_to do |format|
-        if @map.update_attributes(params)
-          format.json { render json: params  }
-        else
-          format.json { render json: "error! something went wrong!!" }
-        end
-      end
+    end
   end
 
   # used by leaflet to fetch corner coords of each warpable

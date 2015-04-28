@@ -1,25 +1,4 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3">
-      <%= session["googletoken"] %>
-
-
-    <!-- create a new map -->
-    <% if user_signed_in? %>
-      <a href="<%= new_map_url %>">
-        <i class="fa fa-plus-circle"></i> Create a map </a>
-   <% end %>
-
-        <h1>Make maps from aerial photos</h1>
-
-
-      <div class="row map-list">
-        <% @maps.each_with_index do |map,i| %>
-        <%= render :partial => 'maps/list', :locals => {:map => map} %>
-        <% end %>
-      </div>
-      <br style="clear:both;" />
-      <%= will_paginate @maps, renderer: BootstrapPagination::Rails unless @unpaginated %>
-    </div><!-- .col-md-9 -->
-  </div><!-- .row -->
-</div>
+<br>
+<br>
+<br>
+<h1>hello</h1>

@@ -267,12 +267,12 @@ Form.prototype = {
     });
   },
   titleField: function(){
-    autosize($('#project-name'));
     var self = this;
     $('#project-name').on({
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
+        autosize($('#project-name'));
       },
       focusout: function(e){
         self.eTarget = $(e.target);

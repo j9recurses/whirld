@@ -3,7 +3,20 @@ include ApplicationHelper
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
   before_filter :authenticate_user!,  :except => [:index, :show, :images]
-  layout 'layout_map'
+  layout :resolve_layout
+
+  def resolve_layout
+    case action_name
+    when "new", "create", "map_info"
+      "layout_create"
+    when "index, show"
+      "layout_read"
+    when "search"
+      "layout_search"
+    else
+      "application"
+    end
+  end
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')
@@ -13,6 +26,7 @@ class MapsController < ApplicationController
   def new
     @map = Map.new
     @extra_js = true  # for layout differentiation
+    render :layout => 'layout_create'
   end
 
   def create
@@ -165,7 +179,7 @@ class MapsController < ApplicationController
     params[:id] ||= params[:q]
     @maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
     @title = "Search results for '#{params[:id]}'"
-    render "maps/index", :layout => "application2"
+    render "maps/index"#, :layout => "layout_read"
   end
 
   def create_tags

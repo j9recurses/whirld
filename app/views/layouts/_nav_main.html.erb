@@ -1,4 +1,4 @@
-<nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav'>
+<nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav <%=className%>'>
   <div class='row group wrapper'>
     <h1 id='main-logo' class='logo four columns'>
       <a href='/'>
@@ -6,8 +6,8 @@
         Whirld
       </a>
     </h1>
-    <a href='about/' class='three columns block menu-item h-centered h4-size'>About</a>
-    <%= link_to('Create', maps_new_path , :class => 'three columns block menu-item h-centered h4-size') %>
+    <a id='about' href='about/' class='three columns block menu-item h-centered h4-size'>About</a>
+    <%= link_to('Create', maps_new_path , :class => 'three columns block menu-item h-centered h4-size', :id => 'create') %>
 
     <% if user_signed_in? %>
       <%=link_to "Sign out", destroy_user_session_path, :method=> :delete, :class => 'block menu-item h-centered h4-size three columns pull-right'%>
@@ -16,7 +16,7 @@
     <% end %>
 
     <!-- NEED: search path -->
-    <a href='search' class='block menu-item h-centered h4-size two columns pull-right'>
+    <a id='search' href='search' class='block menu-item h-centered h4-size two columns pull-right'>
       <i class='fa fa-search'></i>
     </a>
 

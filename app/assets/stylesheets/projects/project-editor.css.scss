@@ -1,5 +1,41 @@
+/*Hide About and Create on the proejct editor page*/
+#navbar-main.map_info {
+  height: 10%;
+}
+#navbar-main.map_info #about, #navbar-main.map_info #create{
+  display: none;
+}
+
+.ui-draggable-handle{
+  z-index: 100000;
+}
+.ui-autocomplete{
+  background-color: white;
+  color: #333;
+  -webkit-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+  -moz-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+  box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
+/*  font-size: 1em;
+  list-style-type: none;*/
+  margin: 0;
+  padding: 0;
+  width: 200px;
+}
+.ui-autocomplete .ui-menu-item{
+/*  border-top: 1px solid cadetblue;
+  border-top: 1px solid cadetblue;
+  color: darkcyan;
+  cursor: default;
+  padding: 1em .5em;*/
+}
+/*.ui-autocomplete .ui-menu-item.ui-state-focus{*/
+  /*background-color: cadetblue;
+  /*color: white;*/
+/*}*/
+
 /*===== Project Creation =====*/
-#project-creation-2{
+
+#project-creation-1, #project-creation-2{
 
   background-color: #f2f2f2;
   height: 100%;
@@ -19,13 +55,19 @@
   button:focus{ outline: none; }
   button:hover { opacity: .7; }
   button i{ line-height: 0; }
-  .button-next{
-    background-color: cornflowerblue;
-    color: white;
+  .button-action {
     font-weight: bold;
     height: 3em;
     padding: 0;
     width: 100%;
+  }
+  .button-next, .button-finish{
+    background-color: cornflowerblue;
+    color: white;
+  }
+  .button-cancel{
+    background: #333;
+    color: #999;
   }
   .button-bar{ 
     height: 76px;
@@ -95,6 +137,9 @@
     border: none;
     color: rgb(243, 247, 255);
   }
+  #end-bar{
+    margin-bottom: 6em;
+  }
   #end-bar button{
     background-color: cornflowerblue;
     color: white;
@@ -115,17 +160,6 @@
     float: left;
     margin: 0 2% 1% 0;
   }
-  .has-text .input-label{
-    top: -2em;
-    -webkit-transition: all .25s ease-out;
-    -moz-transition: all .25s ease-out;
-    transition: all .25s ease-out;
-  }
-  .has-text textarea {
-    -webkit-transition: all .25s ease-out;
-    -moz-transition: all .25s ease-out;
-    transition: all .25s ease-out;
-  }
   input{
     background: none;
     border: none;
@@ -142,8 +176,7 @@
     pointer-events: none;
     position: absolute;
     text-transform: uppercase;
-    top: 0;
-    z-index: -1;
+    top: -2em;
   }
   .input-label-large{
     top: 1.5em;
@@ -165,18 +198,13 @@
     width: 100%;
   }
 
-  #navbar-create{
-    height: 10%;
-    top: -12px;
-    z-index: 9999;
-  }
   #navbar-photo-manager{ 
     background-color: #333;
     color: white;
     height: 10%;
-    padding: 6% 0  1% 0;
+    padding: 7.5% 0 1% 0;
     top: 0px;
-    z-index: 9998;
+    z-index: 99;
   }
   .photo{ position: relative; }
   .photo .img-wrapper{
@@ -186,7 +214,7 @@
   .photo-list{
     background-color: #333;
     height: 100%;
-    padding-top: 14.67%;
+    padding-top: 15.51%;
     top: 0;
     -webkit-transition: all .25s linear;
     -moz-transition: all .25s linear;
@@ -205,7 +233,7 @@
   }
   #photo-types{
     background-color: #333;
-    padding-bottom: 1em;
+    padding: .5em 0 .5em 0;
   }
   .photo-types-wrapper input[type='radio']{
     display: none;
@@ -274,9 +302,6 @@
     transition: opacity 0.5s linear;
     display: inline-block;
   }
-  #project-create-form{
-    margin-top: 3em;
-  }
   .photo-state-wrapper{
      background: #999;
      border: 1px solid #999;
@@ -292,7 +317,14 @@
       -moz-transition: all .25s linear;
       transition: all .25s linear;
   }
-  #project-form{ margin-top: 53px; }
+  #project-form-new{
+    margin-top: 0;
+    padding-top: 6%;
+  }
+  #project-form-map-info{
+    margin-top: 0;
+    padding-top: 10%;
+  }
   .project-tag.error{ color: cornflowerblue; }
   .project-tag:hover{ text-decoration: line-through; }
   .row-form{ margin-bottom: 2em; }
@@ -339,29 +371,5 @@
   }
   /*textarea.char-limited{ width: 90%; }*/
   textarea:focus{ outline: none; }
-  .ui-draggable-handle{
-    z-index: 100000;
-  }
-  .ui-autocomplete{
-    background-color: white;
-    -webkit-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
-    -moz-box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
-    box-shadow: 1px 1px 4px 1px rgba(194,194,194,1);
-    font-size: 1em;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-  }
-  .ui-autocomplete .ui-menu-item{
-    border-top: 1px solid cadetblue;
-    border-top: 1px solid cadetblue;
-    color: darkcyan;
-    cursor: default;
-    padding: 1em .5em;
-  }
-  .ui-autocomplete .ui-menu-item.ui-state-focus{
-    background-color: cadetblue;
-    color: white;
-  }
 }
+

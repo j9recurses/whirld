@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<%= render "layouts/header_map" %>
+</head>
+<body>
+<%= render "layouts/nav_main", :className=> 'read' %>
+
+<%= yield %>
+
+<!-- JS for read pages -->
+<%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
+<%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
+<%= javascript_include_tag "isotope/dist/isotope.pkgd.js" %>
+<%= javascript_include_tag "isotope-packery/packery-mode.pkgd.js" %>
+<%= javascript_include_tag "juxtapose/build/js/juxtapose.js" %>
+<%= javascript_include_tag "project-show.js" %>
+
+<%= render :partial => 'maps/mappane', :formats => [:js] %>
+</body>
+</html>

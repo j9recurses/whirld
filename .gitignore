@@ -36,6 +36,7 @@ config/amazon_s3.yml
 #config/config.yml
 #config/initializers/site_keys.rb
 Gemfile.lock
+*.db
 vendor/bundle
 app/assets/bower_components
 app/assets/node_modules

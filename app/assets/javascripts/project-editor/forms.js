@@ -251,6 +251,8 @@ Form.prototype = {
       focusout: function(e){
         self.eTarget = $(e.target);
         data[modText] = self.eTarget.val();
+        console.log(modText)
+        console.log(data[modText])
         console.log(data)
         $.ajax({
           url: url,

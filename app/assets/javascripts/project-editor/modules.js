@@ -314,7 +314,7 @@ Module.prototype = {
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_update/'  + this.id;
     var data = {mod_gallery: this.id};
     if(order){
-      data['grid_photo_order'] = order;
+      data[this.options.modType+'_photo_order'] = order;
     }
     console.log(data)
     $.ajax({

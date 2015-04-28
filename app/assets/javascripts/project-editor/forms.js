@@ -133,24 +133,22 @@ Form.prototype = {
         tag.attr('id', tagID);
         tag.on('click', function() {
           $(this).remove();
-          self.tagSave();
+          self.tagSave(null, self.tagList());
         });
     return tag;
   },
   tagList: function(){
     var taglist = []
      $.each(this.modEl.find('.project-tag'), function(i, tag){
-      var tagval =  $(tag).text()
+      var tagval =  $(tag).text().split('#')[1];
       taglist.push(tagval);
     });
-    var taglist_str = taglist.join(",")
-    console.log(taglist.length)
+    var taglist_str = taglist.join(",");
     return taglist_str;
   },
   tagAppend: function(e){
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
-    console.log(e.which)
     if(e.which == 188 || e.which == 13 || e.which == 1) {
       if(tagContainer.children('.project-tag').length == 0) {
         tagContainer.append(tag);
@@ -172,12 +170,15 @@ Form.prototype = {
       }
     }
   },
-  tagSave: function(){
+  tagSave: function(map_id, taglist){
+    console.log(map_id)
     var data = {
       mod_gallery: this.modId,
       mod_type: this.modType,
-      taglist: this.tagList()
+      taglist: taglist,
     }
+    if(map_id){ data['map_id'] = map_id }
+
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -200,36 +201,29 @@ Form.prototype = {
         self.tagAppend(e);
       },
       focusout: function(){
-        self.tagSave();
+        self.tagSave(null, self.tagList());
       }
     })
   },
+  projectTagList: function(){
+    var project_tags = $('#project-tag_list').next().find('.project-tag');
+    var taglist = []
+     $.each(project_tags, function(i, tag){
+      var tagval =  $(tag).text().split('#')[1];
+      taglist.push(tagval);
+    });
+    var taglist_str = taglist.join(",");
+    return taglist_str;
+  },
   projectTagField: function(){
     var self = this;
-    // var data = {
-    //   mod_gallery: this.modId,
-    //   mod_type: this.modType,
-    //   taglist: this.tagList()
-    // }
     $('#project-tag_list').on({
       keyup: function(e){
         self.eTarget = $(e.target);
-        $.ajax({
-          url: '/photo_mods/create_taggings',
-          data: data,
-          cache: false,
-          type: 'post',
-          success: function(data){
-            console.log('Success: tags were created');
-            console.log(data)
-          },
-          error: function(){
-            console.log('Error: tags were not created');
-          }
-        }); // end ajax
+        self.tagAppend(e);
       },
       focusout: function(){
-        console.log('Tags will save here')
+        self.tagSave($('#project-creation-2').data('map-id'), self.projectTagList());
       }
     })
   },

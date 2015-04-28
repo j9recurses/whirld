@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+  decorates_assigned :photo
   before_filter :the_gallery
 
   def index
@@ -33,13 +34,12 @@ class PhotosController < ApplicationController
     @photo = @user_gallery.photos.new(params[:photo])
     if @photo.save
       photo_class_name = @photo.class.to_s.underscore
-      @warpable = Photo.make_warpable(@photo)
       #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
       @photo = Photo.deepLearnPredict(@photo)
-      @photo[:warpable_id] = @warpable.id
-      @warpable_attr =   @warpable.fup_json
-      @photo[:warpable_url] =  @warpable.image.url(:medium)
-      @photo[:warpable_thumb_url] =  @warpable.image.url(:thumb)
+      @warpable = Photo.make_warpable(@photo)
+      @photo.warpable_id =    @warpable.id
+      @photo.warpable_url =   @warpable.image.url(:medium)
+      @photo.warpable_thumb_url =  @warpable.image.url(:thumb)
       respond_to do |format|
         format.json { render json:  @photo }
       end

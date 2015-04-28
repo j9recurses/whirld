@@ -10,7 +10,7 @@ end
 
 class Map < ActiveRecord::Base
 
- extend FriendlyId
+  extend FriendlyId
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
@@ -20,19 +20,28 @@ class Map < ActiveRecord::Base
   validates_uniqueness_of :slug
   validates_presence_of :location, :message => ' cannot be found. Try entering a latitude and longitude if this problem persists.'
   validates_format_of   :slug,
-                        :with => /^[\w-]*$/,
-                        :message => " must not include spaces and must be alphanumeric, as it'll be used in the URL of your map, like: http://mapknitter.org/maps/your-map-name. You may use dashes and underscores.",
-                        :on => :create
+    :with => /^[\w-]*$/,
+    :message => " must not include spaces and must be alphanumeric, as it'll be used in the URL of your map, like: http://mapknitter.org/maps/your-map-name. You may use dashes and underscores.",
+    :on => :create
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
   has_one :user_galleries, :dependent => :destroy
+
+
+
   attr_accessor :taglist
+  def taglist
+    @taglist
+  end
+
+  def taglist=(val)
+    @taglist = val
+  end
+
   #has_many :exports
   #has_many :comments
- # has_many :annotations
-
-
+  # has_many :annotations
 
   has_many :warpables do
     def public_filenames
@@ -170,7 +179,7 @@ class Map < ActiveRecord::Base
       end
       sum = (scales.inject {|sum, n| sum + n }) if scales
       average = sum/count if sum
-      average
+    average
     else
       0
     end
@@ -211,7 +220,7 @@ class Map < ActiveRecord::Base
     begin
       unless export = self.export
         export = Export.new({
-          :map_id => self.id
+                              :map_id => self.id
         })
       end
       export.user_id = user.id if user
@@ -294,15 +303,15 @@ class Map < ActiveRecord::Base
     warpables = self.placed_warpables
     current = 0
     warpables.each do |warpable|
-     current += 1
-     export.status = 'warping '+current.to_s+' of '+warpables.length.to_s
-     puts 'warping '+current.to_s+' of '+warpables.length.to_s
-     export.save
-     my_warpable_coords = warpable.generate_perspectival_distort(scale,self.name)
-     puts '- '+my_warpable_coords.to_s
-     warpable_coords << my_warpable_coords
-     lowest_x = my_warpable_coords.first if (my_warpable_coords.first < lowest_x || lowest_x == 0)
-     lowest_y = my_warpable_coords.last if (my_warpable_coords.last < lowest_y || lowest_y == 0)
+      current += 1
+      export.status = 'warping '+current.to_s+' of '+warpables.length.to_s
+      puts 'warping '+current.to_s+' of '+warpables.length.to_s
+      export.save
+      my_warpable_coords = warpable.generate_perspectival_distort(scale,self.name)
+      puts '- '+my_warpable_coords.to_s
+      warpable_coords << my_warpable_coords
+      lowest_x = my_warpable_coords.first if (my_warpable_coords.first < lowest_x || lowest_x == 0)
+      lowest_y = my_warpable_coords.last if (my_warpable_coords.last < lowest_y || lowest_y == 0)
     end
     [lowest_x,lowest_y,warpable_coords]
   end
@@ -345,8 +354,8 @@ class Map < ActiveRecord::Base
   def generate_tiles
     google_api_key = APP_CONFIG["google_maps_api_key"]
     gdal2tiles = 'gdal2tiles.py -k -t "'+self.name+'" -g "'+google_api_key+'" '+Rails.root.to_s+'/public/warps/'+self.name+'/'+self.name+'-geo.tif '+Rails.root.to_s+'/public/tms/'+self.name+"/"
-#    puts gdal2tiles
-#    puts system('which gdal2tiles.py')
+    #    puts gdal2tiles
+    #    puts system('which gdal2tiles.py')
     system(Gdal.ulimit+gdal2tiles)
   end
 
@@ -374,9 +383,9 @@ class Map < ActiveRecord::Base
 
   def license_link
     if self.license == "cc-by"
-     "<a href='http://creativecommons.org/licenses/by/3.0/'>Creative Commons Attribution 3.0 Unported License</a>"
+      "<a href='http://creativecommons.org/licenses/by/3.0/'>Creative Commons Attribution 3.0 Unported License</a>"
     elsif self.license == "publicdomain"
-     "<a href='http://creativecommons.org/publicdomain/zero/1.0/'>Public Domain</a>"
+      "<a href='http://creativecommons.org/publicdomain/zero/1.0/'>Public Domain</a>"
     end
   end
 

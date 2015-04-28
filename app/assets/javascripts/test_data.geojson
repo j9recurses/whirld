@@ -1,0 +1,48 @@
+    var geojsonFeature = [
+    {
+    "type": "Feature",
+    "properties": 
+        {"title": "Drought in Pinole",
+        "cover_image": 'http://i.imgur.com/DhZ47IS.jpg'
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-122.3640359, 38.0086337]
+        }
+    }, 
+        {
+    "type": "Feature",
+    "properties": 
+        {"title": "Looking over Downtown",
+        "cover_image": 'http://i.imgur.com/SGJI3ek.jpg'
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-122.2586923, 37.8677489]
+        }
+    }, 
+    {
+        "type": "Feature",
+        "properties": 
+            {"title": "Whirld's Aventures in Briones",
+            "cover_image": 'http://i.imgur.com/XXustpW.jpg'
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-122.139664, 37.935689]
+    }
+    },
+        {
+        "type": "Feature",
+        "properties": 
+            {"title": "The Day the Music Died: Oakland Shoreline Park",
+            "cover_image": 'http://i.imgur.com/tbaVuRy.jpg'
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-122.324215, 37.805496]
+    }
+    }
+
+
+    ];

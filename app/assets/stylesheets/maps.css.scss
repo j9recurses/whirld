@@ -1,17 +1,9 @@
 /*===== Project Map =====*/
-#project-show #knitter-map-pane {
+.map-pane {
 	display: none;
 	height: 100%;
 	width: 100%;
 	z-index: 0;
-}
-
-#project-map-wrapper{
-	/*height: 100%;*/
-	margin-bottom: 0;
-	overflow: hidden;
-	position: relative;
-	z-index: -100;
 }
 
 #project-creation-1 #knitter-map-pane{

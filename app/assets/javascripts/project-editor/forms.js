@@ -116,7 +116,7 @@ Form.prototype = {
       }
     });
   },
-  
+
   // functions for creating tag fields
   tagText: function(){
     var s = this.eTarget.val().toLowerCase();
@@ -131,8 +131,8 @@ Form.prototype = {
     var tag = $(tagHTML);
     var tagID = 'tag-' + t;
         tag.attr('id', tagID);
-        tag.on('click', function() { 
-          $(this).remove(); 
+        tag.on('click', function() {
+          $(this).remove();
           self.tagSave();
         });
     return tag;
@@ -235,16 +235,16 @@ Form.prototype = {
         mod_gallery: this.modId,
         mod_type: this.modType
       }
-    
+
     // set params
     var modText;
-    if(this.modType == 'text'){ 
-      modText = 'bloc_text' 
+    if(this.modType == 'text'){
+      modText = 'bloc_text'
     }
     else if(this.modType == 'split'){
       modText == 'split_text'
     }
-    
+
     // Update mod
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
@@ -297,6 +297,7 @@ Form.prototype = {
           // DATA HERE. Probably need to change param names, but this is how you get the values
           var data = {
               map_id: map_id,
+              ///need to pass a hash of the mod type
               mod_order: modIds
           }
           console.log(data);

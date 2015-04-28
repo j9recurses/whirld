@@ -286,19 +286,24 @@ Form.prototype = {
     var map_id = $('#project-creation-2').data('map-id');
     $('#project-finish').on({
         click: function(){
-          var data = [
-                { map_id: map_id }
-              ];
+          var data_list = [];
 
           $.each($('.module'), function(i, mod){
             var obj = {};
             obj[$(mod).data('mod-id')] = $(mod).data('mod-type');
-            data.push(obj);
+            data_list.push(obj);
           });
+
+          console.log(data_list);
+          var data =  {
+            map_id:  map_id,
+            mod_order: JSON.stringify(data_list)
+          };
+// mod_order = [ [12(modgallery_id), "grid"], [14, "split"], [14, "text"]
 
           $.ajax({
             url: '/maps/map_info_finish/'+ map_id,// URL HERE,
-            data: JSON.stringify(data),
+            data: data,
             cach: false,
             type: 'put',
             success: function(data){
@@ -334,7 +339,7 @@ Form.prototype = {
         self.setEnabled(type);
       }
     });
-  }, 
+  },
   setChecked: function(option){
     var self = this;
     if(self.isEmpty(option, 'aerial') == false){
@@ -373,7 +378,7 @@ Form.prototype = {
         self.setAbility(option);
         self.setChecked(option);
       } // end change
-    }); 
+    });
     // toggle aerial or normal
     $('#photo-types').on({
       change: function(){

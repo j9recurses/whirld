@@ -51,6 +51,7 @@ class MapsController < ApplicationController
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @photo = Photo.new
+
     @extra_js = true  # for layout differentiation
     @photo_manager = true # for layout differentiation
     render "map_info"
@@ -58,13 +59,16 @@ class MapsController < ApplicationController
 
 
   def map_info_finish
+    puts "********in here*****"
+    puts params
+    puts "*********"
     @map = Map.find params[:id]
     @map[:finished] = true
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @user_gallery[:module_order] = params[:mod_order]
     if @user_gallery.save && @map.save
-      # render :js => "window.location = '/maps/#{@map[:slug]}'"
+      render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"
     end
@@ -72,9 +76,17 @@ class MapsController < ApplicationController
 
   def show
     @map = Map.find params[:id]
-    @map[:taglist] = @map.tags.pluck([:name])
-    @gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
-    @mappresenter = MapPresenter.new(@map)
+    puts @map.inspect
+    #@map[:taglist] = @map.tags.pluck([:name])
+    @map.taglist = @map.tags.pluck([:name])
+    @user_gallery = UserGallery.where(['map_id = ?', @map]).first
+    @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
+    @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
+    @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
+    @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
+    puts @comps.inspect
+    #@gallery_mod_items = UserGallery.gather_gallery_mods(@map[:id])
+    #@mappresenter = MapPresenter.new(@map)
     @map.zoom ||= 12
     @embed = true
     @user = @map.user

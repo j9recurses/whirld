@@ -5,6 +5,22 @@ class UserGalleryComparison < ActiveRecord::Base
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
 
+  attr_accessor :taglist, :photos
+  def taglist
+    @taglist
+  end
+
+  def taglist=(val)
+     @taglist = val
+  end
+
+  def photos
+    @photos
+  end
+
+  def photos=(val)
+    @photos = val
+  end
 
   def self.gather_gallery_comparisions(user_gallery_id)
     combined_gallery_comps= Array.new
@@ -13,9 +29,9 @@ class UserGalleryComparison < ActiveRecord::Base
       gallery_comp.each do |comp|
         comp_tags  = Tag.gather_tag(comp)
         photos = PhotoMod.gather_mod_photos(comp.comparison_photo_order)
-        comp = comp.attributes
-        comp[:photos] = photos
-        comp[:taglist] = comp_tags
+        #comp = comp.attributes
+        comp.photos = photos
+        comp.taglist = comp_tags
         combined_gallery_comps  << comp
       end
     end

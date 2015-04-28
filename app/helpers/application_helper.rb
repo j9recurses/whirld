@@ -40,16 +40,30 @@ module ApplicationHelper
     elsif mod_type.eql?("map")
       item = Map.find(mod_gallery_id)
     end
-    newtaglist =  taglist.split(",")
-    modtag_ids = item.tags.pluck(:id)
-    unless modtag_ids.blank?
-      Tag.destroy(modtag_ids)
-    end
-    newtaglist.each do |tag|
+    unless taglist.nil?
+      newtaglist =  taglist.split(",")
+      modtag_ids = item.tags.pluck(:id)
+      unless modtag_ids.blank?
+        Tag.destroy(modtag_ids)
+      end
+      newtaglist.each do |tag|
         item.tags.create(name: tag, user_id:current_user[:id])
+      end
+    #item[:taglist] = item.tags
+      item.taglist =item.tags
     end
-    item[:taglist] = item.tags
     return item
+  end
+
+
+  def arrange_modules(mod_order)
+    unless mod_order.blank?
+    mod_order =  mod_order.gsub("{", "[")
+    mod_order =  mod_order.gsub("}", "]")
+     mod_order =  mod_order.gsub(":", ",")
+    mod_order = eval(mod_order)
+  end
+    return mod_order
   end
 
   # polyfill for jquery-ujs in rails 2.x

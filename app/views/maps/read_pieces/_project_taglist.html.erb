@@ -1,15 +1,13 @@
-
-	<div id='project-tag-wrapper' class='twenty-four columns pos-abs'>
-
-			<span id='project-tags-more' class='item h3-size v-centered pos-abs'><i class='fa fa-angle-double-right'></i></span>
-
-			<ul class='project-tag-list inline-list font_small'>
-				<li class='project-tag-icon item h3-size'>
-					<i class='fa fa-tag'></i></li>
-
-					 <%= @mappresenter.taglist_show.inspect %>
-
-
-			</ul>
-
-	</div>
+<div id='project-tag-wrapper' class='twenty-four columns pos-abs'>
+  <span id='project-tags-more' class='item h3-size v-centered pos-abs'><i class='fa fa-angle-double-right'></i></span>
+  <ul class='project-tag-list inline-list font_small'>
+    <li class='project-tag-icon item h3-size'>
+    <i class='fa fa-tag'></i></li>
+    <% if taglist.present? %>
+    <% taglist.each do |tag| %>
+    <% tag_d = TagDecorator.decorate(tag) %>
+    <%= tag_d.tag_li.html_safe %>
+    <%end%>
+    <%end%>
+  </ul>
+</div>

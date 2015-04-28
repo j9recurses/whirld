@@ -1,36 +1,11 @@
 <ul class='inline-list font_small'>
 	<li class='project-tag-icon item h3-size'>
 		<i class='fa fa-tag'></i></li>
-
-	<!-- NEED: Tag paths and names -->
-	<li class='project-tag item push-down'>
-		<a href='/'>california</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>drought</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>bay</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>djiphantom</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>aerialimagery</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>forest</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>nowater</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>dronesareawesome</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>stresstesting</a>
-	</li>
-	<li class='project-tag item push-down'>
-		<a href='/'>thisdesign</a>
+	<% if taglist.present? %>
+	<% taglist.each do |tag| %>
+		<% tag_d = TagDecorator.decorate(tag) %>
+		<%= tag_d.tag_li.html_safe %>
+	<%end%>
+<%end%>
 	</li>
 </ul>

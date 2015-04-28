@@ -64,7 +64,7 @@ class MapsController < ApplicationController
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @user_gallery[:module_order] = params[:mod_order]
     if @user_gallery.save && @map.save
-      render :js => "window.location = '/maps/#{@map[:slug]}'"
+      # render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"
     end

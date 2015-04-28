@@ -282,27 +282,39 @@ Form.prototype = {
   },
   // functions for finish button
   finishButton: function(){
+    var map_id = $('#project-creation-2').data('map-id');
     $('#project-finish').on({
         click: function(){
-          var modIds = '';
+          var data = [
+                { map_id: map_id }
+              ];
+
           $.each($('.module'), function(i, mod){
-            if($(mod).find('.photo').length > 0){
-              modIds += $(mod).data('mod-id') + ',';
-            }
-            else{ modIds = null }
+            var obj = {};
+            obj[$(mod).data('mod-type')] = i+1;
+            data.push(obj);
           });
-          console.log(modIds);
-          var map_id =  $('#project-creation-2').data('map-id');
-          console.log(map_id);
-          // DATA HERE. Probably need to change param names, but this is how you get the values
-          var data = {
-              map_id: map_id,
-              mod_order: modIds
-          }
-          console.log(data);
+
+          // var modIds = '';
+          // $.each($('.module'), function(i, mod){
+          //   if($(mod).find('.photo').length > 0){
+          //     modIds += $(mod).data('mod-id') + ',';
+          //   }
+          //   else{ modIds = null }
+          // });
+          // console.log(modIds);
+          // var map_id =  $('#project-creation-2').data('map-id');
+          // console.log(map_id);
+          // // DATA HERE. Probably need to change param names, but this is how you get the values
+          // var data = {
+          //     map_id: map_id,
+          //     mod_order: modIds,
+          //     // mod_type: 
+          // }
+          console.log(JSON.stringify(data));
           $.ajax({
             url: '/maps/map_info_finish/'+ map_id,// URL HERE,
-            data: data,
+            data: JSON.stringify(data),
             cach: false,
             type: 'put',
             success: function(data){

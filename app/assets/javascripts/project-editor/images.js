@@ -10,6 +10,7 @@ var ImageUploader = function(options){
 
 ImageUploader.prototype = {
   init: function(){
+    var pe = new ProjectEditor();
     console.log('Initated: photo uploader')
     var self = this;
     self.el.fileupload({
@@ -33,13 +34,16 @@ ImageUploader.prototype = {
             path: data.result.url
         });
         img.initUploaded();
+        console.log(pe)
+        pe.init();
       }, // end done
       fail: function (e, data) {
         console.log(data.errorThrown)
         console.log(data.textStatus);
         console.log(data.jqXHR);
       }
-    }); // end fileupload 
+    }); // end fileupload
+
   }
 }
 
@@ -72,7 +76,7 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable invisible " + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
+    var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable" + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
     if(this.is_normal){
       el.addClass('hidden');

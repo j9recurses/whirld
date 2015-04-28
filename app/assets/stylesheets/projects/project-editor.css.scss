@@ -284,10 +284,7 @@
     margin: 0 0 2% 0;
     width: 47.2%;
   }
-  .preview:last-of-type{
-    margin-bottom: 12em;
-  }
-  .preview:nth-child(odd){
+  .aerial:nth-child(odd), .normal:nth-child(odd){
     margin-right: 2%;
   }
   .preview-chosen { opacity: .5; cursor: default; }

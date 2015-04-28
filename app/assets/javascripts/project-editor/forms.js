@@ -192,25 +192,6 @@ Form.prototype = {
       }
     }); // end ajax
   },
-  tagDelete: function(){
-    var data = {
-      mod_gallery: this.modId,
-      mod_type: this.modType,
-      taglist: this.tagList()
-    }
-    $.ajax({
-      url: '/photo_mods/delete_taggings',
-      data: data,
-      cache: false,
-      type: 'post',
-      success: function(data){
-        console.log('Success: tags were deleted');
-      },
-      error: function(){
-        console.log('Error: tags were not deleted');
-      }
-    }); // end ajax
-  },
   modTagField: function(){
     var self = this;
     this.modEl.find('.tag-input').on({
@@ -223,8 +204,34 @@ Form.prototype = {
       }
     })
   },
-  tagField: function(){
-
+  projectTagField: function(){
+    var self = this;
+    // var data = {
+    //   mod_gallery: this.modId,
+    //   mod_type: this.modType,
+    //   taglist: this.tagList()
+    // }
+    $('#project-tag_list').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        $.ajax({
+          url: '/photo_mods/create_taggings',
+          data: data,
+          cache: false,
+          type: 'post',
+          success: function(data){
+            console.log('Success: tags were created');
+            console.log(data)
+          },
+          error: function(){
+            console.log('Error: tags were not created');
+          }
+        }); // end ajax
+      },
+      focusout: function(){
+        console.log('Tags will save here')
+      }
+    })
   },
 
   // functions for creating text fields
@@ -296,7 +303,7 @@ Form.prototype = {
           });
 
           console.log(data);
-          
+
           // var modIds = '';
           // $.each($('.module'), function(i, mod){
           //   if($(mod).find('.photo').length > 0){

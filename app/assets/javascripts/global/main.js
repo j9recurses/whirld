@@ -1,5 +1,6 @@
 $(document).ready(function(){
   new SearchBar();
+  console.log('main?')
 });
 
 var SearchBar = function(){

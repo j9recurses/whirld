@@ -2,10 +2,10 @@
 a, .a {
   cursor: pointer;
   text-decoration: none;
-		-webkit-transition: all .2s ease;
-    -moz-transition: all .2s ease;
-    -o-transition: all .2s ease;
-  transition: all .2s ease;
+		-webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -o-transition: all .2s linear;
+  transition: all .2s linear;
 }
 a:hover, .a:hover {
 	opacity: .9;
@@ -19,13 +19,6 @@ a:hover, .a:hover {
 .cursor-def{ cursor: default; }
 .cursor-point{ 
   cursor: pointer;
-    -webkit-transition: all .2s ease;
-    -moz-transition: all .2s ease;
-    -o-transition: all .2s ease;
-  transition: all .2s ease;
-}
-.cursor-point:hover{ 
-  opacity: .7;
 }
 .first-section{ padding-top: 6%; }
 .h-centered{ text-align: center; }
@@ -75,6 +68,8 @@ img{
 }
 .padding-bottom { padding-bottom: .5em;}
 .padding-top{ padding-top: .5em; }
+.pos-abs{ position: absolute; }
+.pos-rel{ position: relative; }
 .pull-right{ float: right; }
 .pull-left{ float: left; }
 .push-down{ margin-bottom: .5em; }

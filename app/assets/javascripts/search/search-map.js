@@ -1,17 +1,5 @@
-$('.map-pane').css('height', $(this).height() * .9 );
-$('.map-pane').css('display', 'block');
 
-// We've gotten geoJSON search results back, and they are in the HTML with id's of projects and images.
-$(document).ready(function(){
-  var wm = new WhirldMap({
-            mappaneId: 'search-map-pane'
-          });
-      wm.setMap();
-      wm.setTestData();
-      wm.scrollHighlight();
-});
-
-var WhirldMap = function(options){
+var SearchMap = function(options){
   this.options = $.extend({
     markerSettings: {
       markerUrl: '/assets/test/blue_icon.png',
@@ -97,7 +85,7 @@ var WhirldMap = function(options){
   this.currentId = null;
 }
 
-WhirldMap.prototype = {
+SearchMap.prototype = {
   setImages: function(){
 
   },
@@ -158,7 +146,6 @@ WhirldMap.prototype = {
     //Refit Bounds
     map.fitBounds(markerLayer.getBounds(), {padding: [30, 30]});
   },
-
   setTestData: function(){
     var self = this;
     $.each(this.geojsonFeature, function(i, result){
@@ -242,7 +229,6 @@ WhirldMap.prototype = {
       scroll: function(e){
         var firstSearchCardHeight = firstSearchCard.offset().top;
         newId = self.currentId;
-console.log(firstSearchCard.offset().top)
         for (var i = cards.length - 1; i >= 0; i--) {
           var rect = cards[i].getBoundingClientRect();
           if (rect.top >= 0 && rect.top <= firstSearchCardHeight) {

@@ -16,7 +16,7 @@
 }
 .navbar {
 	background-color: #dee3e7;
-	z-index: 100;
+	z-index: 1000;
 }
 .navbar-main{
 	background-color: #dee3e7;
@@ -25,6 +25,9 @@
 	margin-bottom: 0;
 	position: fixed;
 	top:0;
+  -webkit-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
+  -moz-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
+  box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
 }
 .navbar-main a{
 	color: #323432;
@@ -50,7 +53,46 @@
   overflow: overlay;
   position: fixed;
 }
-
+#search-icon-wrapper{
+	background: #dee3e7;
+  height: 50px;
+  line-height: 0em;
+  position: absolute;
+  right: 0;
+  top: 13%;
+  width: 50px;
+  z-index: 100;
+}
+#search-input{
+  border: none;
+  font-size: .75em;
+  height: 48px;
+  padding-left: 2%;
+  position: absolute;
+  right: 0;
+  top: 13%;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+  transition: all .25s ease;
+  width: 0;
+  z-index: 99;
+}
+#search-input:focus{
+  outline-color: #B3B3B3;
+  outline-width: thin;
+}
+#search-input-wrapper{
+  height: 100%;
+}
+.search-expanded #search-input{
+	width: 88.7%;
+}
+.search-expanded #search-icon-wrapper{
+	background: #676767;
+}
+.search-expanded #search-icon-wrapper i{
+	color: white;
+}
 /*Bigger than 568px*/
 @media only screen and (min-width: 568px) {
 

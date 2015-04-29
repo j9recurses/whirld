@@ -4,11 +4,13 @@
 
     <% unless split.photos.blank? or split.photos.size > 1 %>
       <% split.photos.each do |photo| %>
-      <% photo_d = PhotoDecorator.decorate(photo[0]) %>
+      <%unless photo.nil? %>
+      <% photo_d = PhotoDecorator.decorate(photo) %>
         <div class='twelve columns img-wrapper'>
           <%=image_tag(photo_d.img_href, :class => '') %>
           </div>
       <%end%>
+     <%end%>
      <%end%>
 		<div class='eleven offset-one columns'>
 			<p><%=split_d.split_txt%></p>

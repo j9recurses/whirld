@@ -9,6 +9,9 @@
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<%= render :partial => 'layouts/css_all' %>
+
+	<%= stylesheet_link_tag 'Leaflet.awesome-markers/dist/leaflet.awesome-markers.css' %>
+
 </head>
 
 <body>
@@ -18,6 +21,7 @@
 
 <%= render :partial => 'layouts/js_all' %>
 
+<%= javascript_include_tag "Leaflet.awesome-markers/dist/leaflet.awesome-markers.min.js" %>
 <%= javascript_include_tag "project-search.js" %>
 
 </body>

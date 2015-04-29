@@ -1,20 +1,28 @@
-    var geojsonFeature = [
+var geojsonFeature = [
     {
     "type": "Feature",
     "properties": 
-        {"title": "Drought in Pinole",
-        "cover_image": 'http://i.imgur.com/DhZ47IS.jpg'
+        {
+        "id": 1,
+        "title": "Drought in Pinole",
+        "cover_image_url": 'http://i.imgur.com/DhZ47IS.jpg',
+        "cover_image_id": 5,
+        "tags": "drought, pinole, california, waterplease"
     },
     "geometry": {
         "type": "Point",
-        "coordinates": [-122.3640359, 38.0086337]
+        "coordinates": [-122.3640359, 38.0086337],
         }
     }, 
         {
     "type": "Feature",
     "properties": 
-        {"title": "Looking over Downtown",
-        "cover_image": 'http://i.imgur.com/SGJI3ek.jpg'
+        {
+        "id": 2,
+        "title": "Looking over Downtown",
+        "cover_image_url": 'http://i.imgur.com/SGJI3ek.jpg',
+        "cover_image_id": 6,
+        "tags": "san francisco, the city, the bay, bay area, hills"
     },
     "geometry": {
         "type": "Point",
@@ -24,8 +32,12 @@
     {
         "type": "Feature",
         "properties": 
-            {"title": "Whirld's Aventures in Briones",
-            "cover_image": 'http://i.imgur.com/XXustpW.jpg'
+            {
+            "id": 3,
+            "title": "Whirld's Aventures in Briones",
+            "cover_image_url": 'http://i.imgur.com/XXustpW.jpg',
+            "cover_image_id": 7,
+            "tags": "briones, california, whirld, adventures, fun"
         },
         "geometry": {
             "type": "Point",
@@ -35,14 +47,16 @@
         {
         "type": "Feature",
         "properties": 
-            {"title": "The Day the Music Died: Oakland Shoreline Park",
-            "cover_image": 'http://i.imgur.com/tbaVuRy.jpg'
+            {
+            "id": 4,
+            "title": "The Day the Music Died: Oakland Shoreline Park",
+            "cover_image_url": 'http://i.imgur.com/tbaVuRy.jpg',
+            "cover_image_id": 8,
+            "tags": "drone death, opps, dji, bay, drowneddrone"
         },
         "geometry": {
             "type": "Point",
             "coordinates": [-122.324215, 37.805496]
     }
     }
-
-
-    ];
+];

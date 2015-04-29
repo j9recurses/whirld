@@ -40,35 +40,6 @@
   background-color: #f2f2f2;
   height: 100%;
   min-height: 700px;
-
-  button{
-    border: 0;
-    border-radius: 1px;
-    line-height: 0;
-    margin: 0 auto;
-      -webkit-transition: all .2s ease;
-      -moz-transition: all .2s ease;
-      -o-transition: all .2s ease;
-    min-height: 25px;
-    transition: all .2s ease;
-  }
-  button:focus{ outline: none; }
-  button:hover { opacity: .7; }
-  button i{ line-height: 0; }
-  .button-action {
-    font-weight: bold;
-    height: 3em;
-    padding: 0;
-    width: 100%;
-  }
-  .button-next, .button-finish{
-    background-color: cornflowerblue;
-    color: white;
-  }
-  .button-cancel{
-    background: #333;
-    color: #999;
-  }
   .button-bar{ 
     height: 76px;
     list-style-type: none;

@@ -6,6 +6,7 @@ a, .a {
     -moz-transition: all .2s linear;
     -o-transition: all .2s linear;
   transition: all .2s linear;
+  color: cornflowerblue;
 }
 a:hover, .a:hover {
 	opacity: .9;
@@ -14,6 +15,37 @@ a:hover, .a:hover {
 .active:hover { opacity: 1; cursor: default; }
 .block{ display: block; }
 .bold{ font-weight: bold; }
+button{
+  border: 0;
+  border-radius: 1px;
+  line-height: 0;
+  margin: 0 auto;
+  -webkit-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
+    -moz-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
+    box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
+  -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+  min-height: 25px;
+  transition: all .2s ease;
+}
+button:focus{ outline: none; }
+button:hover { opacity: .7; }
+button i{ line-height: 0; }
+.button-action {
+  font-weight: bold;
+  height: 3em;
+  padding: 0;
+  width: 100%;
+}
+.button-next, .button-finish{
+  background-color: cornflowerblue;
+  color: white;
+}
+.button-cancel{
+  background: #333;
+  color: #999;
+}
 .caps{ text-transform: uppercase; }
 .caption{ font-style: italic; }
 .cursor-def{ cursor: default; }
@@ -56,6 +88,7 @@ img{
   opacity: 0;
   transition: all .2s ease-in;
 }
+.last-row{ margin-bottom: 6em; }
 .light{ color: #4A5656; }
 .meta { 
   color: gray;
@@ -70,6 +103,7 @@ img{
 .padding-top{ padding-top: .5em; }
 .pos-abs{ position: absolute; }
 .pos-rel{ position: relative; }
+.pull-center{ margin: 0 auto; }
 .pull-right{ float: right; }
 .pull-left{ float: left; }
 .push-down{ margin-bottom: .5em; }

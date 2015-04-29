@@ -16,6 +16,8 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
+//= global/main
+
 //= require mapknitter.js
 
 // Project editor JS:

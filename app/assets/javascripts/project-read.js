@@ -27,15 +27,15 @@ $(document).ready(function(){
 		});
 
 		// Packery
-	  $('.module-grid-wrapper').isotope({
-			layoutMode: 'packery',
-			packery: {
-			  columnWidth: '.grid-sizer',
-			  grid: 0
-			},
-			itemSelector: '.grid-photo',
-			percentPosition: true
-	  });
+	  // $('.module-grid-wrapper').isotope({
+			// layoutMode: 'packery',
+			// packery: {
+			//   columnWidth: '.grid-sizer',
+			//   grid: 0
+			// },
+			// itemSelector: '.grid-photo',
+			// percentPosition: true
+	  // });
 
 	  // Action bar
 	  var self = $(this);
@@ -45,6 +45,7 @@ $(document).ready(function(){
 		toggleActionBar(bar);
 
 	  self.on('scroll', function(e){
+	  	console.log(e)
 	  	toggleActionBar(bar);
 	  })
 

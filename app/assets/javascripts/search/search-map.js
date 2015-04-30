@@ -17,7 +17,7 @@ var SearchMap = function(options){
     "properties": 
         {
         "id": 1,
-        "title": "Drought in Pinole",
+        "title": "Goats and Grass: Managing Natural Resources in California’s Parks",
         "cover_image_url": 'http://i.imgur.com/DhZ47IS.jpg',
         "tags": "drought, pinole, california, waterplease",
         "user":"kbasye",

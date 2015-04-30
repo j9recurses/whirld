@@ -1,126 +1,41 @@
 <div id='project-search'>
+
+	<div id='search-action-bar' class='twenty-four'>
+		<div class='row group wrapper'>
+
+<!-- 			<div id='search-summary' class='eight columns h-centered'>
+				<h1 class='h4-size'>3,420 results for <span class='caps'>Berkeley, CA</span></h1>
+			</div> -->
+			<div class='fourteen columns'>
+				<span class='blocked caps font_small'>Showing:</span>
+				<h1 class='h5-size'>
+					1,333 <span class='search-filter cursor-point'>projects <i class='fa fa-caret-down'></i></span>
+					tagged <span class='search-filter cursor-point'>anything <i class='fa fa-caret-down'></i></span>
+					near <span class='search-filter cursor-point caps'>Berkeley, CA <i class='fa fa-caret-down'></i></span>
+				</h1>
+			</div>
+			<div id='search-sort' class='ten columns font_small h-righted'>
+						<label for='search-sort'>
+							<i class='fa fa-sort '></i> Popular
+						</label>
+						<label for='search-view'>
+							<i class='fa fa-list '></i> List View
+						</label>
+			</div>
+<!-- 			<div id='search-selects' class='eight columns'>
+
+			</div> -->
+		</div>
+	</div> <!-- end search-action-bar -->
+
 	<section id='search-results-list' class='first-slide slide row group'>
 
 		<div id='search-results' class='columns column-top'>
 			
-			<div id='search-summary' class='row group h-centered'>
-				<h1 class='search-results-wrapper h5-size'>1,333 <span class='search-highlight'>projects</span> tagged <span class='search-highlight'>parks</span> near <span class='search-highlight'>Bay Area, CA</span></h1>
-
-			</div>
-
-			<div id='search-card-list' class='search-results-wrapper'>
-
-				<article id='search-card-1' class='search-card' data-map-id='1'>
-					<div class='row group search-card-wrapper'>
-						<div class='twenty-four columns'>
-							<h1 class='h3-size caps bold'><a href='/'></a></h1>
-							<%#=render :partial => 'maps/show_pieces/project_meta' %>
-							<ul class='map-meta inline-list'></ul>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group'>
-						<div class='twenty-four columns'>
-							<a class='img-wrapper img-wrapper-link'>
-								<!-- <a class='img-link' href='/'></a> -->
-							</a>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group search-card-wrapper'>
-						<div id='project-tag-wrapper' class='twenty-four pos-rel padding-top'>
-							<ul class='project-tag-list inline-list font_small'>
-						    <li class='project-tag-icon item h3-size'>
-						    <i class='fa fa-tag'></i></li>
-							</ul>
-						</span>
-					</div> <!-- end row group -->
-				</article> <!-- end search-card -->
-
-				<article id='search-card-2' class='search-card' data-map-id='2'>
-					<div class='row group search-card-wrapper'>
-						<div class='twenty-four columns'>
-							<h1 class='h3-size caps bold'><a href='/'>Demolition of Rope Factory</a></h1>
-							<%#=render :partial => 'maps/show_pieces/project_meta' %>
-							<ul class='map-meta inline-list'></ul>
-						</div>
-					</div> <!-- end row group -->
-				
-					<div class='row group'>
-						<div class='twenty-four columns'>
-							<a class='img-wrapper img-wrapper-link'></a>
-						</div>
-					</div> <!-- end row group -->
-
-					<div class='row group search-card-wrapper'>
-						<div id='project-tag-wrapper' class='twenty-four pos-rel padding-top'>
-							<ul class='project-tag-list inline-list font_small'>
-						    <li class='project-tag-icon item h3-size'>
-						    <i class='fa fa-tag'></i></li>
-							</ul>
-						</span>
-					</div> <!-- end row group -->
-				</article> <!-- end search-card -->
-
-				<article id='search-card-3' class='search-card' data-map-id='3'>
-					<div class='row group search-card-wrapper'>
-						<div class='twenty-four columns'>
-							<h1 class='h3-size caps bold'><a href='/'></a></h1>
-							<%#=render :partial => 'maps/show_pieces/project_meta' %>
-							<ul class='map-meta inline-list'></ul>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group'>
-						<div class='twenty-four columns'>
-							<a class='img-wrapper img-wrapper-link'>
-								<!-- <a class='img-link' href='/'></a> -->
-							</a>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group search-card-wrapper'>
-						<div id='project-tag-wrapper' class='twenty-four pos-rel padding-top'>
-							<ul class='project-tag-list inline-list font_small'>
-						    <li class='project-tag-icon item h3-size'>
-						    <i class='fa fa-tag'></i></li>
-							</ul>
-						</span>
-					</div> <!-- end row group -->
-				</article> <!-- end search-card -->
-
-				<article id='search-card-4' class='search-card' data-map-id='4'>
-					<div class='row group search-card-wrapper'>
-						<div class='twenty-four columns'>
-							<h1 class='h3-size caps bold'><a href='/'></a></h1>
-							<%#=render :partial => 'maps/show_pieces/project_meta' %>
-							<ul class='map-meta inline-list'></ul>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group'>
-						<div class='twenty-four columns'>
-							<a class='img-wrapper img-wrapper-link'>
-								<!-- <a class='img-link' href='/'></a> -->
-							</a>
-						</div>
-					</div> <!-- end row group -->
-					<div class='row group search-card-wrapper'>
-						<div id='project-tag-wrapper' class='twenty-four pos-rel padding-top'>
-							<ul class='project-tag-list inline-list font_small'>
-						    <li class='project-tag-icon item h3-size'>
-						    <i class='fa fa-tag'></i></li>
-							</ul>
-						</span>
-					</div> <!-- end row group -->
-				</article> <!-- end search-card -->
-	
-		    <div class='row group last-row'>
-		      <div class='twenty-four columns'>
-		        <button id='search-more' class='button-action button-next'>Load More Projects</button>
-		      </div>
-		    </div> <!-- end row group -->
-
-			</div> <!-- end search-results-wrapper -->
 		</div> <!-- end search-results -->
 
-		<div id='search-map-wrapper' class='map-wrapper columns column-top pull-right'>
+<!-- 		<div id='search-map-wrapper' class='map-wrapper columns column-top pull-right'>
 			<div id='search-map-pane' class='map-pane'></div>
-		</div>
+		</div> -->
 	</section>
 </div>

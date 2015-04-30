@@ -116,6 +116,13 @@
   #project-tags-more:hover{
     opacity: .5;
   }
+  #search-action-bar{
+    background: #f27150;
+    color: white;
+    height: 12%;
+    position: fixed;
+    top: 10%;
+  }
   .search-card{
     background: white;
     border-bottom: 1px solid #eee;
@@ -132,8 +139,14 @@
     width: 92%;
     margin: 0 auto;
   }
+  .search-filter{
+    color: white;
+    margin: .5em;
+    border: 1px solid rgb(253, 174, 144);
+    padding: 0 .5em .25em .5em;
+  }
   .search-highlight{
-    color: cadetblue;
+    text-transform: uppercase;
   }
   #search-map-wrapper{
     position: fixed;
@@ -147,9 +160,6 @@
     width: 82%;
   }
   #search-summary{
-    padding-bottom: 2%;
-    padding-top: 1.5em;
-    z-index: 995;
   }
   .slide{
     min-height: 91%;

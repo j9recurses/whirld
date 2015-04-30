@@ -1,27 +1,39 @@
 <nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav <%=className%>'>
   <div class='row group wrapper'>
-    <h1 id='main-logo' class='logo four columns'>
+    <h1 id='main-logo' class='eight columns menu-item'>
       <a href='/'>
         <i class='fa fa-plane'></i>
         Whirld
       </a>
     </h1>
-    <a id='about' href='about/' class='three columns block menu-item h-centered h4-size'>About</a>
-    <%= link_to('Create', maps_new_path , :class => 'three columns block menu-item h-centered h4-size', :id => 'create') %>
+    <a id='about' href='about/' class='two columns block menu-item h-centered h5-size'>About</a>
+    <%= link_to('Create', maps_new_path , :class => 'two columns block menu-item h-centered h5-size', :id => 'create') %>
+
+
+    <div id='search-bar' class='block menu-item h-centered h4-size columns'>
+      <div id='search-bar-wrapper' class='pos-rel search-expanded'>
+          <div id='search-input-wrapper'>
+            <input id='search-keyword' type='text' placeholder='Find Projects' class='search-input'value=''/>
+            <span class='search-input-btw v-centered font_small'>near</span>
+            <input id='search-location' type='text' placeholder='Location' class='search-input'value=''/>
+          </div>
+          <label id='search-icon-wrapper' class='cursor-point' for='search-keyword'>
+            <i class='fa fa-search v-centered font_small'></i>
+          </label>
+      </div>
+    </div>
+
 
     <% if user_signed_in? %>
-      <%=link_to "Sign out", destroy_user_session_path, :method=> :delete, :class => 'block menu-item h-centered h4-size three columns pull-right'%>
+      <a href='' id='user-signin' class='block menu-item menu-item-small h-righted h5-size columns pull-right'>
+        <%= @user.login %> <i class='fa fa-caret-down'></i>
+      </a>
     <% else %>
-      <%= link_to "Log in", new_user_session_path, :class => 'block menu-item h-centered h4-size three columns pull-right' %>
+      <%= link_to "Log in", new_user_session_path, :class => 'block menu-item h-righted h5-size  columns pull-right', :id => 'user-signin' %>
     <% end %>
 
     <!-- NEED: search path -->
-    <div id='search' class='block menu-item h-centered h4-size ten columns pull-right'>
-      <div id='search-input-wrapper' class='pos-rel'>
-        <input id='search-input' type='text' placeholder='Search on Whirld...' value=''/>
-        <label id='search-icon-wrapper' class='cursor-point' for='search-input'><i class='fa fa-search v-centered'></i></label>
-      </div>
-    </div>
+
 
   </div>
 </nav>

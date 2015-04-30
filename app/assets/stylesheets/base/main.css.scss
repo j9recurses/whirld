@@ -91,9 +91,9 @@ img{
 .last-row{ margin-bottom: 6em; }
 .light{ color: #4A5656; }
 .meta { 
-  color: gray;
-  font-style: italic;
+  color: rgb(253, 174, 144);
 }
+.overflow-hidden{ overflow: hidden; }
 .overlay{
   position: relative;
   top: 50%;
@@ -118,6 +118,9 @@ img{
 }
 .tab.active, .tag.active{
   cursor: default;
+}
+.translucent{
+  opacity: .7;
 }
 .v-centered {
   position: relative;

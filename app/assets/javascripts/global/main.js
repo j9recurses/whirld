@@ -11,13 +11,14 @@ var SearchBar = function(options){
   this.options = $.extend({
     expandedClassName: 'search-expanded',
     iconWrapperId: 'search-icon-wrapper',
-    inputId: 'search-input',
-    wrapperId: 'search-input-wrapper'
+    inputId: 'search-input-wrapper',
+    wrapperId: 'search-bar-wrapper',
+    btwTextClassName: 'search-input-btw'
   }, options);
 
   this.inputEl = $('#' + this.options.inputId);
   this.wrapper = $('#' + this.options.wrapperId);
-
+  this.btwTextEl = $('.' + this.options.btwTextClassName);
 }
 
 SearchBar.prototype = {
@@ -26,12 +27,22 @@ SearchBar.prototype = {
     self.wrapper.off().on('click', '#' + self.options.iconWrapperId, function(){
       var wrapper = $(this).closest('#'+self.options.wrapperId);
       if(wrapper.hasClass(self.options.expandedClassName)){
-        wrapper.removeClass(self.options.expandedClassName);
+        self.btwTextEl.addClass('invisible');    
+        setTimeout(function(){
+          wrapper.removeClass(self.options.expandedClassName);
+          self.inputEl.find('#search-keyword').blur();
+          self.inputEl.find('#search-keyword').blur();
+        }), 200;
+
       }
       else{
         wrapper.addClass(self.options.expandedClassName);
         self.inputEl[0].selectionStart = self.inputEl[0].selectionEnd = self.inputEl.val().length;
+        setTimeout(function(){
+          self.btwTextEl.removeClass('invisible');    
+        }, 200)
       }
+      
     });
   },
   init: function(){

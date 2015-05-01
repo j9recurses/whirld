@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+		
 		var tagWrapper = $('#project-tag-wrapper');
 		var projDesc = $('#project-description');
 		$('#project-tags-more').off().on({

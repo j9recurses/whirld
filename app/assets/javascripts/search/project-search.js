@@ -9,4 +9,22 @@ $(document).ready(function(){
   //     wm.setMap();
       // wm.setTestData();
       // wm.scrollHighlight();
+  var fb = new FilterBar();
+  		fb.init();
 });
+
+var FilterBar = function(options){
+	this.options = $.extend({
+
+	}, options);
+}
+
+FilterBar.prototype = {
+	init: function(){
+		$('#filter-entity').off().on({
+			click: function(){
+				$(this).toggleClass('filter-entity-expanded');
+			}
+		})
+	} // end init
+}

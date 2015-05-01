@@ -11,8 +11,8 @@
   }
   #filter-bar{
     background: #f6f6f6;
-    height: 14%;
-    padding-top: 1%;
+    height: 13%;
+    padding-top: 2%;
     position: fixed;
   }
   #filter-bar .columns{
@@ -39,7 +39,7 @@
     color: white;
     height: 100%;
   }
-  #filter-entity{
+  #filter-entity-wrapper {
     background: #f27150;
     color: white;
     cursor: pointer;
@@ -50,9 +50,10 @@
       -moz-transition: all 0.25s linear;
       -ms-transition: all 0.25s linear;
       -o-transition: all 0.25s linear;
+    transition: all 0.3s linear;
     padding: 0 1em 0 1em;
     top: 1.25em;
-    transition: all 0.3s ease-out;
+    
   }
   #filter-entity-options{
     position: absolute;
@@ -235,6 +236,16 @@
   }
   .slide.module-split{
     height: 91%;
+  }
+  .sort-active{
+    border-bottom: 1px solid #f27150;
+    cursor: default;
+    font-weight: bold;
+         -webkit-transition: all 0.25s linear;
+      -moz-transition: all 0.25s linear;
+      -ms-transition: all 0.25s linear;
+      -o-transition: all 0.25s linear;
+    transition: all 0.3s linear;
   }
   .user-meta-item{
     margin-right: 1em;

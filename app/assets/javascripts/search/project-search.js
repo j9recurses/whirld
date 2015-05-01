@@ -20,11 +20,103 @@ var FilterBar = function(options){
 }
 
 FilterBar.prototype = {
-	init: function(){
-		$('#filter-entity').off().on({
+	// functions for getting values from dom
+	getAllValues: function(){
+		var data = [];
+		$.each($('.filter'), function(i, el){
+			var type = $(el).attr('id').split('-')[1];
+			var obj = {};
+					if(type == 'entity'){
+						obj[type] = $(el).text();
+					}
+					else if(type == 'query' && $(el).val() == ''){
+						obj[type] = 'none';
+					}
+					else { 
+						obj[type] = $(el).val();
+					}
+			data.push(obj);
+		});
+		return data;
+	},
+	// functions for posting queries to server
+	search: function(data){
+		$.ajax({
+			url: '',
+			data: data,
+			type: 'post',
+			success: function(data){
+				console.log('Success: user results are returning');
+			},
+			error: function(){
+				console.log('Oops something went wrong.')
+			}
+		});
+	},
+	// functions for posting to DOM
+
+	htmlProjectResult: function(){
+
+	},
+	appendResult: function(){
+
+	},
+	// interactions and triggers for ajax query posts
+	query: function(){
+		console.log('Initiated: query box')
+		var url = '';
+		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
+	},
+	entity: function(){
+		console.log('Initiated: entity box')
+
+		var self = this;
+
+		$('#filter-entity-wrapper').off().on({
 			click: function(){
 				$(this).toggleClass('filter-entity-expanded');
 			}
-		})
+		});
+
+		$('#filter-entity-options').on('click', 'li', function(){
+			var newVal = $(this).text();
+			$('#entity-selected').text(newVal);
+
+			// if we need to get all values of all boxes, run this:
+			var otherVals = self.getAllValues();
+			console.log(otherVals);
+
+			var data = { query: newVal };
+			self.search(data)
+		});
+	},
+	location: function(){
+		console.log('Initiated: location box')
+		var url = '';
+		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
+	},
+	tags: function(){
+		console.log('Initiated: tags box')
+		var url = '';
+		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
+	},
+	sort: function(){
+		$('#sort-bar').on('click', '.sort-item', function(){
+			if($(this).hasClass('sort-active')){
+
+			}
+			else{
+				$(this).addClass('sort-active');
+				$(this).siblings().removeClass('sort-active')
+				// ajax here for sorting results
+			}
+		});
+	},
+	init: function(){
+		this.entity();
+		this.query();
+		this.location();
+		this.tags();
+		this.sort();
 	} // end init
 }

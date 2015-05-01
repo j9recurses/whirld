@@ -4,20 +4,21 @@
 		<div class='row group wrapper pos-rel'>
 
 				<span class='caps block font_small pos-abs'>Showing:</span>
+
 				<div id='filter-result-count-wrapper' class='filter-btw two columns h4-size'>
 					<span id='filter-result-count'>1,333</span>
 				</div>
 				
 				<div class='filter-input-wrapper four columns pos-rel'>
-          <input id='filter-query' type='text' class='filter-input twenty-four pos-abs'value="'goats'"/>
+          <input id='filter-query' type='text' class='filter filter-input twenty-four pos-abs'value="'goats'"/>
 				</div>
 
 				<div class='three columns offset-one'>
-					<div id='filter-entity' class='pos-rel' tabindex='0'>
-						<span id='selected'>projects</span>
+					<div id='filter-entity-wrapper' class='pos-rel' tabindex='0'>
+						<span id='filter-entity' class='filter'>projects</span>
 						<i class='fa fa-caret-down pull-right v-centered'></i>
 						<ul id='filter-entity-options' class='inline-list'>
-						  <li id='not-selected'>users</li>
+						  <li class='entity-not-selected'>users</li>
 						</ul>
 					</div>
 				</div>
@@ -25,23 +26,33 @@
 				<div class='filter-btw one columns h-centered font_small'>near</div>
 
 				<div class='filter-input-wrapper five columns pos-rel'>
-          <input id='filter-location' type='text' class='filter-input twenty-four pos-abs' value='anywhere'/>
+          <input id='filter-location' type='text' class='filter filter-input twenty-four pos-abs' value='anywhere'/>
 				</div>
 
 				<div class='filter-btw two columns h-centered font_small'>tagged</div>
 				
 				<div class='filter-input-wrapper four columns pos-rel'>
-          <input id='filter-tags' type='text' class='filter-input twenty-four pos-abs'value='anything'/>
+          <input id='filter-tags' type='text' class='filter filter-input twenty-four pos-abs'value='anything'/>
 				</div>
 
 				<div id='filter-view' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
 					<i class='fa fa-list'></i>
 					<span class='caps font_small'>List</span>
 				</div>
-
-
+		</div>
+		<div class='row group wrapper'>
+			<!-- <div class='twenty-four columns'> -->
+				<ul id='sort-bar' class='inline-list'>
+					<li class='sort-item item'><span class='caps font_small'>Sort Results: </span></li>
+					<li id='sort-newest' class='sort-item sort-active item cursor-point'>newest</li>
+					<li id='sort-oldest' class='sort-item item cursor-point'>oldest</li>
+					<li id='sort-favorites' class='sort-item item cursor-point'>favorites</li>
+				</ul>
+			<!-- </div> -->
 		</div>
 	</div> <!-- end filter-action-bar -->
+
+
 
 	<section id='search-results-list' class='first-slide slide row group'>
 

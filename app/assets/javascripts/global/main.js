@@ -2,10 +2,10 @@ $(document).ready(function(){
   var sb = new SearchBar();
       sb.init();
   
-  // var locAC = new LocAutoComp({
-  //     inputId: 'search-location'
-  // });
-      // locAC.init();
+  var locAC = new LocAutoComp({
+      inputId: 'search-location'
+  });
+      locAC.init();
   
   // var qAC = new LocAutoComp({
   //     inputId: 'search-keyword'

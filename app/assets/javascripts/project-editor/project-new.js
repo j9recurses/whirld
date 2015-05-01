@@ -7,6 +7,36 @@ $(document).ready(function(){
         pe.init();
   }
 
+  this.modEl.find('.droppable').droppable({
+    accept: '.draggable',
+    activeClass: 'drop-active',
+    hoverClass: 'drop-target',
+    drop: function(e, ui){
+      var photoCount = self.modEl.find('.photo').length;
+      if(photoCount < self.photoLimit){
+        
+        self.dropzone = $(e.target);
+        self.dropzone.removeClass('dropzone');
+        self.dropzone.find('p').remove();
+
+        self.mod = self.dropzone.closest('.module');
+
+        var photo = new ModPhoto({
+          modId: self.id,
+          modType: self.options.modType,
+          modAttrId: self.modEl.attr('id'),
+          dropzone: self.dropzone,
+          modType: self.options.modType,
+          ui: ui
+        });
+        photo.create();
+        // console.log(photo)
+        // self.dropzone.append(photo.modPhotoEl);
+      }
+    }
+
+
+
 });
 
 var ProjectEditor = function(){

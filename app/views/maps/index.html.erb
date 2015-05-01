@@ -20,7 +20,34 @@
 		</div> <!-- end row group -->
 
 	</section>
+	<section id='search-pagination'>
+		<div class='row group wrapper'>
+			<div class='twenty-four columns h-righted'>
+				<% page_count = 1 %>
+				<span class='caps font_small'>
+					<span id ='results-chunk'>1-20</span> of 
+					<span id='results-total'>200</span>
+				</span>
+				<ul class='page-list inline-list'>
+				<% 10.times do |page| %>
+					<% if page_count == 3 %>
+
+						<li id='page-<%=page_count%>' class='active bold page-item item cursor-point' data-page-count='<%=page_count%>'><%=page_count%></li>
+
+					<% else %>
+
+						<li id='page-<%=page_count%>' class='bold page-item item cursor-point' data-page-count='<%=page_count%>'><%=page_count%></li>
+
+
+					<% end %>
+					<% page_count += 1 %>
+				<% end %>
+				</ul>
+			</div>
+		</div>
+	</section>
 </div>
+
 
 
 

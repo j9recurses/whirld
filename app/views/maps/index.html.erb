@@ -1,32 +1,47 @@
 <div id='project-search'>
 
-	<div id='search-action-bar' class='twenty-four'>
-		<div class='row group wrapper'>
+	<div id='filter-bar' class='twenty-four h5-size'>
+		<div class='row group wrapper pos-rel'>
 
-<!-- 			<div id='search-summary' class='eight columns h-centered'>
-				<h1 class='h4-size'>3,420 results for <span class='caps'>Berkeley, CA</span></h1>
-			</div> -->
-			<div class='fourteen columns'>
-				<span class='blocked caps font_small'>Showing:</span>
-				<h1 class='h5-size'>
-					1,333 <span class='search-filter cursor-point'>projects <i class='fa fa-caret-down'></i></span>
-					tagged <span class='search-filter cursor-point'>anything <i class='fa fa-caret-down'></i></span>
-					near <span class='search-filter cursor-point caps'>Berkeley, CA <i class='fa fa-caret-down'></i></span>
-				</h1>
-			</div>
-			<div id='search-sort' class='ten columns font_small h-righted'>
-						<label for='search-sort'>
-							<i class='fa fa-sort '></i> Popular
-						</label>
-						<label for='search-view'>
-							<i class='fa fa-list '></i> List View
-						</label>
-			</div>
-<!-- 			<div id='search-selects' class='eight columns'>
+				<span class='caps block font_small pos-abs'>Showing:</span>
+				<div id='filter-result-count-wrapper' class='filter-btw two columns h4-size'>
+					<span id='filter-result-count'>1,333</span>
+				</div>
+				
+				<div class='filter-input-wrapper four columns pos-rel'>
+          <input id='filter-query' type='text' class='filter-input twenty-four pos-abs'value="'goats'"/>
+				</div>
 
-			</div> -->
+				<div class='three columns offset-one'>
+					<div id='filter-entity' class='pos-rel' tabindex='0'>
+						<span id='selected'>projects</span>
+						<i class='fa fa-caret-down pull-right v-centered'></i>
+						<ul id='filter-entity-options' class='inline-list'>
+						  <li id='not-selected'>users</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class='filter-btw one columns h-centered font_small'>near</div>
+
+				<div class='filter-input-wrapper five columns pos-rel'>
+          <input id='filter-location' type='text' class='filter-input twenty-four pos-abs' value='anywhere'/>
+				</div>
+
+				<div class='filter-btw two columns h-centered font_small'>tagged</div>
+				
+				<div class='filter-input-wrapper four columns pos-rel'>
+          <input id='filter-tags' type='text' class='filter-input twenty-four pos-abs'value='anything'/>
+				</div>
+
+				<div id='filter-view' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
+					<i class='fa fa-list'></i>
+					<span class='caps font_small'>List</span>
+				</div>
+
+
 		</div>
-	</div> <!-- end search-action-bar -->
+	</div> <!-- end filter-action-bar -->
 
 	<section id='search-results-list' class='first-slide slide row group'>
 

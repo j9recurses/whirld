@@ -1,11 +1,91 @@
 $(document).ready(function(){
   var sb = new SearchBar();
       sb.init();
-  var ac = new AutoComplete({
-    inputId: 'search-input'
+  
+  var locAC = new LocAutoComp({
+      inputId: 'search-location'
   });
-      ac.init();
+      locAC.init();
+  
+  // var qAC = new LocAutoComp({
+  //     inputId: 'search-keyword'
+  // });
+  //     qAC.init();
+
+  // var queryAC = new AutoComplete({
+  //     inputId: 'search-keyword',
+  //     formType: 'query'
+  // });
+  // queryAC.initQuery();
 });
+
+var LocAutoComp = function(options){
+  this.options = $.extend({
+    appendTo: '#navbar-main',
+    inputId: null
+  }, options);
+
+  this.geocoder = new google.maps.Geocoder();
+  this.inputEl = $('#' + this.options.inputId);
+}
+LocAutoComp.prototype = {
+  highlightResults: function() {
+    var self = this;
+    $.ui.autocomplete.prototype._renderItem = function( ul, item) {
+      var newText = String(item.value).replace(
+                new RegExp(this.term, "gi"),
+                "<span class='search-term-highlight'>$&</span>");
+        return $("<li></li>")
+            .data("item.autocomplete", item)
+            .append("<span class='cursor-def'>" + newText + "</span>")
+            .appendTo(ul);
+    };
+  },
+  locationUI: function(){
+    console.log('rendering location data')
+    this.highlightResults();
+  },
+  locationSource: function(request, response){
+    var self = this;
+    self.geocoder.geocode( {'address': request.term }, function(results, status) {
+      response($.map(results, function(item) {
+        return {
+          label:  item.formatted_address,
+          value: item.formatted_address,
+          latitude: item.geometry.location.lat(),
+          longitude: item.geometry.location.lng(),
+          bounds: item.geometry.bounds
+        }
+      }));
+    })
+  },
+  autoComp: function(){
+    var self = this;
+    this.inputEl.autocomplete({
+      appendTo: this.options.appendTo,
+      autofocus: false,
+      delay: 400,
+      minLength: 2,
+      open: function(request, response){
+        $(this).data("uiAutocomplete").menu.element.addClass("search-term-list");
+        self.locationUI();
+      },
+      source: function(request, response) {
+        self.locationSource(request, response);
+      }, // end source
+      _renderMenu: function( ul, items ) {
+          var self = this;
+          $.each( items, function( index, item ) {
+              self._renderItem( ul, item );
+          });
+      }
+    });
+  },
+  init: function(){
+    this.locationUI();
+    this.autoComp();
+  }
+}
 
 var SearchBar = function(options){
   this.options = $.extend({
@@ -20,7 +100,6 @@ var SearchBar = function(options){
   this.wrapper = $('#' + this.options.wrapperId);
   this.btwTextEl = $('.' + this.options.btwTextClassName);
 }
-
 SearchBar.prototype = {
   openBar: function(){
     var self = this;
@@ -57,64 +136,7 @@ SearchBar.prototype = {
   }
 }
 
-var AutoComplete = function(options){
-  this.options = $.extend({
-    appendTo: '#navbar-main',
-    inputId: null
-  }, options);
 
-  this.geocoder = new google.maps.Geocoder();
-  this.inputEl = $('#' + this.options.inputId);
-}
-
-AutoComplete.prototype = {
-  monkeyPatchAutocomplete: function() {
-    $.ui.autocomplete.prototype._renderItem = function( ul, item) {
-      var newText = String(item.value).replace(
-                new RegExp(this.term, "gi"),
-                "<span class='search-term-highlight'>$&</span>");
-        return $("<li></li>")
-            .data("item.autocomplete", item)
-            .append("<span class='cursor-def'>" + newText + "</span>")
-            .appendTo(ul);
-    };
-  },
-  autoComp: function(){
-    var self = this;
-    this.inputEl.autocomplete({
-      appendTo: this.options.appendTo,
-      autofocus: false,
-      delay: 400,
-      minLength: 2,
-      open: function(){
-        $(this).data("uiAutocomplete").menu.element.addClass("search-term-list");
-      },
-      source: function(request, response) {
-          self.geocoder.geocode( {'address': request.term }, function(results, status) {
-          response($.map(results, function(item) {
-            return {
-              label:  item.formatted_address,
-              value: item.formatted_address,
-              latitude: item.geometry.location.lat(),
-              longitude: item.geometry.location.lng(),
-              bounds: item.geometry.bounds
-            }
-          }));
-        })
-      }, // end source
-      _renderMenu: function( ul, items ) {
-          var self = this;
-          $.each( items, function( index, item ) {
-              self._renderItem( ul, item );
-          });
-      }
-    });
-  },
-  init: function(){
-    this.monkeyPatchAutocomplete();
-    this.autoComp();
-  }
-}
 
 
 

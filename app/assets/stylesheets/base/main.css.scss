@@ -85,6 +85,15 @@ img{
 	margin-right: .25em;
 }
 .inline-list .item:last-child{ margin-right: 0; }
+input[type='text']{
+  border: none;
+  height: 30px;
+  padding-left: 4%;
+}
+input[type='text']:focus{
+  outline-color: #B3B3B3;
+  outline-width: thin;
+}
 .invisible{
   opacity: 0;
   transition: all .2s ease-in;

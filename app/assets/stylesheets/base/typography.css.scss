@@ -43,6 +43,10 @@ small, .font_small {font-size: 0.75em;}
   font-size: 1em;
 }
 
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover{
+  opacity: .9;
+  text-decoration: none;
+}
 
 /*Bigger than 768px*/
 @media only screen and (min-width: 768px) {

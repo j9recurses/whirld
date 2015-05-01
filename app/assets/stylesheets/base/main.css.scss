@@ -6,10 +6,10 @@ a, .a {
     -moz-transition: all .2s linear;
     -o-transition: all .2s linear;
   transition: all .2s linear;
-  color: cornflowerblue;
+  color: #f27150;
 }
 a:hover, .a:hover {
-	opacity: .9;
+	text-decoration: underline;
 }
 .active{ color: white; cursor: default; }
 .active:hover { opacity: 1; cursor: default; }
@@ -112,6 +112,7 @@ input[type='text']:focus{
 .padding-bottom { padding-bottom: .5em;}
 .padding-top{ padding-top: .5em; }
 .pos-abs{ position: absolute; }
+.pos-fixed{ position: fixed; }
 .pos-rel{ position: relative; }
 .pull-center{ margin: 0 auto; }
 .pull-right{ float: right; }

@@ -74,14 +74,15 @@ FilterBar.prototype = {
 
 		$('#filter-entity-wrapper').off().on({
 			click: function(){
-				$(this).toggleClass('filter-entity-expanded');
+				$(this).toggleClass('filter-expanded');
 			}
 		});
 
 		$('#filter-entity-options').on('click', 'li', function(){
+			var oldVal = $('#filter-entity').text();
 			var newVal = $(this).text();
-			$('#entity-selected').text(newVal);
-
+			$('#filter-entity').text(newVal);
+			$(this).text(oldVal)
 			// if we need to get all values of all boxes, run this:
 			var otherVals = self.getAllValues();
 			console.log(otherVals);
@@ -101,15 +102,32 @@ FilterBar.prototype = {
 		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
 	},
 	sort: function(){
-		$('#sort-bar').on('click', '.sort-item', function(){
-			if($(this).hasClass('sort-active')){
+		console.log('Initiated: sort')
 
+		var self = this;
+
+		$('#sort-wrapper').off().on({
+			click: function(){
+				$(this).toggleClass('filter-expanded');
 			}
-			else{
-				$(this).addClass('sort-active');
-				$(this).siblings().removeClass('sort-active')
-				// ajax here for sorting results
-			}
+		});
+
+		$('#sort-options').on('click', 'li', function(){
+			console.log(this)
+			var oldVal = $('#filter-sort').text();
+			var newVal = $(this).text();
+			$('#filter-sort').text(newVal);
+			$(this).text(oldVal)
+
+			console.log(oldVal)
+
+
+			// if we need to get all values of all boxes, run this:
+			var otherVals = self.getAllValues();
+			console.log(otherVals);
+
+			var data = { query: newVal };
+			self.search(data)
 		});
 	},
 	init: function(){

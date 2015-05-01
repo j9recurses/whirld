@@ -15,8 +15,9 @@
 					<div id='filter-entity-wrapper' class='pos-rel' tabindex='0'>
 						<span id='filter-entity' class='filter'>projects</span>
 						<i class='fa fa-caret-down pull-right v-centered'></i>
-						<ul id='filter-entity-options' class='inline-list'>
+						<ul id='filter-entity-options' class='select-options inline-list'>
 						  <li class='entity-not-selected'>users</li>
+						  <li class='entity-not-selected'>photos</li>
 						</ul>
 					</div>
 				</div>
@@ -33,9 +34,15 @@
           <input id='filter-tags' type='text' class='filter filter-input twenty-four pos-abs'value='anything'/>
 				</div>
 
-				<div id='filter-sort' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
-					<i class='fa fa-sort'></i>
-					<span class='caps font_small'>Newest</span>
+				<div id='sort-wrapper' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
+					<div id='sort-wrapper' class='pos-rel' tabindex='0'>
+						<span id='filter-sort' class='filter'>newest</span>
+						<i class='fa fa-sort '></i>
+						<ul id='sort-options' class='select-options inline-list h-centered'>
+						  <li class='sort-not-selected'>oldest</li>
+						  <li class='sort-not-selected'>popular</li>
+						</ul>
+					</div>
 				</div>
 		</div>
 	</div> <!-- end filter-action-bar -->

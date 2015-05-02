@@ -65,7 +65,7 @@ gem 'jbuilder'
 gem 'draper', '~> 1.3'
 
 #search
-gem 'tire'
+#gem 'tire'
 
 
 ##faker data

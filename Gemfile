@@ -4,7 +4,6 @@ ruby "2.1.2"
 gem "rails", "~>3.2.3"
 
 gem "will_paginate", "3.0.7"
-gem "will_paginate-bootstrap"
 gem "friendly_id"
 
 gem "omniauth-google-oauth2"
@@ -64,6 +63,16 @@ gem 'jbuilder'
 
 #ttps://github.com/amatsuda/active_decorator
 gem 'draper', '~> 1.3'
+
+#search
+gem 'tire'
+
+
+##faker data
+#need to install these outside the app to run a rake job
+#gem install populator
+#gem install faker
+
 
 
 #for deepLearn predicter

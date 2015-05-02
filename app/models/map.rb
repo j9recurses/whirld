@@ -11,6 +11,7 @@ end
 class Map < ActiveRecord::Base
 
   extend FriendlyId
+
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
@@ -26,8 +27,10 @@ class Map < ActiveRecord::Base
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
-  has_one :user_galleries, :dependent => :destroy
-
+  has_one :user_galleries
+  has_many :user_gallery_grids, through: :user_galleries
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
 
   attr_accessor :taglist
@@ -38,6 +41,15 @@ class Map < ActiveRecord::Base
   def taglist=(val)
     @taglist = val
   end
+
+def self.search(params)
+  tire.search(load: true) do
+    query { string params[:query]} if params[:query].present?
+      filter :range, published_on: {lte: Time.zone.now }
+  end
+end
+
+
 
   #has_many :exports
   #has_many :comments

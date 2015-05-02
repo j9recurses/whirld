@@ -26,7 +26,7 @@
 
     <% if user_signed_in? %>
       <a href='' id='user-signin' class='block menu-item menu-item-small h-righted h5-size columns pull-right'>
-        <%= @user.login %> <i class='fa fa-caret-down'></i>
+        <%= current_user.login %> <i class='fa fa-caret-down'></i>
       </a>
     <% else %>
       <%= link_to "Log in", new_user_session_path, :class => 'block menu-item h-righted h5-size  columns pull-right', :id => 'user-signin' %>

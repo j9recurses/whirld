@@ -18,6 +18,13 @@ class MapsController < ApplicationController
     end
   end
 
+  def search
+    @map = Map.search(params)
+    @map.inspect
+    @user = current_user
+    render "maps/index"#, :layout => "layout_read"
+  end
+
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')
     render :layout => 'maps'
@@ -183,14 +190,6 @@ class MapsController < ApplicationController
     @title = "Maps licensed '#{params[:id]}'"
     @maps = Map.where(password: '',license: params[:id]).order('updated_at DESC').paginate(:page => params[:page], :per_page => 24)
     render "maps/index", :layout => "application2"
-  end
-
-  def search
-    params[:id] ||= params[:q]
-    @maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
-    @title = "Search results for '#{params[:id]}'"
-    @user = current_user
-    render "maps/index"#, :layout => "layout_read"
   end
 
   def create_tags

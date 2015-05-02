@@ -59,7 +59,7 @@ var Image = function(options){
     removeButtonClassName: 'photo-remove',
     thumbContainerId: 'photos-uploaded'
   }, options);
-  
+
   this.id = this.options.id;
   this.img = null;
   this.thumbEl = null;
@@ -67,7 +67,7 @@ var Image = function(options){
   this.removeButton = null;
   this.thumbContainer = $('#'+this.options.thumbContainerId);
   this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
-  
+
 }
 
 Image.prototype = {

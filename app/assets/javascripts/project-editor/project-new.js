@@ -10,8 +10,8 @@ $(document).ready(function(){
   window.mapKnitter = new MapKnitter.Map({
     latlng:     L.latLng(37.8698672,-122.2680447),
     readOnly:   false,
-    zoom: 15,
-    warpablesUrl: "/maps/7/warpables.json"
+    zoom: 12,
+    warpablesUrl: "/maps/8/warpables.json"
   });
 
   

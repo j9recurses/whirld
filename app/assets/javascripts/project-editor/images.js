@@ -79,7 +79,7 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview h-centered pull-left '" + this.photoType + "' id='#preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
+    var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
     if(this.is_normal){
       el.addClass('hidden');
@@ -89,12 +89,10 @@ Image.prototype = {
   },
   setData: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
-    this.img = this.thumbEl.find('img');
+    this.img = $(this.thumbEl.find('img'));
   },
   setUploadedData: function(){
     this.thumbEl = this.htmlThumb();
-    this.thumbEl.data('warpable-id', this.options.warpableId);
-    this.thumbEl.data('warpable-url', this.options.warpableUrl)
   },
   setSavedData: function(){
     this.thumbEl = $('#preview-' + this.id);
@@ -121,6 +119,12 @@ Image.prototype = {
   },
   init: function(){
     // ajax listeners
+    var self = this;
+    $('.preview').on('click', 'img', function(){
+      console.log($(this).data('warpable-id'))
+      console.log($(this).data('warpable-url'))
+      window.mapKnitter.addImage($(this).data('warpable-id'), $(this).data('warpable-url'));
+    });
   },
   initUploaded: function(){
     console.log('Initated: uploaded photo');

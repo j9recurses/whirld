@@ -49,6 +49,16 @@ class MapsController < ApplicationController
   end
 
 
+ def autocomplete
+    @maps = Map.order(:name).where("name LIKE ?", "%#{params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @maps.map(&:name)
+      }
+    end
+  end
+
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')

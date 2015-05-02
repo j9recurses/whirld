@@ -2,52 +2,93 @@ $(document).ready(function(){
   var sb = new SearchBar();
       sb.init();
   
-  var locAC = new LocAutoComp({
+  var locAC = new AutoComp({
       inputId: 'search-location'
   });
-      locAC.init();
+      locAC.location();
   
-  // var qAC = new LocAutoComp({
-  //     inputId: 'search-keyword'
-  // });
-  //     qAC.init();
+  var kwAC = new AutoComp({
+    inputId: 'search-keyword'
+  });
+      kwAC.keyword();
 
-  // var queryAC = new AutoComplete({
-  //     inputId: 'search-keyword',
-  //     formType: 'query'
-  // });
-  // queryAC.initQuery();
 });
 
-var LocAutoComp = function(options){
+var AutoComp = function(options){
   this.options = $.extend({
     appendTo: '#navbar-main',
-    inputId: null
+    inputId: null,
+    autofocus: false,
+    delay: 400,
+    minLength: 2
   }, options);
 
-  this.geocoder = new google.maps.Geocoder();
   this.inputEl = $('#' + this.options.inputId);
 }
-LocAutoComp.prototype = {
-  highlightResults: function() {
+
+AutoComp.prototype = {
+  highlightResults: function(item, term){
+    return String(item.value).replace(new RegExp(term, "gi"),"<span class='search-term-highlight'>$&</span>");
+  },
+  keywordSource: function(request, response){
+
+  },
+  keyword: function(){
+    var testData = [
+      { label: "annhhx10", category: "Tags" },
+      { label: "annk K12", category: "Tags" },
+      { label: "annttop C13", category: "Tags" },
+      { label: "anders andersson", category: "Search" },
+      { label: "andreas andersson", category: "Search" },
+      { label: "andreas johnson", category: "Search" }
+      ]
     var self = this;
-    $.ui.autocomplete.prototype._renderItem = function( ul, item) {
-      var newText = String(item.value).replace(
-                new RegExp(this.term, "gi"),
-                "<span class='search-term-highlight'>$&</span>");
-        return $("<li></li>")
+
+    // create autocomplete instance
+    var $ac = this.inputEl.autocomplete({
+      appendTo: this.options.appendTo,
+      autofocus: this.options.autofocus,
+      delay: this.options.autofocus,
+      minLength: this.options.minLength,
+      source: testData//function(request, response){
+        // self.locationSource(request, response);
+      // }
+    });
+
+    // render results 
+    keywordAC = $ac.data("ui-autocomplete");
+
+    // customize menu to append categories
+    keywordAC._renderMenu = function(ul, items){
+      var self = this;
+      var category = null;
+      var exploreAll = "<li><a class='browse' href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      ul.append(exploreAll)
+      $.each(items, function(i, item){
+        console.log(item.category)
+        if (item.category != category) {
+          category = item.category;
+          ul.append("<li class='ui-autocomplete-category'>" + category + "</li>");
+        }
+        self._renderItemData( ul, item );
+      });
+
+    };
+    // customize item to highlight text
+    keywordAC._renderItem = function (ul, item) {
+      var newText = self.highlightResults(item, this.term);
+
+      //customize appearance of items here
+      return $("<li></li>")
             .data("item.autocomplete", item)
-            .append("<span class='cursor-def'>" + newText + "</span>")
+            .append(newText)
             .appendTo(ul);
     };
   },
-  locationUI: function(){
-    console.log('rendering location data')
-    this.highlightResults();
-  },
   locationSource: function(request, response){
     var self = this;
-    self.geocoder.geocode( {'address': request.term }, function(results, status) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( {'address': request.term }, function(results, status) {
       response($.map(results, function(item) {
         return {
           label:  item.formatted_address,
@@ -59,31 +100,35 @@ LocAutoComp.prototype = {
       }));
     })
   },
-  autoComp: function(){
+  location: function(){
     var self = this;
-    this.inputEl.autocomplete({
+    // create autocomplete instance
+    var $ac = this.inputEl.autocomplete({
       appendTo: this.options.appendTo,
-      autofocus: false,
-      delay: 400,
-      minLength: 2,
-      open: function(request, response){
-        $(this).data("uiAutocomplete").menu.element.addClass("search-term-list");
-        self.locationUI();
-      },
-      source: function(request, response) {
+      autofocus: this.options.autofocus,
+      delay: this.options.autofocus,
+      minLength: this.options.minLength,
+      source: function(request, response){
         self.locationSource(request, response);
-      }, // end source
-      _renderMenu: function( ul, items ) {
-          var self = this;
-          $.each( items, function( index, item ) {
-              self._renderItem( ul, item );
-          });
       }
     });
-  },
-  init: function(){
-    this.locationUI();
-    this.autoComp();
+    // render results with highlighting
+    locAC = $ac.data("ui-autocomplete")
+    locAC._renderMenu = function(ul, items){
+      var self = this;
+      var category = null;
+      var exploreAll = "<li><a class='browse' href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      ul.append(exploreAll);
+      ul.append("<li class='ui-autocomplete-category'>Locations</li>");
+      $.each(items, function(i, item){
+        self._renderItemData( ul, item );
+      });
+
+    };
+    locAC._renderItem = function (ul, item) {
+      var newText = self.highlightResults(item, this.term);
+      return $("<li></li>").data("item.autocomplete", item).append(newText).appendTo(ul);
+    };
   }
 }
 
@@ -91,32 +136,72 @@ var SearchBar = function(options){
   this.options = $.extend({
     expandedClassName: 'search-expanded',
     iconWrapperId: 'search-icon-wrapper',
-    inputId: 'search-input-wrapper',
+    keywordId: 'search-keyword',
+    locationId: 'search-location',
     wrapperId: 'search-bar-wrapper',
     btwTextClassName: 'search-input-btw'
   }, options);
 
   this.inputEl = $('#' + this.options.inputId);
+  this.keywordEl = $('#' + this.options.keywordId);
+  this.locationEl = $('#' + this.options.locationId);
   this.wrapper = $('#' + this.options.wrapperId);
+  this.container = 
   this.btwTextEl = $('.' + this.options.btwTextClassName);
 }
 SearchBar.prototype = {
-  openBar: function(){
+  isInputsEmpty: function(){
+    if(this.keywordEl.val().length == 0 && this.locationEl.val().length == 0){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+  getValues: function(){
+    var data = [];
+    $.each(this.wrapper.find('input[type=text]'), function(i, input){
+      var type = $(input).attr('id').split('-')[1];
+      var obj = {};
+      // only return input values that exist
+      if($(input).val().length > 0){
+        obj[type] = $(input).val();
+        data.push(obj);
+      }
+    });
+    return data
+  },
+  search: function(data){
+    console.log(data)
+    // $.ajax({
+
+    // })
+  },
+  closeBar: function(){
+    var self = this;
+    this.btwTextEl.addClass('invisible');    
+    setTimeout(function(){
+      self.wrapper.removeClass(self.options.expandedClassName);
+      self.keywordEl.blur();
+    }), 200;
+  },
+  toggleBar: function(){
     var self = this;
     self.wrapper.off().on('click', '#' + self.options.iconWrapperId, function(){
-      var wrapper = $(this).closest('#'+self.options.wrapperId);
-      if(wrapper.hasClass(self.options.expandedClassName)){
-        self.btwTextEl.addClass('invisible');    
-        setTimeout(function(){
-          wrapper.removeClass(self.options.expandedClassName);
-          self.inputEl.find('#search-keyword').blur();
-          self.inputEl.find('#search-keyword').blur();
-        }), 200;
-
+      // When bar is open
+      if(self.wrapper.hasClass(self.options.expandedClassName)){
+        if(self.isInputsEmpty() == true){
+          self.closeBar();
+        }
+        else{
+          self.search(self.getValues());
+        }
       }
+      // When bar is closed
       else{
-        wrapper.addClass(self.options.expandedClassName);
-        self.inputEl[0].selectionStart = self.inputEl[0].selectionEnd = self.inputEl.val().length;
+        self.wrapper.addClass(self.options.expandedClassName);
+        // put focus in keyword box
+        self.keywordEl.selectionStart = self.keywordEl.selectionEnd = self.keywordEl.val().length;
         setTimeout(function(){
           self.btwTextEl.removeClass('invisible');    
         }, 200)
@@ -126,13 +211,8 @@ SearchBar.prototype = {
   },
   init: function(){
     // Initiate event listeners for toggling bar open
-    this.openBar();
-    
-    // Initiate autocomplete on the search bar
-    // var ac = new AutoComplete({
-    //   inputId: this.inputId
-    // })
-    // ac.init()
+    this.toggleBar();
+
   }
 }
 

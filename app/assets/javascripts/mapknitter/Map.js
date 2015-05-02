@@ -269,7 +269,6 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
   selectImage: function(e){
     var img = this
-    console.log(img)
     // save state, watch for changes by tracking 
     // stringified corner positions: 
     img._corner_state = JSON.stringify(img._corners)

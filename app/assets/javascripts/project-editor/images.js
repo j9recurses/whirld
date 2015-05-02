@@ -121,9 +121,7 @@ Image.prototype = {
     // ajax listeners
     var self = this;
     $('.preview').on('click', 'img', function(){
-      console.log($(this).data('warpable-id'))
-      console.log($(this).data('warpable-url'))
-      window.mapKnitter.addImage($(this).data('warpable-id'), $(this).data('warpable-url'));
+      window.mapKnitter.addImage($(this).data('warpable-url'), $(this).data('warpable-id'));
     });
   },
   initUploaded: function(){

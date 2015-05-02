@@ -7,11 +7,12 @@ $(document).ready(function(){
         pe.init();
   }
 
+  var mapId = $('#project-creation-2').data('map-id');
   window.mapKnitter = new MapKnitter.Map({
     latlng:     L.latLng(37.8698672,-122.2680447),
     readOnly:   false,
     zoom: 12,
-    warpablesUrl: "/maps/8/warpables.json"
+    warpablesUrl: "/maps/" + mapId +"/warpables.json"
   });
 
   

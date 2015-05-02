@@ -1,4 +1,3 @@
-<%=@gallery_photos.inspect%>
 <nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
 	<div class='photo-state-wrapper'>
 		<select id='photo-state'>
@@ -29,7 +28,7 @@
 </section>
 
 <section id='photos-saved' class='photo-list first-section scrollable eight hidden invisible'>
-<% @user_gallery.photos.each do |photo| %>
+<% @gallery_photos.each do |photo| %>
 <% if photo.is_aerial %>
 <% type = 'aerial' %>
 <article class='preview h-centered pull-left aerial' id='preview-<%=photo.id%>'>

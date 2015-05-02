@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150502024510) do
+ActiveRecord::Schema.define(:version => 20150502062250) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -99,9 +99,7 @@ ActiveRecord::Schema.define(:version => 20150502024510) do
     t.string   "static_data",                                      :default => ""
     t.boolean  "vectors",                                          :default => false,       :null => false
     t.string   "tiles",                                            :default => "google",    :null => false
-    t.string   "email",                                            :default => "",          :null => false
     t.boolean  "archived",                                         :default => false,       :null => false
-    t.text     "tile_url",                                                                  :null => false
     t.text     "tile_layer",                                                                :null => false
     t.string   "license",                                          :default => "copyright"
     t.integer  "user_id",                                          :default => 0
@@ -109,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20150502024510) do
     t.string   "slug"
     t.boolean  "finished",                                         :default => true
     t.integer  "coverphoto"
+    t.text     "tile_url"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true

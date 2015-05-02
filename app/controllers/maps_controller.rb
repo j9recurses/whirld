@@ -19,18 +19,36 @@ class MapsController < ApplicationController
   end
 
   def search
+    puts "*******"
+    puts params.inspect
+    if params[:query ]
     #@map = Map.search(params)
-    #@map.inspect
-    #@user = current_user
+      @maps = Map.search(params[:query])
+      @maps = Map.get_search_maptags(@maps)
+    else
+      @maps = Map.all
+    end
+    @user = current_user
+   # puts "here"
     #render "maps/index"#, :layout => "layout_read"
-    params[:id] ||= params[:q]
-    @maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
-    @title = "Search results for '#{params[:id]}'"
+    #format.html { render "maps/index", :layout => "application" }
+    #format.json { render :json => @maps }
+
+    #old
+    #params[:id] ||= params[:q]
+    #puts params.inspect
+    #@maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
+    #@title = "Search results for '#{params[:id]}'"
     respond_to do |format|
-     format.html { render "maps/index", :layout => "application" }
-     format.json { render :json => @maps }
+     if params[:query ]
+     format.json { render :json => @maps, :methods => :taglist}
+   else
+    format.html { render "maps/index" }
+  end
     end
   end
+
+
 
   def index
     @maps = Map.page(params[:page]).per_page(20).where(:archived => false,:password => '').order('updated_at DESC')

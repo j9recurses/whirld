@@ -21,7 +21,7 @@ Whirld::Application.routes.draw do
   post 'maps' => 'maps#create' # legacy, will be replaced by resourceful route
   put 'map/:id' => 'maps#update' # legacy, will be replaced by resourceful route
   get 'search/:id' => 'maps#search'
-  get 'search' => 'maps#search'
+
   get 'map/update/:id' => 'maps#update' # legacy
   get 'map/region/:id' => 'maps#region'
   get 'map/license/:id' => 'maps#license'
@@ -125,6 +125,11 @@ Whirld::Application.routes.draw do
 
 #users
  get 'users/profile/:id' => 'users#profile', :as => "user_profile"
+
+#search
+post 'search' => 'maps#search'
+get 'search' => 'maps#search'
+
 
   resources :user_galleries do
       resources :photos, :except => [:update, :edit]

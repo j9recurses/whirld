@@ -31,14 +31,10 @@ class Map < ActiveRecord::Base
   has_many :photos,  through: :user_galleries
   has_many :user_gallery_grids, through: :user_galleries
   has_many :user_gallery_splits, through: :user_galleries
-  has_many :user_gallery_block_texts, through: :user_galleries
+  has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
 
-  #include Tire::Model::Search
-  #include Tire::Model::Callbacks
-
-
-  attr_accessor :taglist
+ attr_accessor :taglist
   def taglist
     @taglist
   end
@@ -46,14 +42,47 @@ class Map < ActiveRecord::Base
   def taglist=(val)
     @taglist = val
   end
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
-def self.search(params)
-  tire.search(load: true) do
-    query { string params[:query]} if params[:query].present?
-      filter :range, published_on: {lte: Time.zone.now }
+
+ index_name "map-engine-#{Rails.env}"
+
+  mapping do
+    indexes :name, analyzer: 'snowball', boost: 100
+    indexes :description, analyzer: 'snowball'
+    indexes :updated_at, type: 'date', index: :not_analyzed
+     indexes :tags, analyzer: 'snowball', boost: 50
   end
-end
 
+
+  def as_indexed_json(options={})
+    as_json(
+      only: [:id, :name, :description, :updated_at],
+      include: [:tags] #, :user_gallery_grids, :user_gallery_splits, :user_gallery_bloc_texts, :photos]
+    )
+  end
+
+
+
+#def self.search(params)
+ #   query { string params[:query], default_operator: "AND" } if params[:query].present?
+  #  sort { by :updated_at, "desc" }
+   #     end
+#end
+#
+#
+  def self.get_search_maptags(maps)
+    puts "****"
+    puts maps.size
+    tagged_maps = Array.new
+    maps.each do |map|
+    map = Map.find(map[:id])
+     map.taglist = map.tags.pluck([:name])
+    tagged_maps << map
+    end
+    return tagged_maps
+end
 
 
   #has_many :exports

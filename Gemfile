@@ -65,13 +65,13 @@ gem 'jbuilder'
 gem 'draper', '~> 1.3'
 
 #search
-#gem 'tire'
+gem 'tire'
 
 
 ##faker data
 #need to install these outside the app to run a rake job
-#gem install populator
-#gem install faker
+gem 'populator', '~> 1.0.0'
+gem 'faker'
 
 
 

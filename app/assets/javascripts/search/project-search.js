@@ -22,9 +22,9 @@ var FilterBar = function(options){
 FilterBar.prototype = {
 	// functions for getting values from dom
 	getAllValues: function(){
-		var data = [];
+		var data = {};
 		$.each($('.filter'), function(i, el){
-			var obj = {};
+			//var obj = {};
 			var type = $(el).attr('id').split('-')[1];
 
 			// grab data according to input type
@@ -35,23 +35,28 @@ FilterBar.prototype = {
 				var val = $(el).text();
 			}
 
-			// check if value is empty 
+			// check if value is empty
 			if(val == ''){ return }
-			else{ obj[type] = val; }
-
-			data.push(obj);
+			else{ data[type] = val; }
+			data[type]= val;
+			//data.push(obj);
 		});
 		return data;
 	},
+
 	// functions for posting queries to server
 	search: function(data){
+		console.log('***in here***')
 		console.log(data)
 		$.ajax({
-			url: '',
+			url: 'search',
 			data: data,
-			type: 'post',
+			type: 'get',
 			success: function(data){
+				console.log(data);
+				console.log('here');
 				console.log('Success: user results are returning');
+
 			},
 			error: function(){
 				console.log('Oops something went wrong.')
@@ -129,7 +134,7 @@ FilterBar.prototype = {
 
 		$('#search-go').on({
 			click: function(){
-				console.log("Searching...")	
+				console.log("Searching...")
 				self.search(self.getAllValues());
 			}
 		});

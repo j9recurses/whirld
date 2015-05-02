@@ -19,6 +19,12 @@ Then to load elasticsearch now:
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
 Or, if you don't want/need launchctl, you can just run:
 
+#to run config for elastic search
+  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
 
-    elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
-==> Summary
+#see if elastic search is running
+http://localhost:9200/
+
+
+#force the indexes to update
+rake environment tire:import CLASS=Map FORCE=true

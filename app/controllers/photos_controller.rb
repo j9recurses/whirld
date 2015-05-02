@@ -39,8 +39,6 @@ class PhotosController < ApplicationController
       @photo.warpable_id =    @warpable.id
       @photo.warpable_url =   @warpable.image.url(:medium)
       @photo.warpable_thumb_url =  @warpable.image.url(:thumb)
-      print 'THIS IS THE PHOTO RIGHT HERE'
-      print @photo.inspect
       respond_to do |format|
         format.json { render json:  @photo }
       end

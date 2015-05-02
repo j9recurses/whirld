@@ -32,8 +32,8 @@ ImageUploader.prototype = {
             mediumPath: data.result.photo_file.medium.url,
             thumbPath: data.result.photo_file.thumb.url,
             path: data.result.url,
-            warpableId: data.result.warpableId,
-            warpableUrl: data.result.warpableUrl
+            warpableId: data.result.warpable_id,
+            warpableUrl: data.result.warpable_url
         });
         img.initUploaded();
         pe.init();

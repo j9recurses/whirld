@@ -12,7 +12,7 @@ class Photo < ActiveRecord::Base
     @warpable_id = val
   end
 
-  attr_writer :warpable_url
+  attr_accessor  :warpable_url
   def warpable_url
     @warpable_url
   end
@@ -20,7 +20,7 @@ class Photo < ActiveRecord::Base
     @warpable_url = val
   end
 
-  attr_writer :warpable_thumb_url
+   attr_accessor :warpable_thumb_url
   def warpable_thumb_url
     @warpable_thumb_url
   end

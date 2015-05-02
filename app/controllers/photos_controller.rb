@@ -40,7 +40,7 @@ class PhotosController < ApplicationController
       @photo.warpable_url =   @warpable.image.url(:medium)
       @photo.warpable_thumb_url =  @warpable.image.url(:thumb)
       respond_to do |format|
-        format.json { render json:  @photo }
+        format.json { render json:  @photo, methods: [:warpable_id, :warpable_url, :warpable_url] }
       end
     else
         render :json => { "errors" => @photo.errors }

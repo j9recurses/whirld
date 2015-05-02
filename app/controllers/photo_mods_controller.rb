@@ -190,6 +190,7 @@ class PhotoModsController < ApplicationController
 
   #taggings
   def create_taggings
+    #parsetag list is in the application helper
     @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
     puts @item.inspect
     respond_to do |format|

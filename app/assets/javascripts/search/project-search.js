@@ -24,23 +24,28 @@ FilterBar.prototype = {
 	getAllValues: function(){
 		var data = [];
 		$.each($('.filter'), function(i, el){
-			var type = $(el).attr('id').split('-')[1];
 			var obj = {};
-					if(type == 'entity'){
-						obj[type] = $(el).text();
-					}
-					else if(type == 'query' && $(el).val() == ''){
-						obj[type] = 'none';
-					}
-					else { 
-						obj[type] = $(el).val();
-					}
+			var type = $(el).attr('id').split('-')[1];
+
+			// grab data according to input type
+			if(type == 'query' || type == 'location'){
+				var val = $(el).val();
+			}
+			else{
+				var val = $(el).text();
+			}
+
+			// check if value is empty 
+			if(val == ''){ return }
+			else{ obj[type] = val; }
+
 			data.push(obj);
 		});
 		return data;
 	},
 	// functions for posting queries to server
 	search: function(data){
+		console.log(data)
 		$.ajax({
 			url: '',
 			data: data,
@@ -53,8 +58,8 @@ FilterBar.prototype = {
 			}
 		});
 	},
-	// functions for posting to DOM
 
+	// functions for posting to DOM
 	htmlProjectResult: function(){
 
 	},
@@ -83,12 +88,6 @@ FilterBar.prototype = {
 			var newVal = $(this).text();
 			$('#filter-entity').text(newVal);
 			$(this).text(oldVal)
-			// if we need to get all values of all boxes, run this:
-			var otherVals = self.getAllValues();
-			console.log(otherVals);
-
-			var data = { query: newVal };
-			self.search(data)
 		});
 	},
 	location: function(){
@@ -118,16 +117,6 @@ FilterBar.prototype = {
 			var newVal = $(this).text();
 			$('#filter-sort').text(newVal);
 			$(this).text(oldVal)
-
-			console.log(oldVal)
-
-
-			// if we need to get all values of all boxes, run this:
-			var otherVals = self.getAllValues();
-			console.log(otherVals);
-
-			var data = { query: newVal };
-			self.search(data)
 		});
 	},
 	init: function(){
@@ -136,5 +125,13 @@ FilterBar.prototype = {
 		this.location();
 		this.tags();
 		this.sort();
+		var self = this;
+
+		$('#search-go').on({
+			click: function(){
+				console.log("Searching...")	
+				self.search(self.getAllValues());
+			}
+		});
 	} // end init
 }

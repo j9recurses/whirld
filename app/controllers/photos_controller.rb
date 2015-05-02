@@ -35,12 +35,9 @@ class PhotosController < ApplicationController
       photo_class_name = @photo.class.to_s.underscore
       #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
       @photo = Photo.deepLearnPredict(@photo)
-      @warpable = Photo.make_warpable(@photo)
-      @photo.warpable_id =    @warpable.id
-      @photo.warpable_url =   @warpable.image.url(:medium)
-      @photo.warpable_thumb_url =  @warpable.image.url(:thumb)
+      @photo = Photo.make_warpable(@photo)
       respond_to do |format|
-        format.json { render json:  @photo, methods: [:warpable_id, :warpable_url, :warpable_url] }
+        format.json { render json:  @photo } # , methods: [:warpable_id, :warpable_url, :warpable_url] }
       end
     else
         render :json => { "errors" => @photo.errors }

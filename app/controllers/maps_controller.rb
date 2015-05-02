@@ -57,6 +57,7 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
+    @gallery_photos =  @user_gallery.photos
     @photo = Photo.new
 
     @extra_js = true  # for layout differentiation

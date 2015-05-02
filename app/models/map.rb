@@ -27,8 +27,8 @@ class Map < ActiveRecord::Base
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
-  has_one :user_galleries
-  has_many :user_gallery_grids, through: :user_galleries
+  has_many :user_galleries
+ # has_many :user_gallery_grids, through: :user_galleries
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

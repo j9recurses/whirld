@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150428014522) do
+ActiveRecord::Schema.define(:version => 20150502024510) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -141,14 +141,17 @@ ActiveRecord::Schema.define(:version => 20150428014522) do
   create_table "photos", :force => true do |t|
     t.integer  "user_gallery_id"
     t.string   "photo_file"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.boolean  "is_aerial",       :default => false
-    t.boolean  "is_normal",       :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_aerial",          :default => false
+    t.boolean  "is_normal",          :default => false
     t.integer  "width"
     t.integer  "height"
     t.string   "content_type"
     t.integer  "file_size"
+    t.integer  "warpable_id"
+    t.string   "warpable_url"
+    t.string   "warpable_thumb_url"
   end
 
   create_table "taggings", :force => true do |t|

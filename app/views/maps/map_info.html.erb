@@ -1,3 +1,4 @@
+
 <div id='project-creation-2' class='row group' data-user-gallery-id = '<%=@user_gallery.id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
   <section id='photo-manager' class='side-nav eight columns'>
     <%= render :partial => "maps/map_info_pieces/side" %>
@@ -10,7 +11,7 @@
     </div>
   </article>
 
-
+<%=@gallery_photos.inspect %>
   <div id='project-form-map-info' class='sixteen columns'>
     <section class='twenty-two columns offset-one'>
 
@@ -29,7 +30,7 @@
     <div class='row-form row group'>
      <%= render :partial => "maps/map_info_pieces/form_tags" %>
     </div>
-    
+
     <h2 class='input-label'>Map Knitter</h2>
     <section id="knitter-map-pane"></section>
 

@@ -4,29 +4,29 @@ class Photo < ActiveRecord::Base
   has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
 
-  attr_accessor :warpable_id
-  def warpable_id
-    @warpable_id
-  end
-  def warpable_id= val
-    @warpable_id = val
-  end
+ # attr_accessor :warpable_id
+ # def warpable_id
+ #   @warpable_id
+ # end
+ # def warpable_id= val
+  #  @warpable_id = val
+ # end
 
-  attr_accessor  :warpable_url
-  def warpable_url
-    @warpable_url
-  end
-  def warpable_url= val
-    @warpable_url = val
-  end
+  #attr_accessor  :warpable_url
+  #def warpable_url
+  #  @warpable_url
+  #end
+  #def warpable_url= val
+  #  @warpable_url = val
+  #end
 
-   attr_accessor :warpable_thumb_url
-  def warpable_thumb_url
-    @warpable_thumb_url
-  end
-  def warpable_thumb_url= val
-    @warpable_thumb_url = val
-  end
+  # attr_accessor :warpable_thumb_url
+  #def warpable_thumb_url
+   # @warpable_thumb_url
+  #end
+  #def warpable_thumb_url= val
+  #  @warpable_thumb_url = val
+  # end
 
 
 
@@ -40,7 +40,11 @@ class Photo < ActiveRecord::Base
     gallery = UserGallery.find(photo[:user_gallery_id])
     warpable.map_id = gallery[:map_id]
     warpable.save!
-    return warpable
+    photo.warpable_id =    warpable.id
+    photo.warpable_url =   warpable.image.url(:medium)
+    photo.warpable_thumb_url =  warpable.image.url(:thumb)
+    photo.save
+    return photo
   end
 
   def self.deepLearnPredict(photo)

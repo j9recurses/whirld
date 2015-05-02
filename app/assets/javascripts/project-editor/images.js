@@ -120,7 +120,8 @@ Image.prototype = {
   init: function(){
     // ajax listeners
     var self = this;
-    $('.preview').on('click', 'img', function(){
+    $('.preview').off().on('click', 'img', function(){
+      console.log(this)
       window.mapKnitter.addImage($(this).data('warpable-url'), $(this).data('warpable-id'));
     });
   },

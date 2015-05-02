@@ -28,9 +28,14 @@ class Map < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   belongs_to :user
   has_many :user_galleries
- # has_many :user_gallery_grids, through: :user_galleries
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  has_many :photos,  through: :user_galleries
+  has_many :user_gallery_grids, through: :user_galleries
+  has_many :user_gallery_splits, through: :user_galleries
+  has_many :user_gallery_block_texts, through: :user_galleries
+  has_many :user_gallery_comparisons, through: :user_galleries
+
+  #include Tire::Model::Search
+  #include Tire::Model::Callbacks
 
 
   attr_accessor :taglist

@@ -38,7 +38,7 @@
 <% end %>
 			<div class='img-wrapper v-centered'>
 				<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
-				<%= image_tag(photo.photo_file, :class => 'draggable', :data => {:img_id => photo.id, :img_type => type }) %>
+				<%= image_tag(photo.photo_file, :class => 'draggable', :data => {:img_id => photo.id, :img_type => type, :warpable_id => photo.warpable_id, :warpable_url => photo.warpable_url }) %>
 			</article>
 <% end %>
 

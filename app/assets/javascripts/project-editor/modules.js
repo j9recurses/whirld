@@ -184,6 +184,9 @@ Module.prototype = {
             ui: ui
           });
           photo.create();
+
+
+
           // console.log(photo)
           // self.dropzone.append(photo.modPhotoEl);
         }

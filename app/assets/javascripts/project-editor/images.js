@@ -31,10 +31,11 @@ ImageUploader.prototype = {
             is_normal: data.result.is_normal,
             mediumPath: data.result.photo_file.medium.url,
             thumbPath: data.result.photo_file.thumb.url,
-            path: data.result.url
+            path: data.result.url,
+            warpableId: data.result.warpableId,
+            warpableUrl: data.result.warpableUrl
         });
         img.initUploaded();
-        console.log(pe)
         pe.init();
       }, // end done
       fail: function (e, data) {
@@ -57,7 +58,9 @@ var Image = function(options){
     mediumPath: null,
     path: null,
     removeButtonClassName: 'photo-remove',
-    thumbContainerId: 'photos-uploaded'
+    thumbContainerId: 'photos-uploaded',
+    warpableId: null,
+    warpableUrl: null
   }, options);
   
   this.id = this.options.id;
@@ -90,6 +93,8 @@ Image.prototype = {
   },
   setUploadedData: function(){
     this.thumbEl = this.htmlThumb();
+    this.thumbEl.data('warpable-id', this.options.warpableId);
+    this.thumbEl.data('warpable-url', this.options.warpableUrl)
   },
   setSavedData: function(){
     this.thumbEl = $('#preview-' + this.id);

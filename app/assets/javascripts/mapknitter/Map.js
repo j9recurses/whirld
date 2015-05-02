@@ -42,7 +42,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
         // only already-placed images:
         if (warpable.nodes.length > 0) {
 
-          var corners = [
+          var corners = [ 
                 new L.latLng(warpable.nodes[0].lat,
                              warpable.nodes[0].lon),
                 new L.latLng(warpable.nodes[1].lat,
@@ -55,35 +55,34 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
           var img = new L.DistortableImageOverlay(
             warpable.srcmedium,
-            {
+            { 
               corners: corners,
               mode: 'lock'
           }).addTo(window.mapKnitter._map);
 
           bounds = bounds.concat(corners);
+          window.mapKnitter._map.fitBounds(bounds);
           images.push(img);
           img.warpable_id = warpable.id
 
           if (!options.readOnly) {
             // img.on('select', function(e){
             // refactor to use on/fire; but it doesn't seem to work
-            // without doing it like this:
+            // without doing it like this: 
             L.DomEvent.on(img._image, 'click', window.mapKnitter.selectImage, img);
             img.on('deselect', window.mapKnitter.saveImageIfChanged, img)
             L.DomEvent.on(img._image, 'dblclick', window.mapKnitter.dblClickImage, img);
             L.DomEvent.on(img._image, 'load', function() {
               var img = this
-              img.on('edit', window.mapKnitter.saveImageIfChanged, img);
-              img.on('delete', window.mapKnitter.deleteImage, img)
-              L.DomEvent.on(img._image, 'mouseup', window.mapKnitter.saveImageIfChanged, img);
-              L.DomEvent.on(img._image, 'touchend', window.mapKnitter.saveImageIfChanged, img);
+              window.mapKnitter.setupToolbar(img)
             }, img);
           }
         }
       });
 
-      window.mapKnitter._map.fitBounds(bounds);
     });
+
+
 
     /* Deselect images if you click on the sidebar,
      * otherwise hotkeys still fire as you type. */

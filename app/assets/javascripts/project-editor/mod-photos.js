@@ -93,7 +93,7 @@ ModPhoto.prototype = {
             modtype: this.options.modType,
             photo_id: this.imgId
           };
-    console.log(data)      
+
     $.ajax({
       url: url,
       data: data,
@@ -101,6 +101,7 @@ ModPhoto.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: photo is associated')
+
         // Set parts, data, initiate events
         self.initModPhoto();
 

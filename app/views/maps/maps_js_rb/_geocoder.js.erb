@@ -5,11 +5,11 @@ jQuery(document).ready(function($) {
     e.preventDefault();
   })
 
-  window.mapKnitter.getMap().on('drag',function(e) {
-    $("#project-lat").val(window.mapKnitter.getMap().getCenter().lat);
-    $("#project-lon").val(window.mapKnitter.getMap().getCenter().lng);
-    $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
-  })
+  // window.mapKnitter.getMap().on('drag',function(e) {
+  //   $("#project-lat").val(window.mapKnitter.getMap().getCenter().lat);
+  //   $("#project-lon").val(window.mapKnitter.getMap().getCenter().lng);
+  //   $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
+  // })
 
   $("#project-location").autocomplete({
     autoFocus: true,

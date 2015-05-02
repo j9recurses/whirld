@@ -172,10 +172,16 @@ SearchBar.prototype = {
     return data
   },
   search: function(data){
-    console.log(data)
-    // $.ajax({
-
-    // })
+    $.ajax({
+      url: 'search',
+      data: data,
+      cache: false,
+      type: 'get',
+      success: function(data){
+        console.log('Success');
+        console.log(data)
+      }
+    })
   },
   closeBar: function(){
     var self = this;

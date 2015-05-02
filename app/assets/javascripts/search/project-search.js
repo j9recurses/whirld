@@ -24,7 +24,6 @@ FilterBar.prototype = {
 	getAllValues: function(){
 		var data = {};
 		$.each($('.filter'), function(i, el){
-			//var obj = {};
 			var type = $(el).attr('id').split('-')[1];
 
 			// grab data according to input type
@@ -34,12 +33,7 @@ FilterBar.prototype = {
 			else{
 				var val = $(el).text();
 			}
-
-			// check if value is empty
-			if(val == ''){ return }
-			else{ data[type] = val; }
 			data[type]= val;
-			//data.push(obj);
 		});
 		return data;
 	},

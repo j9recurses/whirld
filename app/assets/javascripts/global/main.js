@@ -35,12 +35,12 @@ AutoComp.prototype = {
   },
   keyword: function(){
     var testData = [
-      { label: "annhhx10", category: "Tags" },
-      { label: "annk K12", category: "Tags" },
-      { label: "annttop C13", category: "Tags" },
       { label: "anders andersson", category: "Search" },
       { label: "andreas andersson", category: "Search" },
-      { label: "andreas johnson", category: "Search" }
+      { label: "andreas johnson", category: "Search" },
+      { label: "annhhx10", category: "Tags" },
+      { label: "annk K12", category: "Tags" },
+      { label: "annttop C13", category: "Tags" }
       ]
     var self = this;
 

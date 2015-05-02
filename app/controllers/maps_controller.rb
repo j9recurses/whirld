@@ -19,10 +19,17 @@ class MapsController < ApplicationController
   end
 
   def search
-    @map = Map.search(params)
-    @map.inspect
-    @user = current_user
-    render "maps/index"#, :layout => "layout_read"
+    #@map = Map.search(params)
+    #@map.inspect
+    #@user = current_user
+    #render "maps/index"#, :layout => "layout_read"
+    params[:id] ||= params[:q]
+    @maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
+    @title = "Search results for '#{params[:id]}'"
+    respond_to do |format|
+     format.html { render "maps/index", :layout => "application" }
+     format.json { render :json => @maps }
+    end
   end
 
   def index
@@ -57,7 +64,7 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
-    @gallery_photos =  @user_gallery.photos
+    @gallery_photos =  @map.photos
     @photo = Photo.new
     @extra_js = true  # for layout differentiation
     @photo_manager = true # for layout differentiation

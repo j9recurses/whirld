@@ -40,17 +40,12 @@ FilterBar.prototype = {
 
 	// functions for posting queries to server
 	search: function(data){
-		console.log('***in here***')
-		console.log(data)
 		$.ajax({
 			url: 'search',
 			data: data,
 			type: 'get',
 			success: function(data){
-				console.log(data);
-				console.log('here');
 				console.log('Success: user results are returning');
-
 			},
 			error: function(){
 				console.log('Oops something went wrong.')
@@ -64,12 +59,6 @@ FilterBar.prototype = {
 	},
 	appendResult: function(){
 
-	},
-	// interactions and triggers for ajax query posts
-	query: function(){
-		console.log('Initiated: query box')
-		var url = '';
-		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
 	},
 	entity: function(){
 		console.log('Initiated: entity box')
@@ -88,16 +77,6 @@ FilterBar.prototype = {
 			$('#filter-entity').text(newVal);
 			$(this).text(oldVal)
 		});
-	},
-	location: function(){
-		console.log('Initiated: location box')
-		var url = '';
-		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
-	},
-	tags: function(){
-		console.log('Initiated: tags box')
-		var url = '';
-		// hopefully we'll be able to get the Autocomplete object working. It posts in the select listener.
 	},
 	sort: function(){
 		console.log('Initiated: sort')
@@ -120,9 +99,6 @@ FilterBar.prototype = {
 	},
 	init: function(){
 		this.entity();
-		this.query();
-		this.location();
-		this.tags();
 		this.sort();
 		var self = this;
 

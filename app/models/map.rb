@@ -80,8 +80,9 @@ class Map < ActiveRecord::Base
   #end
   #
   #
+
+  #
   def self.get_maptags(maps)
-    puts maps.size
     tagged_maps = Array.new
     maps.each do |map|
       map = Map.find(map[:id])

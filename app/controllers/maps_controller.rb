@@ -13,6 +13,7 @@ class MapsController < ApplicationController
       "layout_read"
     when "search"
       "layout_search"
+
     else
       "application"
     end
@@ -22,7 +23,6 @@ class MapsController < ApplicationController
     puts "*******"
     puts params.inspect
     if params[:query ]
-      #@map = Map.search(params)
       @maps = Map.search(params[:query])
       @maps = Map.get_maptags(@maps)
       @maps = Map.get_photos(@maps)
@@ -32,13 +32,15 @@ class MapsController < ApplicationController
     @user = current_user
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => :taglist, :methods => :coverphoto_name}
+        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name]}
         #to_json(:include => [:material_costs])}
       else
         format.html { render "maps/index" }
       end
     end
   end
+
+
 
   def search_top_navbar
     puts params.inspect

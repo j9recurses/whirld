@@ -74,7 +74,6 @@ gem 'populator', '~> 1.0.0'
 gem 'faker'
 
 
-
 #for deepLearn predicter
 #gem 'delayed_job_active_record'
 #gem 'daemons'

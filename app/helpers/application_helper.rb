@@ -49,23 +49,21 @@ module ApplicationHelper
       newtaglist.each do |tag|
         item.tags.create(name: tag, user_id:current_user[:id])
       end
-    #item[:taglist] = item.tags
+      #item[:taglist] = item.tags
       item.taglist =item.tags
     end
     return item
   end
 
-  def delete_hashkeys( model, keep_keys)
-         cool =  del_keys.each { |k| params.delete(k) }
-  end
+
 
   def arrange_modules(mod_order)
     unless mod_order.blank?
-    mod_order =  mod_order.gsub("{", "[")
-    mod_order =  mod_order.gsub("}", "]")
-     mod_order =  mod_order.gsub(":", ",")
-    mod_order = eval(mod_order)
-  end
+      mod_order =  mod_order.gsub("{", "[")
+      mod_order =  mod_order.gsub("}", "]")
+      mod_order =  mod_order.gsub(":", ",")
+      mod_order = eval(mod_order)
+    end
     return mod_order
   end
 

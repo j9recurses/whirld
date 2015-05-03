@@ -66,6 +66,7 @@ module ApplicationHelper
     return mod_order
   end
 
+
   # polyfill for jquery-ujs in rails 2.x
   # see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2
 

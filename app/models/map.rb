@@ -34,7 +34,7 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
 
- attr_accessor :taglist
+  attr_accessor :taglist
   def taglist
     @taglist
   end
@@ -42,17 +42,27 @@ class Map < ActiveRecord::Base
   def taglist=(val)
     @taglist = val
   end
+
+  attr_accessor :coverphoto_name
+  def coverphoto_name
+    @coverphoto_name
+  end
+
+  def coverphoto_name=(val)
+    @coverphoto_name = val
+  end
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
 
- index_name "map-engine-#{Rails.env}"
+  index_name "map-engine-#{Rails.env}"
 
   mapping do
     indexes :name, analyzer: 'snowball', boost: 100
     indexes :description, analyzer: 'snowball'
     indexes :updated_at, type: 'date', index: :not_analyzed
-     indexes :tags, analyzer: 'snowball', boost: 50
+    indexes :tags, analyzer: 'snowball', boost: 50
   end
 
 
@@ -63,31 +73,40 @@ class Map < ActiveRecord::Base
     )
   end
 
-
-
-#def self.search(params)
- #   query { string params[:query], default_operator: "AND" } if params[:query].present?
+  #def self.search(params)
+  #   query { string params[:query], default_operator: "AND" } if params[:query].present?
   #  sort { by :updated_at, "desc" }
-   #     end
-#end
-#
-#
-  def self.get_search_maptags(maps)
-    puts "****"
+  #     end
+  #end
+  #
+  #
+  def self.get_maptags(maps)
     puts maps.size
     tagged_maps = Array.new
     maps.each do |map|
-    map = Map.find(map[:id])
-     map.taglist = map.tags.pluck([:name])
-    tagged_maps << map
+      map = Map.find(map[:id])
+      map.taglist = map.tags.pluck([:name])
+      tagged_maps << map
     end
     return tagged_maps
-end
+  end
 
 
-  #has_many :exports
-  #has_many :comments
-  # has_many :annotations
+  def self.get_photos(maps)
+    coverphoto_maps = Array.new
+    maps.each do |map|
+      puts map.inspect
+      usr_gallery_id = map.user_galleries.map(&:id)
+      coverphoto = Photo.find(map[:coverphoto])
+      map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+      puts map.coverphoto_name
+      coverphoto_maps  << map
+    end
+  end
+
+
+
+
 
   has_many :warpables do
     def public_filenames

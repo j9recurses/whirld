@@ -6,8 +6,8 @@
 	<%= render "layouts/header_map" %>
 </head>
 <body>
-<% if @photo_manager %>
-	<%= render "layouts/nav_main", :className => 'map_info' %>
+<% if @project_editor==true %>
+	<%= render "layouts/nav_project_editor", :className => 'map-info' %>
 <% else %>
 	<%= render "layouts/nav_main", :className => 'new' %>
 <% end %>
@@ -16,10 +16,16 @@
 
 <script><%= render :partial => 'maps/mappane', :formats => [:js] %></script>
 <!-- JS for project editor -->
-<%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
-<%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
-<%= javascript_include_tag "autosize/dest/autosize.js" %>	
-<%= javascript_include_tag "global/search-bar.js" %>
+<%#= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
+<%#= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
+<%= javascript_include_tag "autosize/dest/autosize.js" %>
+<%= javascript_include_tag "mixitup/src/jquery.mixitup.js" %>
+
+<% unless @project_editor==true %>
+	<%= javascript_include_tag "global/search-bar.js" %>
+	<%= javascript_include_tag "global/main.js" %>
+<% end %>
+<%= javascript_include_tag "bootstrap/dist/js/bootstrap.min" %>
 <%= javascript_include_tag "project-editor/modules.js" %>
 <%= javascript_include_tag "project-editor/button-bar.js" %>
 <%= javascript_include_tag "project-editor/images.js" %>

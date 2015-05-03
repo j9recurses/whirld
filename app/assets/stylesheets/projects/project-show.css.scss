@@ -57,16 +57,6 @@
     float: left;
     width: 50%;
   }
-  .img-wrapper{
-    background-color: #f5f5f5;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  }
-  .img-wrapper-link{
-    display: block;
-    width: 100%;
-  }
   .module-split-wrapper{
     height: 100%;
   }
@@ -284,9 +274,6 @@
   }
   .search-card i{
     color: #ababab;
-  }
-  .gray{
-    color: #595959;
   }
   input[type='text']:focus{
     outline-color: #f27150; 

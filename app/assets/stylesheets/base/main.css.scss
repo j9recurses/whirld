@@ -54,6 +54,9 @@ button i{ line-height: 0; }
   cursor: pointer;
 }
 .first-section{ padding-top: 6%; }
+.gray{
+  color: #595959;
+}
 .h-centered{ text-align: center; }
 .h-righted{ text-align: right; }
 .hidden{ 
@@ -72,6 +75,16 @@ button i{ line-height: 0; }
 img{
   height: auto;
   max-width: 100%;
+}
+.img-wrapper{
+  background-color: #f5f5f5;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.img-wrapper-link{
+  display: block;
+  width: 100%;
 }
 .inactive{ color: inherit; }
 .inactive:hover, .tab .inactive:hover, .tag .inactive:hover{ color: white;opacity: 1; }
@@ -127,6 +140,7 @@ input[type='text']:focus{
   right: 5px;
   top: 5px;
 }
+.round{ border-radius: 50%; }
 .tab.active, .tag.active{
   cursor: default;
 }

@@ -80,6 +80,7 @@ class MapsController < ApplicationController
     gallery = UserGallery.new()
     gallery.name = @map.slug
     gallery.user_id = @user.id
+
     if @map.save && gallery.save
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
@@ -95,7 +96,7 @@ class MapsController < ApplicationController
     @gallery_photos =  @map.photos
     @photo = Photo.new
     @extra_js = true  # for layout differentiation
-    @photo_manager = true # for layout differentiation
+    @project_editor = true # for layout differentiation
     render "map_info"
   end
 

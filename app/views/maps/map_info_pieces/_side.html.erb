@@ -1,48 +1,58 @@
-<nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
-	<div class='photo-state-wrapper'>
-		<select id='photo-state'>
-		  <option value="uploaded" selected='selected'>Current Photos</option>
-		  <option value="saved" >Saved (<%= @user_gallery.photos.count%>)</option>
-		</select>
-	</div>
-	<div id='photo-types' class='photo-types-wrapper'>
-			<input id="aerial" type="radio" name="photo-type" value="aerial">
-		  <label for="aerial">Aerial</label>
+<nav id='photo-manager-nav' class='six row group'>
 
-			<input id="normal" type="radio" name="photo-type" value="normal">
-		  <label for="normal">Street View</label>
-	</div>
+	<ul class='inline-list sort-list row group twenty-two h-righted'>
+		<li class='item pull-left offset-one'>Photo Manager</li>
+		<li id='photo-upload' class='item cursor-point'>
+			<i class='fa fa-upload'></i>
+				<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
+				<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+		    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+			<% end %>
+		</li>
+	</ul>
 </nav>
 
-<section id='photos-uploaded' class='photo-list first-section scrollable eight'>
-	<article id='photo-upload' class='h-centered'>
-		<div class='img-wrapper photo-upload-wrapper v-centered'>
-				<i class='fa fa-plus-circle h1-size'></i>
-		</div>
-		<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
-			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-		<% end %>
-	</article>
+	<ul class='inline-list filter-list h-centered row group font_small'>
+		<li class="filter-type item active" data-filter="all">All</li>
+		<li class="filter-type item" data-filter=".aerial">Aerial</li>
+		<li class="filter-type item" data-filter=".normal">Street View</li>
+		<li class="filter-type item" data-filter=".people">People</li>
+		<li class="sort sort-item item cursor-point active" data-sort="created:desc">
+			<i class='fa fa-sort-amount-desc'></i>
+		</li>
+		<li class="sort sort-item item cursor-point" data-sort="created:asc">
+			<i class='fa fa-sort-amount-asc'></i>
+		</li>
+	</ul>
+
+<section id='preview-list'>
+
+	<% @gallery_photos.each do |photo| %>
+	<% if photo.is_aerial %>
+	<% type = 'aerial' %>
+	<article id='preview-<%=photo.id%>' class='preview mix aerial saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+	<% elsif photo.is_normal %>
+	<% type = 'normal' %>
+	<article id='preview-<%=photo.id%>' class='preview mix normal saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>'style="background-image:url('<%=photo.photo_file%>')">
+	<% end %>					
+					<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
+				</article>
+	<% end %>
+
+	<% @gallery_photos.each do |photo| %>
+	<% if photo.is_aerial %>
+	<% type = 'aerial' %>
+	<article id='preview-<%=photo.id%>' class='preview mix aerial saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>'data-created='<%=photo.created_at.to_i%>'  style="background-image:url('<%=photo.photo_file%>')">
+	<% elsif photo.is_normal %>
+	<% type = 'normal' %>
+	<article id='preview-<%=photo.id%>' class='preview mix normal saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' style="background-image:url('<%=photo.photo_file%>')">
+	<% end %>		
+					<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
+				</article>
+	<% end %>
 
 </section>
 
-<section id='photos-saved' class='photo-list first-section scrollable eight hidden invisible'>
-<% @gallery_photos.each do |photo| %>
-<% if photo.is_aerial %>
-<% type = 'aerial' %>
-<article class='preview h-centered pull-left aerial' id='preview-<%=photo.id%>'>
-<% elsif photo.is_normal %>
-<% type = 'normal' %>
-<article class='preview h-centered pull-left normal hidden invisible' id='preview-<%=photo.id%>'>
-<% end %>
-			<div class='img-wrapper v-centered'>
-				<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
-				<%= image_tag(photo.photo_file, :class => 'draggable', :data => {:img_id => photo.id, :img_type => type, :warpable_id => photo.warpable_id, :warpable_url => photo.warpable_url }) %>
-			</article>
-<% end %>
-
-</section>
 
 
 <%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>

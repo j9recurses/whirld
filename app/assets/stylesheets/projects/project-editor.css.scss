@@ -1,10 +1,24 @@
-/*Hide About and Create on the proejct editor page*/
-#navbar-main.map_info {
-  height: 10%;
+#navbar-main.map-info{
+  height: 8%;
+  .help-wrapper { padding-top: 5%; }
+  #help{
+    border: #999 1px solid;
+    height: 25px;
+    width: 25px;
+  }
+  #help i {
+    left: 20%;
+    top: 25%;
+  }
+  #help:hover{
+    background: #999;
+    border: none;
+    color: #f6f6f6;
+  }
+  .menu-item{ border: none; }
+  .navbar-main{ height: 8%; }
 }
-#navbar-main.map_info #about, #navbar-main.map_info #create{
-  display: none;
-}
+
 
 .ui-draggable-handle{
   z-index: 100000;
@@ -14,7 +28,7 @@
 
 #project-creation-1, #project-creation-2{
 
-  background-color: #f2f2f2;
+  background-color: #fff;
   height: 100%;
   min-height: 700px;
   .button-bar{ 
@@ -96,6 +110,21 @@
   }
   .error{ color: coral; }
   .fa-plus{ line-height: 0;}
+  .filter-list{ padding-top: 24%; }
+  .filter-type{
+    color: rgb(44, 203, 197);
+    cursor: pointer;
+    margin-right: 1em;
+    font-weight: bold;
+  }
+  .filter-type:last-of-type{
+    margin-right: 0;
+  }
+  .filter-type.active{
+    border-bottom: 3px solid rgb(44, 203, 197);
+    color: #CFCFCF;
+    cursor: default;
+  }
   .focus-in .input-label{
     color: darkcyan;
   }
@@ -145,31 +174,30 @@
   .module img.ui-draggable-handle {
     width: 100%;
   }
-
-  #navbar-photo-manager{ 
-    background-color: #333;
-    color: white;
-    height: 10%;
-    padding: 7.5% 0 1% 0;
-    top: 0px;
-    z-index: 99;
-  }
   .photo{ position: relative; }
-  .photo .img-wrapper{
-    height: 290px;
-    overflow: hidden;
-  }
   .photo-list{
-    background-color: #333;
+    background-color: #666;
     height: 100%;
-    padding-top: 15.51%;
-    top: 0;
     -webkit-transition: all .25s linear;
     -moz-transition: all .25s linear;
     transition: all .25s linear;
   }
     .photo-list img { max-height: 180px; }
 
+  #photo-manager{
+    background: #333;
+    height: 100%;
+    padding-top: 3%;
+    position: fixed;
+    overflow: scroll;
+  }
+  #photo-manager-nav{
+    background: #CBCBCB;
+    height: 8%;
+    line-height: 3em;
+    position: fixed;
+    z-index: 100;
+  }
   .photo-remove{
     background-color: #333;
     color: white;
@@ -179,81 +207,72 @@
     top: 10px;
     width: 22px;
   }
-  #photo-types{
-    background-color: #333;
-    padding: .5em 0 .5em 0;
-  }
-  .photo-types-wrapper input[type='radio']{
-    display: none;
-  }
-  .photo-types-wrapper input[type="radio"]:checked+label {
-    color: aquamarine;
-    cursor: default;
-    -webkit-transition: all .1s linear;
-      -moz-transition: all .1s linear;
-      transition: all .1s linear;
-  }
-  .photo-types-wrapper input[type="radio"]:disabled+label{
-    cursor: default;
-  }
-  .photo-types-wrapper label{
-    color: #999;
-    display: inline-block;
-    cursor: pointer;
-    line-height: 1em;
-    position: relative;
-    padding-left: 1.5em;
-  }
-  .photo-types-wrapper label:nth-of-type(1){
-    margin-right: 2em;
-  }
-  #photo-upload{ 
-    background: #999;
-    height: 180px;
-    float: left;
-    margin: 0 2% 2% 0;
-    position: relative;
-    width: 47.2%;
+
+  #photo-upload{
+    width: 50px;
+    height: 50px;
+    color: rgb(44, 203, 197);
   }
   #photo-upload form {
     opacity: 0;
     overflow: hidden;
     position: absolute;
     top: 0;
+    right: 13px;
+    width: 34px;
+    top: 0;
+    height: 50px;
+    border-left: 1px solid #2ccbc5;;
   }
   #photo-upload input{
     cursor: pointer;
     font-size: 100px;
   }
-  .preview {
-    background-color: gray;
-    color: white;
-    height: 180px;
-    margin: 0 0 2% 0;
-    width: 47.2%;
+
+  #preview-list{
+    font-size: 0;
+    padding: 6% 1% 0;
+    text-align: justify;
   }
-  .aerial:nth-child(odd), .normal:nth-child(odd){
-    margin-right: 2%;
-  }
-  .preview-chosen { opacity: .5; cursor: default; }
-  .preview:hover{
-    opacity: .5;
-      -webkit-transition: all .25s linear;
-      -moz-transition: all .25s linear;
-      -o-transition: all .25s linear;
-    transition: all .25s linear;
-  }
-  .preview img{
-    transition: opacity 0.5s linear;
+
+  #preview-list:after{
+    content: '';
     display: inline-block;
+    height: 100%;
+    width: 100%;
   }
-  .photo-state-wrapper{
-     background: #999;
-     border: 1px solid #999;
-     height: 2em;
-     margin: 0 auto 1em auto;
-     overflow: hidden;
-     width: 75%;
+
+  #preview-list .preview,
+  #preview-list .gap{
+    display: inline-block;
+    width: 100%;
+    height: 146px;
+  }
+
+  #preview-list .preview{
+    text-align: left;
+    margin-bottom: 2%;
+    display: none; /*<-- uncomment this rule for use with MixItUp */
+  }
+
+  #preview-list .preview:before{
+    content: '';
+    display: inline-block;
+    padding-top: 60%;
+  }
+
+  @media all and (min-width: 420px){
+    #preview-list .preview,
+    #preview-list .gap{
+      width: 32%;
+    }
+  }
+
+  @media all and (min-width: 640px){
+    #preview-list .preview,
+    #preview-list .gap{
+      width: 49%;
+    }
   }
   .project-tag{ 
     display: inline-block;
@@ -272,6 +291,7 @@
   }
   .project-tag.error{ color: cornflowerblue; }
   .project-tag:hover{ text-decoration: line-through; }
+
   .row-form{ margin-bottom: 2em; }
   .saved .fa-save { color: green; }
   .save-module{
@@ -298,8 +318,22 @@
     width: 75%;
     -webkit-appearance: none;
   }
-  .tab{ cursor: pointer; }
-  .tab.empty{ cursor: default; }
+  #select-photo-state{
+    padding: 0 0 0 10px;
+    height: 43px;
+  }
+  .sort-item{
+    color: #CFCFCF;
+  }
+  .sort.active{
+    color: coral;
+  }
+  .sort-item:hover{
+    color: coral;
+  }
+  .sort-list .item:hover{
+    opacity: .7;
+  }
   .tag-container{ min-height: 29px; }
   textarea{
     background: none;

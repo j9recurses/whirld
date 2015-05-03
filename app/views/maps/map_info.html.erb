@@ -1,51 +1,19 @@
 
 <div id='project-creation-2' class='row group' data-user-gallery-id = '<%=@user_gallery.id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
-  <section id='photo-manager' class='side-nav eight columns'>
+  <section id='photo-manager' class='six columns'>
     <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
 
-  <article class="temp-preloader eight columns hidden">
+  <article class="temp-preloader six columns hidden">
     <h1 class='h3-size h-centered v-centered'>Uploading...</h1>
     <div class='progress-bar-wrapper'>
       <div class='progress-bar'></div>
     </div>
   </article>
 
-  <div id='project-form-map-info' class='sixteen columns'>
-    <section class='twenty-two columns offset-one'>
-
-    <div class='row-form row group'>
-      <%= render :partial => "maps/map_info_pieces/form_title" %>
-    </div>
-
-    <div class='row-form row group'>
-      <%= render :partial => "maps/map_info_pieces/form_location" %>
-    </div>
-
-    <div class='row-form row group'>
-       <%= render :partial => "maps/map_info_pieces/form_description" %>
-    </div>
-
-    <div class='row-form row group'>
-     <%= render :partial => "maps/map_info_pieces/form_tags" %>
-    </div>
-
-    <h2 class='input-label'>Map Knitter</h2>
-    <section id="knitter-map-pane"></section>
-
-
-    <%= render :partial => "maps/map_info_pieces/buttonBar" %>
-
-    <div class='row group'>
-      <div class='three columns pull-right'>
-        <button id='project-finish' class='button-action button-finish'>Finish</button>
-      </div>
-      <div class='three columns pull-right'>
-        <button id='project-cancel' class='button-action button-cancel two columns pull-right'>Cancel</button>
-      </div>
-    </div>
-
-
+  <section class='eighteen columns'>
+    <section id="knitter-map-pane" class='hidden'></section>
+  </section>
   </div> <!-- end #project-form -->
 </div> <!-- end #project-creation -->
 

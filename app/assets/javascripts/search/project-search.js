@@ -128,30 +128,24 @@ FilterBar.prototype = {
 			$(this).text(oldVal)
 		});
 	},
-	sort: function(){
+	sort: function(byOrder){
 		console.log('Initiated: sort')
+		console.log(byOrder)
 
 		var self = this;
 
-		$('#sort-wrapper').off().on({
-			click: function(){
-				$(this).toggleClass('filter-expanded');
-			}
-		});
+		self.searchResultsContainer.find('.search-card').sort(function (a, b) {
+			console.log(a.dataset.createdAt)
 
-		$('#sort-options').on('click', 'li', function(){
-			console.log(this)
-			var oldVal = $('#filter-sort').text();
-			var newVal = $(this).text();
-			$('#filter-sort').text(newVal);
-			$(this).text(oldVal)
-		});
+		})
+		.appendTo( self.searchResultsContainer );
+
 	},
 	init: function(){
 		this.entity();
 		this.keywordAC();
 		this.locationAC();
-		this.sort();
+		// this.sort();
 		var self = this;
 
 		$('#filter-location').on({
@@ -169,7 +163,7 @@ FilterBar.prototype = {
 				}
 			}
 		});
-
+		
 		$('#search-go').on({
 			click: function(){
 				console.log("Searching...")

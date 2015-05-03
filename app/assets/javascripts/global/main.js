@@ -37,8 +37,6 @@ AutoComp.prototype = {
           dataType: "json",
           data: {term: request.term},
           success: function(data) {
-            console.log(data)
-
             response($.map(data, function(item) {
               return item;
             }));

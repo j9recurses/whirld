@@ -3,21 +3,7 @@
 
 	<section id='search-results' class='search-list-view twenty-four'>
 
-		<% count = 0 %>
-		<div class='row group wrapper
-		'>
-		<% 32.times do |card| %>
-			<% if count%3 != 0 %>
-				<%=render :partial => 'maps/search_pieces/search_card' %>
-			<% else %>
-				</div>
-				<div class='row group wrapper'>
-				<%=render :partial => 'maps/search_pieces/search_card' %>
-			<% end %>
-			<% count +=1 %>
-		<% end %>
 
-		</div> <!-- end row group -->
 
 	</section>
 	<section id='search-pagination'>

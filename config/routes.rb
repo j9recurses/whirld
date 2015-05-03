@@ -131,7 +131,7 @@ post 'search' => 'maps#search'
 get 'search' => 'maps#search'
 
 #search from nav bar
-get 'search_nav' => 'maps#search_top_navbar'
+get 'search_top_navbar' => 'maps#search_top_navbar'
 
 #autocomplete results
 get 'autocomplete' => 'maps#autocomplete'

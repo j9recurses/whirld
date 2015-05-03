@@ -1,17 +1,6 @@
 $(document).ready(function(){
   var sb = new SearchBar();
       sb.init();
-  
-  var locAC = new AutoComp({
-      inputId: 'search-location'
-  });
-      locAC.location();
-  
-  var kwAC = new AutoComp({
-    inputId: 'search-keyword'
-  });
-      kwAC.keyword();
-
 });
 
 var AutoComp = function(options){
@@ -30,18 +19,7 @@ AutoComp.prototype = {
   highlightResults: function(item, term){
     return String(item.value).replace(new RegExp(term, "gi"),"<span class='search-term-highlight'>$&</span>");
   },
-  keywordSource: function(request, response){
-
-  },
   keyword: function(){
-    var testData = [
-      { label: "anders andersson", category: "Search" },
-      { label: "andreas andersson", category: "Search" },
-      { label: "andreas johnson", category: "Search" },
-      { label: "annhhx10", category: "Tags" },
-      { label: "annk K12", category: "Tags" },
-      { label: "annttop C13", category: "Tags" }
-      ]
     var self = this;
 
     // create autocomplete instance
@@ -53,32 +31,35 @@ AutoComp.prototype = {
       // source: testData
       source: function(request, response){
         $.ajax({
+          // at some point will need to differentiate between projects, users, etc.
           url: "/autocomplete",
           type: 'get',
           dataType: "json",
           data: {term: request.term},
           success: function(data) {
-            console.log(data)
+            response($.map(data, function(item) {
+              return item;
+            }));
           }
         });
       }
     });
 
-    // render results 
+    // // render results 
     keywordAC = $ac.data("ui-autocomplete");
 
     // customize menu to append categories
     keywordAC._renderMenu = function(ul, items){
       var self = this;
       var category = null;
-      var exploreAll = "<li><a class='browse' href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       ul.append(exploreAll)
+      // ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
       $.each(items, function(i, item){
-        console.log(item.category)
-        if (item.category != category) {
-          category = item.category;
-          ul.append("<li class='ui-autocomplete-category'>" + category + "</li>");
-        }
+        // if (item.category != category) {
+        //   category = item.category;
+        //   ul.append("<li class='ui-autocomplete-category'>" + category + "</li>");
+        // }
         self._renderItemData( ul, item );
       });
 
@@ -86,7 +67,6 @@ AutoComp.prototype = {
     // customize item to highlight text
     keywordAC._renderItem = function (ul, item) {
       var newText = self.highlightResults(item, this.term);
-
       //customize appearance of items here
       return $("<li></li>")
             .data("item.autocomplete", item)
@@ -126,9 +106,9 @@ AutoComp.prototype = {
     locAC._renderMenu = function(ul, items){
       var self = this;
       var category = null;
-      var exploreAll = "<li><a class='browse' href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      var exploreAll = "<li><ahref='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       ul.append(exploreAll);
-      ul.append("<li class='ui-autocomplete-category'>Locations</li>");
+      // ul.append("<li class='ui-autocomplete-category'>Locations</li>");
       $.each(items, function(i, item){
         self._renderItemData( ul, item );
       });
@@ -140,106 +120,3 @@ AutoComp.prototype = {
     };
   }
 }
-
-var SearchBar = function(options){
-  this.options = $.extend({
-    expandedClassName: 'search-expanded',
-    iconWrapperId: 'search-icon-wrapper',
-    keywordId: 'search-keyword',
-    locationId: 'search-location',
-    wrapperId: 'search-bar-wrapper',
-    btwTextClassName: 'search-input-btw'
-  }, options);
-
-  this.inputEl = $('#' + this.options.inputId);
-  this.keywordEl = $('#' + this.options.keywordId);
-  this.locationEl = $('#' + this.options.locationId);
-  this.wrapper = $('#' + this.options.wrapperId);
-  this.container = 
-  this.btwTextEl = $('.' + this.options.btwTextClassName);
-}
-SearchBar.prototype = {
-  isInputsEmpty: function(){
-    if(this.keywordEl.val().length == 0 && this.locationEl.val().length == 0){
-      return true;
-    }
-    else{
-      return false;
-    }
-  },
-  getValues: function(){
-    var data = [];
-    $.each(this.wrapper.find('input[type=text]'), function(i, input){
-      var type = $(input).attr('id').split('-')[1];
-      var obj = {};
-      // only return input values that exist
-      if($(input).val().length > 0){
-        obj[type] = $(input).val();
-        data.push(obj);
-      }
-    });
-    return data
-  },
-  search: function(data){
-    $.ajax({
-      url: 'search',
-      data: data,
-      cache: false,
-      type: 'get',
-      success: function(data){
-        console.log('Success');
-        console.log(data)
-      }
-    })
-  },
-  closeBar: function(){
-    var self = this;
-    this.btwTextEl.addClass('invisible');    
-    setTimeout(function(){
-      self.wrapper.removeClass(self.options.expandedClassName);
-      self.keywordEl.blur();
-    }), 200;
-  },
-  toggleBar: function(){
-    var self = this;
-    self.wrapper.off().on('click', '#' + self.options.iconWrapperId, function(){
-      // When bar is open
-      if(self.wrapper.hasClass(self.options.expandedClassName)){
-        if(self.isInputsEmpty() == true){
-          self.closeBar();
-        }
-        else{
-          self.search(self.getValues());
-        }
-      }
-      // When bar is closed
-      else{
-        self.wrapper.addClass(self.options.expandedClassName);
-        // put focus in keyword box
-        self.keywordEl.selectionStart = self.keywordEl.selectionEnd = self.keywordEl.val().length;
-        setTimeout(function(){
-          self.btwTextEl.removeClass('invisible');    
-        }, 200)
-      }
-      
-    });
-  },
-  init: function(){
-    // Initiate event listeners for toggling bar open
-    this.toggleBar();
-
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-

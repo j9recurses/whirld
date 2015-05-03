@@ -130,6 +130,10 @@ Whirld::Application.routes.draw do
 post 'search' => 'maps#search'
 get 'search' => 'maps#search'
 
+#search from nav bar
+get 'search_nav' => 'maps#search_top_navbar'
+
+#autocomplete results
 get 'autocomplete' => 'maps#autocomplete'
 
 

@@ -24,24 +24,16 @@ class MapsController < ApplicationController
     if params[:query ]
     #@map = Map.search(params)
       @maps = Map.search(params[:query])
-      @maps = Map.get_search_maptags(@maps)
+      @maps = Map.get_maptags(@maps)
+      @maps = Map.get_photos(@maps)
     else
       @maps = Map.all
     end
     @user = current_user
-   # puts "here"
-    #render "maps/index"#, :layout => "layout_read"
-    #format.html { render "maps/index", :layout => "application" }
-    #format.json { render :json => @maps }
-
-    #old
-    #params[:id] ||= params[:q]
-    #puts params.inspect
-    #@maps = Map.where('archived = false AND (name LIKE ? OR location LIKE ? OR description LIKE ?)',"%"+params[:id]+"%", "%"+params[:id]+"%", "%"+params[:id]+"%").paginate(:page => params[:page], :per_page => 24)
-    #@title = "Search results for '#{params[:id]}'"
     respond_to do |format|
      if params[:query ]
-     format.json { render :json => @maps, :methods => :taglist}
+     format.json { render :json => @maps, :methods => :taglist, :methods => :coverphoto_name}
+     #to_json(:include => [:material_costs])}
    else
     format.html { render "maps/index" }
   end
@@ -50,11 +42,16 @@ class MapsController < ApplicationController
 
 
  def autocomplete
-    @maps = Map.order(:name).where("name LIKE ?", "%#{params[:term]}%")
+    maps = Map.order(:name).where("name LIKE ?", "%#{params[:term]}%")
+    maptags = Tag.order(:name).where(["name LIKE ? and taggable_type = ?", "%#{params[:term]}%", "Map"] )
+    @terms = Hash.new
+    @terms[:projects] = maps.map(&:name).to_set
+    @terms[:tags] = maptags.map(&:name).to_set
+    puts @terms.inspect
     respond_to do |format|
       format.html
       format.json {
-        render json: @maps.map(&:name)
+        render json: @terms
       }
     end
   end

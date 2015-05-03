@@ -100,6 +100,7 @@ FilterBar.prototype = {
 			data: data,
 			type: 'get',
 			success: function(data){
+				console.log(data)
 				console.log('Success: user results are returning');
 				self.resultsCount.text(data.length);
 				self.appendProjectResults(data);

@@ -56,7 +56,7 @@ AutoComp.prototype = {
       var category = null;
       var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       ul.append(exploreAll)
-      ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
+      // ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
       $.each(items, function(i, item){
         // if (item.category != category) {
         //   category = item.category;
@@ -110,7 +110,7 @@ AutoComp.prototype = {
       var category = null;
       var exploreAll = "<li><ahref='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       ul.append(exploreAll);
-      ul.append("<li class='ui-autocomplete-category'>Locations</li>");
+      // ul.append("<li class='ui-autocomplete-category'>Locations</li>");
       $.each(items, function(i, item){
         self._renderItemData( ul, item );
       });

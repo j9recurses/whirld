@@ -130,7 +130,7 @@ Whirld::Application.routes.draw do
 post 'search' => 'maps#search'
 get 'search' => 'maps#search'
 
-get 'autocomplete' => 'map#autocomplete'
+get 'autocomplete' => 'maps#autocomplete'
 
 
   resources :user_galleries do

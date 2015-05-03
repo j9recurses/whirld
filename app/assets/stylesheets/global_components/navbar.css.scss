@@ -38,7 +38,7 @@
 	text-transform: uppercase;
 }
 .navbar-main input[type='text']{
-  font-size: .75em;
+  font-size: .6em;
   height: 30px;
   padding-left: 2%;
 }
@@ -123,13 +123,6 @@
   font-weight: bold;
 }
 
-/*Search dropdown*/
-.search-ac-browse{
-  padding: .25em .5em;
-}
-.search-ac-browse a:hover{
-  color: cadetblue;
-}
 /*Autocomplete list*/
 .ui-autocomplete{
   background-color: white;
@@ -154,7 +147,7 @@
   overflow-y: scroll;
   padding: .5em .25em;
 }
-.ui-menu-item.ui-state-focus, a.browse:hover {
+.ui-menu-item.ui-state-focus, .browse a:hover {
   background: #CCE5FD;
   cursor: pointer;
   text-decoration: none;

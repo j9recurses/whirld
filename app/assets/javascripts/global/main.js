@@ -34,14 +34,6 @@ AutoComp.prototype = {
 
   },
   keyword: function(){
-    var testData = [
-      { label: "anders andersson", category: "Search" },
-      { label: "andreas andersson", category: "Search" },
-      { label: "andreas johnson", category: "Search" },
-      { label: "annhhx10", category: "Tags" },
-      { label: "annk K12", category: "Tags" },
-      { label: "annttop C13", category: "Tags" }
-      ]
     var self = this;
 
     // create autocomplete instance
@@ -59,22 +51,27 @@ AutoComp.prototype = {
           data: {term: request.term},
           success: function(data) {
             console.log(data)
+
+            response($.map(data, function(item) {
+              console.log(item)
+              return item;
+            }));
           }
         });
       }
     });
 
-    // render results 
+    // // render results 
     keywordAC = $ac.data("ui-autocomplete");
 
     // customize menu to append categories
     keywordAC._renderMenu = function(ul, items){
       var self = this;
       var category = null;
-      var exploreAll = "<li><a class='browse' href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       ul.append(exploreAll)
+      ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
       $.each(items, function(i, item){
-        console.log(item.category)
         if (item.category != category) {
           category = item.category;
           ul.append("<li class='ui-autocomplete-category'>" + category + "</li>");
@@ -180,18 +177,6 @@ SearchBar.prototype = {
     });
     return data
   },
-  search: function(data){
-    $.ajax({
-      url: 'search',
-      data: data,
-      cache: false,
-      type: 'get',
-      success: function(data){
-        console.log('Success');
-        console.log(data)
-      }
-    })
-  },
   closeBar: function(){
     var self = this;
     this.btwTextEl.addClass('invisible');    
@@ -209,7 +194,8 @@ SearchBar.prototype = {
           self.closeBar();
         }
         else{
-          self.search(self.getValues());
+          // self.search(self.getValues());
+          console.log('Redirecting to search page...')
         }
       }
       // When bar is closed

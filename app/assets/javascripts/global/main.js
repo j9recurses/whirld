@@ -19,9 +19,6 @@ AutoComp.prototype = {
   highlightResults: function(item, term){
     return String(item.value).replace(new RegExp(term, "gi"),"<span class='search-term-highlight'>$&</span>");
   },
-  keywordSource: function(request, response){
-
-  },
   keyword: function(){
     var self = this;
 
@@ -43,7 +40,6 @@ AutoComp.prototype = {
             console.log(data)
 
             response($.map(data, function(item) {
-              console.log(item)
               return item;
             }));
           }

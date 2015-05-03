@@ -50,9 +50,18 @@ AutoComp.prototype = {
       autofocus: this.options.autofocus,
       delay: this.options.autofocus,
       minLength: this.options.minLength,
-      source: testData//function(request, response){
-        // self.locationSource(request, response);
-      // }
+      // source: testData
+      source: function(request, response){
+        $.ajax({
+          url: "/autocomplete",
+          type: 'get',
+          dataType: "json",
+          data: {term: request.term},
+          success: function(data) {
+            console.log(data)
+          }
+        });
+      }
     });
 
     // render results 

@@ -55,6 +55,9 @@ module ApplicationHelper
     return item
   end
 
+  def delete_hashkeys( model, keep_keys)
+         cool =  del_keys.each { |k| params.delete(k) }
+  end
 
   def arrange_modules(mod_order)
     unless mod_order.blank?

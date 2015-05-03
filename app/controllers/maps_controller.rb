@@ -25,13 +25,15 @@ class MapsController < ApplicationController
     #@map = Map.search(params)
       @maps = Map.search(params[:query])
       @maps = Map.get_maptags(@maps)
+      @maps = Map.get_photos(@maps)
     else
       @maps = Map.all
     end
     @user = current_user
     respond_to do |format|
      if params[:query ]
-     format.json { render :json => @maps, :methods => :taglist}
+     format.json { render :json => @maps, :methods => :taglist, :methods => :coverphoto_name}
+     #to_json(:include => [:material_costs])}
    else
     format.html { render "maps/index" }
   end

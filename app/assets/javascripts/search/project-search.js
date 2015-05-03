@@ -40,11 +40,13 @@ FilterBar.prototype = {
 
 	// functions for posting queries to server
 	search: function(data){
+		console.log(data)
 		$.ajax({
 			url: 'search',
 			data: data,
 			type: 'get',
 			success: function(data){
+				console.log(data)
 				console.log('Success: user results are returning');
 			},
 			error: function(){

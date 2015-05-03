@@ -96,7 +96,7 @@ FilterBar.prototype = {
 		var self = this;
 				self.searchResultsContainer.empty();
 		$.ajax({
-			url: 'search',
+			url: '/search',
 			data: data,
 			type: 'get',
 			success: function(data){

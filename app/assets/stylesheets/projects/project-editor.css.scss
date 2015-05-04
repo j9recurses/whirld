@@ -2,7 +2,8 @@
   height: 8%;
   .help-wrapper { padding-top: 5%; }
   #help{
-    border: #999 1px solid;
+    border: #333 1px solid;
+    color: #333;
     height: 25px;
     width: 25px;
   }
@@ -11,9 +12,8 @@
     top: 25%;
   }
   #help:hover{
-    background: #999;
-    border: none;
-    color: #f6f6f6;
+    background: #fafafa;
+    color: #333;
   }
   .menu-item{ border: none; }
   .navbar-main{ height: 8%; }
@@ -80,16 +80,64 @@
   .button-bar-btw .option-toggle button:hover{ opacity: 1; }
   /*.closed .option, .open .option-toggle { visibility: hidden; }*/
   /*.closed .option-toggle, .open .option { visibility: visible; }*/
-  .dropzone{
-    background-color: rgba(100, 149, 237, 0.34);
-    box-sizing: border-box;
-    color: rgb(126, 162, 228);
-    cursor: default;
-    font-weight: bold;
-    height: 290px;
-    line-height: 13em;
-    overflow: hidden;
-    text-align: center;
+
+  .dropdown a{
+    position: relative;
+    color: #666 ;
+    display: block;
+  }
+  .dropdown a:hover{
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    background-color: #fff;
+    border-color: #c2c2c2;
+    text-decoration: none;
+  }
+  .dropdown i{ line-height: 0; }
+  .dropdown-container{
+    position: relative;
+  }
+  .dropdown-container.open a {
+    background-color: #eee;
+    border-color: #337ab7;
+  }
+
+  .dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+  #dropdown-button, #dropdown-upload{ height: 100%; }
+  #dropdown-button li, #dropdown-upload li{
+    height: 98%;
+    padding-top: 6%;
+  }
+  #dropdown-button a {
+        padding: 0;
+    width: 36px;
+    height: 35px;
+  }
+  #dropdown-photos{
+    border-right: 1px solid white;
+  }
+  #dropdown-upload{
+    margin-left: 12.833333%;
   }
   .drop-active{
     border: 3px dotted cornflowerblue;
@@ -192,11 +240,14 @@
     overflow: scroll;
   }
   #photo-manager-nav{
-    background: #CBCBCB;
+    background: #f6f6f6;
+    box-shadow: 0 2px 0px rgba(0,0,0,0.26);
     height: 8%;
     line-height: 3em;
     position: fixed;
-    z-index: 100;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid #e5e5e5;
+    z-index: 5;
   }
   .photo-remove{
     background-color: #333;
@@ -209,8 +260,10 @@
   }
 
   #photo-upload{
-    width: 50px;
-    height: 50px;
+    border-left: 1px solid white;
+    padding-left: 47%;
+  }
+  #photo-upload a{
     color: rgb(44, 203, 197);
   }
   #photo-upload form {
@@ -218,11 +271,10 @@
     overflow: hidden;
     position: absolute;
     top: 0;
-    right: 13px;
+    right: 0;
     width: 34px;
     top: 0;
     height: 50px;
-    border-left: 1px solid #2ccbc5;;
   }
   #photo-upload input{
     cursor: pointer;

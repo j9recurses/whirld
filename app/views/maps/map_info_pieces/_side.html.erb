@@ -1,15 +1,60 @@
 <nav id='photo-manager-nav' class='six row group'>
 
-	<ul class='inline-list sort-list row group twenty-two h-righted'>
+<!-- 	<ul class='inline-list sort-list row group twenty-two h-righted'>
 		<li class='item pull-left offset-one'>Photo Manager</li>
 		<li id='photo-upload' class='item cursor-point'>
 			<i class='fa fa-upload'></i>
-				<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
+				<%#= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
 				<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-		    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-			<% end %>
+		    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%#=@user_gallery[:id]%>>
+			<%# end %>
 		</li>
+	</ul> -->
+
+	<div id='dropdown-photos' class="dropdown eight columns font_small h-centered">
+	  <div class="dropdown-container">
+	  	<a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+          All Photos
+          <i class="fa fa-caret-down"></i>
+        </a>
+	    <ul class="dropdown-menu dropdown-select font_small" role='menu' aria-labelledby="drop1">
+	      <li role='presentation' class='cursor-point'>Current</li>
+	      <li role='presentation' class='cursor-point'>Saved</li>
+	      <li role='presentation' class='cursor-point'>Mine</li>
+	    </ul>
+
+	  </div>
+	</div>
+
+	<ul id='dropdown-button' class='dropdown eight columns inline-list'>
+		<li id='view-switch' role='presentation' class='item h-centered'>
+			<a aria-haspopup="false" role="button">
+          <i class='fa fa-th-large'></i>
+        </a>
+		</li> <!-- end view-switch -->
+		<li id='sort' role='presentation' class='item h-centered'>
+	  	<a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+        </a>
+	    <ul class="dropdown-menu dropdown-select font_small" role='menu' aria-labelledby="drop1">
+	      <li role='presentation' class='cursor-point' data-sort="created:asc">Newst</li>
+	      <li role='presentation' class='cursor-point' data-sort="created:desc">Oldest</li>
+	    </ul>
+		</li><!-- end sort -->
 	</ul>
+
+	<ul id='dropdown-upload' class='dropdown four columns inline-list'>
+		<li id='photo-upload' role='presentation' class='item'>
+			<a aria-haspopup="false" role="button">
+				<i class='fa fa-upload'></i>
+					<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
+					<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+			    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+				<% end %>
+      </a>
+		</li> <!-- end photo-upload -->
+	</ul>
+
 </nav>
 
 	<ul class='inline-list filter-list h-centered row group font_small'>
@@ -17,12 +62,6 @@
 		<li class="filter-type item" data-filter=".aerial">Aerial</li>
 		<li class="filter-type item" data-filter=".normal">Street View</li>
 		<li class="filter-type item" data-filter=".people">People</li>
-		<li class="sort sort-item item cursor-point active" data-sort="created:desc">
-			<i class='fa fa-sort-amount-desc'></i>
-		</li>
-		<li class="sort sort-item item cursor-point" data-sort="created:asc">
-			<i class='fa fa-sort-amount-asc'></i>
-		</li>
 	</ul>
 
 <section id='preview-list'>

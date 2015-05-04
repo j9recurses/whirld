@@ -15,8 +15,7 @@ class UserProfilesController < ApplicationController
     @maps = get_photos(@maps)
     @maps = get_maptags(@maps)
     @collaborators = UserProfile.get_collaborators(@maps)
-    puts "**"
-    puts @maps.size
+
     #find similar users?
   end
 

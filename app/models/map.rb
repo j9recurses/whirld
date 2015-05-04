@@ -11,8 +11,8 @@ end
 class Map < ActiveRecord::Base
 
   extend FriendlyId
-  include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  #include PublicActivity::Model
+  #tracked owner: Proc.new{ |controller, model| controller.current_user }
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

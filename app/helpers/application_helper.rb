@@ -42,8 +42,6 @@ module ApplicationHelper
     end
     unless taglist.nil?
       newtaglist =  taglist.split(",")
-      puts "*******"
-      puts newtaglist
       modtag_ids = item.tags.pluck(:id)
       unless modtag_ids.blank?
         Tag.destroy(modtag_ids)

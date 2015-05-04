@@ -1,5 +1,8 @@
 	<ul class='inline-list'>
-		<li class='user-meta-item item font_small bold'><a href='/'>pswigert</a></li>
-		<li class='user-meta-item item font_small bold'>Oakland, CA</li>
-		<li class='user-meta-item item font_small pull-right'>Apr 17, 2015</li>
+		<li class='user-meta-item item font_small bold'><a href='/'><%= @map.author %></a></li>
+		<li class='user-meta-item item font_small bold'><%=@map.location%></li>
+		<li class='user-meta-item item font_small pull-right'>  <%= @map.finished_dt.strftime("%B %d, %Y").to_s %></li>
 	</ul>
+
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150502062250) do
+ActiveRecord::Schema.define(:version => 20150504034243) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "map_id"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20150502062250) do
     t.boolean  "finished",                                         :default => true
     t.integer  "coverphoto"
     t.text     "tile_url"
+    t.datetime "finished_dt"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true

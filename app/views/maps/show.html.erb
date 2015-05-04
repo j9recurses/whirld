@@ -57,7 +57,7 @@
 				<%end%>
 			<%end%>
 			 <!-- comps -->
-			<%elsif mod[1]  == "comp" %>
+			<%elsif mod[1]  == "comparison" %>
 				<% @comps.each do |comp| %>
 					<% if comp.id == mod[0].to_i %>
 						<%= render partial: "maps/show_pieces/module_comparison", :locals => {:comp => comp} %>
@@ -87,12 +87,5 @@
 
 
 
-
-
-
-<%# @gallery_mod_items.each do |k,v| %>
-<!-- <div id ="moduletype"> type: <%#= k %> </div> -->
-<!-- <div id ="moduleitems"> items: </br><%#= v.inspect %> </p> -->
-<%#  end %>
 
 <!-- but we'll need the decorating html to add to it -->

@@ -17,7 +17,7 @@ class Map < ActiveRecord::Base
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug
@@ -37,7 +37,7 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_comparisons, through: :user_galleries
   after_touch() { tire.update_index }
 
-  attr_accessor :taglist
+  attr_accessor :taglist,
   def taglist
     @taglist
   end
@@ -53,6 +53,24 @@ class Map < ActiveRecord::Base
 
   def coverphoto_name=(val)
     @coverphoto_name = val
+  end
+
+  attr_accessor :search_order
+  def search_order
+    @search_order
+  end
+
+  def search_order=(val)
+    @search_order = val
+  end
+
+  attr_accessor :geographic_search
+  def geographic_search
+    @geographic_search
+  end
+
+  def geographic_search=(val)
+    @geographic_search = val
   end
 
 
@@ -83,19 +101,19 @@ class Map < ActiveRecord::Base
         }
       }
     } do
-  mapping do
-    indexes :name, type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer", boost: 50
-    indexes :description,   type: 'string', analyzer: 'snowball'
-    indexes :lat_lon, type: 'geo_point'
-    indexes :id, :index    => :not_analyzed
-  end
+      mapping do
+        indexes :name, type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer", boost: 50
+        indexes :description,   type: 'string', analyzer: 'snowball'
+        indexes :lat_lon, type: 'geo_point'
+        indexes :id, :index    => :not_analyzed
+      end
 
-  indexes :tags do
-    indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
-  end
-  end
+      indexes :tags do
+        indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
+      end
+    end
 
-end
+  end
 
   def lat_lon
     [lat, lon].join(',')
@@ -106,16 +124,13 @@ end
     to_json(:include => [:tags], :methods => [:lat_lon])
   end
 
-
-  #filtered do
-  #http://stackoverflow.com/questions/18493005/elasticsearch-doesnt-apply-the-not-filter
   def self.simple_search(params)
     unless params[:location].blank?
       point  = self.get_search_cords(params[:location])
-       unless params[:query].blank?
-      s = Tire.search('maps') { query { match [:name, :description, :name],  params[:query]  } }
-       else
-      s = Tire.search('maps') { query { all } }
+      unless params[:query].blank?
+        s = Tire.search('maps') { query { match [:name, :description, :name],  params[:query]  } }
+      else
+        s = Tire.search('maps') { query { all } }
       end
       s. filter :geo_distance, lat_lon: point, distance: '300km'
       s.sort {  by "_geo_distance", {
@@ -126,12 +141,11 @@ end
                 }
       results = s.results
     else
-      puts "in here"
       results = Map.search do
         query { match [:name, :description, :name],  params[:query] }
       end
     end
-    puts results.inspect
+    #puts results.inspect
     return results
   end
   #
@@ -156,17 +170,33 @@ end
   def self.get_photos(maps)
     coverphoto_maps = Array.new
     maps.each do |map|
-      puts map.inspect
       usr_gallery_id = map.user_galleries.map(&:id)
       unless map[:coverphoto].blank?
         coverphoto = Photo.find(map[:coverphoto])
-        map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
-      else
+        #this will work once we have real data
+       # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
        map.coverphoto_name = "/assets/test/grid-09.png"
+      else
+        map.coverphoto_name = "/assets/test/grid-09.png"
       end
-      puts map.coverphoto_name
       coverphoto_maps  << map
     end
+  end
+
+  def self.search_type(maps, params)
+    search_info_maps = Array.new
+    counter = 1
+    maps.each do |map|
+      if params[:location]
+        map.geographic_search = 1
+      else
+         map.geographic_search = 0
+      end
+      map.search_order = counter
+      counter = counter + 1
+      search_info_maps << map
+    end
+    return search_info_maps
   end
 
 

@@ -27,10 +27,7 @@ class UserGallerySplit < ActiveRecord::Base
     unless gallery_splits.blank? || gallery_splits.nil?
       gallery_splits.each do |split|
         split_tags  = Tag.gather_tag(split)
-        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.user_gallery_id)
-        #split = split.attributes
-        #split[:photos] = photos
-        #split[:taglist] = split_tags
+        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.id)
         split.photos = photos
         split.taglist = split_tags
         combined_gallery_splits  << split

@@ -20,6 +20,7 @@ class MapsController < ApplicationController
   end
 
   def search
+    puts params
     if params[:query ]
       @maps = Map.simple_search(params)
     else
@@ -31,7 +32,7 @@ class MapsController < ApplicationController
     @maps = Map.search_type(@maps, params)
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name, :search_order, :geographic_search ]}
+        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name, :search_order, :geographic_search, :search_entity ]}
       else
         format.html { render "maps/index" }
       end

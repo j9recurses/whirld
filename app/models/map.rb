@@ -74,6 +74,16 @@ class Map < ActiveRecord::Base
   end
 
 
+  attr_accessor :search_entity
+  def search_entity
+    @search_entity
+  end
+
+  def search_entity=(val)
+    @search_entity= val
+  end
+
+
   #set the search units for tire
   SEARCH_UNIT   = "mi"
   SEARCH_RADIUS = "300mi"
@@ -191,6 +201,9 @@ class Map < ActiveRecord::Base
         map.geographic_search = 1
       else
          map.geographic_search = 0
+      end
+      if params[:entity]
+        map.search_entity = params[:entity]
       end
       map.search_order = counter
       counter = counter + 1

@@ -83,6 +83,11 @@ class MapsController < ApplicationController
     gallery.user_id = @user.id
     if @map.save && gallery.save
       # Collaborator.create(@map.id, @user.id)
+      # @collabo = Collaborator.new()
+      # @collabo[:map_id] = @map.id
+      # @collabo[:user_id] = @user.id
+      # @collabo.save
+
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else
@@ -110,7 +115,7 @@ class MapsController < ApplicationController
     @user_gallery[:module_order] = params[:mod_order]
     @map[:finished_dt] = Time.now
     if @user_gallery.save && @map.save
-      @map.create_activity key: 'map.finished', owner: current_user
+      #@map.create_activity key: 'map.finished', owner: current_user
       render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"

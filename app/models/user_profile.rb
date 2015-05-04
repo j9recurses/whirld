@@ -7,8 +7,8 @@ class UserProfile < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
-  include PublicActivity::Model
-   tracked owner: Proc.new{ |controller, model| controller.current_user }
+  #include PublicActivity::Model
+  # tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.get_collaborators(maps)
     collaborators = Hash.new

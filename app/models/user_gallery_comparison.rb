@@ -4,8 +4,8 @@ class UserGalleryComparison < ActiveRecord::Base
   attr_accessible :comparison_order, :user_gallery_id
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
-  include PublicActivity::Model
-   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
+  #include PublicActivity::Model
+  # tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
 
   attr_accessor :taglist, :photos
   def taglist

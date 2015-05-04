@@ -197,7 +197,8 @@ class Map < ActiveRecord::Base
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
-      if params[:location]
+      unless params[:location].blank?
+        puts params[:location]
         map.geographic_search = 1
       else
          map.geographic_search = 0

@@ -23,9 +23,11 @@ class MapsController < ApplicationController
     puts "*******"
     puts params.inspect
     if params[:query ]
-      @maps = Map.search(params[:query])
+      @maps = Map.simple_search(params)
+      puts @maps.inspect
       @maps = Map.get_maptags(@maps)
       @maps = Map.get_photos(@maps)
+      @maps_cnt = @maps.size
     else
       @maps = Map.all
     end
@@ -33,7 +35,6 @@ class MapsController < ApplicationController
     respond_to do |format|
       if params[:query ]
         format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name]}
-        #to_json(:include => [:material_costs])}
       else
         format.html { render "maps/index" }
       end

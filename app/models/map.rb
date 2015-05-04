@@ -11,6 +11,8 @@ end
 class Map < ActiveRecord::Base
 
   extend FriendlyId
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
@@ -33,6 +35,7 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_splits, through: :user_galleries
   has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
+  after_touch() { tire.update_index }
 
   attr_accessor :taglist
   def taglist
@@ -52,35 +55,92 @@ class Map < ActiveRecord::Base
     @coverphoto_name = val
   end
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
 
+  #set the search units for tire
+  SEARCH_UNIT   = "mi"
+  SEARCH_RADIUS = "300mi"
+  SEARCH_ORDER  = "asc"
 
-  index_name "map-engine-#{Rails.env}"
-
+  tire do
+    settings analysis: {
+      filter: {
+        ngram_filter: {
+          type: 'nGram',
+          min_gram: 2,
+          max_gram: 12
+        }
+      },
+      analyzer: {
+        index_ngram_analyzer: {
+          type: 'custom',
+          tokenizer: 'standard',
+          filter: ['lowercase', 'ngram_filter']
+        },
+        search_ngram_analyzer: {
+          type: 'custom',
+          tokenizer: 'standard',
+          filter: ['lowercase']
+        }
+      }
+    } do
   mapping do
-    indexes :name, analyzer: 'snowball', boost: 100
-    indexes :description, analyzer: 'snowball'
-    indexes :updated_at, type: 'date', index: :not_analyzed
-    indexes :tags, analyzer: 'snowball', boost: 50
+    indexes :name, type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer", boost: 50
+    indexes :description,   type: 'string', analyzer: 'snowball'
+    indexes :lat_lon, type: 'geo_point'
+    indexes :id, :index    => :not_analyzed
+  end
+
+  indexes :tags do
+    indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
+  end
+  end
+
+end
+
+  def lat_lon
+    [lat, lon].join(',')
+  end
+
+  def to_indexed_json
+    # to_json(only: ['name', 'description'], methods: ['lat_lon'])
+    to_json(:include => [:tags], :methods => [:lat_lon])
   end
 
 
-  def as_indexed_json(options={})
-    as_json(
-      only: [:id, :name, :description, :updated_at],
-      include: [:tags] #, :user_gallery_grids, :user_gallery_splits, :user_gallery_bloc_texts, :photos]
-    )
+  #filtered do
+  #http://stackoverflow.com/questions/18493005/elasticsearch-doesnt-apply-the-not-filter
+  def self.simple_search(params)
+    unless params[:location].blank?
+      point  = self.get_search_cords(params[:location])
+       unless params[:query].blank?
+      s = Tire.search('maps') { query { match [:name, :description, :name],  params[:query]  } }
+       else
+      s = Tire.search('maps') { query { all } }
+      end
+      s. filter :geo_distance, lat_lon: point, distance: '300km'
+      s.sort {  by "_geo_distance", {
+                  "lat_lon" => point,
+                  "order"       => SEARCH_ORDER,
+                  "unit"        => SEARCH_UNIT
+                }
+                }
+      results = s.results
+    else
+      puts "in here"
+      results = Map.search do
+        query { match [:name, :description, :name],  params[:query] }
+      end
+    end
+    puts results.inspect
+    return results
   end
-
-  #def self.search(params)
-  #   query { string params[:query], default_operator: "AND" } if params[:query].present?
-  #  sort { by :updated_at, "desc" }
-  #     end
-  #end
-  #
   #
 
+  def self.get_search_cords(location)
+    geo = Geocoder.coordinates(location)
+    point = "#{geo[0]}, #{geo[1]}"
+    return point
+  end
   #
   def self.get_maptags(maps)
     tagged_maps = Array.new
@@ -98,14 +158,16 @@ class Map < ActiveRecord::Base
     maps.each do |map|
       puts map.inspect
       usr_gallery_id = map.user_galleries.map(&:id)
-      coverphoto = Photo.find(map[:coverphoto])
-      map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+      unless map[:coverphoto].blank?
+        coverphoto = Photo.find(map[:coverphoto])
+        map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+      else
+       map.coverphoto_name = "/assets/test/grid-09.png"
+      end
       puts map.coverphoto_name
       coverphoto_maps  << map
     end
   end
-
-
 
 
 

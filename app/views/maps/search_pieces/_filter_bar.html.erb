@@ -8,16 +8,15 @@
 				</div>
 				
 				<div class='filter-input-wrapper four columns pos-rel'>
-          <input id='filter-query' type='text' class='filter filter-input twenty-four pos-abs' placeholder='Keyword Search'/>
+          <input id='filter-query' type='text' class='filter-input twenty-four pos-abs' placeholder='Keyword Search'/>
 				</div>
 
 				<div class='three columns offset-one'>
-					<div id='filter-entity-wrapper' class='pos-rel' tabindex='0'>
-						<span id='filter-entity' class='filter'>projects</span>
-						<i class='fa fa-caret-down pull-right v-centered'></i>
-						<ul id='filter-entity-options' class='select-options inline-list'>
-						  <li class='entity-not-selected'>users</li>
-						  <li class='entity-not-selected'>photos</li>
+					<div id='filter-entity' class='pos-rel filter-input'>
+						<ul class='inline-list'>
+							<li class='item active'>Projects</li>
+							<!-- <li class='item filter' data-filter='project'>Projects</li> -->
+							<!-- <li class='item filter' data-filter='user'>Users</li> -->
 						</ul>
 					</div>
 				</div>
@@ -25,7 +24,7 @@
 				<div class='filter-btw one columns h-centered font_small'>near</div>
 
 				<div class='filter-input-wrapper five columns pos-rel'>
-          <input id='filter-location' type='text' class='filter filter-input twenty-four pos-abs' placeholder='anywhere'/>
+          <input id='filter-location' type='text' class='filter-input twenty-four pos-abs' placeholder='anywhere'/>
 				</div>
 
 
@@ -33,14 +32,11 @@
 
 
 				<div id='sort-wrapper' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
-					<div id='sort-wrapper' class='pos-rel' tabindex='0'>
-						<span id='filter-sort' class='filter'>newest</span>
-						<i class='fa fa-sort '></i>
-						<ul id='sort-options' class='select-options inline-list h-centered'>
-						  <li class='sort-not-selected'>oldest</li>
-						  <li class='sort-not-selected'>popular</li>
-						</ul>
-					</div>
+					<ul class='inline-list'>
+						<li class='item sort' data-sort="relevant:asc">Relevance</li>
+						<li class='item sort' data-sort="updated:asc">Newest</li>
+						<li class='item sort' data-sort="updated:desc">Oldest</li>
+					</ul>
 				</div>
 		</div>
 	</div> <!-- end filter-action-bar -->

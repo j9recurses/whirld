@@ -20,20 +20,19 @@ class MapsController < ApplicationController
   end
 
   def search
-    puts "*******"
-    puts params.inspect
+    puts params
     if params[:query ]
-      @maps = Map.search(params[:query])
-      @maps = Map.get_maptags(@maps)
-      @maps = Map.get_photos(@maps)
+      @maps = Map.simple_search(params)
     else
       @maps = Map.all
     end
     @user = current_user
+    @maps = Map.get_maptags(@maps)
+    @maps = Map.get_photos(@maps)
+    @maps = Map.search_type(@maps, params)
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name]}
-        #to_json(:include => [:material_costs])}
+        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name, :search_order, :geographic_search, :search_entity ]}
       else
         format.html { render "maps/index" }
       end
@@ -83,6 +82,7 @@ class MapsController < ApplicationController
     gallery.name = @map.slug
     gallery.user_id = @user.id
     if @map.save && gallery.save
+      Collaborator.create(@map.id, @user.id)
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else
@@ -103,15 +103,14 @@ class MapsController < ApplicationController
 
 
   def map_info_finish
-    puts "********in here*****"
-    puts params
-    puts "*********"
     @map = Map.find params[:id]
     @map[:finished] = true
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @user_gallery[:module_order] = params[:mod_order]
+    @map[:finished_dt] = Time.now
     if @user_gallery.save && @map.save
+      @map.create_activity key: 'map.finished', owner: current_user
       render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"
@@ -120,18 +119,16 @@ class MapsController < ApplicationController
 
   def show
     @map = Map.find params[:id]
-    puts @map.inspect
-    #@map[:taglist] = @map.tags.pluck([:name])
     @map.taglist = @map.tags.pluck([:name])
     @user_gallery = UserGallery.where(['map_id = ?', @map]).first
     @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
     @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
     @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
     @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
-    puts @comps.inspect
     @map.zoom ||= 12
     @embed = true
-    @user = @map.user
+    @user = @map.user_id
+    @collaborators = @map.users
   end
 
 

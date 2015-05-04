@@ -3,6 +3,8 @@ class UserGallerySplit < ActiveRecord::Base
   attr_accessible :split_text, :user_gallery_id
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
+  include PublicActivity::Model
+   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
 
   attr_accessor :taglist, :photos
   def taglist
@@ -27,10 +29,7 @@ class UserGallerySplit < ActiveRecord::Base
     unless gallery_splits.blank? || gallery_splits.nil?
       gallery_splits.each do |split|
         split_tags  = Tag.gather_tag(split)
-        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.user_gallery_id)
-        #split = split.attributes
-        #split[:photos] = photos
-        #split[:taglist] = split_tags
+        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.id)
         split.photos = photos
         split.taglist = split_tags
         combined_gallery_splits  << split

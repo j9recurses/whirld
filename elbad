@@ -1,0 +1,51 @@
+  if params[:location]
+ point  = self.get_search_cords(params[:location])
+      results = Map.search do
+        query { string params[:query],  default_operator: "AND" }
+        filter :geo_distance, distance: SEARCH_RADIUS, coordinates: point
+        sort {
+          by "_geo_distance", {
+            "coordinates" => point,
+            "order"       => SEARCH_ORDER,
+            "unit"        => SEARCH_UNIT
+          }
+        }
+        puts "*********RESULTS**************"
+        puts results.inspect
+      end
+
+
+          if params[:location]
+     point  = self.get_search_cords(params[:location])
+     search = Tire::Search::Search.new('maps')
+     search.query{ string params[:query],  default_operator: "AND" }
+     search.filter :geo_distance, distance: SEARCH_RADIUS, coordinates: point
+     search.sort {
+          by "_geo_distance", {
+            "coordinates" => point,
+            "order"       => SEARCH_ORDER,
+            "unit"        => SEARCH_UNIT
+          }
+        }
+      puts search.to_curl
+      puts search.results
+      results = search.results
+
+
+curl -XGET 'http://localhost:9200/maps/_search?size=5&pretty=true' -d '
+{
+    "sort" : [
+        {
+            "_geo_distance" : {
+                "coordinates" : [48.8583, 2.2945],
+                "order" : "asc",
+                "unit" : "km"
+            }
+        }
+    ]
+    },
+    "query" :
+    {
+        "match_all"
+    }
+'

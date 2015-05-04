@@ -66,12 +66,18 @@ gem 'draper', '~> 1.3'
 
 #search
 gem 'tire'
+gem 'elasticsearch'
 
+#geocoder
+gem 'geocoder'
 
 ##faker data
 #need to install these outside the app to run a rake job
 gem 'populator', '~> 1.0.0'
 gem 'faker'
+
+#public activity
+gem 'public_activity'
 
 
 #for deepLearn predicter

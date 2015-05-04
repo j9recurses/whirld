@@ -69,6 +69,32 @@ module ApplicationHelper
     return mod_order
   end
 
+    def get_maptags(maps)
+    tagged_maps = Array.new
+    maps.each do |map|
+      map = Map.find(map[:id])
+      map.taglist = map.tags.pluck([:name])
+      tagged_maps << map
+    end
+    return tagged_maps
+  end
+
+
+  def get_photos(maps)
+    coverphoto_maps = Array.new
+    maps.each do |map|
+      usr_gallery_id = map.user_galleries.map(&:id)
+      unless map[:coverphoto].blank?
+        coverphoto = Photo.find(map[:coverphoto])
+        #this will work once we have real data
+       # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+       map.coverphoto_name = "/assets/test/grid-09.png"
+      else
+        map.coverphoto_name = "/assets/test/grid-09.png"
+      end
+      coverphoto_maps  << map
+    end
+  end
 
 
 

@@ -9,6 +9,16 @@
         <h4>Tools and Skills : <%= @user_profile.taglist %> </h4>
         <H4>Description: </h4>
         <p> <%= @user_profile.description %></p>
+        <h4> <%= @user.login %>   has worked on  <%= @maps.size.to_s %> projects</h4>
+        <h4> Collaborators </h4>
+         <% unless @collaborators.nil? %>
+          <% @collaborators.each do |map, collabo| %>
+             <%= link_to "Project: " + map.name, map_path(map.id) %> ==>
+          <% collabo.each do |c| %>
+              <li class='user-meta-item item font_small bold'><%=link_to c.login, user_profile_path(c.id) %></li>
+                  <%end%>
+                 <%end%>
+     <%end%>
         <h3> Nearby Users </h3>
           <% @neighbors.each do |n| %>
             <%if n.id != @user_profile.id %>

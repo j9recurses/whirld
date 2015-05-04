@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_profile_attributes
   # Include default devise modules. Others available are:
   # :token_authenticatable, :lockable, :timeoutable and :activatable
-
-  has_many :maps
+  has_many :collaborators
+  has_many :maps, through: :collaborators
   has_many :comments
   has_many :exports
   has_many :videos

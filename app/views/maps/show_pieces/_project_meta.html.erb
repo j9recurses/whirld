@@ -1,5 +1,13 @@
 	<ul class='inline-list'>
-		<li class='user-meta-item item font_small bold'><a href='/'><%= @map.author %></a></li>
+ <li class='user-meta-item item font_small bold'>Collaborators: </li>
+ <% unless @collaborators.nil? %>
+  <% @collaborators.each do |collabo| %>
+	<li class='user-meta-item item font_small bold'> <%= link_to collabo.login, user_profile_path(collabo.id) %> </li>
+   <%end%>
+   <%else%>
+   <li class='user-meta-item item font_small bold'><% @map.author %></li>
+     <%end%>
+
 		<li class='user-meta-item item font_small bold'><%=@map.location%></li>
 		<li class='user-meta-item item font_small pull-right'>  <%= @map.finished_dt.strftime("%B %d, %Y").to_s %></li>
 	</ul>

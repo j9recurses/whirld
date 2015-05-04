@@ -30,13 +30,15 @@ class Map < ActiveRecord::Base
     :on => :create
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
-  belongs_to :user
   has_many :user_galleries
   has_many :photos,  through: :user_galleries
   has_many :user_gallery_grids, through: :user_galleries
   has_many :user_gallery_splits, through: :user_galleries
   has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
+  has_many :collaborators
+  has_many :users, through: :collaborators
+
   after_touch() { tire.update_index }
 
   attr_accessor :taglist,
@@ -168,32 +170,32 @@ class Map < ActiveRecord::Base
     return point
   end
   #
-  def self.get_maptags(maps)
-    tagged_maps = Array.new
-    maps.each do |map|
-      map = Map.find(map[:id])
-      map.taglist = map.tags.pluck([:name])
-      tagged_maps << map
-    end
-    return tagged_maps
-  end
+  # def self.get_maptags(maps)
+  #   tagged_maps = Array.new
+  #   maps.each do |map|
+  #     map = Map.find(map[:id])
+  #     map.taglist = map.tags.pluck([:name])
+  #     tagged_maps << map
+  #   end
+  #   return tagged_maps
+  # end
 
 
-  def self.get_photos(maps)
-    coverphoto_maps = Array.new
-    maps.each do |map|
-      usr_gallery_id = map.user_galleries.map(&:id)
-      unless map[:coverphoto].blank?
-        coverphoto = Photo.find(map[:coverphoto])
-        #this will work once we have real data
-       # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
-       map.coverphoto_name = "/assets/test/grid-09.png"
-      else
-        map.coverphoto_name = "/assets/test/grid-09.png"
-      end
-      coverphoto_maps  << map
-    end
-  end
+  # def self.get_photos(maps)
+  #   coverphoto_maps = Array.new
+  #   maps.each do |map|
+  #     usr_gallery_id = map.user_galleries.map(&:id)
+  #     unless map[:coverphoto].blank?
+  #       coverphoto = Photo.find(map[:coverphoto])
+  #       #this will work once we have real data
+  #      # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+  #      map.coverphoto_name = "/assets/test/grid-09.png"
+  #     else
+  #       map.coverphoto_name = "/assets/test/grid-09.png"
+  #     end
+  #     coverphoto_maps  << map
+  #   end
+  # end
 
   def self.search_type(maps, params)
     search_info_maps = Array.new
@@ -214,8 +216,6 @@ class Map < ActiveRecord::Base
     end
     return search_info_maps
   end
-
-
 
   has_many :warpables do
     def public_filenames

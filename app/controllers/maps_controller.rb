@@ -82,6 +82,7 @@ class MapsController < ApplicationController
     gallery.name = @map.slug
     gallery.user_id = @user.id
     if @map.save && gallery.save
+      Collaborator.create(@map.id, @user.id)
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else
@@ -126,7 +127,8 @@ class MapsController < ApplicationController
     @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
     @map.zoom ||= 12
     @embed = true
-    @user = @map.user
+    @user = @map.user_id
+    @collaborators = @map.users
   end
 
 

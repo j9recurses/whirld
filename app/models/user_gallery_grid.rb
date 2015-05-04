@@ -7,7 +7,7 @@ class UserGalleryGrid < ActiveRecord::Base
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
 attr_accessor :taglist
 attr_accessor :photos

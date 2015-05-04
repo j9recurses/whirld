@@ -12,7 +12,7 @@ namespace :db do
     [User, Map, Tag].each(&:delete_all)
     password = "password"
     User.populate 2 do | user|
-      user.name = Faker::Name.name
+      #user.name = Faker::Name.name
       user.encrypted_password = User.new(:password => password).encrypted_password
       user.email = Faker::Internet.email
       user.current_sign_in_ip = Faker::Internet.ip_v4_address

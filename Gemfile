@@ -76,7 +76,8 @@ gem 'geocoder'
 gem 'populator', '~> 1.0.0'
 gem 'faker'
 
-
+#public activity
+gem 'public_activity'
 
 
 #for deepLearn predicter

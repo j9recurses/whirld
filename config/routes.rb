@@ -74,7 +74,10 @@ Whirld::Application.routes.draw do
     resources :warpables
     resources :annotations
   end
-  devise_for :users
+
+  devise_for :users do
+    resources :user_profiles
+  end
   #, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   post '/videos/videos_get_upload_token', to: 'videos#videos_get_upload_token', as: :videos_get_upload_token
@@ -124,7 +127,7 @@ Whirld::Application.routes.draw do
  delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
 
 #users
- get 'users/profile/:id' => 'users#profile', :as => "user_profile"
+ get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"
 
 #search
 post 'search' => 'maps#search'
@@ -135,6 +138,7 @@ get 'search_top_navbar' => 'maps#search_top_navbar'
 
 #autocomplete results
 get 'autocomplete' => 'maps#autocomplete'
+
 
 
   resources :user_galleries do

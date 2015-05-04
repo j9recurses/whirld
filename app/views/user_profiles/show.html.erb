@@ -1,0 +1,25 @@
+<section id = 'login' class='first-section'>
+  <div class='wrapper'>
+    <div class='row group'>
+      <div class='twelve columns'>
+        <h1>User Profile</h2>
+        <img src="/assets/test/cat.png" alt="profile_pic" style="width:120px;height:120px">
+        <h4>Username: <%= @user.login %> </h4>
+        <h4>Location: <%= @user_profile.location  %> </h4>
+        <h4>Tools and Skills : <%= @user_profile.taglist %> </h4>
+        <H4>Description: </h4>
+        <p> <%= @user_profile.description %></p>
+        <h3> Nearby Users </h3>
+          <% @neighbors.each do |n| %>
+            <%if n.id != @user_profile.id %>
+          <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist%> distance away from <%=@user.login%> </h5>
+          <% end %>
+           <% end %>
+        <h3>Recent Activity for <%= @user.login %> </h3>
+<div class="col-sm-3">
+  <%= render_activities @activities %>
+</div>
+      </div>
+    </div>
+  </div>
+</section>

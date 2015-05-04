@@ -2,6 +2,8 @@ class UserGalleryBlocText < ActiveRecord::Base
   belongs_to :user_gallery
   has_many :tags, :as => :taggable, dependent: :destroy
   attr_accessible :bloc_text, :user_gallery_id
+  include PublicActivity::Model
+   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
 
 attr_accessor :taglist
   def taglist

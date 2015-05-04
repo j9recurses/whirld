@@ -3,6 +3,8 @@ class Photo < ActiveRecord::Base
   belongs_to :user_gallery
   has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
+  include PublicActivity::Model
+   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.make_warpable(photo)
     photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"

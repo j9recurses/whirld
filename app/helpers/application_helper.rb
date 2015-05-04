@@ -39,6 +39,8 @@ module ApplicationHelper
       item = UserGalleryBlocText.find(mod_gallery_id)
     elsif mod_type.eql?("map")
       item = Map.find(mod_gallery_id)
+     elsif mod_type.eql?("user_profile")
+      item = UserProfile.find(mod_gallery_id)
     end
     unless taglist.nil?
       newtaglist =  taglist.split(",")
@@ -66,6 +68,8 @@ module ApplicationHelper
     end
     return mod_order
   end
+
+
 
 
   # polyfill for jquery-ujs in rails 2.x

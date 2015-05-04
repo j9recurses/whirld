@@ -15,25 +15,35 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
     this._map = L.map('knitter-map-pane', { 
       zoomControl: false,
-      layers: [google]
+      layers: [google],
+      drawControl: true
     }).setView(this._latlng, this._zoom);
 
     // make globally accessible map namespace for knitter.js
     map = this._map
 
     if (!options.readOnly) {
-      saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
-      function() {},
-        'Save status',
-        this._map,
-        this
-      )
+      // saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
+      // function() {},
+      //   'Save status',
+      //   this._map,
+      //   this
+      // )
+
+      // videoBtn = L.easyButton('fa-video-camera',
+      //   function() {
+      //   },
+      //   'Add a Video',
+      //   this._map,
+      //   this
+      // )
     }
 
     images = [], bounds = [];
 
     /* Set up basemap and drawing toolbars. */
     this.setupMap();
+    // this.setDraw();
 
     /* Load warpables data via AJAX request. */
     this._warpablesUrl = options.warpablesUrl;
@@ -275,7 +285,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
       if (img._leaflet_id != images[i]._leaflet_id) {
         /* Deselect (disable) other images */
         images[i].editing.disable()
-        /* Ensure that other toolbars are removed */
+         // Ensure that other toolbars are removed 
         if (images[i].editing.toolbar) {
           map.removeLayer(images[i].editing.toolbar);
         }
@@ -297,12 +307,12 @@ MapKnitter.Map = MapKnitter.Class.extend({
   },
 
   dblClickImage: function (e) { 
-    var img = this
-    window.mapKnitter.selectImage.bind(img)
-    img.editing._enableDragging()
-    img.editing.enable()
-    img.editing._toggleRotateDistort()
-    e.stopPropagation()
+    // var img = this
+    // window.mapKnitter.selectImage.bind(img)
+    // img.editing._enableDragging()
+    // img.editing.enable()
+    // img.editing._toggleRotateDistort()
+    // e.stopPropagation()
   },
 
   saveImage: function() {
@@ -416,7 +426,22 @@ MapKnitter.Map = MapKnitter.Class.extend({
     this._map.addControl(layersControl);
 
     L.control.zoom({ position: 'topright' }).addTo(map);
-    L.control.scale().addTo(map);
+    L.control.scale().addTo(map)
+
+
   }
+  // setDraw: function(){
+  //   var map = this._map;
+  //   var drawnItems = new L.FeatureGroup();
+  //   map.addLayer(drawnItems);
+
+  //   var drawControl = new L.Control.Draw({
+  //       edit: {
+  //           featureGroup: drawnItems
+  //       }
+  //   });
+  //   map.addControl(drawControl);
+
+  // }
 
 });

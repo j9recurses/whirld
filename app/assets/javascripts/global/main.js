@@ -1,4 +1,4 @@
 $(document).ready(function(){
-  // var sb = new SearchBar();
-      // sb.init();
+  var sb = new SearchBar();
+      sb.init();
 });

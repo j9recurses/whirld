@@ -21,8 +21,6 @@
 //= require uikit/js/uikit.min.js
 //= require uikit/js/core/nav.min.js
 //= require uikit/js/core/dropdown.min.js
-//= require global/main.js
-
 
 
 

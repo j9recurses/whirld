@@ -24,6 +24,5 @@ attr_accessible :map_id, :user_id, :annotation_type, :style, :coordinates, :text
     return geometry_type
   end
 
-  def to_json_show
-    Jbuilder.encode do | json |
+
 end

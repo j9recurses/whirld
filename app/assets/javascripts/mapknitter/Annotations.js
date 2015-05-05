@@ -28,12 +28,12 @@ MapKnitter.Annotations.include({
 
     /* Get annotations for this map from the database. */
     this.retrieve(function(annotations) {
-      new L.GeoJSON(annotations, { 
+      new L.GeoJSON(annotations, {
         pointToLayer: this._pointToLayer.bind(this),
         onEachFeature: function(geojson, layer) {
           layer.type = geojson.properties.annotation_type;
           this._onAnnotationAdd(layer);
-          this.stampResource(layer, geojson.properties.id);          
+          this.stampResource(layer, geojson.properties.id);
         }.bind(this)
       });
     });
@@ -52,7 +52,7 @@ MapKnitter.Annotations.include({
 
       if (layer.type === 'textbox') {
         /* Focus on the textarea. */
-        layer.getTextarea().focus();        
+        layer.getTextarea().focus();
       }
 
       if (window.mapKnitter.logged_in || window.mapKnitter.anonymous) {
@@ -97,7 +97,7 @@ MapKnitter.Annotations.include({
           if (annotation.editing.enabled()) {
             annotation.edited = true;
           } else {
-            this.update(annotation, function(data) { console.log(data); });        
+            this.update(annotation, function(data) { console.log(data); });
           }
         }, this);
         break;

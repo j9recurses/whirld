@@ -49,7 +49,7 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 		}
 
 		url = id ? this._resourcesUrl + id : this._resourcesUrl;
-
+		console.log(url);
 		return jQuery.ajax({
 			url: url,
 			dataType: 'json',
@@ -60,7 +60,7 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 				}
 			},
 			error: function(jqXHR, status, thrownError) { console.log(thrownError);
-					console.log(data);
+
 			}
 		});
 	},

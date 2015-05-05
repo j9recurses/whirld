@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // var sb = new SearchBar();
-  //     sb.init();
+      // sb.init();
 });
 
 var AutoComp = function(options){

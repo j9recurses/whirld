@@ -9,25 +9,18 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require fontawesome/css/font-awesome.min
- *= require stickyNavbar.js/animate.min
- *= require normalize.css/normalize
 
  *= require leaflet-draw/dist/leaflet.draw.css
  *= require leaflet-illustrate/dist/Leaflet.Illustrate.css
  *= require leaflet-toolbar/dist/leaflet.toolbar.css
  *= require leaflet-distortableimage/dist/leaflet.distortableimage.css
 
- *= require base/fonts
- *= require base/grid
- *= require base/main
- *= require base/typography
- *= require global_components/navbar
- *= require global_components/spinners
- *= require projects/project-show
- *= require projects/project-editor
- *= require users
- *= require maps
+
+*= require base/fonts
+*= require uikit/css/uikit.min
+
  *= require juxtapose/build/css/juxtapose
+
  *= require_self
 */
 

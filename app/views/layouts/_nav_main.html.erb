@@ -1,41 +1,35 @@
-<nav id='navbar-main' class='navbar-main navbar twenty-four columns sticky-nav <%=className%>'>
-  <div class='row group wrapper'>
-    <h1 id='main-logo' class='eight columns menu-item'>
-      <a href='/'>
-        <i class='fa fa-plane'></i>
-        Whirld
-      </a>
-    </h1>
-    <a id='about' href='about/' class='two columns block menu-item h-centered h5-size'>About</a>
-    <%= link_to('Create', maps_new_path , :class => 'two columns block menu-item h-centered h5-size', :id => 'create') %>
+<nav class="uk-navbar">
+  <a class="uk-navbar-brand" href="/">Whirld</a>
 
 
-    <div id='search-bar' class='block menu-item h-centered h4-size columns'>
-      <div id='search-bar-wrapper' class='pos-rel'>
-          <div id='search-input-wrapper'>
-            <input id='search-keyword' type='text' placeholder='Find Projects' class='search-input font_small'value=''/>
-            <span class='search-input-btw invisible v-centered font_small block-inline'>near</span>
-            <input id='search-location' type='text' placeholder='Location' class='search-input font_small'value=''/>
+  <ul class="uk-navbar-nav uk-navbar-flip">
+      <li class="uk-parent uk-active" data-uk-dropdown="" aria-haspopup="true" aria-expanded="false">
+          <a href="">kbasye<i class="fa fa-caret-down"></i> </a>
+
+          <div class="uk-dropdown uk-dropdown-navbar" data-uk-dropdown="{mode:'click'}">
+              <ul class="uk-nav uk-nav-navbar">
+                  <li><a href="#">Item</a></li>
+                  <li><a href="#">Another item</a></li>
+                  <li class="uk-nav-header">Header</li>
+                  <li><a href="#">Item</a></li>
+                  <li><a href="#">Another item</a></li>
+                  <li class="uk-nav-divider"></li>
+                  <li><a href="#">Separated item</a></li>
+              </ul>
           </div>
-          <label id='search-icon-wrapper' class='cursor-point' for='search-keyword'>
-            <i class='fa fa-search v-centered font_small'></i>
-          </label>
-      </div>
-    </div>
 
+      </li>
 
-    <%# if user_signed_in? %>
-      <a href='' id='user-signin' class='block menu-item menu-item-small h-righted h5-size columns pull-right'>
+  </ul>
 
-        <%#= current_user.login %> <i class='fa fa-caret-down'></i>
-      </a>
-    <%# else %>
-      <%#= link_to "Log in", new_user_session_path, :class => 'block menu-item h-righted h5-size  columns pull-right', :id => 'user-signin' %>
-    <%# end %>
-
-
-    <!-- NEED: search path -->
-
+  <div class="uk-navbar-content uk-navbar-flip">
+      <form id='search-form' class="uk-form uk-margin-remove uk-display-inline-block">
+          <input id='search-keyword' type="text" placeholder="Search">
+          <input id='search-location' type="text" placeholder="Loation">
+          <button class="uk-button uk-button-primary"><i class='fa fa-search'></i></button>
+      </form>
 
   </div>
+
+
 </nav>

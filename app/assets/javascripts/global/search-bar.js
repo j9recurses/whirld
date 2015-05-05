@@ -4,7 +4,7 @@ var SearchBar = function(options){
     iconWrapperId: 'search-icon-wrapper',
     keywordId: 'search-keyword',
     locationId: 'search-location',
-    wrapperId: 'search-bar-wrapper',
+    wrapperId: 'search-form',
     btwTextClassName: 'search-input-btw'
   }, options);
 

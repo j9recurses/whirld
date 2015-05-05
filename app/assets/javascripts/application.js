@@ -18,6 +18,14 @@
 
 //= require mapknitter.js
 
+//= require uikit/js/uikit.min.js
+//= require uikit/js/core/nav.min.js
+//= require uikit/js/core/dropdown.min.js
+//= require global/main.js
+
+
+
+
 // Project editor JS:
 
 //= jquery-ui/jquery-ui.min
@@ -30,6 +38,6 @@
 //= require turbolinks
 //= require jquery.placeholder
 
-// Project Show JS:
+
 
 //= require_self

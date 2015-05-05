@@ -134,13 +134,20 @@ class MapsController < ApplicationController
     @embed = true
     @user = @map.user_id
     @collaborators = @map.users
+    if @collaborators.size == 0
+      @collaborators = Array.new
+      @collaborators << User.find(@map.user_id)
+    end
+    puts  @collaborators.inspect
+    @nearby_maps = Map.find_nearby_maps(@map)
+    @nearby_maps = get_map_coverphotos(@nearby_maps)
   end
-
 
 
   def annotate
     @map = Map.find params[:id]
     @map.zoom = 12 # get rid of this; use setBounds or something
+    @annotations = true # loads annotations-specific assets
   end
 
   def edit
@@ -194,10 +201,13 @@ class MapsController < ApplicationController
       warpables << warpable
       warpables.last[:nodes] = warpable.nodes_array
       warpables.last.src = warpable.image.url
+       puts "********"
+      puts warpable.image.url
       warpables.last.srcmedium = warpable.image.url(:medium)
     end
     render :json => warpables
   end
+
 
   # run the export
   def export

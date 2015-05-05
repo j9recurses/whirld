@@ -4,10 +4,10 @@
       <div class='twelve columns'>
         <h1>User Profile</h1>
         <h5> <%= link_to "Manage Your Profile", user_profile_edit_path(@user.id) %> </h5>
-        <img src="/assets/test/cat.png" alt="profile_pic" style="width:120px;height:120px">
-        <h4>Username: <%= @user.login %> </h4>
+         <%= image_tag(@user_profile.photo_file, :size => "200x250")%>
+         <h4>Username: <%= @user.login %> </h4>
         <h4>Location: <%= @user_profile.location  %> </h4>
-        <h4>Tools and Skills : <%= @user_profile.taglist.join(" , ") %> </h4>
+        <h4>Tools and Skills : <%= @user_profile.tags.pluck([:name]).join(" , ") %> </h4>
         <H4>Description: </h4>
         <p> <%= @user_profile.description %></p>
         <h4> <%= @user.login.titleize %> has worked on <%= @maps_cnt %> projects and has finished <%= @maps.size.to_s %> projects</h4>
@@ -29,10 +29,15 @@
             </div>
           <%end%>
         <%end%>
-        <h3> Other Users Nearby <%= @user.login.titleize%> </h3>
+        <h3> Nearby Users <%= @user.login.titleize%> </h3>
         <% @neighbors.each do |n| %>
         <%if n.id != @user_profile.id %>
-        <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist%> distance away from <%=@user.login%> </h5>
+        <%unless n.photo_file.blank? %>
+         <%= image_tag(n.photo_file, :size => "100x100") %>
+         <%else%>
+           <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+         <%end%>
+        <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist.round(0)%> miles away from <%=@user.login%> </h5>
         <% end %>
         <% end %>
         <h3>Recent Activity for <%= @user.login.titleize %> </h3>
@@ -47,6 +52,26 @@
           </li>
           <%end%>
           </div>
+
+          <H3> <%@user.login.titleize%> Collaborators </H3>
+          <%  @collaborators_list.each do |collabo | %>
+          <%  cprofile = collabo.user_profile %>
+          <% unless cprofile.nil? %>
+          <li class='user-meta-item item font_small bold'>
+           <% unless cprofile.photo_file.blank? %>
+           <%= image_tag(cprofile.photo_file, :size => "100x100") %>
+           <%else%>
+            <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+            <%end%>
+            <%else%>
+            <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+            <%end%>
+            <%= link_to collabo.login.titleize, user_profile_path(collabo.id)%>
+          </li>
+            <%unless cprofile.blank? %>
+            <%= cprofile.tags.pluck([:name]).join(" , ") %>
+            <%end%>
+          <%end%>
       </div>
     </div>
   </div>

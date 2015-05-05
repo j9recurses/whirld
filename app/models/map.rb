@@ -9,11 +9,11 @@ class NotAtOriginValidator < ActiveModel::Validator
 end
 
 class Map < ActiveRecord::Base
-
+  geocoded_by :address, :latitude  => :lat, :longitude => :lon
   extend FriendlyId
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
-  acts_as_commentable
+  #acts_as_commentable
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
@@ -37,6 +37,8 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_comparisons, through: :user_galleries
   has_many :collaborators
   has_many :users, through: :collaborators
+  has_many :annotations, :dependent => :destroy
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -123,6 +125,22 @@ class Map < ActiveRecord::Base
     geo = Geocoder.coordinates(location)
     point = "#{geo[0]}, #{geo[1]}"
     return point
+  end
+
+   def self.find_nearby_maps(map)
+      neighbors = Map.near([map.lat, map.lon], 100)
+      neighbor_info = Array.new
+      neighbors.each do | n|
+        n.ndist = neighbor_distance(map.lat, map.lon, n.lat, n.lon)
+        n.taglist = n.tags.pluck([:name])
+        neighbor_info << n
+      end
+      return neighbor_info
+  end
+
+  def self.neighbor_distance(lat1, lon1, lat2, lon2)
+    distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
+    return distance
   end
   #
   # def self.get_maptags(maps)
@@ -232,6 +250,16 @@ class Map < ActiveRecord::Base
   def search_entity=(val)
     @search_entity= val
   end
+
+   attr_accessor :ndist
+   def ndist
+    @ndist
+  end
+
+  def ndist=(val)
+    @ndist = val
+  end
+
 
 
   def validate

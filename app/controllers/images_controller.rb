@@ -72,7 +72,9 @@ class ImagesController < ApplicationController
   def show
     @image = Warpable.find params[:id]
     respond_to do |format|
-      format.html # show.html.erb
+      puts "in here"
+      puts :json => @image.map{|img| img.fup_json}
+      #format.html # show.html.erb
       format.json { render :json => @image.map{|img| img.fup_json} }
     end
   end
@@ -107,15 +109,15 @@ class ImagesController < ApplicationController
 
   def destroy
     @warpable = Warpable.find params[:id]
-    if logged_in? && current_user.can_delete?(@warpable)
+    #if logged_in? && current_user.can_delete?(@warpable)
       @warpable.destroy
       respond_to do |format|
         format.html { redirect_to @warpable.map }
         format.json { render :json => @warpable }
-      end
-    else
-      flash[:error] = "You must be logged in to delete images."
-      redirect_to "/login"
+     # end
+    #else
+     # flash[:error] = "You must be logged in to delete images."
+     # redirect_to "/login"
     end
   end
 

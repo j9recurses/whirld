@@ -24,6 +24,10 @@
           <%= profile_form.hidden_field(:photo_file_cache) %>
           <%= profile_form.file_field(:photo_file) %>
         </div>
+         <div class="field">
+          <%= profile_form.label :taglist %>
+          <%= profile_form.text_field :taglist %>
+        </div>
 
         <div class="actions">
           <button class='submit'><%= profile_form.submit "Submit" %></button>

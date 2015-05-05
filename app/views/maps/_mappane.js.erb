@@ -26,3 +26,4 @@ if($('#project-show').length > 0){
 	//   });
 	//  })();
 // }
+<% puts url_for([@map, :warpables])+'.json' unless @map.warpables.empty? %>

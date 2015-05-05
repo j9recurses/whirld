@@ -12,13 +12,18 @@ $(document).ready(function(){
     latlng:     L.latLng(37.8698672,-122.2680447),
     readOnly:   false,
     zoom: 12,
-    warpablesUrl: "/maps/" + mapId +"/warpables.json"
+    warpablesUrl: "/maps/" + mapId +"/warpables.json",
+    logged_in: true,
+    anonymous:  false,
   });
 
   var annotations = new MapKnitter.Annotations({
     name:   'annotation',
     map_id: mapId,
-    map:   window.mapKnitter.getMap()
+    map:   window.mapKnitter.getMap(),
+    logged_in: true,
+    anonymous:  false
+
   });
 
   // this.modEl.find('.droppable').droppable({
@@ -28,7 +33,7 @@ $(document).ready(function(){
   //   drop: function(e, ui){
   //     var photoCount = self.modEl.find('.photo').length;
   //     if(photoCount < self.photoLimit){
-        
+
   //       self.dropzone = $(e.target);
   //       self.dropzone.removeClass('dropzone');
   //       self.dropzone.find('p').remove();
@@ -64,11 +69,11 @@ ProjectEditor.prototype = {
     var title = new Form();
         desc.titleField();
     var loc = new Form();
-        loc.locationField(); 
+        loc.locationField();
     var lat = new Form();
-        lat.latField(); 
+        lat.latField();
     var lon = new Form();
-        lon.lonField();    
+        lon.lonField();
     var ptf = new Form();
         ptf.projectTagField();
 

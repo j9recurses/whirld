@@ -1,12 +1,8 @@
 Whirld::Application.routes.draw do
 
-  # redirect legacy route:
-  #get 'tag/:id', to: redirect('/tags/%{id}')
-  #get 'tags/:id' => 'tags#show'
 
-  # Registered user pages:
-  #get 'profile' => 'users#profile', :id => 0
-   #get 'dashboard' => 'users#dashboard'
+    # RESTful API
+
 
   get 'feeds/all' => 'feeds#all', :format => 'rss'
   get 'feeds/license/:id' => 'feeds#license', :format => 'rss'
@@ -50,6 +46,11 @@ Whirld::Application.routes.draw do
   delete 'maps/:map_id/warpables/:id' => 'images#destroy' #legacy, will be resourceful
   delete 'images/:id' => 'images#destroy' #legacy, will be resourceful
 
+
+ resources :maps do
+    resources :warpables
+    resources :annotations
+  end
     # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   root :to => 'projects#show'
@@ -66,14 +67,6 @@ Whirld::Application.routes.draw do
 
   get 'tags/:tag', to: 'maps#index', as: :tag
 
-
-  # RESTful API
-  resources :maps do
-    resources :tags
-    resources :comments
-    resources :warpables
-    resources :annotations
-  end
 
   devise_for :users do
     resources :user_profiles

@@ -30,16 +30,20 @@ class UserProfilesController < ApplicationController
 
 
   def update
-
     puts params
     @user_profile = UserProfile.find(params[:id])
     up = params["user_profile"]
     @user_profile.description = up[:description]
      @user_profile.last_name = up[:last_name]
+    @user_profile.location = up[:location]
+    geoloc =  Geocoder.coordinates( @user_profile.location)
+    @user_profile.lat = geoloc[0]
+    @user_profile.lon = geoloc[1]
     @user_profile.first_name = up[:first_name]
     @user_profile.photo_file = up[:photo_file]
     @user = User.find(@user_profile.user_id)
     if @user_profile.save
+      tags = parse_taglist(up[:taglist], "user_profile", @user_profile.id)
     #@user = User.find(@user_profile[:id])
       redirect_to user_profile_path(@user.id)
     else

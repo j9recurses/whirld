@@ -32,6 +32,7 @@ public/system/*
 public/warps/*
 public/tms/*
 config/amazon_s3.yml
+public/user_profile/*
 #config/initializers/recaptcha.rb
 #config/config.yml
 #config/initializers/site_keys.rb

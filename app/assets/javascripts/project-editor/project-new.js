@@ -15,7 +15,13 @@ $(document).ready(function(){
     warpablesUrl: "/maps/" + mapId +"/warpables.json"
   });
 
-  
+  var annotations = new MapKnitter.Annotations({
+    name:   'annotation',
+    map_id: mapId,
+    map:   window.mapKnitter.getMap()
+  });
+
+  console.log(annotations)
 
   // this.modEl.find('.droppable').droppable({
   //   accept: '.draggable',

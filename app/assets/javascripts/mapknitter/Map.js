@@ -307,12 +307,12 @@ MapKnitter.Map = MapKnitter.Class.extend({
   },
 
   dblClickImage: function (e) { 
-    // var img = this
-    // window.mapKnitter.selectImage.bind(img)
-    // img.editing._enableDragging()
-    // img.editing.enable()
-    // img.editing._toggleRotateDistort()
-    // e.stopPropagation()
+    var img = this
+    window.mapKnitter.selectImage.bind(img)
+    img.editing._enableDragging()
+    img.editing.enable()
+    img.editing._toggleRotateDistort()
+    e.stopPropagation()
   },
 
   saveImage: function() {

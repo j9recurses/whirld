@@ -11,10 +11,9 @@ end
 class Map < ActiveRecord::Base
 
   extend FriendlyId
-  #include PublicActivity::Model
-  #tracked owner: Proc.new{ |controller, model| controller.current_user }
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include PublicActivity::Model
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  acts_as_commentable
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
@@ -38,55 +37,11 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_comparisons, through: :user_galleries
   has_many :collaborators
   has_many :users, through: :collaborators
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
+#FOR SEARCH
   after_touch() { tire.update_index }
-
-  attr_accessor :taglist,
-  def taglist
-    @taglist
-  end
-
-  def taglist=(val)
-    @taglist = val
-  end
-
-  attr_accessor :coverphoto_name
-  def coverphoto_name
-    @coverphoto_name
-  end
-
-  def coverphoto_name=(val)
-    @coverphoto_name = val
-  end
-
-  attr_accessor :search_order
-  def search_order
-    @search_order
-  end
-
-  def search_order=(val)
-    @search_order = val
-  end
-
-  attr_accessor :geographic_search
-  def geographic_search
-    @geographic_search
-  end
-
-  def geographic_search=(val)
-    @geographic_search = val
-  end
-
-
-  attr_accessor :search_entity
-  def search_entity
-    @search_entity
-  end
-
-  def search_entity=(val)
-    @search_entity= val
-  end
-
 
   #set the search units for tire
   SEARCH_UNIT   = "mi"
@@ -205,7 +160,7 @@ class Map < ActiveRecord::Base
         puts params[:location]
         map.geographic_search = 1
       else
-         map.geographic_search = 0
+        map.geographic_search = 0
       end
       if params[:entity]
         map.search_entity = params[:entity]
@@ -230,6 +185,52 @@ class Map < ActiveRecord::Base
       end
       filenames
     end
+  end
+
+ attr_accessor :taglist,
+  def taglist
+    @taglist
+  end
+
+  def taglist=(val)
+    @taglist = val
+  end
+
+  attr_accessor :coverphoto_name
+  def coverphoto_name
+    @coverphoto_name
+  end
+
+  def coverphoto_name=(val)
+    @coverphoto_name = val
+  end
+
+  attr_accessor :search_order
+  def search_order
+    @search_order
+  end
+
+  def search_order=(val)
+    @search_order = val
+  end
+
+  attr_accessor :geographic_search
+  def geographic_search
+    @geographic_search
+  end
+
+  def geographic_search=(val)
+    @geographic_search = val
+  end
+
+
+  attr_accessor :search_entity
+  def search_entity
+    @search_entity
+  end
+
+  def search_entity=(val)
+    @search_entity= val
   end
 
 

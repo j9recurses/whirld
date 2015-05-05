@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150504131912) do
+ActiveRecord::Schema.define(:version => 20150505023901) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -50,17 +50,20 @@ ActiveRecord::Schema.define(:version => 20150504131912) do
   add_index "collaborators", ["user_id"], :name => "index_collaborators_on_user_id"
 
   create_table "comments", :force => true do |t|
-    t.string   "title",            :limit => 50, :default => ""
-    t.text     "comment"
-    t.integer  "commentable_id"
+    t.integer  "commentable_id",   :default => 0
     t.string   "commentable_type"
-    t.integer  "user_id"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.string   "title"
+    t.text     "body"
+    t.string   "subject"
+    t.integer  "user_id",          :default => 0, :null => false
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
-  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
-  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -177,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20150504131912) do
     t.integer  "warpable_id"
     t.string   "warpable_url"
     t.string   "warpable_thumb_url"
+    t.integer  "user_id"
   end
 
   create_table "taggings", :force => true do |t|
@@ -245,6 +249,7 @@ ActiveRecord::Schema.define(:version => 20150504131912) do
     t.string  "first_name"
     t.string  "last_name"
     t.integer "photo_id"
+    t.string  "photo_file"
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id", :unique => true

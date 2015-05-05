@@ -52,6 +52,8 @@ class User < ActiveRecord::Base
   end
 
   def can_delete?(resource)
+    puts "******"
+    puts resource
     self.owns?(resource) || self.owns_map?(resource) || self.role == "admin"
   end
 

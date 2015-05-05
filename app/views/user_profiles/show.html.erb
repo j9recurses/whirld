@@ -2,33 +2,51 @@
   <div class='wrapper'>
     <div class='row group'>
       <div class='twelve columns'>
-        <h1>User Profile</h2>
+        <h1>User Profile</h1>
+        <h5> <%= link_to "Manage Your Profile", user_profile_edit_path(@user.id) %> </h5>
         <img src="/assets/test/cat.png" alt="profile_pic" style="width:120px;height:120px">
         <h4>Username: <%= @user.login %> </h4>
         <h4>Location: <%= @user_profile.location  %> </h4>
-        <h4>Tools and Skills : <%= @user_profile.taglist %> </h4>
+        <h4>Tools and Skills : <%= @user_profile.taglist.join(" , ") %> </h4>
         <H4>Description: </h4>
         <p> <%= @user_profile.description %></p>
-        <h4> <%= @user.login %>   has worked on  <%= @maps.size.to_s %> projects</h4>
-        <h4> Collaborators </h4>
-         <% unless @collaborators.nil? %>
+        <h4> <%= @user.login.titleize %> has worked on <%= @maps_cnt %> projects and has finished <%= @maps.size.to_s %> projects</h4>
+        <% unless @collaborators.nil? %>
           <% @collaborators.each do |map, collabo| %>
-             <%= link_to "Project: " + map.name, map_path(map.id) %> ==>
-          <% collabo.each do |c| %>
-              <li class='user-meta-item item font_small bold'><%=link_to c.login, user_profile_path(c.id) %></li>
-                  <%end%>
-                 <%end%>
-     <%end%>
-        <h3> Nearby Users </h3>
-          <% @neighbors.each do |n| %>
-            <%if n.id != @user_profile.id %>
-          <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist%> distance away from <%=@user.login%> </h5>
-          <% end %>
-           <% end %>
-        <h3>Recent Activity for <%= @user.login %> </h3>
-<div class="col-sm-3">
-  <%= render_activities @activities %>
-</div>
+              <div id= "user_projects">
+              <%= image_tag(map.coverphoto_name, :size => "100x100") %>
+              <li class='user-meta-item item font_small bold'>
+              <%= link_to "Project: " + map.name, map_path(map.id) %>
+              <% if collabo.size == 1%>
+                <%next%>
+              <%else%>
+                 => Collaborators:
+                <% collabo.each do |c| %>
+                  <%=link_to c.login + ",", user_profile_path(c.id) %>
+                <%end%>
+              <%end%>
+              </li>
+            </div>
+          <%end%>
+        <%end%>
+        <h3> Other Users Nearby <%= @user.login.titleize%> </h3>
+        <% @neighbors.each do |n| %>
+        <%if n.id != @user_profile.id %>
+        <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist%> distance away from <%=@user.login%> </h5>
+        <% end %>
+        <% end %>
+        <h3>Recent Activity for <%= @user.login.titleize %> </h3>
+        <div class="col-sm-3">
+          <%= render_activities @activities %>
+        </div>
+        <h3> <%= @user.login.titleize%> has contributed <%=@photos_contributed %> Photos</h3>
+       <div id="user_street_photos">
+        <% @user_photos.each do |photo|%>
+         <li class='user-meta-item item font_small bold'>
+           <%= image_tag(photo.photo_file, :size => "100x100") %>
+          </li>
+          <%end%>
+          </div>
       </div>
     </div>
   </div>

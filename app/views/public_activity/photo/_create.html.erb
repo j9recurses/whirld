@@ -3,7 +3,7 @@
   <small class="text-muted"><%= a.created_at.strftime('%H:%M:%S %-d %B %Y') %></small><br/>
   <strong><%= activity.owner ? activity.owner.login : 'Guest' %></strong>
   <% if a.trackable %>
-    added a photo <%=image_tag(a.trackable.photo_file)%>
+   <%=image_tag(a.trackable.photo_file, :size => "100x100")%>  added a photo
   <% else %>
     added a photo that is currently deleted.
   <% end %>

@@ -28,7 +28,7 @@ class MapsController < ApplicationController
     end
     @user = current_user
     @maps = Map.get_maptags(@maps)
-    @maps = Map.get_photos(@maps)
+    @maps = Map.map_coverphotos(@maps)
     @maps = Map.search_type(@maps, params)
     respond_to do |format|
       if params[:query ]
@@ -113,7 +113,7 @@ class MapsController < ApplicationController
     @user_gallery[:module_order] = params[:mod_order]
     @map[:finished_dt] = Time.now
     if @user_gallery.save && @map.save
-      #@map.create_activity key: 'map.finished', owner: current_user
+      @map.create_activity key: 'map.finished', owner: current_user
       render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"

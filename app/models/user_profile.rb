@@ -1,14 +1,15 @@
 class UserProfile < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
-
-  attr_accessible :user_id, :location, :lat, :lon, :description, :first_name, :last_name
+ mount_uploader :photo_file, UserProfileUploader
+  attr_accessible :user_id, :location, :lat, :lon, :description, :first_name, :last_name, :photo_file
   belongs_to :users
   has_one :photo
   has_many :tags, :as => :taggable, dependent: :destroy
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
-  #include PublicActivity::Model
-  # tracked owner: Proc.new{ |controller, model| controller.current_user }
+  validates  :photo_file, :presence => true
+  include PublicActivity::Model
+   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.get_collaborators(maps)
     collaborators = Hash.new
@@ -18,7 +19,18 @@ class UserProfile < ActiveRecord::Base
       end
       return collaborators
     end
+    def self.get_collaborators_list(user_id)
+      map_list = Collaborator.where(["user_id = ?", user_id]).pluck([:map_id])
+      collabo_list = Array.new
+      map_list.each do | map |
+        user =
 
+
+  def self.get_photo_gallery(user_id)
+    user_photos = Photo.where(["user_id = ?" , user_id])
+    #map_photos = Photo.where(["user_id = ? and is_aerial = true " , user_id])
+  return user_photos
+  end
 
   def self.find_nearby_users(user_profile)
     unless user_profile.lat.blank? or user_profile.lon.blank?
@@ -39,6 +51,8 @@ def self.neighbor_distance(lat1, lon1, lat2, lon2)
     distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
     return distance
   end
+
+
 
   attr_accessor :taglist, :photos
   def taglist

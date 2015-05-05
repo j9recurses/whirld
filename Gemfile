@@ -79,6 +79,8 @@ gem 'faker'
 #public activity
 gem 'public_activity'
 
+#comments
+gem 'acts_as_commentable_with_threading'
 
 #for deepLearn predicter
 #gem 'delayed_job_active_record'

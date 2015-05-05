@@ -79,7 +79,7 @@ MapKnitter.Annotations.include({
     map.on('draw:deleted', function(event) {
       var layers = event.layers;
 
-       // Delete each record via AJAX request; see MapKnitter.Resources#delete. 
+      /* Delete each record via AJAX request; see MapKnitter.Resources#delete. */
       layers.eachLayer(function(layer) {
         this.deleteResource(layer, function(data) { console.log(data); });
       }, this);

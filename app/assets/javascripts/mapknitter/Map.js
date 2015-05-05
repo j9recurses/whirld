@@ -15,35 +15,25 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
     this._map = L.map('knitter-map-pane', { 
       zoomControl: false,
-      layers: [google],
-      drawControl: true
+      layers: [google]
     }).setView(this._latlng, this._zoom);
 
     // make globally accessible map namespace for knitter.js
     map = this._map
 
     if (!options.readOnly) {
-      // saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
-      // function() {},
-      //   'Save status',
-      //   this._map,
-      //   this
-      // )
-
-      // videoBtn = L.easyButton('fa-video-camera',
-      //   function() {
-      //   },
-      //   'Add a Video',
-      //   this._map,
-      //   this
-      // )
+      saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
+      function() {},
+        'Save status',
+        this._map,
+        this
+      )
     }
 
     images = [], bounds = [];
 
     /* Set up basemap and drawing toolbars. */
     this.setupMap();
-    // this.setDraw();
 
     /* Load warpables data via AJAX request. */
     this._warpablesUrl = options.warpablesUrl;
@@ -125,6 +115,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
   /* Add a new, unplaced, but already uploaded image to the map.
    * <lat> and <lng> are optional. */
   addImage: function(url,id,lat,lng) {
+
     var img = new L.DistortableImageOverlay(url);
     img.geocoding = { lat: lat,
                       lng: lng };
@@ -285,7 +276,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
       if (img._leaflet_id != images[i]._leaflet_id) {
         /* Deselect (disable) other images */
         images[i].editing.disable()
-         // Ensure that other toolbars are removed 
+        /* Ensure that other toolbars are removed */
         if (images[i].editing.toolbar) {
           map.removeLayer(images[i].editing.toolbar);
         }
@@ -426,22 +417,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
     this._map.addControl(layersControl);
 
     L.control.zoom({ position: 'topright' }).addTo(map);
-    L.control.scale().addTo(map)
-
-
+    L.control.scale().addTo(map);
   }
-  // setDraw: function(){
-  //   var map = this._map;
-  //   var drawnItems = new L.FeatureGroup();
-  //   map.addLayer(drawnItems);
-
-  //   var drawControl = new L.Control.Draw({
-  //       edit: {
-  //           featureGroup: drawnItems
-  //       }
-  //   });
-  //   map.addControl(drawControl);
-
-  // }
 
 });

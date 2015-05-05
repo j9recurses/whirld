@@ -21,8 +21,6 @@ $(document).ready(function(){
     map:   window.mapKnitter.getMap()
   });
 
-  console.log(annotations)
-
   // this.modEl.find('.droppable').droppable({
   //   accept: '.draggable',
   //   activeClass: 'drop-active',

@@ -9,6 +9,14 @@ $(document).ready(function() {
 		var bar = new ButtonBar({ type: 'end' });
 		// initiate the tab manager
 		// initiate the photo upload
+    var annotations = new MapKnitter.Annotations({
+      name:   'annotation',
+      map_id: $('#project-creation-2').data('map-id'),
+      map:   window.mapKnitter.getMap()
+    });
+
+    console.log('hello')
+    console.log(annotations)
 	}
 
 });

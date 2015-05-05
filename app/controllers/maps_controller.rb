@@ -82,10 +82,12 @@ class MapsController < ApplicationController
     gallery.name = @map.slug
     gallery.user_id = @user.id
     if @map.save && gallery.save
-      @collabo = Collaborator.new()
-      @collabo[:map_id] = @map.id
-      @collabo[:user_id] = @user.id
-      @collabo.save
+      # Collaborator.create(@map.id, @user.id)
+      # @collabo = Collaborator.new()
+      # @collabo[:map_id] = @map.id
+      # @collabo[:user_id] = @user.id
+      # @collabo.save
+
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else

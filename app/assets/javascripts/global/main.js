@@ -1,6 +1,70 @@
 $(document).ready(function(){
   var sb = new SearchBar();
       sb.init();
+
+
+  $('#comments-testing').on('click', function(){
+    console.log('clicking the button')
+    $.ajax({
+      url: '',
+      data: {},
+      cache: false,
+      type: 'post',
+      success: function(data){
+        console.log('Success comments posted')
+        console.log(data)
+      }, 
+      error: function(){
+        console.log('Failure: comments not posted')
+      }
+    });
+  });
+
+
+// $.ajax({
+//       url: url,
+//       data:  data,
+//       cache: false,
+//       type: 'post',
+//       success: function(data) {
+//         console.log('Success: module created');
+
+//         // Set parts, data, initiate events
+//         self.initMod();
+
+//         // Set ID
+//         self.setId(data.id);
+
+//         // append module to DOM before the origin bar, before events are attached
+//         self.originBar = self.setOriginBar();
+//         self.modEl.insertBefore(self.originBar);
+
+//         // create a new button bar and append it before the module element
+//         self.setNewBar();
+//         self.newBar.barEl.insertBefore(self.modEl);
+
+//         // initiate drag and sort if it's a module with photos
+//         if(self.isPhotoMod){
+//           self.setDrop();
+//           self.setSort();          
+//         }
+
+//         // initiate the form fields
+//         var tf = new Form({ modAttrId: self.modEl.attr('id') })
+//             tf.modTagField();
+
+//         if(self.options.modType == 'split' || self.options.modType == 'text'){
+//           txtField = new Form({ modAttrId: self.modEl.attr('id') });
+//           txtField.textField();
+//         }
+
+//       },
+//       error: function(){
+//         console.log("Error: module not created");
+//       }
+//     }); // end ajax
+
+
 });
 
 var AutoComp = function(options){
@@ -12,7 +76,8 @@ var AutoComp = function(options){
     minLength: 2
   }, options);
 
-  this.inputEl = $('#' + this.options.inputId);
+  this.inputEl = $('#' + this.options.inputId)
+
 }
 
 AutoComp.prototype = {

@@ -8,8 +8,10 @@ $(document).ready(function(){
   }
 
   var mapId = $('#project-creation-2').data('map-id');
+  var mapLat = $('#project-creation-2').data('map-lat');
+  var mapLon = $('#project-creation-2').data('map-lon');
   window.mapKnitter = new MapKnitter.Map({
-    latlng:     L.latLng(37.8698672,-122.2680447),
+    latlng:     L.latLng(mapLat, mapLon),
     readOnly:   false,
     zoom: 12,
     warpablesUrl: "/maps/" + mapId +"/warpables.json",

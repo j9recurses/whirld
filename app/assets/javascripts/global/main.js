@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+  var sb = new SearchBar({});
+      sb.init();
+
+
 //like whirl function.
 //this function takes the following params:
 //Klass_id : id of the module object

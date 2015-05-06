@@ -1,23 +1,89 @@
-<div class="uk-flex button-group">
-
-	<button class="uk-button"></button>
-
-	<div class="uk-button-group">
-    <button class="uk-button">Select Photos</button>
-    <div data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" class="">
-        <button class="uk-button"><i class="uk-icon-caret-down"></i></button>
-        <div class="uk-dropdown uk-dropdown-small">
-            <ul class="uk-nav uk-nav-dropdown">
-                <li><a href="#">All</a></li>
-                <li><a href="#">Current</a></li>
-                <li><a href="#">Saved</a></li>
-                <li><a href="#">Mine</a></li>
-            </ul>
-        </div>
+<nav id='photo-manager-nav' class='' data-uk-sticky>
+ 
+  <div id='photo-select' class="uk-flex uk-flex-left uk-flex-space-between button-group uk-margin-bottom">
+    <div class="uk-button uk-form-select" data-uk-form-select>
+      <span>All Photos <i class='fa fa-caret-down'></i></span>
+      <select>
+          <option value="all">All Photos</option>
+          <option value="current">Current</option>
+          <option value="saved">Saved</option>
+          <option value="mine">Mine</option>
+      </select>
     </div>
+
+    <button class="uk-button"><i class='fa fa-th-large'></i></button>
+
+    <div class="uk-button uk-form-select" data-uk-form-select>
+      <span><i class='fa fa-sort'></i></span>
+      <select>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+      </select>
+    </div>
+
+    <div class="uk-form-file">
+      <button class="uk-button"><i class='fa fa-upload'></i></button>
+      <input type="file">
+    </div>
+  </div> <!-- end .uk-flex -->
+
+  <div id='photo-type' class='uk-flex uk-flex-center'>
+    <ul class="uk-subnav uk-subnav-pill">
+      <li class="uk-active"><a href="#">All</a></li>
+      <li><a href="#">Aerial</a></li>
+      <li><a href="#">Street</a></li>
+      <li><a href="#">People</a></li>
+    </ul>
   </div>
+</nav>
 
-
-
-
-</div> <!-- end .uk-flex -->
+<section id='preview-list' class="uk-grid uk-grid-collapse" data-uk-grid >
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+  <div class='uk-width-1-2'>
+    <figure class="uk-overlay uk-overlay-hover">
+      <img src="/assets/images/test/grid-02.jpg" width="" height="" alt="">
+      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
+    </figure>
+  </div>
+</section>

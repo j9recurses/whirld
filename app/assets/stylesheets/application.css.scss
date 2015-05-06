@@ -20,10 +20,14 @@
 *= require uikit/css/uikit.min
 *= require base/main
 *= require global_components/navbar
+*= require uikit/css/components/form-file.min
+*= require uikit/css/components/form-select.min
 
- *= require juxtapose/build/css/juxtapose
+*= require project_editor/project-editor.css
 
- *= require_self
+*= require juxtapose/build/css/juxtapose
+
+*= require_self
 */
 
 .preloader {

@@ -50,13 +50,15 @@ Form.prototype = {
     }); // end ajax
   },
   changeCounter:function(){
+    var wrapper = this.eTarget.closest('.input-wrapper');
+    var span = $(wrapper).find('.char-limit');
+        span.removeClass('invisible');
     var letterCount = this.eTarget.val().length;
-    var span = this.eTarget.nextAll('span.char-limit');
-        $(span).removeClass('invisible');
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
+
     this.eTarget.on('focusout', function() {
-      if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('invisible'); }
+      if(letterCount == 0) { span.addClass('invisible'); }
     });
   },
   setData: function(){
@@ -319,87 +321,26 @@ Form.prototype = {
         } // end click
     });
   },
-
-  // functions for photo manager controls
-  isEmpty: function(trigger, type){
-    return $('#photos-'+trigger).find('.' + type).length == 0;
-  },
-  setDisabled: function(type){
-    $('#' + type).prop('checked', false);
-    $('#' + type).prop('disabled', true);
-  },
-  setEnabled: function(type){
-    $('#' + type).prop('disabled', false);
-  },
-  setAbility: function(trigger){
+  map_new: function(){
     var self = this;
-    $.each([ 'aerial', 'normal' ], function(i, type){
-      if(self.isEmpty(trigger, type)){
-        self.setDisabled(type);
-      }
-      else{
-        self.setEnabled(type);
+    $('#project-name').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+        autosize($('#project-name'));
       }
     });
-  },
-  setChecked: function(option){
-    var self = this;
-    if(self.isEmpty(option, 'aerial') == false){
-      $('#aerial').prop('checked', true);
-      self.showPhotos(option, 'aerial');
-    }
-    else if(self.isEmpty(option, 'normal') == false){
-      $('#normal').prop('checked', true);
-      self.showPhotos(option, 'normal');
-    }
-  },
-  hidePhotos: function(trigger, type){
-    $('#photos-'+trigger).find('.'+type).addClass('invisible').addClass('hidden');
-  },
-  showPhotos: function(trigger, type){
-    $('#photos-'+trigger).find('.'+type).removeClass('hidden').removeClass('invisible');
-  },
-  photoSelectFields: function(){
-    var self = this;
-    var photoContainers = { uploaded: $('#photos-uploaded'), saved: $('#photos-saved') };
-
-    // disable uploaded tabs
-    $('#aerial').prop('disabled', true);
-    $('#normal').prop('disabled', true);
-
-    // when the drop down changes
-    $('#photo-state').on({
-      change: function(){
-        // toggle the whole containers
-        $.each(photoContainers, function(option, container){
-          container.toggleClass('hidden');
-          container.toggleClass('invisible');
-        }); // end each
-        // determine whether aerial and normal should be clicked on or not
-        var option = $('#photo-state option:selected').val()
-        self.setAbility(option);
-        self.setChecked(option);
-      } // end change
-    });
-    // toggle aerial or normal
-    $('#photo-types').on({
-      change: function(){
-        var trigger = $('#photo-state option:selected').val();
-
-        // show the photos of the selected
-        var type = $('#photo-types input:checked').val();
-        self.showPhotos(trigger, type);
-
-        // hide the photos of the other
-        var other;
-        $.each($('#photo-types input'), function(i, el){
-          if($(el).val() != type){
-            other = $(el).val();
-          }
-        });
-        self.hidePhotos(trigger, other);
+    $('#project-description').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+        autosize($('#project-name'));
       }
-    })
+    });
+    var locAC = new AutoComp({
+      inputId: 'project-location'
+    });
+    locAC.location();
   }
 
 } // end Form Prototype

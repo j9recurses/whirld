@@ -94,7 +94,12 @@ AutoComp.prototype = {
       minLength: this.options.minLength,
       source: function(request, response){
         self.locationSource(request, response);
-      }
+      },
+      select: function(event, ui) {
+      var b = ui.item.bounds
+      $("#project-lat").val(ui.item.latitude);
+      $("#project-lon").val(ui.item.longitude);
+    }
     });
     // render results with highlighting
     locAC = $ac.data("ui-autocomplete")

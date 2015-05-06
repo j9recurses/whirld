@@ -1,6 +1,7 @@
 $(document).ready(function(){
   if($('#project-creation-1').length > 0){
-
+    var form = new Form();
+        form.map_new();
   }
   if($('#project-creation-2').length > 0){
     var pe = new ProjectEditor();
@@ -28,16 +29,6 @@ $(document).ready(function(){
 
   });
 
-  // $('#preview-list').mixItUp({
-  //   selectors: {
-  //     filter: '.filter-type'
-  //   },
-  //   callbacks: {
-  //     onMixFail: function(state){
-  //       console.log('Filter Failed')
-  //     }
-  //   }
-  // });
 
 });
 

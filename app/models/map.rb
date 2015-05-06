@@ -13,12 +13,13 @@ class Map < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
-  #acts_as_commentable
+  acts_as_commentable
+  acts_as_votable
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt,:whirls
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug
@@ -42,7 +43,7 @@ class Map < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-#FOR SEARCH
+  #FOR SEARCH
   after_touch() { tire.update_index }
 
   #set the search units for tire
@@ -127,15 +128,17 @@ class Map < ActiveRecord::Base
     return point
   end
 
-   def self.find_nearby_maps(map)
-      neighbors = Map.near([map.lat, map.lon], 100)
-      neighbor_info = Array.new
-      neighbors.each do | n|
+  def self.find_nearby_maps(map)
+    neighbors = Map.near([map.lat, map.lon], 100)
+    neighbor_info = Array.new
+    neighbors.each do | n|
+      unless map.id == n.id
         n.ndist = neighbor_distance(map.lat, map.lon, n.lat, n.lon)
         n.taglist = n.tags.pluck([:name])
         neighbor_info << n
       end
-      return neighbor_info
+    end
+    return neighbor_info
   end
 
   def self.neighbor_distance(lat1, lon1, lat2, lon2)
@@ -205,7 +208,7 @@ class Map < ActiveRecord::Base
     end
   end
 
- attr_accessor :taglist,
+  attr_accessor :taglist,
   def taglist
     @taglist
   end
@@ -251,8 +254,8 @@ class Map < ActiveRecord::Base
     @search_entity= val
   end
 
-   attr_accessor :ndist
-   def ndist
+  attr_accessor :ndist
+  def ndist
     @ndist
   end
 
@@ -260,6 +263,14 @@ class Map < ActiveRecord::Base
     @ndist = val
   end
 
+  attr_accessor :whirls
+  def whirls
+    @whirls
+  end
+
+  def whirls=(val)
+    @whirls = val
+  end
 
 
   def validate

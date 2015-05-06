@@ -1,12 +1,17 @@
 class Comment < ActiveRecord::Base
-  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  acts_as_nested_set :scope => [:commentable_id, :commentable_type,:parent_id]
 
   validates :body, :presence => true
   validates :user, :presence => true
+  trimmed_fields :body
+  include PublicActivity::Model
+   tracked owner: Proc.new{ |controller, model| controller.current_user }
+
+  attr_accessible :commentable, :body, :user_id, :title, :user_login
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
-  #acts_as_votable
+  acts_as_votable
 
   belongs_to :commentable, :polymorphic => true
 
@@ -16,11 +21,12 @@ class Comment < ActiveRecord::Base
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
-  def self.build_from(obj, user_id, comment)
+  def self.build_from(obj, user_id,  comment, title=nil)
     new \
       :commentable => obj,
       :body        => comment,
-      :user_id     => user_id
+      :user_id     => user_id,
+      :title  =>  title
   end
 
   #helper method to check if a comment has children
@@ -45,4 +51,5 @@ class Comment < ActiveRecord::Base
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end
+
 end

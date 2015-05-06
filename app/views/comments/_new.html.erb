@@ -1,8 +1,0 @@
-<div class="form-group">
-  <%= form_for [@map, Comment.new] do |f| %>
-    <%= f.label :body, "Leave a comment" %>
-    <%= f.text_area :body, :class => "form-control" %>
-
-    <%= f.submit "Post comment", :class => "btn btn-primary" %>
-  <% end %>
-</div>

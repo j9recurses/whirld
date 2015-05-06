@@ -2,6 +2,10 @@
 <button id='comments-testing'>TEST THIS</button>
 
 <div id='project-show'>
+
+
+
+
 <section id='project-header' class='first-slide slide row group'>
 	<div class='header-wrapper ten columns column-top column-first'>
 			<div class='row group'>
@@ -29,7 +33,7 @@
 		<div id='project-action-bar' class='row group invisible pos-abs'>
 			<div id='favorited' class='four columns column-first'>
 				<!-- NEED: favorites or votes -->
-				<span class='caps'>Favorited 1,822 times</span>
+				<span class='caps'>Whirled <%= @map.votes_for.size%> times</span>
 			</div>
 			<div id='project-edit' class='four columns'>
 			 <!-- NEED: edit or request to edit path -->
@@ -97,7 +101,7 @@
 
 	<%= render partial: "maps/show_pieces/nearby_maps" %>
 
-
+<%= render partial: "maps/show_pieces/comments"%>
 
 
 <!-- but we'll need the decorating html to add to it -->

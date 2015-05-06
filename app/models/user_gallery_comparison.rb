@@ -6,23 +6,7 @@ class UserGalleryComparison < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
-
-  attr_accessor :taglist, :photos
-  def taglist
-    @taglist
-  end
-
-  def taglist=(val)
-     @taglist = val
-  end
-
-  def photos
-    @photos
-  end
-
-  def photos=(val)
-    @photos = val
-  end
+  acts_as_votable
 
   def self.gather_gallery_comparisions(user_gallery_id)
     combined_gallery_comps= Array.new
@@ -39,4 +23,29 @@ class UserGalleryComparison < ActiveRecord::Base
     end
     return combined_gallery_comps
   end
+
+  def taglist
+    @taglist
+  end
+
+  def taglist=(val)
+    @taglist = val
+  end
+
+  def photos
+    @photos
+  end
+
+  def photos=(val)
+    @photos = val
+  end
+
+  def whirls
+    @whirls
+  end
+
+  def whirls=(val)
+    @whirls = val
+  end
+
 end

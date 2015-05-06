@@ -77,17 +77,16 @@ class MapsController < ApplicationController
     @map = @user.maps.new(params[:map])
     @map.author = @user.login
     @map.name = params[:name]
+    @map.user_id = current_user.id
     @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
     gallery = UserGallery.new()
     gallery.name = @map.slug
     gallery.user_id = @user.id
     if @map.save && gallery.save
-      # Collaborator.create(@map.id, @user.id)
-      # @collabo = Collaborator.new()
-      # @collabo[:map_id] = @map.id
-      # @collabo[:user_id] = @user.id
-      # @collabo.save
-
+       @collabo = Collaborator.new()
+       @collabo[:map_id] = @map.id
+       @collabo[:user_id] = @user.id
+       @collabo.save
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else
@@ -138,9 +137,9 @@ class MapsController < ApplicationController
       @collaborators = Array.new
       @collaborators << User.find(@map.user_id)
     end
-    puts  @collaborators.inspect
     @nearby_maps = Map.find_nearby_maps(@map)
     @nearby_maps = get_map_coverphotos(@nearby_maps)
+    @map_comments =  @map.comment_threads
   end
 
 

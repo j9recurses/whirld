@@ -7,11 +7,7 @@ class UserProfile < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
-<<<<<<< HEAD
-  #validates  :photo_file, :presence => true
-=======
-  ##validates  :photo_file, :presence => true
->>>>>>> aeb056c572697d873ff15b474cec0a3e30f33931
+
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
 

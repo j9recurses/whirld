@@ -177,8 +177,6 @@ $( '#updateButton' ).click ( function () {
   var sb = new SearchBar();
       sb.init();
 
-<<<<<<< HEAD
-
   $('#comments-testing').on('click', function(){
     console.log('clicking the button')
     $.ajax({

@@ -6,7 +6,7 @@ class UserGalleryComparison < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
-  acts_as_votable
+  # acts_as_votable
 
   def self.gather_gallery_comparisions(user_gallery_id)
     combined_gallery_comps= Array.new

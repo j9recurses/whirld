@@ -5,7 +5,7 @@ class UserGallerySplit < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
-  acts_as_votable
+  # acts_as_votable
 
   def self.gather_gallery_splits(user_gallery_id)
     combined_gallery_splits= Array.new

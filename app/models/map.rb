@@ -14,7 +14,7 @@ class Map < ActiveRecord::Base
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
   acts_as_commentable
-  acts_as_votable
+  # acts_as_votable
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list

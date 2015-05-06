@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
   belongs_to :user_gallery
   has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
-  acts_as_votable
+  # acts_as_votable
   include PublicActivity::Model
    tracked owner: Proc.new{ |controller, model| controller.current_user }
 

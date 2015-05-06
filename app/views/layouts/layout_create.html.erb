@@ -6,11 +6,11 @@
 	<%= render "layouts/header_map" %>
 </head>
 <body>
-<% if @project_editor==true %>
-	<%= render "layouts/nav_project_editor", :className => 'map-info' %>
-<% else %>
+<%# if @project_editor==true %>
+	<%#= render "layouts/nav_project_editor", :className => 'map-info' %>
+<%# else %>
 	<%= render "layouts/nav_main", :className => 'new' %>
-<% end %>
+<%# end %>
 
 <%= yield %>
 

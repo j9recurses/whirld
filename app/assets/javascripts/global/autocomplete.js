@@ -37,6 +37,12 @@ AutoComp.prototype = {
             }));
           }
         });
+      },
+      select: function(event, ui) {
+        console.log(ui.item)
+        var b = ui.item.bounds
+        $("#project-lat").val(ui.item.latitude);
+        $("#project-lon").val(ui.item.longitude);
       }
     });
 

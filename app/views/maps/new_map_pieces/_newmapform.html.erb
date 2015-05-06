@@ -15,30 +15,24 @@
         </div>
         <div class="uk-width-1-2 input-wrapper uk-margin-top">
           <%= f.label :name, 'Location', :class => 'uk-form-label' %> 
-          <%=  f.text_field :location,
-                           :name => 'location',
-                           :rows => '0',
+          <%= f.text_field :location,
                            :class => 'uk-width-1-1',
                            :id => 'project-location',
                            :placeholder => 'Location' %>
         </div>
         <div class="uk-width-1-4 uk-margin-top">
-          <%= f.label :name, 'Latitude', :class => 'uk-form-label' %> 
-          <%=  f.text_field :lat,
-                           :name => 'lat',
-                           :rows => '0',
-                           :class => 'uk-width-1-1',
-                           :id => 'project-lat',
-                           :placeholder => 'Latitude' %>
+          <%= f.label :lat, 'Latitude', :class => 'input-label light' %>
+          <%= f.text_field :lat,
+                            :id => 'project-lat',
+                            :class => 'uk-width-1-1',
+                            :placeholder => 'Latitude' %>
         </div>
         <div class="uk-width-1-4 uk-margin-top">
-          <%= f.label :name, 'Longitude', :class => 'uk-form-label' %> 
-          <%=  f.text_field :lon,
-                           :name => 'lon',
-                           :rows => '0',
-                           :class => 'uk-width-1-1',
-                           :id => 'project-lon',
-                           :placeholder => 'Longitude' %>
+          <%= f.label :lon, 'Longitude', :class => 'input-label light' %>
+          <%= f.text_field :lon,
+                            :id => 'project-lon',
+                            :class => 'uk-width-1-1',
+                            :placeholder => 'Longitude' %>
         </div>
         <div class="uk-width-1-1 input-wrapper uk-margin-top">
           <%= f.label :name, 'Description', :class => 'uk-form-label' %> 

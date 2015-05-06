@@ -1,54 +1,23 @@
-<nav id='photo-manager-nav' class='six row group'>
-	
-	<div id='cssmenu'>
-	  <ul>
-	     <li class='has-sub '><a href='#'>All Photos</a>
-	        <ul>
-	           <li><a href='#'>Current</a></li>
-	           <li>><a href='#'>Saved</a></li>
-	           <li>><a href='#'>Saved</a></li>
-	        </ul>
-	     </li>
-	  </ul>
-	</div>
+<div class="uk-flex button-group">
 
-</nav>
+	<button class="uk-button"></button>
 
-	<ul class='inline-list filter-list h-centered row group font_small'>
-		<li class="filter-type item active" data-filter="all">All</li>
-		<li class="filter-type item" data-filter=".aerial">Aerial</li>
-		<li class="filter-type item" data-filter=".normal">Street View</li>
-		<li class="filter-type item" data-filter=".people">People</li>
-	</ul>
-
-<section id='preview-list'>
-
-	<% @gallery_photos.each do |photo| %>
-	<% if photo.is_aerial %>
-	<% type = 'aerial' %>
-	<article id='preview-<%=photo.id%>' class='preview mix aerial saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
-	<% elsif photo.is_normal %>
-	<% type = 'normal' %>
-	<article id='preview-<%=photo.id%>' class='preview mix normal saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>'style="background-image:url('<%=photo.photo_file%>')">
-	<% end %>					
-					<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
-				</article>
-	<% end %>
-
-	<% @gallery_photos.each do |photo| %>
-	<% if photo.is_aerial %>
-	<% type = 'aerial' %>
-	<article id='preview-<%=photo.id%>' class='preview mix aerial saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>'data-created='<%=photo.created_at.to_i%>'  style="background-image:url('<%=photo.photo_file%>')">
-	<% elsif photo.is_normal %>
-	<% type = 'normal' %>
-	<article id='preview-<%=photo.id%>' class='preview mix normal saved cursor-point draggable img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' style="background-image:url('<%=photo.photo_file%>')">
-	<% end %>		
-					<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
-				</article>
-	<% end %>
-
-</section>
+	<div class="uk-button-group">
+    <button class="uk-button">Select Photos</button>
+    <div data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" class="">
+        <button class="uk-button"><i class="uk-icon-caret-down"></i></button>
+        <div class="uk-dropdown uk-dropdown-small">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li><a href="#">All</a></li>
+                <li><a href="#">Current</a></li>
+                <li><a href="#">Saved</a></li>
+                <li><a href="#">Mine</a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
 
 
 
-<%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>
+
+</div> <!-- end .uk-flex -->

@@ -1,7 +1,7 @@
 Whirld::Application.routes.draw do
 
 
-    # RESTful API
+  # RESTful API
 
 
   get 'feeds/all' => 'feeds#all', :format => 'rss'
@@ -47,11 +47,11 @@ Whirld::Application.routes.draw do
   delete 'images/:id' => 'images#destroy' #legacy, will be resourceful
 
 
- resources :maps do
+  resources :maps do
     resources :warpables
     resources :annotations
   end
-    # You can have the root of your site routed with 'root'
+  # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   root :to => 'projects#show'
   get 'new' => 'projects#new'
@@ -87,10 +87,10 @@ Whirld::Application.routes.draw do
 
   post '/maps/update_remote/:id/' =>'maps#update_remote', :as => :map_update_remote, :defaults => {:format => 'json' }
 
-# module orders
-# post 'photo_mods/mod_order/:id...id is Map id. params are '
+  # module orders
+  # post 'photo_mods/mod_order/:id...id is Map id. params are '
 
-#project module routes
+  #project module routes
   #photo mods
   post 'photo_mods/place_mod_photo', :to => 'photo_mods#place_mod_photo', :as => 'place_mod_photo'
   delete 'photo_mods/remove_mod_photo/:id', :to => 'photo_mods#remove_mod_photo', :as => 'remove_mod_photo'
@@ -100,43 +100,53 @@ Whirld::Application.routes.draw do
   put 'photo_mods/user_gallery_split_update/:id', :to => 'photo_mods#user_gallery_split_update', :as => 'user_gallery_split_update'
   post 'photo_mods/user_gallery_split_create/:id', :to => 'photo_mods#user_gallery_split_create', :as => 'user_gallery_split_create'
 
-#gallery comparison
+  #gallery comparison
   delete 'photo_mods/user_gallery_comparison_delete/:id', :to => 'photo_mods#user_gallery_comparison_delete', :as => 'user_gallery_comparison_delete'
   put 'photo_mods/user_gallery_comparison_update/:id', :to => 'photo_mods#user_gallery_comparison_update', :as => 'user_gallery_comparison_update'
   post 'photo_mods/user_gallery_comparison_create/:id', :to => 'photo_mods#user_gallery_comparison_create', :as => 'user_gallery_comparison_create'
 
-#grid
+  #grid
   delete 'photo_mods/user_gallery_grid_delete/:id', :to => 'photo_mods#user_gallery_grid_delete', :as => 'user_gallery_grid_delete'
   put 'photo_mods/user_gallery_grid_update/:id', :to => 'photo_mods#user_gallery_grid_update', :as => 'user_gallery_grid_update'
   post 'photo_mods/user_gallery_grid_create/:id', :to  => 'photo_mods#user_gallery_grid_create', :as => 'user_gallery_grid_create'
 
-#bloc_text
+  #bloc_text
   delete 'photo_mods/user_gallery_text_delete/:id', :to => 'photo_mods#user_gallery_text_delete', :as => 'user_gallery_text_delete'
   put 'photo_mods/user_gallery_text_update/:id', :to => 'photo_mods#user_gallery_text_update', :as => 'user_gallery_text_update'
   post 'photo_mods/user_gallery_text_create/:id', :to  => 'photo_mods#user_gallery_text_create', :as => 'user_gallery_text_create'
 
-#taggings
- post 'photo_mods/create_taggings', :to => 'photo_mods#create_taggings', :as => 'create_taggings'
- delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
+  #taggings
+  post 'photo_mods/create_taggings', :to => 'photo_mods#create_taggings', :as => 'create_taggings'
+  delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
 
-#user profiles
- get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"
- get 'users_profiles_edit/:id' => 'user_profiles#edit', :as => "user_profile_edit"
- put 'users/:id/user_profiles_update/:id' => 'user_profiles#update', :as => "user_user_profile"
+  #user profiles
+  get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"
+  get 'users_profiles_edit/:id' => 'user_profiles#edit', :as => "user_profile_edit"
+  put 'users/:id/user_profiles_update/:id' => 'user_profiles#update', :as => "user_user_profile"
 
-#search
-post 'search' => 'maps#search'
-get 'search' => 'maps#search'
+  #search
+  post 'search' => 'maps#search'
+  get 'search' => 'maps#search'
 
-#search from nav bar
-get 'search_top_navbar' => 'maps#search_top_navbar'
+  #search from nav bar
+  get 'search_top_navbar' => 'maps#search_top_navbar'
 
-#autocomplete results
-get 'autocomplete' => 'maps#autocomplete'
+  #autocomplete results
+  get 'autocomplete' => 'maps#autocomplete'
 
-
-
+  #user galleries
   resources :user_galleries do
-      resources :photos, :except => [:update, :edit]
-    end
+    resources :photos, :except => [:update, :edit]
+  end
+
+  #whirls
+  post 'whirl' => 'whirls#whirl',  :as => "whirl_path"
+
+  #comments
+  post 'comment' => "comments#comment" ,  :as => "comment_path"
+  post 'threaded_comment' => "comments#threaded_comment" ,  :as => "threaded_comment_path"
+  put  'edit_comment/:id'  => "comments#edit_comment" ,  :as => "edit_comment_path"
+  delete  'delete_comment/:id'  => "comments#delete_comment" ,  :as => "delete_comment_path"
+
+
 end

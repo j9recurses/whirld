@@ -7,7 +7,7 @@ class UserProfile < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
-  validates  :photo_file, :presence => true
+  ##validates  :photo_file, :presence => true
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
@@ -56,7 +56,7 @@ class UserProfile < ActiveRecord::Base
     distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
     return distance
   end
-  #attr_accessor :taglist, :photos
+
   def taglist
     @taglist
   end

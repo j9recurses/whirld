@@ -5,8 +5,23 @@ class UserGallerySplit < ActiveRecord::Base
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
+  acts_as_votable
 
-  attr_accessor :taglist, :photos
+  def self.gather_gallery_splits(user_gallery_id)
+    combined_gallery_splits= Array.new
+    gallery_splits = UserGallerySplit.where(['user_gallery_id = ?', user_gallery_id])
+    unless gallery_splits.blank? || gallery_splits.nil?
+      gallery_splits.each do |split|
+        split_tags  = Tag.gather_tag(split)
+        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.id)
+        split.photos = photos
+        split.taglist = split_tags
+        combined_gallery_splits  << split
+      end
+    end
+    return combined_gallery_splits
+  end
+
   def taglist
     @taglist
   end
@@ -23,18 +38,12 @@ class UserGallerySplit < ActiveRecord::Base
     @photos = val
   end
 
-  def self.gather_gallery_splits(user_gallery_id)
-    combined_gallery_splits= Array.new
-    gallery_splits = UserGallerySplit.where(['user_gallery_id = ?', user_gallery_id])
-    unless gallery_splits.blank? || gallery_splits.nil?
-      gallery_splits.each do |split|
-        split_tags  = Tag.gather_tag(split)
-        photos = PhotoMod.gather_mod_photo("UserGallerySplit", split.id)
-        split.photos = photos
-        split.taglist = split_tags
-        combined_gallery_splits  << split
-      end
-    end
-    return combined_gallery_splits
+  def whirls
+    @whirls
   end
+
+  def whirls=(val)
+    @whirls = val
+  end
+
 end

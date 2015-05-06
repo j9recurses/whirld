@@ -8,8 +8,11 @@
     "annotation_type": "<%= annotation.annotation_type %>",
     "id":     <%= annotation.id %>,
     "map_id": <%= annotation.map_id %>,
-    "style":  <%= annotation.style.to_json %>,
+    "style":  <% unless  annotation.style.nil?%>
+            <%= annotation.style.to_json %><%end%>,
     "textContent":   "<%= annotation.text %>",
     "url":    "<%= url_for([@map, annotation]) %>"
   }
 }
+
+

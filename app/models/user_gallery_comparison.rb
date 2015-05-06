@@ -4,23 +4,9 @@ class UserGalleryComparison < ActiveRecord::Base
   attr_accessible :comparison_order, :user_gallery_id
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
-
-  attr_accessor :taglist, :photos
-  def taglist
-    @taglist
-  end
-
-  def taglist=(val)
-     @taglist = val
-  end
-
-  def photos
-    @photos
-  end
-
-  def photos=(val)
-    @photos = val
-  end
+  include PublicActivity::Model
+  tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
+  acts_as_votable
 
   def self.gather_gallery_comparisions(user_gallery_id)
     combined_gallery_comps= Array.new
@@ -37,4 +23,29 @@ class UserGalleryComparison < ActiveRecord::Base
     end
     return combined_gallery_comps
   end
+
+  def taglist
+    @taglist
+  end
+
+  def taglist=(val)
+    @taglist = val
+  end
+
+  def photos
+    @photos
+  end
+
+  def photos=(val)
+    @photos = val
+  end
+
+  def whirls
+    @whirls
+  end
+
+  def whirls=(val)
+    @whirls = val
+  end
+
 end

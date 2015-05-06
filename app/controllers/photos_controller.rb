@@ -31,6 +31,7 @@ class PhotosController < ApplicationController
 
   def create
     @photo = @user_gallery.photos.new(params[:photo])
+    @photo[:user_id] = current_user.id
     if @photo.save
       photo_class_name = @photo.class.to_s.underscore
       #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])

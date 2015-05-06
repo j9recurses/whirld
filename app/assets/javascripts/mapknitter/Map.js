@@ -115,6 +115,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
   /* Add a new, unplaced, but already uploaded image to the map.
    * <lat> and <lng> are optional. */
   addImage: function(url,id,lat,lng) {
+
     var img = new L.DistortableImageOverlay(url);
     img.geocoding = { lat: lat,
                       lng: lng };

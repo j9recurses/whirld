@@ -151,6 +151,7 @@
 #project-search{
   padding-top: 5%;
 
+
   #filter-bar{
     background: #f6f6f6;
     height: 13%;
@@ -182,57 +183,7 @@
     color: white;
     height: 100%;
   }
-  #filter-entity-wrapper {
-    background: #f27150;
-    color: white;
-    cursor: pointer;
-    height: 49px;
-    line-height: 2.9em ;
-    outline: none;
-      -webkit-transition: all 0.25s linear;
-      -moz-transition: all 0.25s linear;
-      -ms-transition: all 0.25s linear;
-      -o-transition: all 0.25s linear;
-    transition: all 0.3s linear;
-    padding: 0 1em 0 1em;
-    top: 1.25em;
-    
-  }
-  #filter-entity-options{
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #fff; 
-    border: 1px solid rgba(0,0,0,0.2);
-    border-top: none;
-    border-bottom: none;
-    color: #f27150;
-  }
-  #filter-entity-options li{
-    padding-left: 1em;
-  }
-  #filter-entity-options li:hover{
-    color: white;
-    background: #f27150;
-  }
-  .select-options{
-    max-height: 0;
-    overflow: hidden;
-    list-style: none;
-    -webkit-transition: all 0.25s linear;
-    -moz-transition: all 0.25s linear;
-    -ms-transition: all 0.25s linear;
-    -o-transition: all 0.25s linear;
-    transition: all 0.25s linear;
-  }
-  .filter-expanded #filter-entity-options, .filter-expanded #sort-options{
-    max-height: 400px;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
-  }
-  #filter-bar .columns#filter-result-count-wrapper{
-    line-height: 3.8em;
-  }
+
   #filter-result-count-wrapper{
     margin-left: 0;
   }
@@ -268,18 +219,12 @@
     -webkit-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
     -moz-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
     box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
-    margin-right: 1%;
-    padding: 1em 0 1em 0;
-    width: 31.6666666667%;
   }
-  .search-card i{
-    color: #ababab;
+  .search-card-footer{
+    padding: 2% 4%;
   }
-  input[type='text']:focus{
-    outline-color: #f27150; 
-  }
-  #search-card-list{
-    padding-top: 3%;
+  .search-card-header{
+    padding: 5%;
   }
   .search-card-location{  
     background: #333;
@@ -296,8 +241,49 @@
     min-height: 57px;
     overflow: hidden;
   }
-  .search-card .wrapper{
-    width: 94%;
+  .search-card-title a{ color: #333; }
+  .search-card-title a:hover{ color: #f27150; }
+  #search-results-container{
+    padding: 12% 2% 0;
+    text-align: justify;
+    /*font-size: 0;*/
+    /*background: #68b8c4;*/
+  }
+
+  #search-results-container:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+
+  #search-results-container .mix,
+  #search-results-container .gap{
+    display: inline-block;
+    width: 49%;
+  }
+
+  #search-results-container .mix{
+    text-align: left;
+    margin-bottom: 2%;
+    vertical-align: top;
+    display: none; /*<-- uncomment this rule for use with MixItUp*/
+  }
+
+  @media all and (min-width: 420px){
+    #search-results-container .mix,
+    #search-results-container .gap{
+      width: 32%;
+    }
+  }
+
+  .search-card i{
+    color: #ababab;
+  }
+  .gray{
+    color: #595959;
+  }
+  input[type='text']:focus{
+    outline-color: #f27150; 
   }
   #search-map-wrapper{
     position: fixed;
@@ -307,47 +293,12 @@
     margin-top: 5%;
     margin-bottom: 2%;
   }
-  #search-results{
-    padding-top: 11%;
-  }
   #search-results h1 a{ color: #333; }
-  #search-results h1 a:hover{ color: #f27150; }
-  .search-results-wrapper{
-    margin: 0 auto;
-    width: 82%;
-  }
   select{
     border: none;
     width: 100%;
   }
-  .sort-active{
-    border-bottom: 1px solid #f27150;
-    cursor: default;
-    font-weight: bold;
-         -webkit-transition: all 0.25s linear;
-      -moz-transition: all 0.25s linear;
-      -ms-transition: all 0.25s linear;
-      -o-transition: all 0.25s linear;
-    transition: all 0.3s linear;
-  }
-  #sort-wrapper{
-    color: #f27150;
-    outline: none;
-  }
-  #sort-options{
-    position: absolute;
-    top: 90%;
-    left: 0;
-    right: 0;
-    background: #fff; 
-    border: 1px solid rgba(0,0,0,0.2);
-    border-top: none;
-    border-bottom: none;
-  }
-/*  #sort-bar-wrapper{
-    background: #e3e3e3;
-    top: 25%;
-  }*/
+
 }
 
 

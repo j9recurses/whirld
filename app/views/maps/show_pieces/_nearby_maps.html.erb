@@ -1,0 +1,30 @@
+
+<section class='slide module module-split'>
+
+  <div class='row group module-split-wrapper'>
+    <div class='twelve columns img-wrapper'>
+    <h2> Nearby Projects </h1>
+ <%@nearby_maps.each do | map |%>
+        <div class='juxtapose'>
+      <%= image_tag(map.coverphoto_name, :size => "100x100") %>
+      </div>
+  <li class='project-tag item push-down'>
+  <%= link_to map.name.titleize, map_path(map.id)%> , <%=map.ndist.round(2)%> miles away
+  </li>
+  <% if map.taglist.present? and  map.taglist.size > 0  %>
+  <ul class='inline-list font_small'>
+  <li class='project-tag-icon item h3-size'>
+    <i class='fa fa-tag'></i></li>
+   <% map.taglist.each do |tag| %>
+    <% tag_d = TagDecorator.decorate(tag) %>
+    <%= tag_d.tag_li.html_safe %>
+  <%end%>
+<%end%>
+<%end%>
+
+  </li>
+</ul>
+
+</div>
+</div>
+</div>

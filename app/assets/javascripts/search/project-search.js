@@ -19,7 +19,7 @@ var FilterBar = function(options){
 	}, options);
 
 	this.resultsCount = $('#filter-result-count');
-	this.searchResultsContainer = $('#search-results');
+	this.searchResultsContainer = $('#search-results-container');
 }
 
 FilterBar.prototype = {
@@ -42,28 +42,32 @@ FilterBar.prototype = {
 	// functions for getting values from dom
 	getAllValues: function(){
 		var data = {};
-		$.each($('.filter'), function(i, el){
+		$.each($('.filter-input'), function(i, el){
+			console.log(el)
+
 			var type = $(el).attr('id').split('-')[1];
 
-			// grab data according to input type
+		// 	// grab data according to input type
 			if(type == 'query' || type == 'location'){
 				var val = $(el).val();
 			}
-			else{
-				var val = $(el).text();
+			else if(type == 'entity'){
+				var val = $(el).find('.active').text();
 			}
 			data[type]= val;
 		});
+		console.log(data)
 		return data;
 	},
 	// functions for posting to DOM
 	htmlCreatedAt: function(item){
+		var a = new Date(item.created_at)
 		var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 		var d = new Date(item.created_at)
-		return monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+		var date = monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+		return date;
 	},
 	htmlProjectResult: function(item){
-		console.log(item)
 		var tagList = "";
 		$.each(item.taglist, function(i, tag){
 			var tagText = "<li class='project-tag item push-down gray'>" + tag + ", </li>"
@@ -74,23 +78,16 @@ FilterBar.prototype = {
 		var commentCount = 100; 
 		var voteCount = 4000;
 		var activity = "<div class='search-card-activity search-card-footer row group wrapper gray'><div class='twenty-four columns'><ul class='inline-list font_small'><li class='comment-count item cursor-point'><i class='fa fa-comment'></i><span class='comment-num'>" + commentCount + "</span></li><li class='vote-count item cursor-point'><i class='fa fa-thumbs-up'></i><span class='vote-num'>" + voteCount + "</span></li></ul></div></div>";
-		return "<article id='search-card-" + item.id + "' class='search-card eight columns' data-map-id='" + item.id + "'>" + header + thumbnail + activity + "</article>";
+		return "<article id='search-card-" + item.id + "' class='search-card mix project' data-map-id='" + item.id + "' data-updated='" + item.created_at + "' data-relevance='" + item.search_order + "'>" + header + thumbnail + activity + "</article>";
 	},
 	appendProjectResults: function(data){
 		var self = this;
 		var count = 0;
-		var html="<div class='row group wrapper'>";
 		$.each(data, function(i, result){
-			if(count%3 != 0){
-				html += self.htmlProjectResult(result);
-			}
-			else{
-				html += ("</div><div class='row group wrapper'>" + self.htmlProjectResult(result));
-			}
-			count += 1;
+			var html = self.htmlProjectResult(result);
+			self.searchResultsContainer.append($(html))
 		});
-		html += "</div>"
-		this.searchResultsContainer.append($(html))
+		if(data.length %3 != 0){ self.searchResultsContainer.append($("<div class='gap'></div>")); }
 	},
 	// functions for posting queries to server
 	search: function(data){
@@ -101,10 +98,15 @@ FilterBar.prototype = {
 			data: data,
 			type: 'get',
 			success: function(data){
-				console.log(data.length)
+				console.log(data)
 				console.log('Success: user results are returning');
 				self.resultsCount.text(data.length);
 				self.appendProjectResults(data);
+				self.searchResultsContainer.mixItUp({
+					load: {
+						sort: 'relevant:asc'
+					}
+				});
 			},
 			error: function(){
 				console.log('Oops something went wrong.')
@@ -116,18 +118,6 @@ FilterBar.prototype = {
 
 		var self = this;
 
-		$('#filter-entity-wrapper').off().on({
-			click: function(){
-				$(this).toggleClass('filter-expanded');
-			}
-		});
-
-		$('#filter-entity-options').on('click', 'li', function(){
-			var oldVal = $('#filter-entity').text();
-			var newVal = $(this).text();
-			$('#filter-entity').text(newVal);
-			$(this).text(oldVal)
-		});
 	},
 	sort: function(byOrder){
 		console.log('Initiated: sort')
@@ -153,6 +143,7 @@ FilterBar.prototype = {
 			keyup:function(e){
 				if(e.which == 13){
 					self.search(self.getAllValues());
+					$('#filter-location').autocomplete( "close" );
 				}
 			}
 		});
@@ -161,6 +152,7 @@ FilterBar.prototype = {
 			keyup:function(e){
 				if(e.which == 13){
 					self.search(self.getAllValues());
+					$('#filter-query').autocomplete( "close" );
 				}
 			}
 		});
@@ -169,6 +161,8 @@ FilterBar.prototype = {
 			click: function(){
 				console.log("Searching...")
 				self.search(self.getAllValues());
+				$('#filter-query').autocomplete( "close" );
+				$('#filter-location').autocomplete( "close" );
 			}
 		});
 	} // end init

@@ -1,55 +1,78 @@
 class CommentsController < ApplicationController
-  def index
-  end
 
-  def show
-  end
 
-  def new
-  end
-
-  def create
-    if logged_in?
-      map = Map.find params[:map_id]
-
-      if params[:comment][:body] != ""
-        map.comments.create(
-          :user_id => current_user.id,
-          :body => params[:comment][:body]
-        )
+  #this method will work for both singular and threaded comments
+  def comment
+    klass_id = params[:klass_id]
+    klass = Object.const_get params[:klass_type]
+    klass_obj = klass.find( klass_id )
+    if user_signed_in?
+      if params[:title]
+        @comment =  Comment.build_from(klass_obj, current_user.id, params[:comment], params[:title] )
+      else
+        @comment =  Comment.build_from(klass_obj, current_user.id, params[:comment] )
       end
-      redirect_to "/maps/" + params[:map_id]         
-    else
-      flash[:error] = "You must be logged in to comment."
-      redirect_to "/login?back_to=/maps/#{params[:map_id]}"
+      @comment.user_login = current_user.login
+    end
+    respond_to do |format|
+      if user_signed_in?
+        if @comment.save
+          format.json { render json: @comment, :methods => [:commenter_login]}
+        else
+          format.json { render "Something went wrong! Could not save your comment." }
+        end
+      else
+        format.json { render "You must be logged in to make comments." }
+      end
     end
   end
 
-  def update
-    @comment = Comment.find params[:id]
-
-    if logged_in? && current_user.can_edit?(@comment)
-      Comment.update(@comment.id, :body => params[:comment][:body])
-      redirect_to "/maps/" + params[:map_id]
-    else
-      flash[:error] = "You must be logged in to comment."
-      redirect_to "/login"            
+  def threaded_comment
+    klass_id = params[:klass_id]
+    klass = Object.const_get params[:klass_type]
+    klass_obj = klass.find( klass_id )
+    if user_signed_in?
+      @parent_comment =Comment.find(params[:parent_comment_id])
+      if params[:title]
+        @comment =  Comment.build_from(klass_obj, current_user.id, params[:comment], params[:title] )
+      else
+        @comment = Comment.build_from(klass_obj, current_user.id, params[:comment] )
+      end
+      @comment.user_login
+    end
+    respond_to do |format|
+      if user_signed_in?
+        if @comment.save
+           @comment.move_to_child_of(@parent_comment)
+          format.json { render json: @comment }
+        else
+          format.json { render "Something went wrong! Could not save your comment." }
+        end
+      else
+        format.json { render "You must be logged in to make comments." }
+      end
     end
   end
 
-  def edit
-  end
-
-  def destroy
-    @comment = Comment.find(params[:id])
-
-    if logged_in? && current_user.can_delete?(@comment)
-      @comment.delete 
-      flash[:notice] = "Comment by " + @comment.author + " deleted."
-      redirect_to "show"
-    else
-      flash[:error] = "You must be logged in to delete comments."
-      redirect_to "/login"
+   def edit_comment
+      @comment = Comment.find(params[:comment_id])
+      @comment.body = params[:comment]
+      if @comment.save
+        render :json => @comment, :status => :ok
+      else
+        render :js => "alert('error deleting comment');"
+      end
     end
-  end
+
+  def delete_comment
+      @comment = Comment.find(params[:id])
+      unless @comment.nil?
+      if @comment.destroy
+        render :json => @comment, :status => :ok
+      else
+        render :js => "alert('error deleting comment');"
+      end
+    end
+    end
+
 end

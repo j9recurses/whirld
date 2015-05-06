@@ -26,7 +26,7 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 			});
 	},
 
-	update: function(resource, callback) {	
+	update: function(resource, callback) {
 		// PUT to /maps/:map_id/:resources/:id
 		this._updateResource(resource, callback);
 	},
@@ -36,8 +36,8 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 	},
 
 	_retrieveResources: function(id, callback) {
-		/* 
-		 * With the optional id argument, _retrieveResources gets a single resource, if it exists. 
+		/*
+		 * With the optional id argument, _retrieveResources gets a single resource, if it exists.
 		 * Without the optional id argument, _retrieveResources gets all resources.
 		 */
 
@@ -49,17 +49,19 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 		}
 
 		url = id ? this._resourcesUrl + id : this._resourcesUrl;
-
+		console.log(url);
 		return jQuery.ajax({
 			url: url,
 			dataType: 'json',
 			context: this,
-			success: function(data) { 
-				if (callback && typeof callback === 'function' ) { 
-					callback.call(this, data); 
-				} 
+			success: function(data) {
+				if (callback && typeof callback === 'function' ) {
+					callback.call(this, data);
+				}
 			},
-			error: function(jqXHR, status, thrownError) { console.log(thrownError);	}
+			error: function(jqXHR, status, thrownError) { console.log(thrownError);
+
+			}
 		});
 	},
 
@@ -108,11 +110,11 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 			},
 			success: function(data) {
 				if (callback && typeof callback === 'function') {
-					callback.call(this, data); 
+					callback.call(this, data);
 				}
 			},
 			error: function(jqXHR, status, thrownError) { console.log(thrownError); }
-		};	
+		};
 	}
 
 });
@@ -124,6 +126,6 @@ MapKnitter.Resources = MapKnitter.Class.extend({
 
 		MapKnitter[resource + 's'] = MapKnitter.Resources.extend({
 			_name: resource.toLowerCase()
-		});	
+		});
 	}
 })();

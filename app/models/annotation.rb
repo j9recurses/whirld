@@ -1,7 +1,7 @@
 class Annotation < ActiveRecord::Base
   belongs_to :map
   belongs_to :user
-
+attr_accessible :map_id, :user_id, :annotation_type, :style, :coordinates, :text
   serialize :coordinates, Array
   serialize :style, Hash
 
@@ -23,4 +23,6 @@ class Annotation < ActiveRecord::Base
 
     return geometry_type
   end
+
+
 end

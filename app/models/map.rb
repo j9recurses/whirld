@@ -9,13 +9,17 @@ class NotAtOriginValidator < ActiveModel::Validator
 end
 
 class Map < ActiveRecord::Base
-
+  geocoded_by :address, :latitude  => :lat, :longitude => :lon
   extend FriendlyId
+  include PublicActivity::Model
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  acts_as_commentable
+  acts_as_votable
 
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt,:whirls
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug
@@ -26,15 +30,185 @@ class Map < ActiveRecord::Base
     :on => :create
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
-  belongs_to :user
   has_many :user_galleries
   has_many :photos,  through: :user_galleries
   has_many :user_gallery_grids, through: :user_galleries
   has_many :user_gallery_splits, through: :user_galleries
   has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
+  has_many :collaborators
+  has_many :users, through: :collaborators
+  has_many :annotations, :dependent => :destroy
 
-  attr_accessor :taglist
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  #FOR SEARCH
+  after_touch() { tire.update_index }
+
+  #set the search units for tire
+  SEARCH_UNIT   = "mi"
+  SEARCH_RADIUS = "300mi"
+  SEARCH_ORDER  = "asc"
+
+  tire do
+    settings analysis: {
+      filter: {
+        ngram_filter: {
+          type: 'nGram',
+          min_gram: 2,
+          max_gram: 12
+        }
+      },
+      analyzer: {
+        index_ngram_analyzer: {
+          type: 'custom',
+          tokenizer: 'standard',
+          filter: ['lowercase', 'ngram_filter']
+        },
+        search_ngram_analyzer: {
+          type: 'custom',
+          tokenizer: 'standard',
+          filter: ['lowercase']
+        }
+      }
+    } do
+      mapping do
+        indexes :name, type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer", boost: 50
+        indexes :description,   type: 'string', analyzer: 'snowball'
+        indexes :lat_lon, type: 'geo_point'
+        indexes :id, :index    => :not_analyzed
+      end
+
+      indexes :tags do
+        indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
+      end
+    end
+
+  end
+
+  def lat_lon
+    [lat, lon].join(',')
+  end
+
+  def to_indexed_json
+    # to_json(only: ['name', 'description'], methods: ['lat_lon'])
+    to_json(:include => [:tags], :methods => [:lat_lon])
+  end
+
+  def self.simple_search(params)
+    unless params[:location].blank?
+      point  = self.get_search_cords(params[:location])
+      unless params[:query].blank?
+        s = Tire.search('maps') { query { match [:name, :description, :name],  params[:query]  } }
+      else
+        s = Tire.search('maps') { query { all } }
+      end
+      s. filter :geo_distance, lat_lon: point, distance: '300km'
+      s.sort {  by "_geo_distance", {
+                  "lat_lon" => point,
+                  "order"       => SEARCH_ORDER,
+                  "unit"        => SEARCH_UNIT
+                }
+                }
+      results = s.results
+    else
+      results = Map.search do
+        query { match [:name, :description, :name],  params[:query] }
+      end
+    end
+    #puts results.inspect
+    return results
+  end
+  #
+
+  def self.get_search_cords(location)
+    geo = Geocoder.coordinates(location)
+    point = "#{geo[0]}, #{geo[1]}"
+    return point
+  end
+
+  def self.find_nearby_maps(map)
+    neighbors = Map.near([map.lat, map.lon], 100)
+    neighbor_info = Array.new
+    neighbors.each do | n|
+      unless map.id == n.id
+        n.ndist = neighbor_distance(map.lat, map.lon, n.lat, n.lon)
+        n.taglist = n.tags.pluck([:name])
+        neighbor_info << n
+      end
+    end
+    return neighbor_info
+  end
+
+  def self.neighbor_distance(lat1, lon1, lat2, lon2)
+    distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
+    return distance
+  end
+  #
+  # def self.get_maptags(maps)
+  #   tagged_maps = Array.new
+  #   maps.each do |map|
+  #     map = Map.find(map[:id])
+  #     map.taglist = map.tags.pluck([:name])
+  #     tagged_maps << map
+  #   end
+  #   return tagged_maps
+  # end
+
+
+  # def self.get_photos(maps)
+  #   coverphoto_maps = Array.new
+  #   maps.each do |map|
+  #     usr_gallery_id = map.user_galleries.map(&:id)
+  #     unless map[:coverphoto].blank?
+  #       coverphoto = Photo.find(map[:coverphoto])
+  #       #this will work once we have real data
+  #      # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+  #      map.coverphoto_name = "/assets/test/grid-09.png"
+  #     else
+  #       map.coverphoto_name = "/assets/test/grid-09.png"
+  #     end
+  #     coverphoto_maps  << map
+  #   end
+  # end
+
+  def self.search_type(maps, params)
+    search_info_maps = Array.new
+    counter = 1
+    maps.each do |map|
+      unless params[:location].blank?
+        puts params[:location]
+        map.geographic_search = 1
+      else
+        map.geographic_search = 0
+      end
+      if params[:entity]
+        map.search_entity = params[:entity]
+      end
+      map.search_order = counter
+      counter = counter + 1
+      search_info_maps << map
+    end
+    return search_info_maps
+  end
+
+  has_many :warpables do
+    def public_filenames
+      filenames = {}
+      self.each do |warpable|
+        filenames[warpable.id] = {}
+        sizes = Array.new(Warpable::THUMBNAILS.keys).push(nil)
+        sizes.each do |size|
+          key = size != nil ? size : "original"
+          filenames[warpable.id][key] = warpable.public_filename(size)
+        end
+      end
+      filenames
+    end
+  end
+
+  attr_accessor :taglist,
   def taglist
     @taglist
   end
@@ -52,75 +226,50 @@ class Map < ActiveRecord::Base
     @coverphoto_name = val
   end
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  attr_accessor :search_order
+  def search_order
+    @search_order
+  end
 
+  def search_order=(val)
+    @search_order = val
+  end
 
-  index_name "map-engine-#{Rails.env}"
+  attr_accessor :geographic_search
+  def geographic_search
+    @geographic_search
+  end
 
-  mapping do
-    indexes :name, analyzer: 'snowball', boost: 100
-    indexes :description, analyzer: 'snowball'
-    indexes :updated_at, type: 'date', index: :not_analyzed
-    indexes :tags, analyzer: 'snowball', boost: 50
+  def geographic_search=(val)
+    @geographic_search = val
   end
 
 
-  def as_indexed_json(options={})
-    as_json(
-      only: [:id, :name, :description, :updated_at],
-      include: [:tags] #, :user_gallery_grids, :user_gallery_splits, :user_gallery_bloc_texts, :photos]
-    )
+  attr_accessor :search_entity
+  def search_entity
+    @search_entity
   end
 
-  #def self.search(params)
-  #   query { string params[:query], default_operator: "AND" } if params[:query].present?
-  #  sort { by :updated_at, "desc" }
-  #     end
-  #end
-  #
-  #
-  def self.get_maptags(maps)
-    puts maps.size
-    tagged_maps = Array.new
-    maps.each do |map|
-      map = Map.find(map[:id])
-      map.taglist = map.tags.pluck([:name])
-      tagged_maps << map
-    end
-    return tagged_maps
+  def search_entity=(val)
+    @search_entity= val
   end
 
-
-  def self.get_photos(maps)
-    coverphoto_maps = Array.new
-    maps.each do |map|
-      puts map.inspect
-      usr_gallery_id = map.user_galleries.map(&:id)
-      coverphoto = Photo.find(map[:coverphoto])
-      map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
-      puts map.coverphoto_name
-      coverphoto_maps  << map
-    end
+  attr_accessor :ndist
+  def ndist
+    @ndist
   end
 
+  def ndist=(val)
+    @ndist = val
+  end
 
+  attr_accessor :whirls
+  def whirls
+    @whirls
+  end
 
-
-
-  has_many :warpables do
-    def public_filenames
-      filenames = {}
-      self.each do |warpable|
-        filenames[warpable.id] = {}
-        sizes = Array.new(Warpable::THUMBNAILS.keys).push(nil)
-        sizes.each do |size|
-          key = size != nil ? size : "original"
-          filenames[warpable.id][key] = warpable.public_filename(size)
-        end
-      end
-      filenames
-    end
+  def whirls=(val)
+    @whirls = val
   end
 
 

@@ -88,6 +88,7 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_split_update
     @user_gallery_split = UserGallerySplit.find(params[:mod_gallery])
+    @user_gallery_split[:split_text] = params[:split_text]
     respond_to do |format|
       if @user_gallery_split.save
         format.json { render json:  @user_gallery_split}

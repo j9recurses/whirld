@@ -1,0 +1,10 @@
+<li class="list-group-item">
+  <span class="glyphicon glyphicon-plus"></span>
+  <small class="text-muted"><%= a.created_at.strftime('%H:%M:%S %-d %B %Y') %></small><br/>
+  <strong><%= activity.owner ? activity.owner.login : 'Guest' %></strong>
+  <% if a.trackable %>
+    added a user gallery grid.
+  <% else %>
+    added a user gallery grid that is currently deleted.
+  <% end %>
+</li>

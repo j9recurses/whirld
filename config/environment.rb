@@ -6,6 +6,10 @@ class ActiveRecord::Base
   include Trimmer
 end
 
+::ActiveSupport::Deprecation.silenced = true
+
+
+
 # Initialize the rails application
 Whirld::Application.initialize!
 

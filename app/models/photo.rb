@@ -1,8 +1,11 @@
 class Photo < ActiveRecord::Base
-  attr_accessible :photo_file, :user_gallery_id, :is_normal, :is_aerial
+  attr_accessible :photo_file, :user_gallery_id, :is_normal, :is_aerial, :user_id
   belongs_to :user_gallery
   has_many :photo_mods
   mount_uploader :photo_file, PhotoFileUploader
+  acts_as_votable
+  include PublicActivity::Model
+   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.make_warpable(photo)
     photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"
@@ -51,4 +54,15 @@ class Photo < ActiveRecord::Base
       return "error"
     end
   end
+
+#attributes
+  def whirls
+    @whirls
+  end
+
+  def whirls=(val)
+    @whirls = val
+  end
+
+
 end

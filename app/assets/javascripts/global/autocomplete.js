@@ -7,7 +7,7 @@ var AutoComp = function(options){
     minLength: 2
   }, options);
 
-  this.inputEl = $('#' + this.options.inputId);
+  this.inputEl = $('#' + this.options.inputId)
 }
 
 AutoComp.prototype = {
@@ -40,7 +40,7 @@ AutoComp.prototype = {
       }
     });
 
-    // // render results 
+    // // render results
     keywordAC = $ac.data("ui-autocomplete");
 
     // customize menu to append categories

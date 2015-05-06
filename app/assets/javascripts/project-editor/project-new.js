@@ -1,12 +1,12 @@
-// $(document).ready(function(){
+$(document).ready(function(){
 //   if($('#project-creation-1').length > 0){
 //     var form = new Form();
 //         form.map_new();
 //   }
-//   if($('#project-creation-2').length > 0){
-//     var pe = new ProjectEditor();
-//         pe.init();
-//   }
+  if($('#project-creation-2').length > 0){
+    var pe = new ProjectEditor();
+        pe.init();
+  }
 
 //   var mapId = $('#project-creation-2').data('map-id');
 //   var mapLat = $('#project-creation-2').data('map-lat');
@@ -30,13 +30,29 @@
 //   });
 
 
-// });
+});
 
-// var ProjectEditor = function(){
+var ProjectEditor = function(){
 
-// }
-// ProjectEditor.prototype = {
-//   init: function(){
+}
+ProjectEditor.prototype = {
+	uiActions: function(){
+		$('#preview-list').mixItUp();
+
+		$('#view-switch').on('click', function(){
+			var icon = $(this).find('i');
+			if(icon.hasClass('fa-th-large')){
+				icon.removeClass('fa-th-large');
+				icon.addClass('fa-square');
+			}
+			else{
+				icon.removeClass('fa-square');
+				icon.addClass('fa-th-large');
+			}
+		});
+
+	},
+  init: function(){
 //       // initiate form fields
 //     var desc = new Form();
 //         desc.descriptionField();
@@ -73,5 +89,27 @@
 //       });
 //       t.initSaved();
 //     });
-//   }
-// }
+
+		this.uiActions();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

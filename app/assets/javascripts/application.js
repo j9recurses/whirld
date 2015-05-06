@@ -20,7 +20,7 @@
 //= require uikit/js/core/nav.min.js
 //= require uikit/js/core/dropdown.min.js
 //= require uikit/js/components/sticky.min.js
-//= require uikit/js/components/grid.min.js
+
 
 // Project Editor
 //= jquery-ui/ui/minified/draggable.min

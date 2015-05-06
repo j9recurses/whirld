@@ -5,7 +5,7 @@ class UserProfilePhoto < ActiveRecord::Base
   mount_uploader :photo_file, UserProfileUploader
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
-  acts_as_votable
+  # acts_as_votable
 
   #this is for the profile photo
   def whirls

@@ -2,6 +2,12 @@
 	height: 100%;
 	overflow-y: 100%;
 
+	#knitter-map-pane{
+		/*display: none;*/
+		height: 500px;
+		width: 100%;
+	}
+
 	#photo-manager{
 		 background: #666;
 	}

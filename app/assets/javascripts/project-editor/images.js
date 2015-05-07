@@ -116,8 +116,9 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
-    this.thumbEl.draggable({
-      // containment: '#' + this.options.dragContainerId,
+    $('.draggable').draggable({
+      containment: '#' + this.options.dragContainerId,
+      containment: 'window',
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
       distance: 10,
@@ -125,6 +126,7 @@ Image.prototype = {
       opacity: '.9',
       revert: true,
       revertDuration: 350,
+      scroll: false,
       snap: true,
       snapMode: 'both',
       snapTolerance: 10,

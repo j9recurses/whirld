@@ -47,13 +47,19 @@
 
     <% if photo.is_aerial %>
     <% type = 'aerial' %>
-    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half uk-overlay img-wrapper draggable' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
-
+    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
+      <div class='draggable draggable-wrapper'>
+        <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+        </div>
+      </div>
 
     <% elsif photo.is_normal %>
     <% type = 'normal' %>
-    <article id='preview-<%=photo.id%>' class='draggable <%=type%> preview mix mix-half uk-overlay img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
-
+    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
+      <div class='draggable draggable-wrapper'>
+        <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+        </div>
+      </div>
     <% end %>
 
       <%# user_id = photo.last.user_gallery.user_id %>
@@ -66,9 +72,6 @@
   <% end %>
 </section>
 <%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>
-
-
-
 
 
 

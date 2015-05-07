@@ -20,7 +20,7 @@ ModuleHtml.prototype = {
       this.label = 'Photo Grid';
     }
     else if(this.options.modType == 'split'){
-      this.emptyMessage = "<p class='uk-h2>'<i class='fa fa-photo'></i> Drag one photo here.</p>";
+      this.emptyMessage = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag one photo here.</p>";
       this.iconClass = 'star-half';
       this.label = 'Text With Photo';
     }
@@ -39,11 +39,11 @@ ModuleHtml.prototype = {
     }
   },
   htmlCaption: function(){
-    var html = "<input class='caption uk-width-1-1' placeholder='Enter an optional caption'/><small class='char-limit uk-invisible' data-limit='70'>70</small>";
+    var html = "<input class='caption uk-width-1-1' placeholder='Describe your content.'/><small class='char-limit uk-invisible' data-limit='70'>70</small>";
     return html
   },
   htmlDropzone: function(){
-    var html = "<div class='uk-placeholder uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center'>" + this.emptyMessage + "</div>";
+    var html = "<div class='uk-placeholder uk-placeholder-large droppable ui-droppable ui-sortable uk-text-center'>" + this.emptyMessage + "</div>";
     return html;
   },
   htmlHeader: function(){
@@ -59,7 +59,7 @@ ModuleHtml.prototype = {
     return $(html);
   },
   grid: function(){
-    var html = "<article class='grid-module uk-width-1-1 grid-module module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlCaption() + this.htmlTaginput() + "</div></article>";
+    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlCaption() + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   split: function(){
@@ -129,16 +129,15 @@ Module.prototype = {
   setDefaultMessage: function(){
     var message;
     if(this.options.modType == 'comparison'){
-      message = 'Drag two photos here to compare them.';
+      message = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag two photos here to compare them.</p>";
     }
     else if(this.options.modType == 'grid'){
-      message = 'Drag up to ten photos here.';
+      message = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag up to ten photos here.</p>";
     }
     else if(this.options.modType == 'split'){
-      message = 'Drag one photo here.';
+      message = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag one photo here.</p>";
     }
-    var html = "<p class='caps'>" + message +"</p>";
-    this.defaultMesage = $(html);
+    return message;
   },
   setModEl: function(){
     this.modEl = new ModuleHtml({ modType: this.options.modType }).html();
@@ -160,18 +159,25 @@ Module.prototype = {
     this.removeButton = this.modEl.find('.' + this.options.removeButtonClassName);
   },
   setDrop: function(){
+    this.modEl = $('#module-'+ this.options.modType + '-' + this.id);
     var self = this;
-    console.log(this.modEl.find('.droppable'))
     this.modEl.find('.droppable').droppable({
       accept: '.draggable',
       activeClass: 'drop-active',
       hoverClass: 'drop-target',
+      start: function(e, ui){
+
+      },
       drop: function(e, ui){
         var photoCount = self.modEl.find('.photo').length;
         if(photoCount < self.photoLimit){
           
+          var path = $(ui.helper.find('.img-wrapper')).attr('style').split('url(\'')[1].split('\')')[0];
           self.dropzone = $(e.target);
-          self.dropzone.removeClass('dropzone');
+          self.dropzone.removeClass('dropzone').removeClass('uk-placeholder').removeClass('uk-placeholder-large');
+          if(self.options.modType != 'split'){
+            self.dropzone.addClass('uk-grid');
+          }
           self.dropzone.find('p').remove();
 
           self.mod = self.dropzone.closest('.module');
@@ -182,14 +188,11 @@ Module.prototype = {
             modAttrId: self.modEl.attr('id'),
             dropzone: self.dropzone,
             modType: self.options.modType,
-            ui: ui
+            ui: ui,
+            path: path
           });
           photo.create();
 
-
-
-          // console.log(photo)
-          // self.dropzone.append(photo.modPhotoEl);
         }
       }
     });
@@ -207,7 +210,11 @@ Module.prototype = {
       revert: 150,
       deactivate: function(e, ui){
         console.log('Sorting finished');
-        // markUnSaved(mod);
+        var ids = '';
+        $.each(self.modEl.find('.photo'), function(i, modphoto){
+          ids += $(modphoto).data('mod-photo-id') + ',';
+        });
+        self.update(ids)
       }
     });
   },
@@ -318,6 +325,7 @@ Module.prototype = {
     });
   },
   update: function(order){
+    console.log(order)
     var self = this;
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_update/'  + this.id;
     var data = {mod_gallery: this.id};
@@ -349,7 +357,9 @@ Module.prototype = {
     var photoCount = this.modEl.find('.photo').length;
     if(photoCount == 0){
       this.dropzone = this.modEl.find('.droppable');
-      this.dropzone.addClass('dropzone').append(this.defaultMesage);
+      this.dropzone.removeClass('uk-grid');
+      this.dropzone.addClass('uk-placeholder').addClass('uk-placeholder-large');
+      this.dropzone.append($(this.setDefaultMessage()));
     }
   }
 }

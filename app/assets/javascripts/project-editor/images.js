@@ -94,7 +94,7 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper uk-overlay uk-overlay-hover " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"><div class='uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom'><a class='photo-delete'><i class='fa fa-remove uk-float-right uk-text-large uk-text-danger'></i></a><p class='uk-text-small'>Updated on<br>" + this.updated_at_pretty() + "<br></p><p class='uk-text-small'>Posted by <a href='/users_profiles/" + this.user_id + "'>" + this.user_name + "</a></div></article>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"></article>";
     // var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
     return el;
@@ -116,6 +116,7 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
+    console.log(this.thumbEl)
     this.thumbEl.draggable({
       // containment: '#' + this.options.dragContainerId,
       cursor: '-webkit-grabbing',

@@ -47,21 +47,21 @@
 
     <% if photo.is_aerial %>
     <% type = 'aerial' %>
-    <article id='preview-<%=photo.id%>' class='uk-overlay-hover <%=type%> preview mix mix-half uk-overlay img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half uk-overlay img-wrapper draggable' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
 
 
     <% elsif photo.is_normal %>
     <% type = 'normal' %>
-    <article id='preview-<%=photo.id%>' class='uk-overlay-hover <%=type%> preview mix mix-half uk-overlay img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+    <article id='preview-<%=photo.id%>' class='draggable <%=type%> preview mix mix-half uk-overlay img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
 
     <% end %>
 
       <%# user_id = photo.last.user_gallery.user_id %>
-      <div class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom">
-        <a class='photo-delete'><i class='fa fa-remove uk-float-right uk-text-large uk-text-danger'></i></a>
-        <p class='uk-text-small'>Updated on <br><%=photo.created_at.strftime(" %B %d, %Y")%></p>
-        <p class='uk-text-small'>Posted by <a href='/users_profiles/<%=user.id%>'><%=user.login%></a>
-      </div>      
+      <!-- <div class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom"> -->
+        <!-- <a class='photo-delete'><i class='fa fa-remove uk-float-right uk-text-large uk-text-danger'></i></a> -->
+        <!-- <p class='uk-text-small'>Updated on <br><%#=photo.created_at.strftime(" %B %d, %Y")%></p> -->
+        <!-- <p class='uk-text-small'>Posted by <a href='/users_profiles/<%=user.id%>'><%=user.login%></a> -->
+      <!-- </div>       -->
     </article>
   <% end %>
 </section>

@@ -161,6 +161,7 @@ Module.prototype = {
   },
   setDrop: function(){
     var self = this;
+    console.log(this.modEl.find('.droppable'))
     this.modEl.find('.droppable').droppable({
       accept: '.draggable',
       activeClass: 'drop-active',

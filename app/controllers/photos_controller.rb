@@ -47,11 +47,19 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo = Photo.find(params[:id])
-    @photo.destroy
     respond_to do |format|
-      format.html { redirect_to gallery_photos_path(@gallery) }
-      format.json { head :no_content }
+      if @photo.destroy
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @user_gallery_grid.errors, status: :unprocessable_entity }
+      end
     end
+    # @photo = Photo.find(params[:id])
+    # @photo.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to gallery_photos_path(@gallery) }
+    #   format.json { head :no_content }
+    # end
   end
 end
 

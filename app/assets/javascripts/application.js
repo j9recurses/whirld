@@ -20,6 +20,7 @@
 //= require uikit/js/core/nav.min.js
 //= require uikit/js/core/dropdown.min.js
 //= require uikit/js/components/sticky.min.js
+//= require uikit/js/components/tooltip.min.js
 
 
 // Project Editor

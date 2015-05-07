@@ -3,17 +3,20 @@
 	overflow-y: 100%;
 
 	#photo-manager{
-		 background: #333;
+		 background: #666;
 	}
 	#photo-type{
-	  background: #333;
+	  background: #666;
 	}
 	#photo-select{
 		background: #efefef;
 	}
-	.sort.uk-active::before{
+	.sort.uk-active::before, #photo-select .filter.uk-active::before{
 		content: "\f00c";
 		font-family: FontAwesome;
+	}
+	.uk-overlay-panel{
+		padding: 10px;
 	}
 	.container{
 	  padding: 2% 2% 0;
@@ -33,7 +36,6 @@
 	}
 	.container .mix{
 	  text-align: left;
-	  background: #03899c;
 	  margin-bottom: 2%;
 	  display: none;
 	}

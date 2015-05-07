@@ -36,15 +36,33 @@ var ProjectEditor = function(){
 
 }
 ProjectEditor.prototype = {
+	initImages: function(){
+    //initiate draggable for all the saved images already loaded
+
+	},
 	uiActions: function(){
+		var self = this;
+
 		$('#preview-list').mixItUp({
 			controls: {
 				activeClass: 'uk-active'
 			},
 			load: {
-				filter: 'all'
+				filter: 'all',
+				sort: 'created:desc'
+			},
+			callbacks: {
+				onMixEnd: function(state){
+			    $.each($('.preview'), function(i, thumb){
+			      var t = new Image({
+			        id: $(thumb).data('img-id'),
+			        is_aerial: $(thumb).data('img_type') == 'aerial',
+			        is_normal: $(thumb).data('img_type') == 'normal',
+			      });
+			      t.initSaved();
+			    });
+				}
 			}
-
 		});
 
 		$('#view-switch').on('click', function(){
@@ -93,17 +111,8 @@ ProjectEditor.prototype = {
     var p = new ImageUploader();
         p.init();
 
-//     //initiate draggable for all the saved images already loaded
-//     $.each($('.preview').find('img'), function(i, thumb){
-//       var t = new Image({
-//         id: $(thumb).data('img-id'),
-//         is_aerial: $(thumb).data('img_type') == 'aerial',
-//         is_normal: $(thumb).data('img_type') == 'normal',
-//       });
-//       t.initSaved();
-//     });
+    this.uiActions();
 
-		this.uiActions();
   }
 }
 

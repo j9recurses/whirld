@@ -17,15 +17,17 @@ ImageUploader.prototype = {
       dataType: 'json',
       url: '/user_galleries/' + this.user_gallery_id + '/photos',
       progressall: function(e, data){
-        $('.temp-preloader').removeClass('hidden');
-        $('#photo-manager').addClass('invisible');
+        $('#loader').removeClass('uk-hidden');
+        $('#preview-list').addClass('uk-hidden');
       },
       done: function (e, data) {
-        console.log(data)
-        $('.temp-preloader').addClass('hidden');
-        $('#photo-manager').removeClass('invisible');
+        $('#loader').addClass('uk-hidden');
+        $('#preview-list').removeClass('uk-hidden');
+
+        console.log(data.result)
 
         var img = new Image({
+          updated_at: data.result.updated_at,
           id: data.result.id,
           is_aerial: data.result.is_aerial,
           is_normal: data.result.is_normal,
@@ -50,6 +52,7 @@ ImageUploader.prototype = {
 
 var Image = function(options){
   this.options = $.extend({
+    updated_at: null,
     dragContainerId: 'project-creation-2',
     id: 1,
     is_aerial: true,
@@ -57,12 +60,13 @@ var Image = function(options){
     thumbPath: null,
     mediumPath: null,
     path: null,
-    removeButtonClassName: 'photo-remove',
+    removeButtonClassName: 'photo-delete',
     thumbContainerId: 'preview-list',
     warpableId: null,
     warpableUrl: null
   }, options);
 
+  this.updated_at = this.setDate();
   this.id = this.options.id;
   this.img = null;
   this.thumbEl = null;
@@ -70,23 +74,35 @@ var Image = function(options){
   this.removeButton = null;
   this.thumbContainer = $('#'+this.options.thumbContainerId);
   this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
+  this.user_id = $('#project-creation-2').data('user-id');
+  this.user_name = $('#project-creation-2').data('user-name');
 
 }
 
 Image.prototype = {
+  setDate: function(){
+    var d = new Date(this.options.updated_at);
+    return d.getTime();
+  },
   setPhotoType: function(){
     if(this.options.is_aerial){ return 'aerial' }
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview draggable mix mix-half " + this.photoType + " uk-cover-background' data-created='1' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"><figure class='uk-overlay uk-overlay-hover'><figcaption class='uk-overlay-panel uk-overlay-fade uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom'>Hiiiiii</figcaption></figure></article>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper uk-overlay uk-overlay-hover " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"><div class='uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom'><a class='photo-delete'><i class='fa fa-remove uk-float-right uk-text-large uk-text-danger'></i></a><p class='uk-text-small'>Updated on " + this.created_at + "<br></p><p class='uk-text-small'>Posted by <a href='/users_profiles/" + this.user_id + "'>" + this.user_name + "</a></div></article>";
     // var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
     return el;
   },
-  setData: function(){
+  setRemoveButton: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
-    this.img = $(this.thumbEl.find('img'));
+
+    var self = this;
+    self.removeButton.on('click', function(){
+      UIkit.modal.confirm("Are you sure you want to delete this photo?", function(){
+        self.delete();
+      });
+    });
   },
   setUploadedData: function(){
     this.thumbEl = this.htmlThumb();
@@ -95,7 +111,7 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
-    this.img.draggable({
+    this.thumbEl.draggable({
       // containment: '#' + this.options.dragContainerId,
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
@@ -111,11 +127,30 @@ Image.prototype = {
     });
   },
   append: function(){
-    this.thumbContainer.append(this.thumbEl);
-    this.thumbEl.find('img').removeClass('invisible');
+    this.thumbContainer.mixItUp('prepend', this.thumbEl, {filter: 'all'})
+  },
+  delete: function(){
+    var self = this;
+    var url = '/user_galleries/' + self.user_gallery_id + '/photos/' + self.id;
+    $.ajax({
+      url: url,
+      cache: false,
+      type: 'post',
+      beforeSend: function(xhr){
+        xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+      },
+      success: function(data){
+        console.log('Success: module deleted');
+        console.log(data)
+        self.thumbEl.remove();
+      },
+      error: function(data){
+        console.log("Error: module not deleted");
+        console.log(data)
+      }
+    }); // end ajax
   },
   init: function(){
-    // ajax listeners
     var self = this;
     $('.preview').off().on('click', 'img', function(){
       console.log(this)
@@ -125,7 +160,7 @@ Image.prototype = {
   initUploaded: function(){
     console.log('Initated: uploaded photo');
     this.setUploadedData();
-    // this.setData();
+    this.setRemoveButton();
     this.setDrag();
     this.init();
     this.append();
@@ -133,7 +168,7 @@ Image.prototype = {
   initSaved: function(){
     console.log('Initated: saved photo');
     this.setSavedData();
-    this.setData();
+    this.setRemoveButton();
     this.setDrag();
     this.init();
   }

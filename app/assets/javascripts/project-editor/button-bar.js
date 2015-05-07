@@ -16,11 +16,11 @@ var ButtonBar = function(options){
   this.modId = null
 
   // utility classes
-  this.hide = function(el){ el.addClass('hidden'); }
-  this.show = function(el){ el.removeClass('hidden'); }
+  this.hide = function(el){ el.addClass('uk-hidden'); }
+  this.show = function(el){ el.removeClass('uk-hidden'); }
   
-  this.invisible = function(el){ el.addClass('invisible'); }
-  this.visible = function(el){ el.removeClass('invisible'); }
+  this.invisible = function(el){ el.addClass('uk-invisible'); }
+  this.visible = function(el){ el.removeClass('uk-invisible'); }
 };
 
 ButtonBar.prototype = {
@@ -63,7 +63,7 @@ ButtonBar.prototype = {
   },
   // html to render new bar
   htmlBar: function(){
-    html = "<ul class='button-bar button-bar-btw'><li class='option item invisible' data-mod-type='grid'><button><i class='h2-size fa fa-square'></i></button><br><span class='invisible button-label font_small'>Grid</span></li><li class='option item invisible' data-mod-type='comparison'><button><i class='h2-size fa fa-sliders'></i></button><br><span class='invisible button-label font_small'>Compare</span></li><li class='item option-toggle'><button><i class='h2-size fa fa-plus'></i></button><br><span class='hidden font_small'>Add</span></li><li class='option item invisible' data-mod-type='split'><button><i class='h2-size fa fa-star-half'></i></button><br><span class='invisible button-label font_small'>Split</span></li><li class='option item invisible' data-mod-type='text'><button><i class='h2-size fa fa-file-text'></i></button><br><span class='invisible button-label font_small'>Text</span></li><li class='option item invisible' data-mod-type='video'><button><i class='h2-size fa fa-file-video-o'></i></button><br><span class='invisible button-label font_small'>Video</span></li></ul>";
+    html = "<ul class='button-bar button-bar-btw'><li class='option item uk-invisible' data-mod-type='grid'><button><i class='fa fa-th-large uk-h4'></i></button><br><span class='uk-invisible button-label uk-text-small'>Grid</span></li><li class='option item uk-invisible' data-mod-type='comparison'><button><i class='fa fa-angle-right uk-h4'></i></button><br><span class='uk-invisible button-label uk-text-small'>Compare</span></li><li class='item option-toggle'><button><i class='fa fa-plus uk-h4'></i></button><br><span class='uk-hidden uk-text-small'>Add</span></li><li class='option item uk-invisible' data-mod-type='split'><button><i class='fa fa-star-half'></i></button><br><span class='uk-invisible button-label uk-text-small'>Split</span></li><li class='option item uk-invisible' data-mod-type='text'><button><i class='fa fa-file-text'></i></button><br><span class='uk-invisible button-label uk-text-small'>Text</span></li><li class='option item uk-invisible' data-mod-type='video'><button><i class='fa fa-file-video-o'></i></button><br><span class='uk-invisible button-label uk-text-small'>Video</span></li></ul>";
     return $(html);
   },
 

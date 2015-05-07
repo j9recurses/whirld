@@ -2,9 +2,56 @@
 	height: 100%;
 	overflow-y: 100%;
 
+	#end-bar .uk-button {
+	  width: 60px;
+	  height: 60px;
+	}
+	.button-bar{
+		height: 76px;
+    list-style-type: none;
+    margin: 2.9em auto 2.9em auto;
+    position: relative;
+    text-align: center;
+    width: 400px;
+    z-index: 1;
+	}
+
+	.button-bar-btw{
+    margin: 1.45em auto 1.45em auto;
+  }
+  .button-bar-btw button{
+    height: 50px;
+    width: 50px;
+  }
+  .button-bar .option-0, .button-bar .option-1, .button-bar .option-2, .button-bar .option-3, .button-bar .option-4, .button-bar .option-5{
+    -webkit-transition: all .25s ease;
+      -moz-transition: all .25s ease;
+      -o-transition: all .25s ease;
+      transition: all .25s ease;
+    z-index: 1;
+  } 
+  .button-bar .item{
+    left: 162.5px;
+    position: absolute;
+  }
+  .button-bar .option-0{left: 37px;}
+  .button-bar .option-1{left: 106px;}
+  .button-bar .option-2{left: 162.5px;}
+  .button-bar .option-3{left: 236px;}
+  .button-bar .option-4{left: 301px;}
+  .button-bar .option-toggle{
+    z-index: 2;
+  }
+  .button-bar-btw .option-0{left: 72px;}
+  .button-bar-btw .option-1{left: 122px;}
+  .button-bar-btw .option-2, .button-bar-btw .option-toggle{left: 180px;}
+  .button-bar-btw .option-3{left: 234px;}
+  .button-bar-btw .option-4{left: 288px;}
+  .button-bar-btw .option-toggle button:hover{ opacity: 1; }
+
 	#knitter-map-pane{
 		/*display: none;*/
-		height: 445px;
+		height: 400px;
 		width: 98%;
 	}
 	.uk-accordion{
@@ -29,6 +76,10 @@
 	#photo-select{
 		background: #efefef;
 	}
+	#project-form{
+	  max-height: 400px;
+	  overflow: hidden;
+	}
 	.project-tag{
 		cursor: default;
 	}
@@ -38,6 +89,9 @@
 	.sort.uk-active::before, #photo-select .filter.uk-active::before{
 		content: "\f00c";
 		font-family: FontAwesome;
+	}
+	.tag-container{
+		min-height: 20px;
 	}
 	.uk-overlay-panel{
 		padding: 10px;

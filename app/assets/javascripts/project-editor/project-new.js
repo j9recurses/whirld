@@ -102,8 +102,8 @@ ProjectEditor.prototype = {
 //     var pageFinish = new Form();
 //         pageFinish.finishButton();
 //     // initiate button bar
-//     var bb = new ButtonBar();
-//         bb.initBar();
+    var bb = new ButtonBar();
+        bb.initBar();
 
     // initiate photo uploader
     var p = new ImageUploader();

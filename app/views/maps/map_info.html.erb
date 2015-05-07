@@ -5,12 +5,12 @@
   </section>
 
   <div class='uk-width-3-4'>
-  	<section id='project-form' class='uk-grid uk-grid-collapse'>
+  	<section id='project-top' class='uk-grid uk-grid-collapse'>
 	  	<div class='uk-width-7-10'>
 		  	<div id='knitter-map-pane' class='uk-margin-top'>	  		
 		  	</div>
 		  </div>
-	  	<div class='uk-width-3-10 uk-margin-top'>
+	  	<div id='project-form' class='uk-width-3-10 uk-margin-top'>
 
 		  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion="{showfirst: false}">
 
@@ -78,10 +78,23 @@
 
 	  	</div>
 	  </section>
-	  <section id='module-content' class='uk-width-3-4'>
-    <%= render :partial => "/maps/map_info_pieces/buttonBar" %>
+	  <section id='module-content' class='uk-grid uk-grid-collapse'>
+    
+      <div class='uk-width-7-10'>
+        <%= render :partial => "/maps/map_info_pieces/buttonBar" %>
+
+
+      </div>
+
+      <div class='uk-width-3-10'></div>
+
 	  </section>
   </div>
 
 </div> <!-- end #project-creation -->
 
+
+
+<!--         <div class="droppable dropzone ui-droppable ui-sortable">
+          <p class="caps">Drag up to ten photos here.</p>
+        </div> -->

@@ -175,6 +175,7 @@ Form.prototype = {
     return taglist_str;
   },
   tagAppend: function(e){
+    e.preventDefault();
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
     if(e.which == 188 || e.which == 13 || e.which == 1) {
@@ -300,7 +301,6 @@ Form.prototype = {
   titleField: function(){
     var el = $('#project-name');
     var wrapper = $('#name-label');
-    console.log(wrapper)
     if(el.val().length > 0){
       var span = wrapper.find('.char-limit');
           span.removeClass('uk-invisible');

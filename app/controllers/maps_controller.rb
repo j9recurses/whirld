@@ -99,6 +99,7 @@ class MapsController < ApplicationController
     @map = Map.find params[:id]
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_id = current_user.id
+    @user_name = current_user.login
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @gallery_photos =  @map.photos
     @photo = Photo.new

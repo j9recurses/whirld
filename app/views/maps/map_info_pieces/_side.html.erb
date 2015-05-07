@@ -48,8 +48,9 @@
     <% if photo.is_aerial %>
     <% type = 'aerial' %>
     <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
-      <div class='draggable draggable-wrapper'>
+      <div class='draggable draggable-wrapper'>        
         <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+          <button class='photo-delete close uk-hidden uk-float-right'><i class='fa fa-remove uk-text-danger'></i></button>
         </div>
       </div>
 
@@ -58,6 +59,7 @@
     <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
       <div class='draggable draggable-wrapper'>
         <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+        <button class='photo-delete close uk-hidden uk-float-right'><i class='fa fa-remove uk-text-danger'></i></button>
         </div>
       </div>
     <% end %>

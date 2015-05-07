@@ -43,6 +43,20 @@ ProjectEditor.prototype = {
 	uiActions: function(){
 		var self = this;
 
+    $('#profile-upload-drop').droppable({
+      accept: '.draggable',
+      activeClass: 'drop-active',
+      hoverClass: 'drop-target',
+      drop: function(e, ui){
+        // var container = e;
+        
+        // var path = $(ui.helper.find('.img-wrapper')).attr('style').split('url(\'')[1].split('\')')[0];
+        // // console.log(container)
+        // html = "<div class='photo uk-width-1-1'><div class='photo-remove uk-hidden' data-uk-tooltip title='Remove photo from module.'><i class='fa fa-remove fa-lg uk-text-danger'></i></div><div class='img-wrapper' style=\"background-image: url('" + path + "')\"></div></div>";
+        console.log(ui)
+      }
+    });
+
 		$('#preview-list').mixItUp({
 			controls: {
 				activeClass: 'uk-active'
@@ -55,7 +69,7 @@ ProjectEditor.prototype = {
 				onMixEnd: function(state){
 			    $.each($('.preview'), function(i, thumb){
 			      var t = new Image({
-			        id: $(thumb).data('img-id'),
+			        id: $(thumb).find('.img-wrapper').data('img-id'),
 			        is_aerial: $(thumb).data('img_type') == 'aerial',
 			        is_normal: $(thumb).data('img_type') == 'normal',
 			      });

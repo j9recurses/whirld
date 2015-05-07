@@ -95,14 +95,22 @@ Image.prototype = {
   },
   htmlThumb: function(){
     var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"></article>";
-    // var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
+    console.log(el)
     return el;
   },
   setRemoveButton: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
 
     var self = this;
+    console.log(self.thumbEl)
+    self.thumbEl.find('.img-wrapper').off().on({
+      mouseenter: function(){ 
+        console.log(this)
+          self.removeButton.removeClass('uk-hidden');
+       },
+      mouseleave: function(){ self.removeButton.addClass('uk-hidden'); }
+    });
     self.removeButton.on('click', function(){
       UIkit.modal.confirm("Are you sure you want to delete this photo?", function(){
         self.delete();

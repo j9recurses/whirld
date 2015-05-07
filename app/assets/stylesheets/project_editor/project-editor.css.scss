@@ -9,16 +9,13 @@
 	.button-bar{
 		height: 76px;
     list-style-type: none;
-    margin: 6em auto 2.9em auto;
+    margin: 2em auto 0em auto;
     position: relative;
     text-align: center;
     width: 400px;
     z-index: 1;
 	}
 
-	.button-bar-btw:nth-of-type(1){
-    margin: 6em auto 0 auto;
-  }
   .button-bar-btw button{
     height: 40px;
     width: 40px;
@@ -53,6 +50,9 @@
 		/*display: none;*/
 		height: 400px;
 		width: 98%;
+	}
+	.text-module .text-module-body{
+		height: 204px;
 	}
 	.text-module-body{
 		height: 227px;

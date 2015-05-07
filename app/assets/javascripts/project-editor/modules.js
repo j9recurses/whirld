@@ -15,17 +15,17 @@ var ModuleHtml = function(options){
 ModuleHtml.prototype = {
   setModData: function(){
     if(this.options.modType == 'grid'){
-      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h1'>Drag up to ten photos here.</p>";
+      this.emptyMessage = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag up to ten photos here.</p>";
       this.iconClass = 'th-large';
       this.label = 'Photo Grid';
     }
     else if(this.options.modType == 'split'){
-      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h2'>Drag one photo here.</p>";
+      this.emptyMessage = "<p class='uk-h2>'<i class='fa fa-photo'></i> Drag one photo here.</p>";
       this.iconClass = 'star-half';
       this.label = 'Text With Photo';
     }
     else if(this.options.modType == 'comparison'){
-      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h2'>Drag two photos here to compare them.</p>";
+      this.emptyMessage = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag two photos here to compare them.</p>";
       this.iconClass = 'angle-right';
       this.label = 'Compare Two Photos';
     }
@@ -47,7 +47,7 @@ ModuleHtml.prototype = {
     return html;
   },
   htmlHeader: function(){
-    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.iconClass + "'></i>" + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><button class='uk-close'></button></div></div>";
+    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.iconClass + "'></i> " + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><button class='uk-close'></button></div></div>";
     return html
   },
   htmlTaginput: function(){
@@ -69,7 +69,7 @@ ModuleHtml.prototype = {
     return $(html);
   },
   text: function(){
-    var html = "<article class='text-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='row group wrapper'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>" + this.htmlTaginput() + "</article>";
+    var html = "<article class='text-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-form uk-width-1-1'><textarea class='text-module-body uk-width-1-1 uk-margin-bottom' placeholder='Add a block of text'></textarea></div>" + this.htmlTaginput() + "</article>";
     return $(html);
   },
   video: function(){

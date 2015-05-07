@@ -24,10 +24,7 @@
 //= require uikit/js/components/accordion.min.js
 
 
-// Project Editor
-//= jquery-ui/ui/minified/draggable.min
-//= jquery-ui/ui/minified/droppable.min
-//= jquery-ui/ui/minified/sortable.min
+
 
 //for uploading videos
 

@@ -17,14 +17,12 @@
 <!-- JS for project editor -->
 <%#= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
 <%#= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
-<%= javascript_include_tag "autosize/dest/autosize.js" %>
-<%= javascript_include_tag "mixitup/src/jquery.mixitup.js" %>
+<%= javascript_include_tag "jquery-ui/ui/draggable.js" %>
+<%= javascript_include_tag "jquery-ui/ui/droppable.js" %>
+<%= javascript_include_tag "jquery-ui/ui/sortable.js" %>
 
-<% unless @project_editor==true %>
-	<%= javascript_include_tag "global/search-bar.js" %>
-	<%= javascript_include_tag "global/main.js" %>
-<% end %>
-<%= javascript_include_tag "bootstrap/dist/js/bootstrap.min" %>
+<%= javascript_include_tag "autosize/dest/autosize.js" %>
+
 <%= javascript_include_tag "project-editor/modules.js" %>
 <%= javascript_include_tag "project-editor/button-bar.js" %>
 <%= javascript_include_tag "project-editor/images.js" %>

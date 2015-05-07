@@ -116,7 +116,6 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
-    console.log(this.thumbEl)
     this.thumbEl.draggable({
       // containment: '#' + this.options.dragContainerId,
       cursor: '-webkit-grabbing',

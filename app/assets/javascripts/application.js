@@ -21,6 +21,7 @@
 //= require uikit/js/core/dropdown.min.js
 //= require uikit/js/components/sticky.min.js
 //= require uikit/js/components/tooltip.min.js
+//= require uikit/js/components/accordion.min.js
 
 
 // Project Editor

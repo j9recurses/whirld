@@ -86,8 +86,7 @@ ProjectEditor.prototype = {
 	},
   init: function(){
 //       // initiate form fields
-    var desc = new Form();
-        desc.descriptionField();
+
     var title = new Form();
         title.titleField();
     var loc = new Form();
@@ -96,12 +95,10 @@ ProjectEditor.prototype = {
         lat.latField();
     var lon = new Form();
         lon.lonField();
-//     var ptf = new Form();
-//         ptf.projectTagField();
-
-//     var photosel = new Form();
-//         photosel.photoSelectFields();
-
+    var desc = new Form();
+        desc.descriptionField();
+    var ptf = new Form();
+        ptf.projectTagField();
 //     var pageFinish = new Form();
 //         pageFinish.finishButton();
 //     // initiate button bar

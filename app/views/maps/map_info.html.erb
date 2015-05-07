@@ -11,46 +11,82 @@
 		  	</div>
 		  </div>
 	  	<div class='uk-width-3-10 uk-margin-top'>
-				<form class="uk-form uk-form-stacked">
-			    <div class="uk-grid">
-			        <div class="uk-width-1-1 input-wrapper">
-			        	<label class="uk-form-label uk-text-muted" for="project-name">Title:</label>
-			        	<textarea id='project-name' type="text" placeholder="Project Title" class="uk-width-9-10" maxlength='70'><%=@map.name%></textarea>
-			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
-			        	<small class='char-limit uk-text-muted uk-invisible' data-limit='70'>70</small>
-			        </div>
-			        <div class="uk-width-1-1 uk-margin-top input-wrapper">
-				        <label class="uk-form-label uk-text-muted" for="project-location">Location:</label>
-			        	<input id='project-location' type="text" placeholder="Location" class="uk-width-9-10" value='<%=@map.location%>'> 
-			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
-			        </div>
 
-			        <div class='uk-grid uk-grid-small uk-width-9-10 uk-margin-top input-wrapper'>
-				        <div class="uk-width-5-10">
-					        <label class="uk-form-label uk-text-muted" for="project-lat">Latitude:</label>
-				        	<input id='project-lat' type="text" placeholder="Latitude" class="uk-width-1-1" value='<%=@map.lat%>'>
-				        </div>
-				        <div class="uk-width-5-10">
-				        	<label class="uk-form-label uk-text-muted" for="project-lon">Longitude:</label>
-				        	<input id='project-lon' type="text" placeholder="Longitude" class="uk-width-1-1" value='<%=@map.lon%>'>
-				        </div>
-			        </div>
+		  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion="{showfirst: false}">
 
-
-			        <div class="uk-width-1-1 uk-margin-top input-wrapper">
-			        	<label class="uk-form-label uk-text-muted" for="project-description">Description:</label>
-			        	<textarea id='project-description' type="text" placeholder="Project description" class="uk-width-9-10" maxlength='140'><%=@map.description%></textarea>
-			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
-			        	<small class='char-limit uk-text-muted uk-invisible' data-limit='140'>140</small>
-			        </div>
-
+			  	<!-- Project Title -->
+					<label id='name-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-name">Title
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+	        	<textarea id='project-name' type="text" placeholder="Project Title" class="uk-width-1-1" maxlength='70'><%=@map.name%></textarea>
+	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='70'>70</small>
 			    </div>
+
+			    <!-- Project Location -->
+					<label id='location-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-location">Location
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-grid uk-margin-bottom">
+							<div class='uk-width-1-1 uk-margin-top'>
+								<input id='project-location' type="text" placeholder="Location" class="uk-width-1-1" value='<%=@map.location%>'>
+							</div>
+
+							<div class="uk-width-5-10 uk-margin-top">
+				        <label id='lat-label' class="uk-form-label uk-text-muted" for="project-lat">Latitude:</label>
+			        	<input id='project-lat' type="text" placeholder="Latitude" class="uk-width-1-1" value='<%=@map.lat%>'>
+			        </div>
+			        <div id='lon-label' class="uk-width-5-10 uk-margin-top">
+			        	<label class="uk-form-label uk-text-muted" for="project-lon">Longitude:</label>
+			        	<input id='project-lon' type="text" placeholder="Longitude" class="uk-width-1-1" value='<%=@map.lon%>'>
+			        </div>
+			    </div>
+
+			  	<!-- Project Description -->
+					<label id='description-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-description">Description
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+	        	<textarea id='project-description' type="text" placeholder="Project Description" class="uk-width-1-1" maxlength='70'><%=@map.description%></textarea>
+	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='140'>140</small>
+			    </div>
+
+			    <hr>
+
+        	<label id='cover-photo-label' class='uk-form-label uk-text-muted uk-margin-top' for='profile-upload'>Cover Photo:</label>
+					<div id="profile-upload-drop" class="uk-placeholder uk-text-center">
+						<i class='fa fa-photo fa-lg uk-text-muted uk-margin-small-right'></i>Drag a cover photo here.
+					</div>
+
+					<hr>
+
+		    	<label id='tags-label' class='uk-form-label uk-text-muted' for='project-tag_list'>Tags:</label>
+		    	<input id='project-tag_list' class='tag-input uk-width-1-1'/>
+			    <div id='tag-container' class='tag-container'>
+			      <% unless @maptags.nil? || @maptags.blank? %>
+			        <% @map.tags.each do |tag| %>
+			          <span class='project-tag cursor-def light font_small'># <%= tag.name %> </span>
+			        <% end %>
+			      <% end %>
+			    </div>
+
+
 				</form>
+
+
+
+
 
 	  	</div>
 	  </section>
 	  <section class='uk-width-3-4'>
-	  	<h1>What?</h1>
+	    <form class='uk-width-1-2 input-wrapper uk-margin-top uk-form uk-form-stacked'>
+
+	    </form>
+
 	  </section>
   </div>
 

@@ -12,6 +12,7 @@ var Form = function(options){
   this.mapId = $('#project-creation-2').data('map-id');
   this.eTarget = null;
   this.url = '/maps/update_remote/' + this.mapId;
+  this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
 }
 
 Form.prototype = {
@@ -41,10 +42,12 @@ Form.prototype = {
       cache: false,
       type: 'post',
       beforeSend: function(){
-        wrapper.find('.fa-spinner').removeClass('uk-invisible');
+        wrapper.find('.fa-check-circle').addClass('uk-hidden');
+        wrapper.find('.fa-spinner').removeClass('uk-hidden');
       },
       complete: function(){
-        wrapper.find('.fa-spinner').addClass('uk-invisible');
+        wrapper.find('.fa-check-circle').removeClass('uk-hidden');
+        wrapper.find('.fa-spinner').addClass('uk-hidden');
       },
       success: function(data) {
          console.log("Success: " + self.eTarget.attr('id').split('-')[1] + ' field was created');
@@ -75,7 +78,7 @@ Form.prototype = {
   // functions for creating the description field
   descriptionField: function(){
     var el = $('#project-description');
-    var wrapper = $(el.closest('.input-wrapper'));
+    var wrapper = $('#description-label');
     if(el.val().length > 0){
       var span = wrapper.find('.char-limit');
           span.removeClass('uk-invisible');
@@ -109,7 +112,7 @@ Form.prototype = {
     locAC.location();
 
     var el = $('#project-location');
-    var wrapper = $(el.closest('.input-wrapper'));
+    var wrapper = $('#location-label');
 
     var self = this;
     el.on({
@@ -122,7 +125,7 @@ Form.prototype = {
     });
   },
   latField: function(){
-    var wrapper = $('#project-location').closest('.input-wrapper');
+    var wrapper = $('#location-label');
     var self = this;
     $('#project-lat').on({
       focusout: function(e){
@@ -132,7 +135,7 @@ Form.prototype = {
     });
   },
   lonField: function(){
-    var wrapper = $('#project-location').closest('.input-wrapper');
+    var wrapper = $('#location-label');
     var self = this;
     $('#project-lon').on({
       focusout: function(e){
@@ -152,7 +155,7 @@ Form.prototype = {
   tagHtml: function(){
     var self = this;
     var t = this.tagText();
-    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + t + "</span>";
+    var tagHTML = "<span class='project-tag uk-text-small uk-text-muted uk-margin-right'>#" + t + "</span>";
     var tag = $(tagHTML);
     var tagID = 'tag-' + t;
         tag.attr('id', tagID);
@@ -182,10 +185,10 @@ Form.prototype = {
       else {
         var tagCheck = tagContainer.find('#'+tag.id);
         if(tagCheck.length > 0) {
-          tagCheck.addClass('error');
+          tagCheck.addClass('uk-text-warning');
           this.eTarget.val('');
           setTimeout(function() {
-             tagCheck.removeClass('error');
+             tagCheck.removeClass('uk-text-warning');
            }, 600);
         }
         else{
@@ -196,14 +199,14 @@ Form.prototype = {
     }
   },
   tagSave: function(map_id, taglist){
-    console.log(map_id)
     var data = {
       mod_gallery: this.modId,
       mod_type: this.modType,
       taglist: taglist,
     }
+    console.log(data)
     if(map_id){ data['map_id'] = map_id }
-
+    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -296,7 +299,8 @@ Form.prototype = {
   },
   titleField: function(){
     var el = $('#project-name');
-    var wrapper = $(el.closest('.input-wrapper'));
+    var wrapper = $('#name-label');
+    console.log(wrapper)
     if(el.val().length > 0){
       var span = wrapper.find('.char-limit');
           span.removeClass('uk-invisible');

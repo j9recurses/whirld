@@ -4,8 +4,20 @@
 
 	#knitter-map-pane{
 		/*display: none;*/
-		height: 500px;
+		height: 445px;
 		width: 98%;
+	}
+	.uk-accordion{
+		font-size: 14px;
+	}
+	.uk-accordion-title.uk-active::after{
+		content: "\f0d7";
+		font-family: FontAwesome;
+	}
+
+	.uk-accordion-title::after{
+		content: "\f0d8";
+		font-family: FontAwesome;
 	}
 
 	#photo-manager{
@@ -16,6 +28,12 @@
 	}
 	#photo-select{
 		background: #efefef;
+	}
+	.project-tag{
+		cursor: default;
+	}
+	.project-tag:hover{
+		text-decoration: line-through;
 	}
 	.sort.uk-active::before, #photo-select .filter.uk-active::before{
 		content: "\f00c";

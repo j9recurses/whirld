@@ -15,17 +15,17 @@ var ModuleHtml = function(options){
 ModuleHtml.prototype = {
   setModData: function(){
     if(this.options.modType == 'grid'){
-      this.emptyMessage = "<i class='fa fa-photo'> Drag up to ten photos here.</i>";
+      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h1'>Drag up to ten photos here.</p>";
       this.iconClass = 'th-large';
       this.label = 'Photo Grid';
     }
     else if(this.options.modType == 'split'){
-      this.emptyMessage = "<p class='caps'>Drag one photo here.</p>";
+      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h2'>Drag one photo here.</p>";
       this.iconClass = 'star-half';
       this.label = 'Text With Photo';
     }
     else if(this.options.modType == 'comparison'){
-      this.emptyMessage = 'Drag two photos here to compare them.';
+      this.emptyMessage = "<i class='fa fa-photo'></i> <p class='uk-h2'>Drag two photos here to compare them.</p>";
       this.iconClass = 'angle-right';
       this.label = 'Compare Two Photos';
     }
@@ -43,11 +43,11 @@ ModuleHtml.prototype = {
     return html
   },
   htmlDropzone: function(){
-    var html = "<div class='uk-placeholder uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center'><p class='uk-h1'>" + this.emptyMessage + "</p></div>";
+    var html = "<div class='uk-placeholder uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center'>" + this.emptyMessage + "</div>";
     return html;
   },
   htmlHeader: function(){
-    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.icon + "'></i>" + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><button class='uk-close'></button></div></div>";
+    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.iconClass + "'></i>" + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><button class='uk-close'></button></div></div>";
     return html
   },
   htmlTaginput: function(){
@@ -63,9 +63,9 @@ ModuleHtml.prototype = {
     return $(html);
   },
   split: function(){
-    var text = "<div class='text-module h-centered twelve columns'><textarea class='text-module-body' placeholder='Add some text' class='twelve columns'></textarea></div>";
-    var photo = "<div class='droppable dropzone twelve columns'>" + this.emptyMessage + "</div>";
-    var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='row group wrapper'>" + photo + text + "</div>" + this.htmlTaginput() + "</article>";
+    var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-width-1-1' placeholder='Add some text'></textarea></div>";
+    var photo = "<div class='uk-placeholder uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
+    var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "</div>" + this.htmlTaginput() + "</article>";
     return $(html);
   },
   text: function(){
@@ -264,9 +264,13 @@ Module.prototype = {
         var tf = new Form({ modAttrId: self.modEl.attr('id') })
             tf.modTagField();
 
-        if(self.options.modType == 'split' || self.options.modType == 'text'){
-          txtField = new Form({ modAttrId: self.modEl.attr('id') });
-          txtField.textField();
+        if(self.options.modType == 'split'){
+          var txtField = new Form({ modAttrId: self.modEl.attr('id') });
+              txtField.splitTextField();
+        }
+        else if(self.options.modType == 'text'){
+          var txtField = new Form({ modAttrId: self.modEl.attr('id') });
+              txtField.textField();
         }
 
       },

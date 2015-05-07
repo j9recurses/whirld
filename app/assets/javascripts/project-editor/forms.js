@@ -213,7 +213,6 @@ Form.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: tags were created');
-        console.log(data)
       },
       error: function(){
         console.log('Error: tags were not created');
@@ -256,6 +255,33 @@ Form.prototype = {
   },
 
   // functions for creating text fields
+  splitTextField: function(){
+    var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
+    var data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType
+      }
+    // Update mod
+    this.modEl.find('.text-module-body').on({
+      focusout: function(e){
+        self.eTarget = $(e.target);
+        data['split_text'] = self.eTarget.val();
+        console.log(data)
+        $.ajax({
+          url: url,
+          data: data,
+          cache: false,
+          type: 'put',
+          success: function(data){
+            console.log('Success: text field was updated');
+          },
+          error: function(){
+            console.log('Error: text field was not updated');
+          }
+        }); // end ajax
+      }
+    });
+  },
   textField: function(){
     autosize(this.modEl.find('.text-module-body'));
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
@@ -264,22 +290,11 @@ Form.prototype = {
         mod_type: this.modType
       }
 
-    // set params
-    var modText;
-    if(this.modType == 'text'){
-      modText = 'bloc_text'
-    }
-    else if(this.modType == 'split'){
-      modText == 'split_text'
-    }
-
     // Update mod
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        data[modText] = self.eTarget.val();
-        console.log(modText)
-        console.log(data[modText])
+        data['bloc_text'] = self.eTarget.val();
         console.log(data)
         $.ajax({
           url: url,

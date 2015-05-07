@@ -1,15 +1,58 @@
 
-<div id='project-creation-2' class='uk-grid' data-user-gallery-id = '<%=@user_gallery.id%>' data-user-name='<%=@user_name%>' data-user-id='<%=@user_id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
+<div id='project-creation-2' class='uk-grid uk-grid-small' data-user-gallery-id = '<%=@user_gallery.id%>' data-user-name='<%=@user_name%>' data-user-id='<%=@user_id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
   <section id='photo-manager' class='uk-width-1-4'>
     <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
 
-  <section id='project-form' class='uk-width-3-4'>
-  	<div class='uk-grid'>
-	  	<div id='knitter-map-pane' class='uk-width-3-4'>Map goes here</div>
-	  	<div class='uk-width-1-4'>Form goes here</div>
-	  </div>
-  </section>
+  <div class='uk-width-3-4'>
+  	<section id='project-form' class='uk-grid uk-grid-collapse'>
+	  	<div class='uk-width-7-10'>
+		  	<div id='knitter-map-pane' class='uk-margin-top'>	  		
+		  	</div>
+		  </div>
+	  	<div class='uk-width-3-10 uk-margin-top'>
+				<form class="uk-form uk-form-stacked">
+			    <div class="uk-grid">
+			        <div class="uk-width-1-1 input-wrapper">
+			        	<label class="uk-form-label uk-text-muted" for="project-name">Title:</label>
+			        	<textarea id='project-name' type="text" placeholder="Project Title" class="uk-width-9-10" maxlength='70'><%=@map.name%></textarea>
+			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
+			        	<small class='char-limit uk-text-muted uk-invisible' data-limit='70'>70</small>
+			        </div>
+			        <div class="uk-width-1-1 uk-margin-top input-wrapper">
+				        <label class="uk-form-label uk-text-muted" for="project-location">Location:</label>
+			        	<input id='project-location' type="text" placeholder="Location" class="uk-width-9-10" value='<%=@map.location%>'> 
+			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
+			        </div>
+
+			        <div class='uk-grid uk-grid-small uk-width-9-10 uk-margin-top input-wrapper'>
+				        <div class="uk-width-5-10">
+					        <label class="uk-form-label uk-text-muted" for="project-lat">Latitude:</label>
+				        	<input id='project-lat' type="text" placeholder="Latitude" class="uk-width-1-1" value='<%=@map.lat%>'>
+				        </div>
+				        <div class="uk-width-5-10">
+				        	<label class="uk-form-label uk-text-muted" for="project-lon">Longitude:</label>
+				        	<input id='project-lon' type="text" placeholder="Longitude" class="uk-width-1-1" value='<%=@map.lon%>'>
+				        </div>
+			        </div>
+
+
+			        <div class="uk-width-1-1 uk-margin-top input-wrapper">
+			        	<label class="uk-form-label uk-text-muted" for="project-description">Description:</label>
+			        	<textarea id='project-description' type="text" placeholder="Project description" class="uk-width-9-10" maxlength='140'><%=@map.description%></textarea>
+			        	<i class='fa fa-spinner uk-invisible fa-spin fa-lg'></i>
+			        	<small class='char-limit uk-text-muted uk-invisible' data-limit='140'>140</small>
+			        </div>
+
+			    </div>
+				</form>
+
+	  	</div>
+	  </section>
+	  <section class='uk-width-3-4'>
+	  	<h1>What?</h1>
+	  </section>
+  </div>
 
 </div> <!-- end #project-creation -->
 

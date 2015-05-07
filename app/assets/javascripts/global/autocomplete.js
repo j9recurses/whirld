@@ -37,12 +37,6 @@ AutoComp.prototype = {
             }));
           }
         });
-      },
-      select: function(event, ui) {
-        console.log(ui.item)
-        var b = ui.item.bounds
-        $("#project-lat").val(ui.item.latitude);
-        $("#project-lon").val(ui.item.longitude);
       }
     });
 
@@ -53,8 +47,8 @@ AutoComp.prototype = {
     keywordAC._renderMenu = function(ul, items){
       var self = this;
       var category = null;
-      var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
-      ul.append(exploreAll)
+      // var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      // ul.append(exploreAll)
       // ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
       $.each(items, function(i, item){
         // if (item.category != category) {
@@ -102,18 +96,30 @@ AutoComp.prototype = {
         self.locationSource(request, response);
       },
       select: function(event, ui) {
-      var b = ui.item.bounds
-      $("#project-lat").val(ui.item.latitude);
-      $("#project-lon").val(ui.item.longitude);
-    }
+        console.log(ui.item)
+        var b = ui.item.bounds
+        $("#project-lat").val(ui.item.latitude);
+        $("#project-lon").val(ui.item.longitude);
+        if (b) {
+          window.mapKnitter.getMap().fitBounds([
+            [b.getNorthEast().lat(), b.getNorthEast().lng()],
+            [b.getSouthWest().lat(), b.getSouthWest().lng()]
+            ]);
+        } else {
+          window.mapKnitter.getMap().panTo([ui.item.latitude,
+                                        ui.item.longitude])
+          window.mapKnitter.getMap().setZoom(14)
+        }
+        $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
+      }
     });
     // render results with highlighting
     locAC = $ac.data("ui-autocomplete")
     locAC._renderMenu = function(ul, items){
       var self = this;
       var category = null;
-      var exploreAll = "<li><ahref='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
-      ul.append(exploreAll);
+      // var exploreAll = "<li><ahref='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
+      // ul.append(exploreAll);
       // ul.append("<li class='ui-autocomplete-category'>Locations</li>");
       $.each(items, function(i, item){
         self._renderItemData( ul, item );

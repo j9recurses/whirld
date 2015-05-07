@@ -1,9 +1,9 @@
-<%= form_for @map, :html => { :id => 'project-form-new', :class => 'uk-form' } do |f| %>
+<%= form_for @map, :html => { :id => 'project-form-new', :class => 'uk-form uk-form-stacked' } do |f| %>
     <legend>Create your project</legend>
     <%= render 'layouts/error_messages', object: f.object %>  
     <div class="uk-grid">
         <div class="uk-width-1-1 input-wrapper">
-          <%= f.label :name, 'Title', :class => 'uk-form-label' %> 
+          <%= f.label :name, 'Title', :class => 'uk-form-label uk-text-muted' %> 
           <%=  f.text_area :name,
                            :name => 'name',
                            :rows => '0',
@@ -14,7 +14,7 @@
           <small class='char-limit uk-invisible' data-limit='70'>70</small>
         </div>
         <div class="uk-width-1-2 input-wrapper uk-margin-top">
-          <%= f.label :name, 'Location', :class => 'uk-form-label' %> 
+          <%= f.label :name, 'Location', :class => 'uk-form-label uk-text-muted' %> 
           <%= f.text_field :location,
                            :class => 'uk-width-1-1',
                            :id => 'project-location',
@@ -35,7 +35,7 @@
                             :placeholder => 'Longitude' %>
         </div>
         <div class="uk-width-1-1 input-wrapper uk-margin-top">
-          <%= f.label :name, 'Description', :class => 'uk-form-label' %> 
+          <%= f.label :name, 'Description', :class => 'uk-form-label uk-text-muted' %> 
           <%=  f.text_area :description,
                            :name => 'description',
                            :rows => '0',

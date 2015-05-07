@@ -9,10 +9,9 @@ var Form = function(options){
   this.modType = this.modEl.data('mod-type');
 
   // what it needs to know for itself
-  this.mapId = $('#project-creation-2').data('data-map-id');
+  this.mapId = $('#project-creation-2').data('map-id');
   this.eTarget = null;
-  this.projectId = $('#project-id').val();
-  this.url = '/maps/update_remote/' + this.projectId;
+  this.url = '/maps/update_remote/' + this.mapId;
 }
 
 Form.prototype = {
@@ -27,20 +26,26 @@ Form.prototype = {
       cache: false,
       type: 'post',
       success: function(data) {
-         console.log("Success: " + el.attr('id').split('-')[1] + ' field was created');
+        console.log("Success: " + el.attr('id').split('-')[1] + ' field was created');
       },
       error: function() {
         console.log("Something went wrong!");
       }
     }); // end ajax
   },
-  save: function(){
+  save: function(wrapper){
     var self = this;
     $.ajax({
-      url: this.url,
+      url: self.url,
       data:  this.setData(),
       cache: false,
       type: 'post',
+      beforeSend: function(){
+        wrapper.find('.fa-spinner').removeClass('uk-invisible');
+      },
+      complete: function(){
+        wrapper.find('.fa-spinner').addClass('uk-invisible');
+      },
       success: function(data) {
          console.log("Success: " + self.eTarget.attr('id').split('-')[1] + ' field was created');
       },
@@ -52,7 +57,7 @@ Form.prototype = {
   changeCounter:function(){
     var wrapper = this.eTarget.closest('.input-wrapper');
     var span = $(wrapper).find('.char-limit');
-        span.removeClass('invisible');
+        span.removeClass('uk-invisible');
     var letterCount = this.eTarget.val().length;
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
@@ -69,18 +74,25 @@ Form.prototype = {
   },
   // functions for creating the description field
   descriptionField: function(){
-    autosize($('#project-description'));
+    var el = $('#project-description');
+    var wrapper = $(el.closest('.input-wrapper'));
+    if(el.val().length > 0){
+      var span = wrapper.find('.char-limit');
+          span.removeClass('uk-invisible');
+      span.text(span.data('limit') - el.val().length)
+    }
     var self = this;
-    $('#project-description').on({
+    el.on({
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
       },
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
+    autosize($('#project-description'));
   },
 
   // functions for creating location fields
@@ -90,31 +102,42 @@ Form.prototype = {
       $('#project-lat').val('');
       $('#project-lon').val('');
     }
+
+    var locAC = new AutoComp({
+      inputId: 'project-location'
+    });
+    locAC.location();
+
+    var el = $('#project-location');
+    var wrapper = $(el.closest('.input-wrapper'));
+
     var self = this;
-    $('#project-location').on({
+    el.on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
         self.ajax($('#project-lat'));
         self.ajax($('#project-lon'));
       }
     });
   },
   latField: function(){
+    var wrapper = $('#project-location').closest('.input-wrapper');
     var self = this;
     $('#project-lat').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },
   lonField: function(){
+    var wrapper = $('#project-location').closest('.input-wrapper');
     var self = this;
     $('#project-lon').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },
@@ -272,8 +295,15 @@ Form.prototype = {
     });
   },
   titleField: function(){
+    var el = $('#project-name');
+    var wrapper = $(el.closest('.input-wrapper'));
+    if(el.val().length > 0){
+      var span = wrapper.find('.char-limit');
+          span.removeClass('uk-invisible');
+      span.text(span.data('limit') - el.val().length)
+    }
     var self = this;
-    $('#project-name').on({
+    el.on({
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
@@ -281,7 +311,7 @@ Form.prototype = {
       },
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },

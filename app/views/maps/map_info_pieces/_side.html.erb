@@ -1,6 +1,6 @@
 <nav id='photo-manager-nav' class=''>
  
-  <div id='photo-select' class="uk-flex uk-flex-left uk-flex-space-between button-group uk-margin-bottom" data-uk-sticky>
+  <div id='photo-select' class="uk-margin-bottom">
     <div class="uk-button uk-form-select" data-uk-form-select>
       <span>All Photos <i class='fa fa-caret-down'></i></span>
       <select>
@@ -12,70 +12,33 @@
     </div>
 
     <button id='view-switch' class="uk-button"><i class='fa fa-th-large'></i></button>
-
-    <div class="uk-button uk-form-select" data-uk-form-select>
-      <span><i class='fa fa-sort'></i></span>
-      <select>
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-      </select>
+    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
+      <button class="uk-button"><i class='fa fa-sort'></i></button>
+      <div class="uk-dropdown">
+          <ul class="uk-nav uk-nav-dropdown">
+            <li><a href="#" class='sort' data-sort='created:asc'>Newest</a></li>
+            <li><a href="#" class='sort' data-sort='created:desc'>Oldest</a></li>
+          </ul>
+      </div>
     </div>
 
-    <div class="uk-form-file">
+    <div class="uk-form-file uk-float-right">
       <button class="uk-button"><i class='fa fa-upload'></i></button>
-      <input type="file">
+      <input type="file" multiple>
     </div>
   </div> <!-- end .uk-flex -->
 
-  <div id='photo-type' class='uk-flex uk-flex-center uk-contrast'>
-    <ul class="uk-subnav uk-subnav-pill ">
-      <li><a href="#" data-filter='all'>All</a></li>
-      <li><a href="#" data-filter='.aerial'>Aerial</a></li>
-      <li><a href="#" data-filter='.normal'> Street</a></li>
-      <li><a href="#" data-filter='.people'>People</a></li>
+  <div id='photo-type' class='uk-contrast uk-flex uk-flex-center'>
+    <ul class="uk-subnav uk-subnav-pill">
+      <li data-filter='all' class='filter uk-active'><a href="#">All</a></li>
+      <li class='filter' data-filter='.aerial'><a href="#">Aerial</a></li>
+      <li class='filter' data-filter='.normal'><a href="#"> Street</a></li>
+      <li class='filter' data-filter='.people'><a href="#">People</a></li>
     </ul>
   </div>
 </nav>
 
 <section id='preview-list' class="container">
-  <div class='preview mix mix-half aerial'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-01.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half normal'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-02.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half people'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-03.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half aerial'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-04.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half normal'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-05.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half people'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-09.png')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half aerial'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-10.png')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
-  <div class='preview mix mix-half normal'>
-    <figure class="uk-overlay uk-overlay-hover" style="background-image:url('images/test/grid-06.jpg')">
-      <figcaption class="uk-overlay-panel">This is a caption</figcaption>
-    </figure>
-  </div>
+
 </section>
+<%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>

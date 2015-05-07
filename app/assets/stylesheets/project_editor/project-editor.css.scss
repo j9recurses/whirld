@@ -1,4 +1,7 @@
 #project-creation-2{
+	height: 100%;
+	overflow-y: 100%;
+
 	#photo-manager{
 		 background: #333;
 	}
@@ -7,6 +10,10 @@
 	}
 	#photo-select{
 		background: #efefef;
+	}
+	.sort.uk-active::before{
+		content: "\f00c";
+		font-family: FontAwesome;
 	}
 	.container{
 	  padding: 2% 2% 0;

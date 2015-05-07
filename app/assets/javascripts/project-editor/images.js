@@ -26,14 +26,14 @@ ImageUploader.prototype = {
         $('#photo-manager').removeClass('invisible');
 
         var img = new Image({
-            id: data.result.id,
-            is_aerial: data.result.is_aerial,
-            is_normal: data.result.is_normal,
-            mediumPath: data.result.photo_file.medium.url,
-            thumbPath: data.result.photo_file.thumb.url,
-            path: data.result.url,
-            warpableId: data.result.warpable_id,
-            warpableUrl: data.result.warpable_url
+          id: data.result.id,
+          is_aerial: data.result.is_aerial,
+          is_normal: data.result.is_normal,
+          mediumPath: data.result.photo_file.medium.url,
+          thumbPath: data.result.photo_file.thumb.url,
+          path: data.result.url,
+          warpableId: data.result.warpable_id,
+          warpableUrl: data.result.warpable_url
         });
         img.initUploaded();
         pe.init();
@@ -58,7 +58,7 @@ var Image = function(options){
     mediumPath: null,
     path: null,
     removeButtonClassName: 'photo-remove',
-    thumbContainerId: 'photos-uploaded',
+    thumbContainerId: 'preview-list',
     warpableId: null,
     warpableUrl: null
   }, options);
@@ -79,12 +79,9 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
+    var html = "<article class='preview draggable mix mix-half " + this.photoType + " uk-cover-background' data-created='1' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"><figure class='uk-overlay uk-overlay-hover'><figcaption class='uk-overlay-panel uk-overlay-fade uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom'>Hiiiiii</figcaption></figure></article>";
+    // var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
     var el = $(html)
-    if(this.is_normal){
-      el.addClass('hidden');
-      el.addClass('invisible');
-    }
     return el;
   },
   setData: function(){
@@ -128,7 +125,7 @@ Image.prototype = {
   initUploaded: function(){
     console.log('Initated: uploaded photo');
     this.setUploadedData();
-    this.setData();
+    // this.setData();
     this.setDrag();
     this.init();
     this.append();

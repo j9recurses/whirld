@@ -37,19 +37,32 @@ var ProjectEditor = function(){
 }
 ProjectEditor.prototype = {
 	uiActions: function(){
-		$('#preview-list').mixItUp();
+		$('#preview-list').mixItUp({
+			controls: {
+				activeClass: 'uk-active'
+			},
+			load: {
+				filter: 'all'
+			}
+
+		});
 
 		$('#view-switch').on('click', function(){
 			var icon = $(this).find('i');
 			if(icon.hasClass('fa-th-large')){
 				icon.removeClass('fa-th-large');
 				icon.addClass('fa-square');
+				$('.preview').removeClass('mix-half');
+				$('.preview').addClass('mix-whole');
 			}
 			else{
 				icon.removeClass('fa-square');
 				icon.addClass('fa-th-large');
+				$('.preview').removeClass('mix-whole');
+				$('.preview').addClass('mix-half');
 			}
 		});
+
 
 	},
   init: function(){
@@ -76,9 +89,9 @@ ProjectEditor.prototype = {
 //     var bb = new ButtonBar();
 //         bb.initBar();
 
-//     // initiate photo uploader
-//     var p = new ImageUploader();
-//         p.init();
+    // initiate photo uploader
+    var p = new ImageUploader();
+        p.init();
 
 //     //initiate draggable for all the saved images already loaded
 //     $.each($('.preview').find('img'), function(i, thumb){

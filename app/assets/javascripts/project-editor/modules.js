@@ -47,7 +47,7 @@ ModuleHtml.prototype = {
     return html;
   },
   htmlHeader: function(){
-    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.icon + "'></i>" + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><a href='' class='uk-close'></a></div></div>";
+    var html = "<div class='module-header uk-width-1-1 uk-grid uk-grid-collapse'><h2 class='uk-text-muted uk-text-bold uk-h4 uk-width-1-2'><i class='fa fa-" + this.icon + "'></i>" + this.label + "</h2><div class='uk-width-1-2 uk-text-right remove-mod'><button class='uk-close'></button></div></div>";
     return html
   },
   htmlTaginput: function(){
@@ -89,7 +89,7 @@ var Module = function(options){
     modType: 'grid',
     modClassName: 'module',
     originBarId: 'end-bar',
-    removeButtonClassName: 'fa-remove'
+    removeButtonClassName: 'remove-mod'
   }, options);
 
 

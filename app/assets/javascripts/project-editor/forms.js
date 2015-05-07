@@ -205,9 +205,7 @@ Form.prototype = {
       mod_type: this.modType,
       taglist: taglist,
     }
-    console.log(data)
     if(map_id){ data['map_id'] = map_id }
-    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,

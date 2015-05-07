@@ -9,19 +9,19 @@
 	.button-bar{
 		height: 76px;
     list-style-type: none;
-    margin: 2.9em auto 2.9em auto;
+    margin: 6em auto 2.9em auto;
     position: relative;
     text-align: center;
     width: 400px;
     z-index: 1;
 	}
 
-	.button-bar-btw{
-    margin: 1.45em auto 1.45em auto;
+	.button-bar-btw:nth-of-type(1){
+    margin: 6em auto 0 auto;
   }
   .button-bar-btw button{
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
   }
   .button-bar .option-0, .button-bar .option-1, .button-bar .option-2, .button-bar .option-3, .button-bar .option-4, .button-bar .option-5{
     -webkit-transition: all .25s ease;
@@ -42,11 +42,11 @@
   .button-bar .option-toggle{
     z-index: 2;
   }
-  .button-bar-btw .option-0{left: 72px;}
-  .button-bar-btw .option-1{left: 122px;}
-  .button-bar-btw .option-2, .button-bar-btw .option-toggle{left: 180px;}
+  .button-bar-btw .option-0{left: 102px;}
+  .button-bar-btw .option-1{left: 143px;}
+  .button-bar-btw .option-2, .button-bar-btw .option-toggle{left: 190px;}
   .button-bar-btw .option-3{left: 234px;}
-  .button-bar-btw .option-4{left: 288px;}
+  .button-bar-btw .option-4{left: 278px;}
   .button-bar-btw .option-toggle button:hover{ opacity: 1; }
 
 	#knitter-map-pane{

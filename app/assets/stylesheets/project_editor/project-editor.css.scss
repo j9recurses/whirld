@@ -50,6 +50,7 @@
 		/*display: none;*/
 		height: 400px;
 		width: 98%;
+		z-index: 99;
 	}
 	.text-module .text-module-body{
 		height: 204px;
@@ -71,7 +72,11 @@
 	}
 
 	#photo-manager{
-		 background: #666;
+		background: #666;
+		height: 94%;
+	  overflow-y: overlay;
+	  position: fixed;
+	  width: 25%;
 	}
 	#photo-type{
 	  background: #666;
@@ -88,6 +93,10 @@
 	}
 	.project-tag:hover{
 		text-decoration: line-through;
+	}
+	#project-top{
+		margin-left: 25%;
+	  width: 75%;
 	}
 	.sort.uk-active::before, #photo-select .filter.uk-active::before{
 		content: "\f00c";

@@ -5,9 +5,13 @@ body, html{
 .field_with_errors{
 	color: #d85030;
 }
+
 .img-wrapper{
   background-color: #f5f5f5;
   background-size: cover;
   background-position: center;
   position: relative;
+}
+#main-nav{
+	z-index: 100;
 }

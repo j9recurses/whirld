@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="uk-form-file uk-float-right" data-uk-tooltip="{pos:'bottom-left'}" title="Upload More Photos">
+    <div class="uk-form-file" data-uk-tooltip="{pos:'bottom-left'}" title="Upload More Photos">
       <button class="uk-button"><i class='fa fa-upload'></i></button>
       <%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
         <input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>

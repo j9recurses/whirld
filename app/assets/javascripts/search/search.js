@@ -9,6 +9,7 @@ $(document).ready(function(){
   //     wm.setMap();
       // wm.setTestData();
       // wm.scrollHighlight();
+
   var fb = new FilterBar();
   		fb.init();
 });
@@ -27,7 +28,7 @@ FilterBar.prototype = {
 	locationAC: function(){
 		// only works for projects right now
     var locAC = new AutoComp({
-      inputId: 'filter-location'
+      inputId: 'search-page-location'
     });
     locAC.location();
 	},
@@ -35,7 +36,7 @@ FilterBar.prototype = {
 		// only works for projects right now
 		console.log('initiated keywordAC')
     var kwAC = new AutoComp({
-      inputId: 'filter-query'
+      inputId: 'search-page-keyword'
     });
     kwAC.keyword();
 	},

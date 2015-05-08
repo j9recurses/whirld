@@ -1,11 +1,11 @@
 <nav id='search-filter-bar' class="uk-navbar wh-search-bar">
 
-  <span class="uk-navbar-content uk-h2">
+  <span id='count-container' class="uk-navbar-content uk-h2 uk-text-center">
     <span id='search-results-count'>1,333</span>
   </span>
 
-  <div id='search-page-entity' class="wh-select uk-button-dropdown uk-navbar-nav" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'bottom-left'}" title="Change your search results.">
-    <button class="uk-button">
+  <div id='search-page-entity' class="wh-select uk-button-dropdown uk-navbar-nav" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'top-left'}" title="Change your search results.">
+    <button class="uk-button uk-button-primary">
       <span class='selected-show uk-h3'>projects </span>
       <i class='fa fa-sort uk-h3'></i></button>
     <div class="uk-dropdown">
@@ -18,7 +18,7 @@
   </div>
 
   <div class="uk-navbar-content">featuring</div>
-
+  
   <div class="uk-navbar-content uk-hidden-small">
       <form class="uk-form uk-margin-remove uk-display-inline-block">
           <input id='search-page-keyword' type="text" placeholder="Keyword" value="Your Query">
@@ -29,27 +29,32 @@
 
   <div class="uk-navbar-content uk-hidden-small">
     <form class="uk-form uk-margin-remove uk-display-inline-block">
-        <input id='search-page-location' type="text" placeholder="Location" value="Location">
-        <button id='search-go' class="uk-button uk-button-primary"><i class='fa fa-search'></i></button>
+        <input id='search-page-location' type="text" placeholder="Location" value="">
+        <button id='search-page-go' class="search-go uk-button uk-button-primary"><i class='fa fa-search'></i></button>
     </form>
   </div>
 
-  <div class="uk-navbar-content uk-navbar-flip  uk-hidden-small">
+  <div class="wh-view uk-navbar-content uk-navbar-flip  uk-hidden-small">
       <div class="uk-button-group">
 
-        <div id='search-sort' class="wh-select uk-button-dropdown" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'bottom-left'}" title="Sort Results">
-          <button class="uk-button selected-show">relevant <i class='fa fa-sort'></i></button>
+        <div id='search-sort' class="wh-select uk-button-dropdown" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'top-left'}" title="Sort Results">
+          <button class="uk-button">
+            <span class='selected-show'>relevant</span>
+            <i class='fa fa-sort'></i>
+          </button>
           <div class="uk-dropdown">
               <ul class="uk-nav uk-nav-dropdown">
                 <li class="uk-nav-header">Sort Results:</li>
-                <li><a href="#" class='sort selected' data-sort='relevance:desc'>Relevant</a></li>
-                <li><a href="#" class='sort' data-sort='created:desc'>Newest</a></li>
-                <li><a href="#" class='sort' data-sort='created:asc'>Oldest</a></li>
+                <li><a href="#" class='sort selected' data-sort='relevant:asc'>relevant</a></li>
+                <li><a href="#" class='sort' data-sort='updated:desc'>newest</a></li>
+                <li><a href="#" class='sort' data-sort='updated:asc'>oldest</a></li>
+                <li><a href="#" class='sort' data-sort='map-id:asc'>testing asc</a></li>
+                <li><a href="#" class='sort' data-sort='map-id:desc'>testing desc</a></li>
               </ul>
           </div>
         </div>
 
-        <button id='view-switch' class="wh-right-button uk-button"><i class='fa fa-th-large' data-uk-tooltip="{pos:'bottom-right'}" title="Switch view"></i></button>
+        <button id='view-switch' class="wh-right-button uk-button uk-button-primary" data-uk-tooltip="{pos:'bottom-right'}" title="Switch view"><i class='fa fa-th-large'></i></button>
       </div>
   </div>
 

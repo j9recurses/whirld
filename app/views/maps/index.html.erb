@@ -1,35 +1,20 @@
 <div id='search-results'>
-	<div class='search-tag-bar uk-container uk-margin-top'>
-		<ul class="uk-subnav uk-subnav-pill uk-width-1-1">
+
+	<div class='uk-container uk-margin-top'>
+		<ul id='search-tag-bar' class="uk-subnav uk-subnav-pill uk-width-1-1">
 				<li class='uk-text-bold uk-text-muted wh-subnav-header'>Popular <i class='fa fa-tag uk-text-muted'></i></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
-	      <li><a class='uk-text-muted' href="#">item</a></li>
+				<%#= @popular_tags.each do |tag| %>
+		      <li><a class='uk-text-muted <%#= tag.name %>'><%#=tag.name%></a></li>
+		    <%# end %>
 	  </ul>
 	</div>
 
 	<div id='search-results-list' class='container'>
-		<% 15.times do |card| %>
-			<%= render :partial => "maps/search_pieces/search_card" %>
-		<% end %>
+		<%# @projects.each do |card| %>
+			<%#= render :partial => "maps/search_pieces/search_card", :card => card %>
+		<%# end %>
 	</div>
 
-	<div class='container'>
-		<ul class="uk-pagination uk-pagination-right">
-		    <li class='uk-active'><span class='page-num'>1</span></li>
-		    <li><a class='page-num'>2</a></li>
-		    <li><a class='page-num'>3</a></li>
-		    <li><a class='page-num'>4</a></li>
-		    <li><a class='page-num'>5</a></li>
-		</ul>
-	</div>
 </div>
 
 

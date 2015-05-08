@@ -70,10 +70,10 @@ $('#textareaCmt').bind("enterKey",function(e){
         });
     });
 $('textarea').keyup(function(e){
-if(e.keyCode == 13)
-{
-  $(this).trigger("enterKey");
-}
+  if(e.keyCode == 13)
+  {
+    $(this).trigger("enterKey");
+  }
 });
 
 ///threaded comments--> child reply to parent comment
@@ -159,7 +159,5 @@ $( '#updateButton' ).click ( function () {
     }
   );
 
-  var sb = new SearchBar();
-      sb.init();
 
 });

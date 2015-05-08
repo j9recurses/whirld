@@ -103,10 +103,8 @@ Image.prototype = {
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
 
     var self = this;
-    console.log(self.thumbEl)
     self.thumbEl.find('.img-wrapper').off().on({
       mouseenter: function(){ 
-        console.log(this)
           self.removeButton.removeClass('uk-hidden');
        },
       mouseleave: function(){ self.removeButton.addClass('uk-hidden'); }

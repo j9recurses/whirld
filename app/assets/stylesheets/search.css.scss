@@ -1,16 +1,21 @@
 #search-filter-bar{
 	border-bottom: 1px solid #ddd;
 	
-	#search-entity {
+	#search-page-entity {
 		margin-top: 3px;
+		width: 105px;
 	}
 	input { 
 		font-size: 18px;
 	  line-height: 24px;
 	}
-	.wh-select .selected::before {
-		content: "\f00c";
-		font-family: FontAwesome;
+	.wh-select .selected {
+		color: #00a8e6;
+		/*content: "\f00c";*/
+		/*font-family: FontAwesome;*/
+	}
+	#view-switch{
+		width: 38px;
 	}
 }
 #search-results{
@@ -37,7 +42,7 @@
 	  background: #fff;
 	  margin-bottom: 2%;
 	  border: 1px solid #ddd;
-	  /*display: none; <-- uncomment this rule for use with MixItUp */
+	  display: none;/* <-- uncomment this rule for use with MixItUp */
 	}
 
 	.container .mix:before{
@@ -58,10 +63,14 @@
 	    width: 32%;
 	  }
 	}
+	.count-container{
+		padding: 0 4px;
+		width: 75px;
+	}
 	.sc-cover{
-	  margin-top: -20px;
 	  width: 100%;
 	  height: 200px;
+	  margin-top: -20px;
 	}
 	.sc-footer{
 		height: 37px;
@@ -82,6 +91,9 @@
 	  overflow-y: hidden;
 	}
 	.sc-title a:hover { text-decoration: none; }
+	#search-results-list{
+		min-height: 385px;
+	}
 	.wh-subnav-header{
 		margin-top: 13px;
 	}

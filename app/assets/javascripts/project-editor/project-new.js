@@ -80,7 +80,6 @@ ProjectEditor.prototype = {
 		});
 
 		$('#view-switch').on('click', function(){
-			console.log(this)
 			var icon = $(this).find('i');
 			if(icon.hasClass('fa-th-large')){
 				icon.removeClass('fa-th-large');

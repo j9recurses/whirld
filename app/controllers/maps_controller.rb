@@ -39,8 +39,6 @@ class MapsController < ApplicationController
     end
   end
 
-
-
   def search_top_navbar
     puts params.inspect
   end

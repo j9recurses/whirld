@@ -19,8 +19,8 @@ var FilterBar = function(options){
 
 	}, options);
 
-	this.resultsCount = $('#filter-result-count');
-	this.searchResultsContainer = $('#search-results-container');
+	this.resultsCount = $('#search-results-count');
+	this.searchResultsContainer = $('#search-results-list');
 }
 
 FilterBar.prototype = {

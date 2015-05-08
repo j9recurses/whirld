@@ -94,7 +94,8 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"></article>";
+    var imgWrapper = "<div class='img-wrapper " + this.photoType + "' data-user-id=" + this.user_id + " data-img-type=" + this.photoType + " data-created='" + this.updated_at + " data-warpable-id=" + this.options.warpableId + " data-warpable-url=" + this.options.warpableUr + " data-img-id=" + this.id + " style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.photoType + "'><div class='draggable'></div>" + imgWrapper + "</article>";
     var el = $(html)
     console.log(el)
     return el;

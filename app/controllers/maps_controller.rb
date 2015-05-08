@@ -20,6 +20,7 @@ class MapsController < ApplicationController
   end
 
   def search
+    puts "******"
     puts params
     if params[:query ]
       @maps = Map.simple_search(params)
@@ -28,7 +29,7 @@ class MapsController < ApplicationController
     end
     @user = current_user
     @maps = Map.get_maptags(@maps)
-    @maps = Map.map_coverphotos(@maps)
+    @maps = Map.get_map_coverphotos(@maps)
     @maps = Map.search_type(@maps, params)
     respond_to do |format|
       if params[:query ]
@@ -108,7 +109,7 @@ class MapsController < ApplicationController
 
   def map_info_finish
     @map = Map.find params[:id]
-    @map[:finished] = true
+    @map[:finished] = 0
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @user_gallery[:module_order] = params[:mod_order]
@@ -167,7 +168,6 @@ class MapsController < ApplicationController
   end
 
   def update_remote
-    puts "*****"
     puts params.inspect
     @map = Map.find params[:id]
     puts @map.inspect

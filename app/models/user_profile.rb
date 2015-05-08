@@ -4,7 +4,6 @@ class UserProfile < ActiveRecord::Base
   attr_accessible :user_id, :location, :lat, :lon, :description, :first_name, :last_name, :photo_file
   belongs_to :users
   has_one :photo
-  has_many :tags, :as => :taggable, dependent: :destroy
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
   ##validates  :photo_file, :presence => true
@@ -29,6 +28,11 @@ class UserProfile < ActiveRecord::Base
       u_collabo_list << u
     end
     return u_collabo_list
+  end
+
+
+  def lat_lon
+    [lat, lon].join(',')
   end
 
   # <img src="/assets/test/cat.png" alt="profile_pic" style="width:120px;height:120px">
@@ -57,12 +61,6 @@ class UserProfile < ActiveRecord::Base
     return distance
   end
 
-  def taglist
-    @taglist
-  end
-  def taglist=(val)
-    @taglist = val
-  end
   def login
     @login
   end

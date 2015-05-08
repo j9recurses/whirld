@@ -29,6 +29,7 @@ module ApplicationHelper
 
   #parse the tags in the form, see if they exist; if not create then,  or delete tags no longer in tagging list
   def parse_taglist(taglist, mod_type, mod_gallery_id)
+    item = ''
     if mod_type == "grid"
       item = UserGalleryGrid.find(mod_gallery_id)
     elsif mod_type.eql?("comparison")
@@ -39,20 +40,26 @@ module ApplicationHelper
       item = UserGalleryBlocText.find(mod_gallery_id)
     elsif mod_type.eql?("map")
       item = Map.find(mod_gallery_id)
-     elsif mod_type.eql?("user_profile")
+    elsif mod_type.eql?("user_profile")
       item = UserProfile.find(mod_gallery_id)
     end
-    unless taglist.nil?
+    unless taglist.blank? or taglist.nil? or item.nil?
       newtaglist =  taglist.split(",")
-      modtag_ids = item.tags.pluck(:id)
-      unless modtag_ids.blank?
-        Tag.destroy(modtag_ids)
+      puts item.inspect
+      item_klass = item.model_name.to_s
+      item_tag_cnt = Tag.count(:conditions => "taggable_type = #{item_klass}")
+      unless  item_tag_cnt == 0
+        modtag_ids = item.tags.pluck(:id)
+        unless modtag_ids.blank?
+          Tag.destroy(modtag_ids)
+        end
       end
-      newtaglist.each do |tag|
-        item.tags.create(name: tag, user_id:current_user[:id])
-      end
-      #item[:taglist] = item.tags
-      item.taglist =item.tags
+    newtaglist.each do |tag|
+      puts "in here"
+      item.tags.create(name: tag, user_id:current_user[:id])
+    end
+    #item[:taglist] = item.tags
+    item.taglist =item.tags
     end
     return item
   end
@@ -69,11 +76,12 @@ module ApplicationHelper
     return mod_order
   end
 
-    def get_maptags(maps)
+  def get_maptags(maps)
     tagged_maps = Array.new
     maps.each do |map|
-      map = Map.find(map[:id])
-      map.taglist = map.tags.pluck([:name])
+      map = Map.where([ "map_id = ? and finished=0", map.id ]).first
+      puts map.inspect
+      # map.taglist = map.tags.pluck([:name]])
       tagged_maps << map
     end
     return tagged_maps
@@ -82,16 +90,16 @@ module ApplicationHelper
 
   def get_map_coverphotos(maps)
     coverphoto_maps = Array.new
-     maps.each do | map |
+    maps.each do | map |
       #usr_gallery_id = map.user_galleries.map(&:id)
       #unless map[:coverphoto].blank?
       #coverphoto = Photo.find(map[:coverphoto])
-        #this will work once we have real data
-       # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
-       #map.coverphoto_name = "/assets/test/grid-09.png"
-     # else
-        map.coverphoto_name = "/assets/test/grid-09.png"
-     # end
+      #this will work once we have real data
+      # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
+      #map.coverphoto_name = "/assets/test/grid-09.png"
+      # else
+      map.coverphoto_name = "/assets/test/grid-09.png"
+      # end
       coverphoto_maps  << map
     end
   end

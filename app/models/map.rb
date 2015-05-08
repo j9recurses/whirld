@@ -30,7 +30,7 @@ class Map < ActiveRecord::Base
     :on => :create
   validates_with NotAtOriginValidator
   has_many :tags, :as => :taggable, dependent: :destroy
-  has_many :user_galleries
+  has_many :user_galleries, dependent: :destroy
   has_many :photos,  through: :user_galleries
   has_many :user_gallery_grids, through: :user_galleries
   has_many :user_gallery_splits, through: :user_galleries

@@ -11,9 +11,10 @@ $(document).ready(function(){
  $( '#someButton' ).click ( function () {
   var data_items = {
                      //module object
-                     klass_id: 1,
+                     klass_id: 2,
                      ////module class
-                     klass_type: "UserGalleryGrid"};
+                     klass_type: "Map"};
+  console.log(data_items);
         $.ajax({
           // at some point will need to differentiate between projects, users, etc.
           url: "/whirl",
@@ -42,7 +43,6 @@ $(document).ready(function(){
 $('#textareaCmt').bind("enterKey",function(e){
  var comment_txt = $('textarea').val()
  console.log ( 'in here text' );
-
   var data_items = {
                     //module object id
                      klass_id: 1,

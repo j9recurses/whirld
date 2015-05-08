@@ -12,6 +12,20 @@ body, html{
   background-position: center;
   position: relative;
 }
-#main-nav{
+.wh-caps {
+	text-transform: uppercase;
+}
+.wh-middle{
+
+}
+.wh-navbar {
+	border-bottom: 1px solid white;
+	padding: 10px 0;
 	z-index: 100;
+}
+.wh-right-button{
+	border-left: 1px solid #fff;
+}
+.wh-search-bar{
+	padding: 10px 0;
 }

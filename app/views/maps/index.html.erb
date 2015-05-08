@@ -1,51 +1,26 @@
-<div id='project-search'>
-	<%= render :partial => "maps/search_pieces/filter_bar" %>
+<div id='search-results'>
+	<div class='search-tag-bar uk-container uk-margin-top'>
+		<ul class="uk-subnav uk-subnav-pill uk-width-1-1">
+				<li class='uk-text-bold uk-text-muted wh-subnav-header'>Popular Tags:</li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	      <li><a class='uk-text-muted' href="#">#item</a></li>
+	  </ul>
+	</div>
 
+	<div id='search-results-list' class='container'>
+		<% 15.times do |card| %>
+			<%= render :partial => "maps/search_pieces/search_card" %>
+		<% end %>
+	</div>
 
-	<section id='search-results-container'>	
-
-		<%# 15.times do |card| %>
-<!-- 			<div class='search-card mix project' data-map-id='1' data-updated='2' data-relevant='1'> -->
-				<%#= render :partial => "maps/search_pieces/search_card" %>
-			<!-- </div> -->
-
-		<%# end %>
-
-		<%# 15.times do |card| %>
-<!-- 			<div class='search-card mix user' data-map-id='1' data-updated='1' data-relevant='2'>
-				<%#= render :partial => "maps/search_pieces/search_card" %>
-			</div> -->
-
-		<%# end %>
-
-	</section>
-
-	<section id='search-pagination'>
-		<div class='row group wrapper'>
-			<div class='twenty-four columns h-righted'>
-				<% page_count = 1 %>
-				<span class='caps font_small'>
-					<span id ='results-chunk'>1-20</span> of 
-					<span id='results-total'>200</span>
-				</span>
-				<ul class='page-list inline-list'>
-				<% 10.times do |page| %>
-					<% if page_count == 3 %>
-
-						<li id='page-<%=page_count%>' class='active bold page-item item cursor-point' data-page-count='<%=page_count%>'><%=page_count%></li>
-
-					<% else %>
-
-						<li id='page-<%=page_count%>' class='bold page-item item cursor-point' data-page-count='<%=page_count%>'><%=page_count%></li>
-
-
-					<% end %>
-					<% page_count += 1 %>
-				<% end %>
-				</ul>
-			</div>
-		</div>
-	</section>
 </div>
 
 
@@ -54,6 +29,3 @@
 
 
 
-<!-- 		<div id='search-map-wrapper' class='map-wrapper columns column-top pull-right'>
-			<div id='search-map-pane' class='map-pane'></div>
-		</div> --

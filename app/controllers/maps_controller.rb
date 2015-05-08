@@ -28,7 +28,7 @@ class MapsController < ApplicationController
     end
     @user = current_user
     @maps = Map.get_maptags(@maps)
-    @maps = Map.map_coverphotos(@maps)
+    # @maps = Map.map_coverphotos(@maps)
     @maps = Map.search_type(@maps, params)
     respond_to do |format|
       if params[:query ]

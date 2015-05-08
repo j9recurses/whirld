@@ -1,43 +1,56 @@
-	<div id='filter-bar' class='twenty-four h5-size'>
-		<div class='row group wrapper pos-rel'>
+<nav id='search-filter-bar' class="uk-navbar wh-search-bar">
 
-				<span class='caps block font_small pos-abs'>Showing:</span>
+  <span class="uk-navbar-content uk-h2">
+    <span id='search-results-count'>1,333</span>
+  </span>
 
-				<div id='filter-result-count-wrapper' class='filter-btw h-centered two columns h4-size'>
-					<span id='filter-result-count'>1,333</span>
-				</div>
-				
-				<div class='filter-input-wrapper four columns pos-rel'>
-          <input id='filter-query' type='text' class='filter-input twenty-four pos-abs' placeholder='Keyword Search'/>
-				</div>
+  <div id='search-entity' class="wh-select uk-button-dropdown uk-navbar-nav" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'bottom-left'}" title="Change your search results.">
+    <button class="uk-button">
+      <span class='selected-show uk-h3'>projects </span>
+      <i class='fa fa-sort uk-h3'></i></button>
+    <div class="uk-dropdown">
+      <ul class="uk-nav uk-nav-dropdown">
+        <li class="uk-nav-header">Search for:</li>
+        <li><a href="#" class='selected'>projects</a></li>
+        <li><a href="#">users</a></li>
+      </ul>
+    </div>
+  </div>
 
-				<div class='three columns offset-one'>
-					<div id='filter-entity' class='pos-rel filter-input'>
-						<ul class='inline-list'>
-							<li class='item active'>Projects</li>
-							<!-- <li class='item filter' data-filter='project'>Projects</li> -->
-							<!-- <li class='item filter' data-filter='user'>Users</li> -->
-						</ul>
-					</div>
-				</div>
+  <div class="uk-navbar-content">featuring</div>
 
-				<div class='filter-btw one columns h-centered font_small'>near</div>
+  <div class="uk-navbar-content uk-hidden-small">
+      <form id='search-keyword' class="uk-form uk-margin-remove uk-display-inline-block">
+          <input type="text" placeholder="Keyword" value="Your Query">
+      </form>
+  </div>
 
-				<div class='filter-input-wrapper five columns pos-rel'>
-          <input id='filter-location' type='text' class='filter-input twenty-four pos-abs' placeholder='anywhere'/>
-				</div>
+  <div class="uk-navbar-content">near</div>
 
+  <div class="uk-navbar-content uk-hidden-small">
+    <form id='search-location' class="uk-form uk-margin-remove uk-display-inline-block">
+        <input type="text" placeholder="Keyword" value="Location">
+        <button class="uk-button uk-button-primary"><i class='fa fa-search'></i></button>
+    </form>
+  </div>
 
-				<button id='search-go'>Go</button>
+  <div class="uk-navbar-content uk-navbar-flip  uk-hidden-small">
+      <div class="uk-button-group">
 
+        <div id='search-sort' class="wh-select uk-button-dropdown" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'bottom-left'}" title="Sort Results">
+          <button class="uk-button selected-show">relevant <i class='fa fa-sort'></i></button>
+          <div class="uk-dropdown">
+              <ul class="uk-nav uk-nav-dropdown">
+                <li class="uk-nav-header">Sort Results:</li>
+                <li><a href="#" class='sort selected' data-sort='relevance:desc'>Relevant</a></li>
+                <li><a href="#" class='sort' data-sort='created:desc'>Newest</a></li>
+                <li><a href="#" class='sort' data-sort='created:asc'>Oldest</a></li>
+              </ul>
+          </div>
+        </div>
 
-				<div id='sort-wrapper' class='two columns h-righted offset-one pull-right pos-rel cursor-point'>
-					<ul class='inline-list'>
-						<li class='item sort' data-sort="relevant:asc">Relevance</li>
-						<li class='item sort' data-sort="updated:asc">Newest</li>
-						<li class='item sort' data-sort="updated:desc">Oldest</li>
-					</ul>
-				</div>
-		</div>
-	</div> <!-- end filter-action-bar -->
+        <button id='view-switch' class="wh-right-button uk-button"><i class='fa fa-th-large' data-uk-tooltip="{pos:'bottom-right'}" title="Switch view"></i></button>
+      </div>
+  </div>
 
+</nav>

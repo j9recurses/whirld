@@ -7,7 +7,7 @@
          <%= image_tag(@user_profile.photo_file, :size => "200x250")%>
          <h4>Username: <%= @user.login %> </h4>
         <h4>Location: <%= @user_profile.location  %> </h4>
-        <h4>Tools and Skills : <%= @user_profile.tags.pluck([:name]).join(" , ") %> </h4>
+        <h4>Tools and Skills : <%= @user.tags.pluck([:name]).join(" , ") %> </h4>
         <H4>Description: </h4>
         <p> <%= @user_profile.description %></p>
         <h4> <%= @user.login.titleize %> has worked on <%= @maps_cnt %> projects and has finished <%= @maps.size.to_s %> projects</h4>

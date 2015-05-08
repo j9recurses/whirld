@@ -1,124 +1,5 @@
 /*===== Navbar =====*/
-.logo a:hover { opacity: 1; }
-.menu-item{
-	border-right: 1px solid white;
-	height: 100%;
-	margin-bottom: 0;
-	margin-top: 0;
-  margin-left: 0;
-	line-height: 4.6em;
-}
-.menu-item:nth-of-type(2){
-  margin-right: 1%;
-}
-.menu-item:nth-of-type(3){
-	border-right: none;
-}
-.menu-item:nth-of-type(4){
-  border-right: none;
-}
-.navbar {
-	background-color: #dee3e7;
-	z-index: 1000;
-}
-.navbar-main{
-	background-color: #f6f6f6;
-  border-bottom: 1px solid white;
-	height: 10%;
-	margin-top: 0;
-	margin-bottom: 0;
-	position: fixed;
-	top:0;
-/*  -webkit-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
-  -moz-box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);
-  box-shadow: 2px 2px 2px -1px rgba(168,168,168,1);*/
-}
-.navbar-main a{
-	color: #323432;
-	text-transform: uppercase;
-}
-.navbar-main input[type='text']{
-  font-size: .6em;
-  height: 30px;
-  padding-left: 2%;
-}
-.navbar-main .wrapper{
-	height: 100%;
-}
-#navbar-photo-manager{ 
-  background-color: black;
-  color: white;
-  height: 10%;
-  padding: 7% 0  1% 0;
-  top: 0px;
-  z-index: 9998;
-}
-#main-logo{
-	font-weight: bold;
-	font-style: italic;
-}
-.scrollable {
-  height: 100%;
-  overflow: overlay;
-  position: fixed;
-}
 
-#search-bar{
-  width: 43.083333%;
-}
-#search-icon-wrapper{
-	background: #f6f6f6;
-  height: 32px;
-  line-height: 0em;
-  position: absolute;
-  right: 1.8%;
-  top: 30%;
-  width: 30px;
-  z-index: 100;
-}
-#search-icon-wrapper:focus{ outline: none; }
-.search-input{
-  position: absolute;
-  right: 2%;
-  top: 30%;
-  width: 0;
-  z-index: 99;
-}
-.search-input-btw{
-  color: #989898;
-  margin-left: -12px;
-    -moz-transition: all .25s linear;
-    -o-transition: all .25s linear;
-  transition: all .25s linear;
-}
-#search-input-wrapper{
-  height: 100%;
-  position: absolute;
-  right: 2%;
-    -moz-transition: all .25s ease;
-    -o-transition: all .25s ease;
-  transition: all .25s ease;
-  width: 0;
-}
-#search-bar-wrapper{
-  height: 100%;
-}
-.search-expanded #search-input-wrapper{
-	  width: 98%;
-}
-.search-expanded #search-icon-wrapper{
-	background: #676767;
-}
-.search-expanded #search-icon-wrapper i{
-	color: white;
-}
-#search-keyword{
-  width: 41%;
-  left: 0;
-}
-#search-location{
-  width: 41%;
-}
 .search-term-highlight{
   font-weight: bold;
 }
@@ -136,6 +17,8 @@
   padding: 0;
   width: 200px;
   z-index: 100000;
+  max-height: 200px;
+  overflow-y: overlay;
 }
 /*Autocomplete items*/
 .ui-menu-item{

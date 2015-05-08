@@ -22,18 +22,20 @@ class MapsController < ApplicationController
   def search
     puts "******"
     puts params
+    http = false
     if params[:query ]
       @maps = Map.simple_search(params)
     else
-      @maps = Map.all
+      @maps = Map.where(["finished = 0"])
+      http = true
     end
     @user = current_user
-    @maps = Map.get_maptags(@maps)
-    @maps = Map.get_map_coverphotos(@maps)
-    @maps = Map.search_type(@maps, params)
+    unless @maps.blank?
+      @maps = Map.search_type(@maps, params, http)
+    end
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :coverphoto_name, :search_order, :geographic_search, :search_entity ]}
+        format.json { render :json => @maps, :methods => [:taglist, :ollaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls ]}
       else
         format.html { render "maps/index" }
       end
@@ -83,11 +85,12 @@ class MapsController < ApplicationController
     gallery = UserGallery.new()
     gallery.name = @map.slug
     gallery.user_id = @user.id
+
     if @map.save && gallery.save
-       @collabo = Collaborator.new()
-       @collabo[:map_id] = @map.id
-       @collabo[:user_id] = @user.id
-       @collabo.save
+      @collabo = Collaborator.new()
+      @collabo[:map_id] = @map.id
+      @collabo[:user_id] = @user.id
+      @collabo.save
       UserGallery.update(gallery.id, map_id: @map.id)
       redirect_to map_info_path(@map.slug)
     else
@@ -98,11 +101,13 @@ class MapsController < ApplicationController
   def map_info
     @map = Map.find params[:id]
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
+    @user_id = current_user.id
+    @user_name = current_user.login
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @gallery_photos =  @map.photos
     @photo = Photo.new
     @extra_js = true  # for layout differentiation
-    @photo_manager = true # for layout differentiation
+    @project_editor = true # for layout differentiation
     render "map_info"
   end
 
@@ -200,7 +205,7 @@ class MapsController < ApplicationController
       warpables << warpable
       warpables.last[:nodes] = warpable.nodes_array
       warpables.last.src = warpable.image.url
-       puts "********"
+      puts "********"
       puts warpable.image.url
       warpables.last.srcmedium = warpable.image.url(:medium)
     end

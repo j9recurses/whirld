@@ -17,23 +17,25 @@ ImageUploader.prototype = {
       dataType: 'json',
       url: '/user_galleries/' + this.user_gallery_id + '/photos',
       progressall: function(e, data){
-        $('.temp-preloader').removeClass('hidden');
-        $('#photo-manager').addClass('invisible');
+        $('#loader').removeClass('uk-hidden');
+        $('#preview-list').addClass('uk-hidden');
       },
       done: function (e, data) {
-        console.log(data)
-        $('.temp-preloader').addClass('hidden');
-        $('#photo-manager').removeClass('invisible');
+        $('#loader').addClass('uk-hidden');
+        $('#preview-list').removeClass('uk-hidden');
+
+        console.log(data.result)
 
         var img = new Image({
-            id: data.result.id,
-            is_aerial: data.result.is_aerial,
-            is_normal: data.result.is_normal,
-            mediumPath: data.result.photo_file.medium.url,
-            thumbPath: data.result.photo_file.thumb.url,
-            path: data.result.url,
-            warpableId: data.result.warpable_id,
-            warpableUrl: data.result.warpable_url
+          updated_at: data.result.updated_at,
+          id: data.result.id,
+          is_aerial: data.result.is_aerial,
+          is_normal: data.result.is_normal,
+          mediumPath: data.result.photo_file.medium.url,
+          thumbPath: data.result.photo_file.thumb.url,
+          path: data.result.url,
+          warpableId: data.result.warpable_id,
+          warpableUrl: data.result.warpable_url
         });
         img.initUploaded();
         pe.init();
@@ -50,6 +52,7 @@ ImageUploader.prototype = {
 
 var Image = function(options){
   this.options = $.extend({
+    updated_at: null,
     dragContainerId: 'project-creation-2',
     id: 1,
     is_aerial: true,
@@ -57,12 +60,13 @@ var Image = function(options){
     thumbPath: null,
     mediumPath: null,
     path: null,
-    removeButtonClassName: 'photo-remove',
-    thumbContainerId: 'photos-uploaded',
+    removeButtonClassName: 'photo-delete',
+    thumbContainerId: 'preview-list',
     warpableId: null,
     warpableUrl: null
   }, options);
 
+  this.updated_at = this.setDate();
   this.id = this.options.id;
   this.img = null;
   this.thumbEl = null;
@@ -70,26 +74,48 @@ var Image = function(options){
   this.removeButton = null;
   this.thumbContainer = $('#'+this.options.thumbContainerId);
   this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
+  this.user_id = $('#project-creation-2').data('user-id');
+  this.user_name = $('#project-creation-2').data('user-name');
 
 }
 
 Image.prototype = {
+  setDate: function(){
+    var d = new Date(this.options.updated_at);
+    return d.getTime();
+  },
+  updated_at_pretty: function(){
+    var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    var d = new Date(this.options.updated_at);
+    return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  },
   setPhotoType: function(){
     if(this.options.is_aerial){ return 'aerial' }
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article class='preview h-centered pull-left " + this.photoType + "' id='preview-" + this.id +"'><div class='img-wrapper v-centered'><img src='" + this.options.mediumPath +"' class='draggable " + this.photoType + "' data-warpable-id='" + this.options.warpableId +"' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id +"' data-img-type='" + this.photoType +"'</div></article>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"></article>";
     var el = $(html)
-    if(this.is_normal){
-      el.addClass('hidden');
-      el.addClass('invisible');
-    }
+    console.log(el)
     return el;
   },
-  setData: function(){
+  setRemoveButton: function(){
     this.removeButton = this.thumbEl.find('.'+this.options.removeButtonClassName);
-    this.img = $(this.thumbEl.find('img'));
+
+    var self = this;
+    console.log(self.thumbEl)
+    self.thumbEl.find('.img-wrapper').off().on({
+      mouseenter: function(){ 
+        console.log(this)
+          self.removeButton.removeClass('uk-hidden');
+       },
+      mouseleave: function(){ self.removeButton.addClass('uk-hidden'); }
+    });
+    self.removeButton.on('click', function(){
+      UIkit.modal.confirm("Are you sure you want to delete this photo?", function(){
+        self.delete();
+      });
+    });
   },
   setUploadedData: function(){
     this.thumbEl = this.htmlThumb();
@@ -98,8 +124,9 @@ Image.prototype = {
     this.thumbEl = $('#preview-' + this.id);
   },
   setDrag: function(){
-    this.img.draggable({
-      // containment: '#' + this.options.dragContainerId,
+    $('.draggable').draggable({
+      containment: '#' + this.options.dragContainerId,
+      containment: 'window',
       cursor: '-webkit-grabbing',
       cursorAt: { top: 0, left: 0 },
       distance: 10,
@@ -107,6 +134,7 @@ Image.prototype = {
       opacity: '.9',
       revert: true,
       revertDuration: 350,
+      scroll: false,
       snap: true,
       snapMode: 'both',
       snapTolerance: 10,
@@ -114,11 +142,29 @@ Image.prototype = {
     });
   },
   append: function(){
-    this.thumbContainer.append(this.thumbEl);
-    this.thumbEl.find('img').removeClass('invisible');
+    this.thumbContainer.mixItUp('prepend', this.thumbEl, {filter: 'all'})
+  },
+  delete: function(){
+    var self = this;
+    var url = '/user_galleries/' + self.user_gallery_id + '/photos/' + self.id;
+    $.ajax({
+      url: url,
+      cache: false,
+      type: 'post',
+      beforeSend: function(xhr){
+        xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+      },
+      success: function(data){
+        console.log('Success: module deleted');
+        self.thumbEl.remove();
+      },
+      error: function(data){
+        console.log("Error: module not deleted");
+        console.log(data)
+      }
+    }); // end ajax
   },
   init: function(){
-    // ajax listeners
     var self = this;
     $('.preview').off().on('click', 'img', function(){
       console.log(this)
@@ -128,7 +174,7 @@ Image.prototype = {
   initUploaded: function(){
     console.log('Initated: uploaded photo');
     this.setUploadedData();
-    this.setData();
+    this.setRemoveButton();
     this.setDrag();
     this.init();
     this.append();
@@ -136,7 +182,7 @@ Image.prototype = {
   initSaved: function(){
     console.log('Initated: saved photo');
     this.setSavedData();
-    this.setData();
+    this.setRemoveButton();
     this.setDrag();
     this.init();
   }

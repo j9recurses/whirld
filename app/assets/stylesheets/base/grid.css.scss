@@ -52,10 +52,11 @@
 .three {
     width:11.625%;
 }
+.offset-three{margin-left:11.625%;}
 .four {
     width:15.8333333333%;
 }
-  .columns.offset-four{ margin-left: 15.8333333333%; }
+  .columns.offset-four, .inline-list.offset-four{ margin-left: 15.8333333333%; }
 .five {
     width:20.0416666667%;
 }

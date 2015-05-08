@@ -36,10 +36,10 @@ class Map < ActiveRecord::Base
   has_many :user_gallery_splits, through: :user_galleries
   has_many :user_gallery_bloc_texts, through: :user_galleries
   has_many :user_gallery_comparisons, through: :user_galleries
-  has_many :collaborators
+  has_many :collaborators,  dependent: :destroy
   has_many :users, through: :collaborators
   has_many :annotations, :dependent => :destroy
-
+  has_many :votes,  dependent: :destroy
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -117,7 +117,6 @@ class Map < ActiveRecord::Base
         query { match [:name, :description, :name],  params[:query] }
       end
     end
-    #puts results.inspect
     return results
   end
   #
@@ -145,39 +144,15 @@ class Map < ActiveRecord::Base
     distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
     return distance
   end
-  #
-  # def self.get_maptags(maps)
-  #   tagged_maps = Array.new
-  #   maps.each do |map|
-  #     map = Map.find(map[:id])
-  #     map.taglist = map.tags.pluck([:name])
-  #     tagged_maps << map
-  #   end
-  #   return tagged_maps
-  # end
 
-
-  # def self.get_photos(maps)
-  #   coverphoto_maps = Array.new
-  #   maps.each do |map|
-  #     usr_gallery_id = map.user_galleries.map(&:id)
-  #     unless map[:coverphoto].blank?
-  #       coverphoto = Photo.find(map[:coverphoto])
-  #       #this will work once we have real data
-  #      # map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{usr_gallery_id[0]}/#{coverphoto[:photo_file]}"
-  #      map.coverphoto_name = "/assets/test/grid-09.png"
-  #     else
-  #       map.coverphoto_name = "/assets/test/grid-09.png"
-  #     end
-  #     coverphoto_maps  << map
-  #   end
-  # end
-
-  def self.search_type(maps, params)
+  ##extra info for ajax'd json back to server
+  def self.search_type(maps, params, http)
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
+      #map.ndist = map.sort
       unless params[:location].blank?
+        puts map.inspect
         puts params[:location]
         map.geographic_search = 1
       else
@@ -186,7 +161,24 @@ class Map < ActiveRecord::Base
       if params[:entity]
         map.search_entity = params[:entity]
       end
-      map.search_order = counter
+      if http == false
+        map.taglist = map.load(:include => 'tags')
+        map.ndist = map.sort
+        map.collaborator_list = map.collaborators_list(map, httpp)
+        get_map_coverphoto(map, false)
+        #ap.coverphoto_name = get_map_coverphoto(map)
+      else
+        map.taglist = map.tags
+        map.collaborator_list = map.collaborators_list(map, http )
+        get_map_coverphoto(map, http)
+        map.search_order = counter
+      end
+      unless map.votes_for.nil?
+        map.whirls =  map.votes_for.size
+      end
+      unless map.comment_threads.nil?
+        map.comment_count = map.comment_threads.size
+      end
       counter = counter + 1
       search_info_maps << map
     end
@@ -208,34 +200,17 @@ class Map < ActiveRecord::Base
     end
   end
 
-  attr_accessor :taglist,
-  def taglist
-    @taglist
+
+
+  attr_accessor :collaborator_list, :geographic_search, :taglist, :coverphoto_name,  :search_entity,  :search_order, :ndist, :whirls, :comment_count
+  def collaborator_list
+    @collaborator_list
   end
 
-  def taglist=(val)
-    @taglist = val
+  def collaborator_list=(val)
+    @collaborator_list = val
   end
 
-  attr_accessor :coverphoto_name
-  def coverphoto_name
-    @coverphoto_name
-  end
-
-  def coverphoto_name=(val)
-    @coverphoto_name = val
-  end
-
-  attr_accessor :search_order
-  def search_order
-    @search_order
-  end
-
-  def search_order=(val)
-    @search_order = val
-  end
-
-  attr_accessor :geographic_search
   def geographic_search
     @geographic_search
   end
@@ -244,8 +219,31 @@ class Map < ActiveRecord::Base
     @geographic_search = val
   end
 
+  def taglist
+    @taglist
+  end
 
-  attr_accessor :search_entity
+  def taglist=(val)
+    @taglist = val
+  end
+
+  def coverphoto_name
+    @coverphoto_name
+  end
+
+  def coverphoto_name=(val)
+    @coverphoto_name = val
+  end
+
+
+  def search_order
+    @search_order
+  end
+
+  def search_order=(val)
+    @search_order = val
+  end
+
   def search_entity
     @search_entity
   end
@@ -254,7 +252,6 @@ class Map < ActiveRecord::Base
     @search_entity= val
   end
 
-  attr_accessor :ndist
   def ndist
     @ndist
   end
@@ -263,7 +260,6 @@ class Map < ActiveRecord::Base
     @ndist = val
   end
 
-  attr_accessor :whirls
   def whirls
     @whirls
   end

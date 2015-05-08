@@ -1,8 +1,9 @@
 class Adddefaultlatlon < ActiveRecord::Migration
   def up
-    change_column_default(:maps, :finished, 1)
+    remove_column :user_profiles, :photo_id
   end
 
   def down
+    add_column :user_profiles, :photo_id, :integer
   end
 end

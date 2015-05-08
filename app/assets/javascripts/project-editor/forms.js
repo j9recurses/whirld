@@ -9,10 +9,10 @@ var Form = function(options){
   this.modType = this.modEl.data('mod-type');
 
   // what it needs to know for itself
-  this.mapId = $('#project-creation-2').data('data-map-id');
+  this.mapId = $('#project-creation-2').data('map-id');
   this.eTarget = null;
-  this.projectId = $('#project-id').val();
-  this.url = '/maps/update_remote/' + this.projectId;
+  this.url = '/maps/update_remote/' + this.mapId;
+  this.user_gallery_id = $('#project-creation-2').data('user-gallery-id');
 }
 
 Form.prototype = {
@@ -27,20 +27,28 @@ Form.prototype = {
       cache: false,
       type: 'post',
       success: function(data) {
-         console.log("Success: " + el.attr('id').split('-')[1] + ' field was created');
+        console.log("Success: " + el.attr('id').split('-')[1] + ' field was created');
       },
       error: function() {
         console.log("Something went wrong!");
       }
     }); // end ajax
   },
-  save: function(){
+  save: function(wrapper){
     var self = this;
     $.ajax({
-      url: this.url,
+      url: self.url,
       data:  this.setData(),
       cache: false,
       type: 'post',
+      beforeSend: function(){
+        wrapper.find('.fa-check-circle').addClass('uk-hidden');
+        wrapper.find('.fa-spinner').removeClass('uk-hidden');
+      },
+      complete: function(){
+        wrapper.find('.fa-check-circle').removeClass('uk-hidden');
+        wrapper.find('.fa-spinner').addClass('uk-hidden');
+      },
       success: function(data) {
          console.log("Success: " + self.eTarget.attr('id').split('-')[1] + ' field was created');
       },
@@ -50,13 +58,15 @@ Form.prototype = {
     }); // end ajax
   },
   changeCounter:function(){
+    var wrapper = this.eTarget.closest('.input-wrapper');
+    var span = $(wrapper).find('.char-limit');
+        span.removeClass('uk-invisible');
     var letterCount = this.eTarget.val().length;
-    var span = this.eTarget.nextAll('span.char-limit');
-        $(span).removeClass('invisible');
     var count = $(span).data('limit') - letterCount;
     $(span).text(count);
+
     this.eTarget.on('focusout', function() {
-      if(letterCount == 0) { $($(this).nextAll('span.char-limit')).addClass('invisible'); }
+      if(letterCount == 0) { span.addClass('invisible'); }
     });
   },
   setData: function(){
@@ -67,18 +77,25 @@ Form.prototype = {
   },
   // functions for creating the description field
   descriptionField: function(){
-    autosize($('#project-description'));
+    var el = $('#project-description');
+    var wrapper = $('#description-label');
+    if(el.val().length > 0){
+      var span = wrapper.find('.char-limit');
+          span.removeClass('uk-invisible');
+      span.text(span.data('limit') - el.val().length)
+    }
     var self = this;
-    $('#project-description').on({
+    el.on({
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
       },
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
+    autosize($('#project-description'));
   },
 
   // functions for creating location fields
@@ -88,31 +105,42 @@ Form.prototype = {
       $('#project-lat').val('');
       $('#project-lon').val('');
     }
+
+    var locAC = new AutoComp({
+      inputId: 'project-location'
+    });
+    locAC.location();
+
+    var el = $('#project-location');
+    var wrapper = $('#location-label');
+
     var self = this;
-    $('#project-location').on({
+    el.on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
         self.ajax($('#project-lat'));
         self.ajax($('#project-lon'));
       }
     });
   },
   latField: function(){
+    var wrapper = $('#location-label');
     var self = this;
     $('#project-lat').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },
   lonField: function(){
+    var wrapper = $('#location-label');
     var self = this;
     $('#project-lon').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },
@@ -127,7 +155,7 @@ Form.prototype = {
   tagHtml: function(){
     var self = this;
     var t = this.tagText();
-    var tagHTML = "<span class='project-tag cursor-def light font_small'>#" + t + "</span>";
+    var tagHTML = "<span class='project-tag uk-text-small uk-text-muted uk-margin-right'>#" + t + "</span>";
     var tag = $(tagHTML);
     var tagID = 'tag-' + t;
         tag.attr('id', tagID);
@@ -147,6 +175,7 @@ Form.prototype = {
     return taglist_str;
   },
   tagAppend: function(e){
+    e.preventDefault();
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
     if(e.which == 188 || e.which == 13 || e.which == 1) {
@@ -157,10 +186,10 @@ Form.prototype = {
       else {
         var tagCheck = tagContainer.find('#'+tag.id);
         if(tagCheck.length > 0) {
-          tagCheck.addClass('error');
+          tagCheck.addClass('uk-text-warning');
           this.eTarget.val('');
           setTimeout(function() {
-             tagCheck.removeClass('error');
+             tagCheck.removeClass('uk-text-warning');
            }, 600);
         }
         else{
@@ -171,14 +200,12 @@ Form.prototype = {
     }
   },
   tagSave: function(map_id, taglist){
-    console.log(map_id)
     var data = {
       mod_gallery: this.modId,
       mod_type: this.modType,
       taglist: taglist,
     }
     if(map_id){ data['map_id'] = map_id }
-
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -186,7 +213,6 @@ Form.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: tags were created');
-        console.log(data)
       },
       error: function(){
         console.log('Error: tags were not created');
@@ -229,6 +255,33 @@ Form.prototype = {
   },
 
   // functions for creating text fields
+  splitTextField: function(){
+    var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
+    var data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType
+      }
+    // Update mod
+    this.modEl.find('.text-module-body').on({
+      focusout: function(e){
+        self.eTarget = $(e.target);
+        data['split_text'] = self.eTarget.val();
+        console.log(data)
+        $.ajax({
+          url: url,
+          data: data,
+          cache: false,
+          type: 'put',
+          success: function(data){
+            console.log('Success: text field was updated');
+          },
+          error: function(){
+            console.log('Error: text field was not updated');
+          }
+        }); // end ajax
+      }
+    });
+  },
   textField: function(){
     autosize(this.modEl.find('.text-module-body'));
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
@@ -237,22 +290,11 @@ Form.prototype = {
         mod_type: this.modType
       }
 
-    // set params
-    var modText;
-    if(this.modType == 'text'){
-      modText = 'bloc_text'
-    }
-    else if(this.modType == 'split'){
-      modText == 'split_text'
-    }
-
     // Update mod
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        data[modText] = self.eTarget.val();
-        console.log(modText)
-        console.log(data[modText])
+        data['bloc_text'] = self.eTarget.val();
         console.log(data)
         $.ajax({
           url: url,
@@ -270,8 +312,15 @@ Form.prototype = {
     });
   },
   titleField: function(){
+    var el = $('#project-name');
+    var wrapper = $('#name-label');
+    if(el.val().length > 0){
+      var span = wrapper.find('.char-limit');
+          span.removeClass('uk-invisible');
+      span.text(span.data('limit') - el.val().length)
+    }
     var self = this;
-    $('#project-name').on({
+    el.on({
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
@@ -279,7 +328,7 @@ Form.prototype = {
       },
       focusout: function(e){
         self.eTarget = $(e.target);
-        self.save();
+        self.save(wrapper);
       }
     });
   },
@@ -319,87 +368,26 @@ Form.prototype = {
         } // end click
     });
   },
-
-  // functions for photo manager controls
-  isEmpty: function(trigger, type){
-    return $('#photos-'+trigger).find('.' + type).length == 0;
-  },
-  setDisabled: function(type){
-    $('#' + type).prop('checked', false);
-    $('#' + type).prop('disabled', true);
-  },
-  setEnabled: function(type){
-    $('#' + type).prop('disabled', false);
-  },
-  setAbility: function(trigger){
+  map_new: function(){
     var self = this;
-    $.each([ 'aerial', 'normal' ], function(i, type){
-      if(self.isEmpty(trigger, type)){
-        self.setDisabled(type);
-      }
-      else{
-        self.setEnabled(type);
+    $('#project-name').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+        autosize($('#project-name'));
       }
     });
-  },
-  setChecked: function(option){
-    var self = this;
-    if(self.isEmpty(option, 'aerial') == false){
-      $('#aerial').prop('checked', true);
-      self.showPhotos(option, 'aerial');
-    }
-    else if(self.isEmpty(option, 'normal') == false){
-      $('#normal').prop('checked', true);
-      self.showPhotos(option, 'normal');
-    }
-  },
-  hidePhotos: function(trigger, type){
-    $('#photos-'+trigger).find('.'+type).addClass('invisible').addClass('hidden');
-  },
-  showPhotos: function(trigger, type){
-    $('#photos-'+trigger).find('.'+type).removeClass('hidden').removeClass('invisible');
-  },
-  photoSelectFields: function(){
-    var self = this;
-    var photoContainers = { uploaded: $('#photos-uploaded'), saved: $('#photos-saved') };
-
-    // disable uploaded tabs
-    $('#aerial').prop('disabled', true);
-    $('#normal').prop('disabled', true);
-
-    // when the drop down changes
-    $('#photo-state').on({
-      change: function(){
-        // toggle the whole containers
-        $.each(photoContainers, function(option, container){
-          container.toggleClass('hidden');
-          container.toggleClass('invisible');
-        }); // end each
-        // determine whether aerial and normal should be clicked on or not
-        var option = $('#photo-state option:selected').val()
-        self.setAbility(option);
-        self.setChecked(option);
-      } // end change
-    });
-    // toggle aerial or normal
-    $('#photo-types').on({
-      change: function(){
-        var trigger = $('#photo-state option:selected').val();
-
-        // show the photos of the selected
-        var type = $('#photo-types input:checked').val();
-        self.showPhotos(trigger, type);
-
-        // hide the photos of the other
-        var other;
-        $.each($('#photo-types input'), function(i, el){
-          if($(el).val() != type){
-            other = $(el).val();
-          }
-        });
-        self.hidePhotos(trigger, other);
+    $('#project-description').on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+        autosize($('#project-name'));
       }
-    })
+    });
+    var locAC = new AutoComp({
+      inputId: 'project-location'
+    });
+    locAC.location();
   }
 
 } // end Form Prototype

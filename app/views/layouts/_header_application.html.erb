@@ -1,4 +1,7 @@
-<title>Whirld</title>
-<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-<%= csrf_meta_tag %>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<%=raw csrf_meta_tags %>
+<title>Whirld></title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<%= render :partial => 'layouts/js_all' %>
+<%= render :partial => 'layouts/css_all' %>

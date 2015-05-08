@@ -4,7 +4,6 @@
 //= require jquery-ujs/src/rails.js
 //= require bootstrap/dist/js/bootstrap.js
 
-
 //= require leaflet/dist/leaflet
 //= require leaflet-providers/leaflet-providers.js
 //= require leaflet-toolbar/dist/leaflet.toolbar-src.js
@@ -13,20 +12,26 @@
 //= require leaflet-google/index.js
 //= require sparklines/source/sparkline.js
 
-
 //= require mapknitter.js
 //= require annotations.js
 
-// Everything else
-//= require global/main
-//= jquery-ui/ui/minified/draggable.min
-//= jquery-ui/ui/minified/droppable.min
-//= jquery-ui/ui/minified/sortable.min
+// Everythinge else:
+//= require uikit/js/uikit.min.js
+//= require uikit/js/core/nav.min.js
+//= require uikit/js/core/dropdown.min.js
+//= require uikit/js/components/sticky.min.js
+//= require uikit/js/components/tooltip.min.js
+//= require uikit/js/components/accordion.min.js
+//= require uikit/js/components/pagination.min.js
+
+
+
 
 //for uploading videos
 
 //= require jquery.turbolinks
 //= require turbolinks
 //= require jquery.placeholder
+
 
 //= require_self

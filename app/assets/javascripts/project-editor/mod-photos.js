@@ -6,6 +6,7 @@ var ModPhoto = function(options){
     modType: null,
     modAttrId: null,
     dropzone: null,
+    path: null,
     modType: 'grid',
     ui: null,
     removeButtonClassName: 'photo-remove'
@@ -32,7 +33,12 @@ ModPhoto.prototype = {
     }
   },
   htmlPhoto: function(){
-    html = "<div class='photo " + this.colnum + " columns'><div class='img-wrapper'><button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button></div></div>";
+    console.log(this.options.modType)
+    var width;
+    if(this.options.modType == 'split'){ width = 1; }
+    else{ width = 2; }
+
+    html = "<div class='photo uk-width-1-" + width + " uk-margin-bottom'><div class='photo-remove uk-hidden' data-uk-tooltip title='Remove photo from module.'><i class='fa fa-remove fa-lg uk-text-danger'></i></div><div class='img-wrapper' style=\"background-image: url('" + this.options.path + "')\"></div></div>";
     return $(html);
   },
   setId: function(id){
@@ -65,21 +71,23 @@ ModPhoto.prototype = {
     var self = this;
 
     // initiate events
-    this.modPhotoEl.find('.img-wrapper').on({
+    this.modPhotoEl.off().on({
       mouseenter: function(){
-        self.removeButton.removeClass('hidden');
+        self.removeButton.removeClass('uk-hidden');
+
       },
       mouseleave: function(){
-        self.removeButton.addClass('hidden');
+        self.removeButton.addClass('uk-hidden');
       }
     });
 
-    this.removeButton.on({
+    self.removeButton.off().on({
       click: function(){
         self.delete();
         self.remove();
       }
     })
+
   },
   create: function(){
     // need this for image id
@@ -159,7 +167,6 @@ ModPhoto.prototype = {
     $.each($('#' + this.options.modAttrId).find('.photo'), function(i, modphoto){
       ids += $(modphoto).data('mod-photo-id') + ',';
     });
-    console.log(ids)
     mod.update(ids)
   }
 }

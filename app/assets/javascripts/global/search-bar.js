@@ -4,7 +4,7 @@ var SearchBar = function(options){
     iconWrapperId: 'search-icon-wrapper',
     keywordId: 'search-keyword',
     locationId: 'search-location',
-    wrapperId: 'search-bar-wrapper',
+    wrapperId: 'search-form',
     btwTextClassName: 'search-input-btw'
   }, options);
 
@@ -12,7 +12,6 @@ var SearchBar = function(options){
   this.keywordEl = $('#' + this.options.keywordId);
   this.locationEl = $('#' + this.options.locationId);
   this.wrapper = $('#' + this.options.wrapperId);
-  this.container = 
   this.btwTextEl = $('.' + this.options.btwTextClassName);
 }
 SearchBar.prototype = {
@@ -69,6 +68,28 @@ SearchBar.prototype = {
       }
     });
   },
+// functions for posting queries to server
+  getValues: function(){
+    var data = {'query': this.keywordEl.val(), location: this.locationEl.val() };
+    console.log(data);
+    return data;
+  },
+  search: function(data){
+    console.log(data)
+    var self = this;
+    $.ajax({
+      url: '/search',
+      data: data,
+      type: 'get',
+      success: function(data){
+        console.log(data)
+        console.log('Success: user results are returning');
+      },
+      error: function(){
+        console.log('Oops something went wrong.')
+      }
+    });
+  },
   init: function(){
     // Initiate event listeners for toggling bar open
     this.toggleBar();
@@ -82,5 +103,20 @@ SearchBar.prototype = {
       inputId: 'search-keyword'
     });
     kwAC.keyword();
+
+    var self = this;
+    $('#search-location').on({
+      keyup: function(e){
+        if(e.which == 13){
+          self.search(self.getValues());
+        }
+      }
+    });
+
+
+    $('#search-bar-go').on('click', function(){
+
+    });
+
   }
 }

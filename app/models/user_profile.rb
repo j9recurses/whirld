@@ -6,7 +6,7 @@ class UserProfile < ActiveRecord::Base
   has_one :photo
   validates_length_of       :first_name,     :maximum => 100
   validates_length_of       :last_name,     :maximum => 100
-  ##validates  :photo_file, :presence => true
+
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
 
@@ -50,7 +50,7 @@ class UserProfile < ActiveRecord::Base
       neighbors.each do | n|
         n.ndist = neighbor_distance(user_profile.lat, user_profile.lon, n.lat, n.lon)
         n.login = User.where(["id = ?", n.user_id]).pluck([:login]).first
-        n.taglist = n.tags
+        n.taglist = User.where(["id = ?", n.user_id]).first.tags
         neighbor_info << n
       end
       return neighbor_info
@@ -73,4 +73,14 @@ class UserProfile < ActiveRecord::Base
   def ndist=(val)
     @ndist = val
   end
+
+    def taglist
+    @taglist
+  end
+  def taglist=(val)
+    @taglist = val
+  end
+
 end
+
+

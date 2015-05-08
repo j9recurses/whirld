@@ -1,48 +1,89 @@
-<nav id='navbar-photo-manager' class='sticky-nav eight h-centered'>
-	<div class='photo-state-wrapper'>
-		<select id='photo-state'>
-		  <option value="uploaded" selected='selected'>Current Photos</option>
-		  <option value="saved" >Saved (<%= @user_gallery.photos.count%>)</option>
-		</select>
-	</div>
-	<div id='photo-types' class='photo-types-wrapper'>
-			<input id="aerial" type="radio" name="photo-type" value="aerial">
-		  <label for="aerial">Aerial</label>
+<nav id='photo-manager-nav' class=''>
+ 
+  <div id='photo-select' class="uk-margin-bottom">
+    <button id='title' class="uk-button" disabled>Photo Manager</button>
 
-			<input id="normal" type="radio" name="photo-type" value="normal">
-		  <label for="normal">Street View</label>
-	</div>
+    <button id='view-switch' class="uk-button" data-uk-tooltip="{pos:'bottom-left'}" title="Switch View"><i class='fa fa-th-large'></i></button>
+    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'bottom-left'}" title="Sort Photos">
+      <button class="uk-button"><i class='fa fa-sort'></i></button>
+      <div class="uk-dropdown">
+          <ul class="uk-nav uk-nav-dropdown">
+            <li class="uk-nav-header">Sort Photos:</li>
+            <li><a href="#" class='sort' data-sort='created:desc'>Newest</a></li>
+            <li><a href="#" class='sort' data-sort='created:asc'>Oldest</a></li>
+            <li><a href="#" class='sort' data-sort='user-id:asc'>User</a></li>
+          </ul>
+      </div>
+    </div>
+
+    <div class="uk-form-file" data-uk-tooltip="{pos:'bottom-left'}" title="Upload More Photos">
+      <button class="uk-button"><i class='fa fa-upload'></i></button>
+      <%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
+        <input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
+        <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+      <% end %>
+    </div>
+  </div> <!-- end .uk-flex -->
+
+  <div id='photo-type'>
+    <p class="uk-text-small uk-margin-left">Photo Type <i class='fa fa-info-circle fa-lg' data-uk-tooltip="{pos:'bottom-left'}" title="We sorted your photos for you!"></i></p>
+    <ul class="uk-subnav uk-subnav-pill uk-text-small uk-container-center">
+      <li data-filter='all' class='filter uk-active'><a href="#">All</a></li>
+      <li class='filter' data-filter='.aerial'><a href="#">Aerial</a></li>
+      <li class='filter' data-filter='.normal'><a href="#"> Street</a></li>
+      <li class='filter' data-filter='.people'><a href="#">People</a></li>
+    </ul>
+  </div>
 </nav>
 
-<section id='photos-uploaded' class='photo-list first-section scrollable eight'>
-	<article id='photo-upload' class='h-centered'>
-		<div class='img-wrapper photo-upload-wrapper v-centered'>
-				<i class='fa fa-plus-circle h1-size'></i>
-		</div>
-		<%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
-			<input id='photo-upload-input' type='file' name='photo[photo_file]' multiple/>
-	    <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
-		<% end %>
-	</article>
+<div id='loader' class='uk-text-center uk-margin-top uk-text-middle uk-animation-slide-bottom uk-contrast uk-hidden'>
+  <p class='uk-text-large'>Uploading & sorting your photos...</p>
+  <i class="fa fa-spinner fa-spin fa-5x"></i>
+</div>
 
+<section id='preview-list' class="container">
+  <% @gallery_photos.each do |photo| %>
+    <% user = User.find(photo.user_gallery.user_id) %>
+
+    <% if photo.is_aerial %>
+    <% type = 'aerial' %>
+    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
+      <div class='draggable draggable-wrapper'>        
+        <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+          <button class='photo-delete close uk-hidden uk-float-right'><i class='fa fa-remove uk-text-danger'></i></button>
+        </div>
+      </div>
+
+    <% elsif photo.is_normal %>
+    <% type = 'normal' %>
+    <article id='preview-<%=photo.id%>' class='<%=type%> preview mix mix-half'>
+      <div class='draggable draggable-wrapper'>
+        <div class='img-wrapper' data-img-id='<%=photo.id%>' data-img-type='<%=type%>' data-user-id='<%=user.id%>' data-warpable-id='<%=photo.warpable_id%>' data-warpable-url='<%=photo.warpable_url%>' data-created='<%=photo.created_at.to_i%>' style="background-image:url('<%=photo.photo_file%>')">
+        <button class='photo-delete close uk-hidden uk-float-right'><i class='fa fa-remove uk-text-danger'></i></button>
+        </div>
+      </div>
+    <% end %>
+
+      <%# user_id = photo.last.user_gallery.user_id %>
+      <!-- <div class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom"> -->
+        <!-- <a class='photo-delete'><i class='fa fa-remove uk-float-right uk-text-large uk-text-danger'></i></a> -->
+        <!-- <p class='uk-text-small'>Updated on <br><%#=photo.created_at.strftime(" %B %d, %Y")%></p> -->
+        <!-- <p class='uk-text-small'>Posted by <a href='/users_profiles/<%=user.id%>'><%=user.login%></a> -->
+      <!-- </div>       -->
+    </article>
+  <% end %>
 </section>
-
-<section id='photos-saved' class='photo-list first-section scrollable eight hidden invisible'>
-<% @gallery_photos.each do |photo| %>
-<% if photo.is_aerial %>
-<% type = 'aerial' %>
-<article class='preview h-centered pull-left aerial' id='preview-<%=photo.id%>'>
-<% elsif photo.is_normal %>
-<% type = 'normal' %>
-<article class='preview h-centered pull-left normal hidden invisible' id='preview-<%=photo.id%>'>
-<% end %>
-			<div class='img-wrapper v-centered'>
-				<button class='photo-remove font_small h-centered hidden'><i class='fa fa-remove'></i></button>
-				<%= image_tag(photo.photo_file, :class => 'draggable', :data => {:img_id => photo.id, :img_type => type, :warpable_id => photo.warpable_id, :warpable_url => photo.warpable_url }) %>
-			</article>
-<% end %>
-
-</section>
-
-
 <%= javascript_include_tag "/javascripts/jquery-file-upload/jquery.fileupload.js" %>
+
+
+
+
+
+
+
+
+
+
+
+
+

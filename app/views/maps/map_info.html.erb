@@ -1,51 +1,99 @@
 
-<div id='project-creation-2' class='row group' data-user-gallery-id = '<%=@user_gallery.id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
-  <section id='photo-manager' class='side-nav eight columns'>
+<div id='project-creation-2' class='uk-grid uk-grid-small' data-user-gallery-id = '<%=@user_gallery.id%>' data-user-name='<%=@user_name%>' data-user-id='<%=@user_id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
+  <section id='photo-manager' class='uk-width-1-4'>
     <%= render :partial => "maps/map_info_pieces/side" %>
   </section>
 
-  <article class="temp-preloader eight columns hidden">
-    <h1 class='h3-size h-centered v-centered'>Uploading...</h1>
-    <div class='progress-bar-wrapper'>
-      <div class='progress-bar'></div>
-    </div>
-  </article>
+  <div id='project-top' class='uk-width-3-4'>
+  	<section id='project-map' class='uk-grid uk-grid-collapse'>
+	  	<div class='uk-width-7-10'>
+		  	<div id='knitter-map-pane' class='uk-margin-top'>	  		
+		  	</div>
+		  </div>
+	  	<div id='project-form' class='uk-width-3-10 uk-margin-top'>
 
-  <div id='project-form-map-info' class='sixteen columns'>
-    <section class='twenty-two columns offset-one'>
+		  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion="{showfirst: false}">
 
-    <div class='row-form row group'>
-      <%= render :partial => "maps/map_info_pieces/form_title" %>
-    </div>
+			  	<!-- Project Title -->
+					<label id='name-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-name">Title
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+	        	<textarea id='project-name' type="text" placeholder="Project Title" class="uk-width-1-1" maxlength='70'><%=@map.name%></textarea>
+	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='70'>70</small>
+			    </div>
 
-    <div class='row-form row group'>
-      <%= render :partial => "maps/map_info_pieces/form_location" %>
-    </div>
+			    <!-- Project Location -->
+					<label id='location-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-location">Location
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-grid uk-margin-bottom">
+							<div class='uk-width-1-1 uk-margin-top'>
+								<input id='project-location' type="text" placeholder="Location" class="uk-width-1-1" value='<%=@map.location%>'>
+							</div>
 
-    <div class='row-form row group'>
-       <%= render :partial => "maps/map_info_pieces/form_description" %>
-    </div>
+							<div class="uk-width-5-10 uk-margin-top">
+				        <label id='lat-label' class="uk-form-label uk-text-muted" for="project-lat">Latitude:</label>
+			        	<input id='project-lat' type="text" placeholder="Latitude" class="uk-width-1-1" value='<%=@map.lat%>'>
+			        </div>
+			        <div id='lon-label' class="uk-width-5-10 uk-margin-top">
+			        	<label class="uk-form-label uk-text-muted" for="project-lon">Longitude:</label>
+			        	<input id='project-lon' type="text" placeholder="Longitude" class="uk-width-1-1" value='<%=@map.lon%>'>
+			        </div>
+			    </div>
 
-    <div class='row-form row group'>
-     <%= render :partial => "maps/map_info_pieces/form_tags" %>
-    </div>
+			  	<!-- Project Description -->
+					<label id='description-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-description">Description
+						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
+						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
+					</label>
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+	        	<textarea id='project-description' type="text" placeholder="Project Description" class="uk-width-1-1" maxlength='70'><%=@map.description%></textarea>
+	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='140'>140</small>
+			    </div>
 
-    <h2 class='input-label'>Map Knitter</h2>
-    <section id="knitter-map-pane"></section>
+			    <hr>
+
+        	<label id='cover-photo-label' class='uk-form-label uk-text-muted uk-margin-top' for='profile-upload'>Cover Photo:</label>
+					<div id="profile-upload-drop" class="uk-placeholder uk-text-center droppable">
+						<i class='fa fa-photo fa-lg uk-text-muted uk-margin-small-right'></i>Drag a cover photo here.
+					</div>
+
+					<hr>
+
+		    	<label id='tags-label' class='uk-form-label uk-text-muted' for='project-tag_list'>Tags:</label>
+		    	<input id='project-tag_list' class='tag-input uk-width-1-1'/>
+			    <div id='tag-container' class='tag-container'>
+			      <% unless @maptags.nil? || @maptags.blank? %>
+			        <% @map.tags.each do |tag| %>
+			          <span class='project-tag cursor-def light font_small'># <%= tag.name %> </span>
+			        <% end %>
+			      <% end %>
+			    </div>
 
 
-    <%= render :partial => "maps/map_info_pieces/buttonBar" %>
+				</form>
 
-    <div class='row group'>
-      <div class='three columns pull-right'>
-        <button id='project-finish' class='button-action button-finish'>Finish</button>
+	  	</div>
+	  </section>
+	  <section id='module-content' class='uk-grid uk-grid-collapse'>
+    
+      <div class='uk-width-7-10'>
+        <%= render :partial => "/maps/map_info_pieces/buttonBar" %>
+
       </div>
-      <div class='three columns pull-right'>
-        <button id='project-cancel' class='button-action button-cancel two columns pull-right'>Cancel</button>
-      </div>
-    </div>
 
+      <div class='uk-width-3-10'></div>
 
-  </div> <!-- end #project-form -->
+	  </section>
+  </div>
+
 </div> <!-- end #project-creation -->
 
+
+
+<!--         <div class="droppable dropzone ui-droppable ui-sortable">
+          <p class="caps">Drag up to ten photos here.</p>
+        </div> -->

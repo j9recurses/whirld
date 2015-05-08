@@ -4,7 +4,7 @@ class UserGalleryBlocText < ActiveRecord::Base
   attr_accessible :bloc_text, :user_gallery_id
   include PublicActivity::Model
   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
-  acts_as_votable
+  # acts_as_votable
 
   def self.gather_bloc_texts(user_gallery_id)
     combined_block_texts = Array.new

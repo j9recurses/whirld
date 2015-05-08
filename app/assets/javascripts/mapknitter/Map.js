@@ -20,7 +20,7 @@ MapKnitter.Map = MapKnitter.Class.extend({
 
     // make globally accessible map namespace for knitter.js
     map = this._map
-
+    map.scrollWheelZoom.disable();
     if (!options.readOnly) {
       saveBtn = L.easyButton('fa-check-circle fa-green mk-save', 
       function() {},

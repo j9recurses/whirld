@@ -6,20 +6,23 @@
 	<%= render "layouts/header_map" %>
 </head>
 <body>
-<% if @photo_manager %>
-	<%= render "layouts/nav_main", :className => 'map_info' %>
-<% else %>
+<%# if @project_editor==true %>
+	<%#= render "layouts/nav_project_editor", :className => 'map-info' %>
+<%# else %>
 	<%= render "layouts/nav_main", :className => 'new' %>
-<% end %>
+<%# end %>
 
 <%= yield %>
 
-<script><%= render :partial => 'maps/mappane', :formats => [:js] %></script>
 <!-- JS for project editor -->
-<%= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
-<%= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
-<%= javascript_include_tag "autosize/dest/autosize.js" %>	
-<%= javascript_include_tag "global/search-bar.js" %>
+<%#= javascript_include_tag "stickyNavbar.js/jquery.easing.min.js" %>
+<%#= javascript_include_tag "stickyNavbar.js/jquery.stickyNavbar.js" %>
+<%= javascript_include_tag "jquery-ui/ui/draggable.js" %>
+<%= javascript_include_tag "jquery-ui/ui/droppable.js" %>
+<%= javascript_include_tag "jquery-ui/ui/sortable.js" %>
+
+<%= javascript_include_tag "autosize/dest/autosize.js" %>
+
 <%= javascript_include_tag "project-editor/modules.js" %>
 <%= javascript_include_tag "project-editor/button-bar.js" %>
 <%= javascript_include_tag "project-editor/images.js" %>

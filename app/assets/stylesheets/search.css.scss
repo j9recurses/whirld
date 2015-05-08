@@ -1,0 +1,88 @@
+#search-filter-bar{
+	border-bottom: 1px solid #ddd;
+	
+	#search-entity {
+		margin-top: 3px;
+	}
+	input { 
+		font-size: 18px;
+	  line-height: 24px;
+	}
+	.wh-select .selected::before {
+		content: "\f00c";
+		font-family: FontAwesome;
+	}
+}
+#search-results{
+	.container{
+	  padding: 2% 2% 0;
+	  text-align: justify;
+	  /*font-size: 0;*/
+	}
+
+	.container:after{
+	  content: '';
+	  display: inline-block;
+	  width: 100%;
+	}
+
+	.container .mix,
+	.container .gap{
+	  display: inline-block;
+	  width: 49%;
+	}
+
+	.container .mix{
+	  text-align: left;
+	  background: #fff;
+	  margin-bottom: 2%;
+	  border: 1px solid #ddd;
+	  /*display: none; <-- uncomment this rule for use with MixItUp */
+	}
+
+	.container .mix:before{
+	  content: '';
+	  display: inline-block;
+	}
+
+	@media all and (min-width: 420px){
+	  .container .mix,
+	  .container .gap{
+	    width: 32%;
+	  }
+	}
+
+	@media all and (min-width: 640px){
+	  .container .mix,
+	  .container .gap{
+	    width: 32%;
+	  }
+	}
+	.sc-cover{
+	  margin-top: -20px;
+	  width: 100%;
+	  height: 200px;
+	}
+	.sc-footer{
+		height: 37px;
+	  overflow-y: hidden;
+	  width: 100%;
+	}
+	.sc-header{
+		height: 80px;
+	}
+	.sc-location{
+		padding: 2px 0;
+	}
+	.sc-meta ul{
+		margin-bottom: 0;
+	}
+	.sc-tags{
+		height: 40px;
+	  overflow-y: hidden;
+	}
+	.sc-title a:hover { text-decoration: none; }
+	.wh-subnav-header{
+		margin-top: 13px;
+	}
+}

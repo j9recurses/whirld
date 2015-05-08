@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150506103439) do
+ActiveRecord::Schema.define(:version => 20150508075438) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -249,7 +249,6 @@ ActiveRecord::Schema.define(:version => 20150506103439) do
     t.text    "description"
     t.string  "first_name"
     t.string  "last_name"
-    t.integer "photo_id"
     t.string  "photo_file"
   end
 

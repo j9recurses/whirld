@@ -12,6 +12,15 @@ $(document).ready(function(){
 
   var fb = new FilterBar();
   		fb.init();
+
+  $('#search-results-list').mixItUp({
+					callbacks: {
+						onMixStart: function(state){
+							console.log('MIXING IT UP');
+						}
+					}
+  });
+
 });
 
 var FilterBar = function(options){
@@ -86,14 +95,13 @@ FilterBar.prototype = {
 		var count = 0;
 		$.each(data, function(i, result){
 			var html = self.htmlProjectResult(result);
-			self.searchResultsContainer.append($(html))
+			self.searchResultsContainer.mixItUp('append', $(html), {filter: 'all'})
 		});
 		if(data.length %3 != 0){ self.searchResultsContainer.append($("<div class='gap'></div>")); }
 	},
 	// functions for posting queries to server
 	search: function(data){
 		var self = this;
-				self.searchResultsContainer.empty();
 		$.ajax({
 			url: '/search',
 			data: data,
@@ -101,42 +109,59 @@ FilterBar.prototype = {
 			success: function(data){
 				console.log(data)
 				console.log('Success: user results are returning');
+
 				self.resultsCount.text(data.length);
+				self.searchResultsContainer.empty();
 				self.appendProjectResults(data);
-				self.searchResultsContainer.mixItUp({
-					load: {
-						sort: 'relevant:asc'
-					}
-				});
 			},
 			error: function(){
 				console.log('Oops something went wrong.')
 			}
 		});
 	},
-	entity: function(){
+	dropDowns: function(){
 		console.log('Initiated: entity box')
 
 		var self = this;
-
-	},
-	sort: function(byOrder){
-		console.log('Initiated: sort')
-		console.log(byOrder)
-
-		var self = this;
-		self.searchResultsContainer.find('.search-card').sort(function (a, b) {
-			console.log(a.dataset.createdAt)
-
+		$('.wh-select').on('click', 'a', function(){
+			var container = $(this).closest('.wh-select')
+			if($(this).hasClass('selected')){
+				console.log('nothing happens')
+			}
+			else{
+				$(container.find('.selected')).removeClass('selected')
+				$(this).addClass('selected');
+				container.find('.selected-show').text($(this).text());
+			}
 		})
-		.appendTo( self.searchResultsContainer );
+	},
+	viewSwitch: function(){
+		var self = this;
+		$('#view-switch').on('click', function(){
+			console.log(this)
+			var icon = $(this).find('i');
+			if(icon.hasClass('fa-th-large')){
+				icon.removeClass('fa-th-large');
+				icon.addClass('fa-map-marker');
+				
+				//Temp
+				$('.search-card').addClass('uk-hidden');
+				self.searchResultsContainer.append($("<h1 id='placeholder'>A Map Will Go Here</h1>"))
+			}
+			else{
+				icon.addClass('fa-th-large');
+				icon.removeClass('fa-map-marker');
 
+				$('#placeholder').remove()
+				$('.search-card').removeClass('uk-hidden')
+			}
+		})
 	},
 	init: function(){
-		this.entity();
 		this.keywordAC();
 		this.locationAC();
-		// this.sort();
+		this.dropDowns();
+		this.viewSwitch();
 		var self = this;
 
 		// $('#search-page-location').on({

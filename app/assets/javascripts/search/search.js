@@ -28,7 +28,8 @@ FilterBar.prototype = {
 	locationAC: function(){
 		// only works for projects right now
     var locAC = new AutoComp({
-      inputId: 'search-page-location'
+      inputId: 'search-page-location',
+      mapknitter: false
     });
     locAC.location();
 	},
@@ -42,21 +43,11 @@ FilterBar.prototype = {
 	},
 	// functions for getting values from dom
 	getAllValues: function(){
-		var data = {};
-		$.each($('.filter-input'), function(i, el){
-			console.log(el)
-
-			var type = $(el).attr('id').split('-')[1];
-
-		// 	// grab data according to input type
-			if(type == 'query' || type == 'location'){
-				var val = $(el).val();
-			}
-			else if(type == 'entity'){
-				var val = $(el).find('.active').text();
-			}
-			data[type]= val;
-		});
+		var data = {
+			query: $('#search-page-keyword').val(),
+			location: $('#search-page-location').val(),
+			entity: $('#search-page-entity').find('.selected').text()
+		}
 		console.log(data)
 		return data;
 	},
@@ -74,12 +65,9 @@ FilterBar.prototype = {
 			var tagText = "<li class='project-tag item push-down gray'>" + tag + ", </li>"
 			tagList += tagText;
 		});
-		var header = "<div class='search-card-header row group wrapper gray'><div class='twenty-four'><h1 class='search-card-title h5-size caps bold'><a href='maps/" + item.id + "'>" + item.name +"</a></h1><ul class='inline-list'><li class='user-meta-item item font_small'>Posted by: <a href='/users/" + item.user_id + "'>" + item.author + "</a></li><li class='user-meta-item item'>&bull;</li><li class='user-meta-item item font_small'>" + this.htmlCreatedAt(item) + "</li></ul><ul class='project-tag-list inline-list font_small'><li class='project-tag-icon item h4-size'><i class='fa fa-tag'></i></li><li class='project-tag item pull-right'>...</li>" + tagList + "</ul></div></div>";
-		var thumbnail = "<div class='search-card-thumb row group'><div class='twenty-four columns pos-rel'><div class='search-card-location twenty-four pos-abs font_small wrapper'>" + item.location + "</div><a class='img-wrapper img-wrapper-link' href='/maps/1' style=\"background-image:url('" + item.coverphoto_name + "')\"></a></div></div>";
 		var commentCount = 100; 
 		var voteCount = 4000;
-		var activity = "<div class='search-card-activity search-card-footer row group wrapper gray'><div class='twenty-four columns'><ul class='inline-list font_small'><li class='comment-count item cursor-point'><i class='fa fa-comment'></i><span class='comment-num'>" + commentCount + "</span></li><li class='vote-count item cursor-point'><i class='fa fa-thumbs-up'></i><span class='vote-num'>" + voteCount + "</span></li></ul></div></div>";
-		return "<article id='search-card-" + item.id + "' class='search-card mix project' data-map-id='" + item.id + "' data-updated='" + item.created_at + "' data-relevance='" + item.search_order + "'>" + header + thumbnail + activity + "</article>";
+		// return "<article class='search-card mix' data-map-id='" +  + "' data-updated='2' data-relevant='1'>";
 	},
 	appendProjectResults: function(data){
 		var self = this;
@@ -140,26 +128,27 @@ FilterBar.prototype = {
 		// this.sort();
 		var self = this;
 
-		$('#filter-location').on({
+		$('#search-page-location').on({
 			keyup:function(e){
 				if(e.which == 13){
 					self.search(self.getAllValues());
-					$('#filter-location').autocomplete( "close" );
+					$('#search-page-location').autocomplete( "close" );
 				}
 			}
 		});
 
-		$('#filter-query').on({
+		$('#search-page-query').on({
 			keyup:function(e){
 				if(e.which == 13){
 					self.search(self.getAllValues());
-					$('#filter-query').autocomplete( "close" );
+					$('#search-page-query').autocomplete( "close" );
 				}
 			}
 		});
 		
 		$('#search-go').on({
-			click: function(){
+			click: function(e){
+				e.preventDefault();
 				console.log("Searching...")
 				self.search(self.getAllValues());
 				$('#filter-query').autocomplete( "close" );

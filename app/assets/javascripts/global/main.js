@@ -159,10 +159,7 @@ $( '#updateButton' ).click ( function () {
     }
   );
 
-
-
   var sb = new SearchBar();
       sb.init();
-
 
 });

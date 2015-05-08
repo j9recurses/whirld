@@ -4,7 +4,8 @@ var AutoComp = function(options){
     inputId: null,
     autofocus: false,
     delay: 400,
-    minLength: 2
+    minLength: 2,
+    mapknitter: true
   }, options);
 
   this.inputEl = $('#' + this.options.inputId)
@@ -96,21 +97,22 @@ AutoComp.prototype = {
         self.locationSource(request, response);
       },
       select: function(event, ui) {
-        console.log(ui.item)
         var b = ui.item.bounds
         $("#project-lat").val(ui.item.latitude);
         $("#project-lon").val(ui.item.longitude);
-        if (b) {
-          window.mapKnitter.getMap().fitBounds([
-            [b.getNorthEast().lat(), b.getNorthEast().lng()],
-            [b.getSouthWest().lat(), b.getSouthWest().lng()]
-            ]);
-        } else {
-          window.mapKnitter.getMap().panTo([ui.item.latitude,
-                                        ui.item.longitude])
-          window.mapKnitter.getMap().setZoom(14)
+        if(self.options.mapknitter){
+          if (b) {
+            window.mapKnitter.getMap().fitBounds([
+              [b.getNorthEast().lat(), b.getNorthEast().lng()],
+              [b.getSouthWest().lat(), b.getSouthWest().lng()]
+              ]);
+          } else {
+            window.mapKnitter.getMap().panTo([ui.item.latitude,
+                                          ui.item.longitude])
+            window.mapKnitter.getMap().setZoom(14)
+          }
+          $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
         }
-        $("#map_zoom").val(window.mapKnitter.getMap().getZoom());
       }
     });
     // render results with highlighting

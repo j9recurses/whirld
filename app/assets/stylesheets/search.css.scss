@@ -1,7 +1,7 @@
 #search-filter-bar{
 	border-bottom: 1px solid #ddd;
 	
-	#search-entity {
+	#search-page-entity {
 		margin-top: 3px;
 	}
 	input { 
@@ -37,7 +37,7 @@
 	  background: #fff;
 	  margin-bottom: 2%;
 	  border: 1px solid #ddd;
-	  /*display: none; <-- uncomment this rule for use with MixItUp */
+	  display: none; /*<-- uncomment this rule for use with MixItUp */
 	}
 
 	.container .mix:before{
@@ -59,7 +59,6 @@
 	  }
 	}
 	.sc-cover{
-	  margin-top: -20px;
 	  width: 100%;
 	  height: 200px;
 	}

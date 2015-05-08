@@ -52,22 +52,34 @@ FilterBar.prototype = {
 		return data;
 	},
 	// functions for posting to DOM
-	htmlCreatedAt: function(item){
+	updatedInt: function(item){
+		var d = new Date(item.updated_at);
+		return d.getTime();
+	},
+	htmlUpdatedPretty: function(item){
 		var a = new Date(item.created_at)
 		var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 		var d = new Date(item.created_at)
 		var date = monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
 		return date;
 	},
-	htmlProjectResult: function(item){
+	htmlTagList: function(item){
 		var tagList = "";
 		$.each(item.taglist, function(i, tag){
-			var tagText = "<li class='project-tag item push-down gray'>" + tag + ", </li>"
+			var tagText = "<a class='uk-text-muted' href='maps/tagged/" + tag + "'>" + tag + "</a>";
 			tagList += tagText;
 		});
+		if(tagList != ""){ return "<span class='uk-text-small'><i class='fa fa-tag uk-text-muted'></i></span>" + tagList }
+			else{ return "" }
+	},
+	htmlProjectResult: function(item){
 		var commentCount = 100; 
 		var voteCount = 4000;
-		// return "<article class='search-card mix' data-map-id='" +  + "' data-updated='2' data-relevant='1'>";
+		var thumb = "<a href='/maps/" + item.id + "' class='sc-cover uk-cover-background uk-overlay' style=\"background-image: url('/uploads/photo/13/31/NorthBerkeley.jpg');\"><img class='uk-invisible' src='/uploads/photo/13/31/NorthBerkeley.jpg' alt='" + item.name + "'><div class='sc-location uk-text-contrast wh-caps uk-overlay-panel uk-overlay-bottom uk-overlay-background'><div class='uk-container '>" + item.location + "</div></div></a>";
+		var title = "<div class='uk-container uk-margin-top'><div class='sc-header'><h1 class='sc-title uk-h4 wh-caps uk-text-bold'><a href='/maps/" + item.id + "'>" + item.name + "</a></h1></div><div class='sc-meta uk-text-muted uk-text-small'><ul class='uk-subnav uk-subnav-line'><li class='uk-active'>Posted by <a href='/users_profiles/" + item.user_id + "'>kbasye</a></li><li>Updated on " + this.htmlUpdatedPretty(item) + "</li></ul></div></div>";
+		var activity = "<ul class='uk-subnav uk-text-small uk-float-right uk-width-4-10'><li class='uk-width-1-2 uk-text-muted'><i class='fa fa-comment uk-text-muted'></i> <span id='sc-comment-count' class='uk-text-muted'>" + commentCount + "</span></li><li class='uk-width-1-2 uk-text-muted'><i class='fa fa-heart uk-text-muted'></i> <span id='sc-whirl-count' class='uk-text-muted'>" + voteCount + "</span></li></ul>";
+		var footer = "<div class='sc-footer uk-container'><div class='sc-tags uk-subnav uk-text-small uk-width-6-10 uk-float-left uk-text-nowrap'>" + this.htmlTagList(item) + "</div>" + activity + "</div>"
+		return "<article class='search-card mix' data-map-id='" + item.id + "' data-updated='" + this.updatedInt(item) + "' data-relevant='" + item.search_order + "'>" + thumb + title + "<hr>" + footer + "</article>";
 	},
 	appendProjectResults: function(data){
 		var self = this;
@@ -113,7 +125,6 @@ FilterBar.prototype = {
 		console.log(byOrder)
 
 		var self = this;
-
 		self.searchResultsContainer.find('.search-card').sort(function (a, b) {
 			console.log(a.dataset.createdAt)
 
@@ -128,31 +139,31 @@ FilterBar.prototype = {
 		// this.sort();
 		var self = this;
 
-		$('#search-page-location').on({
-			keyup:function(e){
-				if(e.which == 13){
-					self.search(self.getAllValues());
-					$('#search-page-location').autocomplete( "close" );
-				}
-			}
-		});
+		// $('#search-page-location').on({
+		// 	keyup:function(e){
+		// 		if(e.which == 13){
+		// 			self.search(self.getAllValues());
+		// 			$('#search-page-location').autocomplete( "close" );
+		// 		}
+		// 	}
+		// });
 
-		$('#search-page-query').on({
-			keyup:function(e){
-				if(e.which == 13){
-					self.search(self.getAllValues());
-					$('#search-page-query').autocomplete( "close" );
-				}
-			}
-		});
+		// $('#search-page-keyword').on({
+		// 	keyup:function(e){
+		// 		if(e.which == 13){
+		// 			self.search(self.getAllValues());
+		// 			$('#search-page-keyword').autocomplete( "close" );
+		// 		}
+		// 	}
+		// });
 		
 		$('#search-go').on({
 			click: function(e){
 				e.preventDefault();
 				console.log("Searching...")
 				self.search(self.getAllValues());
-				$('#filter-query').autocomplete( "close" );
-				$('#filter-location').autocomplete( "close" );
+				$('#search-page-keyword').autocomplete( "close" );
+				$('#search-page-location').autocomplete( "close" );
 			}
 		});
 	} // end init

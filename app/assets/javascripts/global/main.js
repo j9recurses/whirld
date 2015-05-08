@@ -116,7 +116,7 @@ $("#commentContainer").delegate("#reply", "keyup", function(e){
 //The id  to delete is hardcoded
 $( '#delButton' ).click ( function () {
     //id of of the comment you are trying to delete
-    var comment_to_delete_id = 40;
+    var comment_to_delete_id = 3;
 
         $.ajax({
           // at some point will need to differentiate between projects, users, etc.
@@ -138,11 +138,14 @@ $( '#delButton' ).click ( function () {
 //The id  to delete is hardcoded
 $( '#updateButton' ).click ( function () {
     //id of of the comment you are trying to delete
-    var comment_to_edit_id = 50;
-
+    var comment_to_edit_id = 2;
+    var comment_text = "blah blah blash"
+    var data_items = { comment_id:comment_to_edit_id,
+                      comment: comment_text
+                     }
         $.ajax({
           // at some point will need to differentiate between projects, users, etc.
-          url: "/edit_comment/" + comment_to_delete_id,
+          url: "/edit_comment/" + comment_to_edit_id,
           type: 'put',
           dataType: "json",
           //data: data_items,

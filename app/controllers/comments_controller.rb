@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if user_signed_in?
         if @comment.save
-           @comment.move_to_child_of(@parent_comment)
+          @comment.move_to_child_of(@parent_comment)
           format.json { render json: @comment }
         else
           format.json { render "Something went wrong! Could not save your comment." }
@@ -54,25 +54,39 @@ class CommentsController < ApplicationController
     end
   end
 
-   def edit_comment
-      @comment = Comment.find(params[:comment_id])
-      @comment.body = params[:comment]
-      if @comment.save
-        render :json => @comment, :status => :ok
+  def edit_comment
+    @comment = Comment.find(params[:id])
+    unless @comment.blank?
+      if user_signed_in? and @comment.user_id == current_user.id
+        @comment.body = params[:comment]
       else
-        render :js => "alert('error deleting comment');"
+        @error =  "You must be logged in to update comments."
+      end
+    else
+      @error = "Comment not found"
+    end
+    respond_to do |format|
+      if @comment.save
+        format.json { render json: @comment}
+      else
+        format.json { render json: @error }
       end
     end
 
-  def delete_comment
-      @comment = Comment.find(params[:id])
-      unless @comment.nil?
-      if @comment.destroy
-        render :json => @comment, :status => :ok
-      else
-        render :js => "alert('error deleting comment');"
+    def delete_comment
+      @comment = Comment.where(["id = ? ", params[:id]]).first
+      respond_to do |format|
+        if user_signed_in?
+          if  @comment.user_id == current_user.id
+          if @comment.destroy
+            render :json => @comment, :status => :ok
+          else
+            format.json { render json: "You must be logged in to delete." }
+          end
+        end
+        end
       end
     end
-    end
+  end
 
 end

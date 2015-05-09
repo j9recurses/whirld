@@ -1,0 +1,147 @@
+[ 2015-05-08 21:18:19.9707 62554/0x7fff7cc8d300 age/Wat/Main.cpp:1264 ]: Starting PassengerAgent watchdog...
+[ 2015-05-08 21:18:20.0123 62556/0x7fff7cc8d300 age/Hel/Main.cpp:891 ]: Starting PassengerAgent server...
+[ 2015-05-08 21:18:20.0130 62556/0x7fff7cc8d300 age/Hel/Main.cpp:234 ]: PassengerAgent server running in multi-application mode.
+[ 2015-05-08 21:18:20.0193 62556/0x7fff7cc8d300 age/Hel/Main.cpp:645 ]: PassengerAgent server online, PID 62556
+[ 2015-05-08 21:18:20.0714 62558/0x7fff7cc8d300 age/Log/Main.cpp:442 ]: Starting PassengerAgent logger...
+[ 2015-05-08 21:18:20.0725 62558/0x7fff7cc8d300 age/Log/Main.cpp:323 ]: PassengerAgent logger online, PID 62558
+App 62574 stdout: 
+App 62574 stderr: Recommendable.config.queue_name has been deprecated. Jobs will always be placed in a queue named 'recommendable'.
+App 62602 stdout: 
+App 62574 stderr: WARN: tilt autoloading 'coffee_script' in a non thread-safe way; explicit require 'coffee_script' suggested.
+App 62574 stderr: WARN: tilt autoloading 'sass' in a non thread-safe way; explicit require 'sass' suggested.
+App 62686 stdout: 
+[ 2015-05-08 21:20:31.0799 62556/0x103c09000 Ser/Server.h:931 ]: [Client 1-1] Disconnecting client with error: client socket write error: Broken pipe (errno=32)
+App 62699 stdout: 
+App 62702 stdout: 
+App 62703 stdout: 
+App 62704 stdout: 
+App 62602 stdout: ********
+App 62602 stdout: /images/40/original/Screen_Shot_2015-04-30_at_12.32.09_PM.png
+App 62602 stdout: ********
+App 62602 stdout: /images/41/original/NorthBerkeley.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/43/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/45/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/47/original/DJI00231_WestSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/48/original/IMG_8915.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/49/original/DJI00247_EastSide5.jpg
+App 62602 stdout: #<UserGallery id: 14, name: "testing", user_id: 4, created_at: "2015-05-08 20:58:30", updated_at: "2015-05-08 20:58:30", map_id: 54, module_order: nil>
+App 62602 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/14/51 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/14/51
+App 62602 stdout: *****aerial****
+App 62602 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/14/51/2002Image1.png
+App 62602 stdout: ********
+App 62602 stdout: /images/40/original/Screen_Shot_2015-04-30_at_12.32.09_PM.png
+App 62602 stdout: ********
+App 62602 stdout: /images/41/original/NorthBerkeley.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/43/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/45/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/47/original/DJI00231_WestSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/48/original/IMG_8915.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/49/original/DJI00247_EastSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/50/original/2002Image1.png
+App 62699 stdout: ****
+App 62699 stdout: 
+App 62699 stdout: []
+App 62699 stdout: 
+App 62602 stdout: #<UserGallery id: 14, name: "testing", user_id: 4, created_at: "2015-05-08 20:58:30", updated_at: "2015-05-08 20:58:30", map_id: 54, module_order: nil>
+App 62602 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/14/52 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/14/52
+App 62602 stdout: *****aerial****
+App 62602 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/14/52/IMG_5686.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/40/original/Screen_Shot_2015-04-30_at_12.32.09_PM.png
+App 62602 stdout: ********
+App 62602 stdout: /images/41/original/NorthBerkeley.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/43/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/45/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/47/original/DJI00231_WestSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/48/original/IMG_8915.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/49/original/DJI00247_EastSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/50/original/2002Image1.png
+App 62602 stdout: ********
+App 62602 stdout: /images/51/original/IMG_5686.JPG
+App 62699 stdout: ****
+App 62699 stdout: []
+App 62602 stdout: #<UserGallery id: 14, name: "testing", user_id: 4, created_at: "2015-05-08 20:58:30", updated_at: "2015-05-08 20:58:30", map_id: 54, module_order: nil>
+App 62602 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/14/53 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/14/53
+App 62602 stdout: *****aerial****
+App 62602 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/14/53/DJI00247_EastSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/40/original/Screen_Shot_2015-04-30_at_12.32.09_PM.png
+App 62602 stdout: ********
+App 62602 stdout: /images/41/original/NorthBerkeley.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/43/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/45/original/DSC00381.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/47/original/DJI00231_WestSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/48/original/IMG_8915.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/49/original/DJI00247_EastSide5.jpg
+App 62602 stdout: ********
+App 62602 stdout: /images/50/original/2002Image1.png
+App 62602 stdout: ********
+App 62602 stdout: /images/51/original/IMG_5686.JPG
+App 62602 stdout: ********
+App 62602 stdout: /images/52/original/DJI00247_EastSide5.jpg
+App 62686 stdout: ****
+App 62686 stdout: []
+App 62602 stdout: #<UserGallery id: 14, name: "testing", user_id: 4, created_at: "2015-05-08 20:58:30", updated_at: "2015-05-08 20:58:30", map_id: 54, module_order: nil>
+App 62602 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/14/54 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/14/54
+App 62602 stdout: *****aerial****
+App 62602 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/14/54/IMG_8915.JPG
+App 62686 stdout: ****
+App 62686 stdout: []
+App 62602 stdout: #<UserGallery id: 15, name: "ok", user_id: 4, created_at: "2015-05-09 04:29:18", updated_at: "2015-05-09 04:29:18", map_id: 55, module_order: nil>
+App 62686 stdout: #<UserGallery id: 15, name: "ok", user_id: 4, created_at: "2015-05-09 04:29:18", updated_at: "2015-05-09 04:29:18", map_id: 55, module_order: nil>
+App 62699 stdout: #<UserGallery id: 15, name: "ok", user_id: 4, created_at: "2015-05-09 04:29:18", updated_at: "2015-05-09 04:29:18", map_id: 55, module_order: nil>
+App 62602 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/15/55 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/15/55
+App 62686 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/15/56 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/15/56
+App 62699 stdout: python /Users/kbasye/Desktop/whirld/zdeepLearn/predict.py -f /Users/kbasye/Desktop/whirld/public/uploads/photo/15/57 -o /Users/kbasye/Desktop/whirld/public/uploads/photo/15/57
+App 62602 stdout: *****aerial****
+App 62602 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/15/55/IMG_5686.JPG
+App 62686 stdout: *****aerial****
+App 62686 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/15/56/IMG_5768.JPG
+App 62699 stdout: *****aerial****
+App 62699 stdout: /Users/kbasye/Desktop/whirld/public/uploads/photo/15/57/IMG_8915.JPG
+[ 2015-05-08 21:34:25.6339 62556/0x1039df000 age/Hel/Main.cpp:732 ]: Disconnecting long-running connections for process 62704, application /Users/kbasye/Desktop/whirld/public (development)#default
+[ 2015-05-08 21:34:25.7069 62556/0x1039df000 age/Hel/Main.cpp:732 ]: Disconnecting long-running connections for process 62703, application /Users/kbasye/Desktop/whirld/public (development)#default
+[ 2015-05-08 21:34:27.8210 62556/0x1039df000 age/Hel/Main.cpp:732 ]: Disconnecting long-running connections for process 62702, application /Users/kbasye/Desktop/whirld/public (development)#default
+[ 2015-05-08 21:34:34.5007 62556/0x1039df000 age/Hel/Main.cpp:732 ]: Disconnecting long-running connections for process 62602, application /Users/kbasye/Desktop/whirld/public (development)#default
+[ 2015-05-08 21:34:34.5750 62556/0x1039df000 age/Hel/Main.cpp:732 ]: Disconnecting long-running connections for process 62686, application /Users/kbasye/Desktop/whirld/public (development)#default
+App 72043 stdout: 
+App 62699 stdout: ********
+App 62699 stdout: /images/54/original/IMG_5686.JPG
+App 62699 stdout: ********
+App 62699 stdout: /images/55/original/IMG_5768.JPG
+App 62699 stdout: ********
+App 62699 stdout: /images/56/original/IMG_8915.JPG
+App 72043 stderr: Recommendable.config.queue_name has been deprecated. Jobs will always be placed in a queue named 'recommendable'.
+App 72076 stdout: 
+App 72082 stdout: 
+App 72083 stdout: 
+App 72084 stdout: 
+App 72087 stdout: 
+App 62699 stdout: ********
+App 62699 stdout: /images/54/original/IMG_5686.JPG
+App 62699 stdout: ********
+App 62699 stdout: /images/55/original/IMG_5768.JPG
+App 62699 stdout: ********
+App 62699 stdout: /images/56/original/IMG_8915.JPG

@@ -119,6 +119,8 @@ Whirld::Application.routes.draw do
   post 'photo_mods/create_taggings', :to => 'photo_mods#create_taggings', :as => 'create_taggings'
   delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
 
+  post 'photo_mods/coverphoto', :to => 'photo_mods#coverphoto', :as => 'coverphoto'
+
   #user profiles
   get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"
   get 'users_profiles_edit/:id' => 'user_profiles#edit', :as => "user_profile_edit"

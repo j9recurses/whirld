@@ -200,12 +200,22 @@ Form.prototype = {
     }
   },
   tagSave: function(map_id, taglist){
-    var data = {
-      mod_gallery: this.modId,
-      mod_type: this.modType,
-      taglist: taglist,
+    var data;
+    if(map_id){ 
+      data = {
+        mod_gallery: map_id,
+        mod_type: 'map',
+        tagList: taglist
+      }
     }
-    if(map_id){ data['map_id'] = map_id }
+    else{
+      data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType,
+        taglist: taglist,
+      }
+    }
+    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,

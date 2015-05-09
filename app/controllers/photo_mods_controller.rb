@@ -190,7 +190,7 @@ class PhotoModsController < ApplicationController
   end
 
   def coverphoto
-    @photo] =  Photo.find(params[:photo_id])
+    @photo =  Photo.find(params[:photo_id])
     if params[:coverphoto] == 'Map'
       puts params
     end

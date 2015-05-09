@@ -124,8 +124,8 @@ ProjectEditor.prototype = {
         desc.descriptionField();
     var ptf = new Form();
         ptf.projectTagField();
-//     var pageFinish = new Form();
-//         pageFinish.finishButton();
+    var pageFinish = new Form();
+        pageFinish.finishButton();
 //     // initiate button bar
     var bb = new ButtonBar();
         bb.initBar();

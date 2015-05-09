@@ -119,7 +119,7 @@ class MapsController < ApplicationController
     @map[:finished_dt] = Time.now
     if @user_gallery.save && @map.save
       @map.create_activity key: 'map.finished', owner: current_user
-      render :js => "window.location = '/maps/#{@map[:slug]}'"
+      # render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150508075438) do
+ActiveRecord::Schema.define(:version => 20150509033343) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20150508075438) do
     t.string   "comparison_photo_order"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.text     "comparison_text"
   end
 
   create_table "user_gallery_grids", :force => true do |t|
@@ -232,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20150508075438) do
     t.string   "grid_photo_order"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.text     "grid_text"
   end
 
   create_table "user_gallery_splits", :force => true do |t|

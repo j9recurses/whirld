@@ -73,34 +73,32 @@ module ApplicationHelper
   end
 
   def get_maptags(maps)
-    tagged_maps = Array.new
     maps.each do |map|
-      map = Map.where([ "id = ? and finished=1", map.id ]).first
       map_tag_cnt = Tag.count(:conditions => "taggable_type = 'Map'")
       puts map_tag_cnt
       unless  map_tag_cnt == 0
         map.taglist = map.tags.pluck([:name])
-        tagged_maps << map
+        puts map.taglist
       end
     end
-    return tagged_maps
+    return maps
   end
 
 
   def collaborators_list(map, http)
     collabo_hash = Hash.new
-    if http  == true
+    if http
       map =  map.collaborators
     else
       map =  map.load(:include => 'collaborators')
-      puts "****"
-      puts map.collaborators.inspect
-      unless map.collaborators
-        map.collaborators.each do |c |
-          puts c.inspect
-          ustuff = User.find(c.user_id)
-          collabo_hash[ustuff.id] = ustuff.login
-        end
+    end
+    puts "****"
+    puts map.collaborators.inspect
+    unless map.collaborators
+      map.collaborators.each do |c |
+        puts c.inspect
+        ustuff = User.find(c.user_id)
+        collabo_hash[ustuff.id] = ustuff.login
       end
     end
     return collabo_hash
@@ -109,7 +107,7 @@ module ApplicationHelper
 
 
   def get_map_coverphoto(map, http)
-    unless http == false
+    if http
       user_gallery_id = UserGallery.where(['map_id = ?', map.id]).first
     else
       usr_gallery_id = map.load(:include => 'user_galleries')
@@ -126,13 +124,14 @@ module ApplicationHelper
   end
 end
 
-def get_map_coverphotos(maps)
-  coverphotos = Array.new
+
+def get_map_coverphotos(maps, http)
+  #coverphotos = Array.new
   maps.each do | map |
-    unless http == false
+    if http
       user_gallery_id = UserGallery.where(['map_id = ?', map.id]).first
     else
-      usr_gallery_id = map.load(:include => 'user_galleries')
+      user_gallery_id = map.load(:include => 'user_galleries')
     end
     unless map.coverphoto.blank?
       coverphoto = Photo.find(map[:coverphoto])
@@ -142,9 +141,8 @@ def get_map_coverphotos(maps)
     else
       map.coverphoto_name = "/assets/test/grid-09.png"
     end
-    coverphotos << map.coverphoto_name
   end
-  return coverphotos
+  return maps
 end
 
 

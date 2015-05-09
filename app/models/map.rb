@@ -19,7 +19,7 @@ class Map < ActiveRecord::Base
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
-  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt,:whirls
+  attr_accessible :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list, :finished, :finished_dt,:whirls, :coverphoto
 
   validates_presence_of :name, :slug, :author, :lat, :lon
   validates_uniqueness_of :slug

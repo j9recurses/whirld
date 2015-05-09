@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_profile_attributes
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_profile_attributes, :encrypted_password
   # Include default devise modules. Others available are:
   # :token_authenticatable, :lockable, :timeoutable and :activatable
   has_many :collaborators

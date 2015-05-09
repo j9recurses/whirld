@@ -15,7 +15,7 @@ class UserProfilesController < ApplicationController
     @maps = Map.find(@maps)
    # @user.maps.where(["maps.finished_dt != ?",  ])
     @maps = get_maptags(@maps)
-    @maps = get_map_coverphotos(@maps, http=true)
+    @maps = get_map_coverphotos(@maps)
     @collaborators = UserProfile.get_collaborators(@maps)
     @user_photos  = UserProfile.get_photo_gallery(@user.id)
     @photos_contributed =  Photo.count(:conditions => ["user_id = ?", @user.id])

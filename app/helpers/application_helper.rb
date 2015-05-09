@@ -85,67 +85,55 @@ module ApplicationHelper
   end
 
 
-  def collaborators_list(map, http)
+  def collaborators_list(map)
+    puts "****"
+    puts map.inspect
+    puts "******"
     collabo_hash = Hash.new
-    if http
-      map =  map.collaborators
-    else
+    puts map.collaborators.inspect
+    if map.collaborators.blank?
       map =  map.load(:include => 'collaborators')
     end
-    puts "****"
-    puts map.collaborators.inspect
-    unless map.collaborators
-      map.collaborators.each do |c |
-        puts c.inspect
-        ustuff = User.find(c.user_id)
-        collabo_hash[ustuff.id] = ustuff.login
-      end
+    map.collaborators.each do |c |
+      puts c.inspect
+      ustuff = User.find(c.user_id)
+      collabo_hash[ustuff.id] = ustuff.login
     end
     return collabo_hash
   end
 
 
 
-  def get_map_coverphoto(map, http)
-    if http
-      user_gallery_id = UserGallery.where(['map_id = ?', map.id]).first
-    else
-      usr_gallery_id = map.load(:include => 'user_galleries')
-    end
+  def get_map_coverphoto(map)
+    user_gallery = UserGallery.where(['map_id = ?', map.id]).first
     unless map.coverphoto.blank?
-      coverphoto = Photo.find(map[:coverphoto])
-      #this will work once we have real data
-      map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{user_gallery_id[0]}/#{coverphoto[:photo_file]}"
-      #map.coverphoto_name = "/assets/test/grid-09.png"
-    else
-      map.coverphoto_name = "/assets/test/grid-09.png"
+      coverphoto = Photo.find(map.coverphoto)
+      map.user_gallery_id = user_gallery.id
+      map.coverphoto_name = coverphoto.photo_file
     end
-    return map.coverphoto_name
+    return map
   end
+
+
+  def get_map_coverphotos(maps)
+    #coverphotos = Array.new
+    maps.each do | map |
+      #  if http
+      user_gallery_id = UserGallery.where(['map_id = ?', map.id]).first
+      unless map.coverphoto.blank?
+        coverphoto = Photo.find(map[:coverphoto])
+        #this will work once we have real data
+        map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{user_gallery_id[0]}/#{coverphoto[:photo_file]}"
+        #map.coverphoto_name = "/assets/test/grid-09.png"
+      else
+        map.coverphoto_name = "/assets/test/grid-09.png"
+      end
+    end
+    return maps
+  end
+
 end
 
 
-def get_map_coverphotos(maps, http)
-  #coverphotos = Array.new
-  maps.each do | map |
-    if http
-      user_gallery_id = UserGallery.where(['map_id = ?', map.id]).first
-    else
-      user_gallery_id = map.load(:include => 'user_galleries')
-    end
-    unless map.coverphoto.blank?
-      coverphoto = Photo.find(map[:coverphoto])
-      #this will work once we have real data
-      map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{user_gallery_id[0]}/#{coverphoto[:photo_file]}"
-      #map.coverphoto_name = "/assets/test/grid-09.png"
-    else
-      map.coverphoto_name = "/assets/test/grid-09.png"
-    end
-  end
-  return maps
-end
-
-
-
-# polyfill for jquery-ujs in rails 2.x
-# see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2
+  # polyfill for jquery-ujs in rails 2.x
+  # see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2

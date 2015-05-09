@@ -146,13 +146,12 @@ class Map < ActiveRecord::Base
   end
 
   ##extra info for ajax'd json back to server
-  def self.search_type(maps, params, http)
+  def self.search_type(maps, params)
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
       #map.ndist = map.sort
       unless params[:location].blank?
-        puts map.inspect
         puts params[:location]
         map.geographic_search = 1
       else
@@ -161,29 +160,33 @@ class Map < ActiveRecord::Base
       if params[:entity]
         map.search_entity = params[:entity]
       end
-      if http == false
-        map.taglist = map.load(:include => 'tags')
-        map.ndist = map.sort
-        map.collaborator_list = map.collaborators_list(map, httpp)
-        get_map_coverphoto(map, false)
-        #ap.coverphoto_name = get_map_coverphoto(map)
-      else
-        map.taglist = map.tags
-        map.collaborator_list = map.collaborators_list(map, http )
-        get_map_coverphoto(map, http)
-        map.search_order = counter
+      map.taglist = map.tags
+      map.collaborator_list = collaborators_list(map)
+      map.user_gallery_id,  map.coverphoto_name = self.get_map_coverphoto(map)
+      map.search_order = counter
+      user_gallery = UserGallery.where(['map_id = ?', map.id]).first
+      unless map.coverphoto.blank?
+        coverphoto = Photo.find(map.coverphoto)
+        map.user_gallery_id = user_gallery.id
+        map.coverphoto_name = coverphoto.photo_file
+        puts map.coverphoto_name
       end
       unless map.votes_for.nil?
         map.whirls =  map.votes_for.size
+        puts map.whirls
       end
       unless map.comment_threads.nil?
         map.comment_count = map.comment_threads.size
       end
       counter = counter + 1
+      puts "**************"
+      puts  map. coverphoto.photo_file
       search_info_maps << map
     end
     return search_info_maps
   end
+
+
 
   has_many :warpables do
     def public_filenames
@@ -202,7 +205,7 @@ class Map < ActiveRecord::Base
 
 
 
-  attr_accessor :collaborator_list, :geographic_search, :taglist, :coverphoto_name,  :search_entity,  :search_order, :ndist, :whirls, :comment_count
+  attr_accessor :collaborator_list, :geographic_search, :taglist,  :search_entity,  :search_order, :ndist, :whirls, :overphoto_name, :comment_count,  :user_gallery_id
   def collaborator_list
     @collaborator_list
   end
@@ -227,12 +230,21 @@ class Map < ActiveRecord::Base
     @taglist = val
   end
 
+
   def coverphoto_name
     @coverphoto_name
   end
 
   def coverphoto_name=(val)
     @coverphoto_name = val
+  end
+
+  def user_gallery_id
+    @user_gallery_id
+  end
+
+  def user_gallery_id=(val)
+    @user_gallery_id = val
   end
 
 

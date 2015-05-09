@@ -10,6 +10,15 @@ json.array!([@maps]) do |json, map|
   json.tags     map.tags
   json.coverphoto maps.coverphoto
   json.taglist  map.taglist
+  json.coverphoto_name   map.coverphoto_name
+  json.collaborator_list  map.collaborator_list
+  json.search_order  map.search_order
+  json.search_entity  map.search_entity
+  json.geographic_search  map.geographic_search
+  json.ndist   map.ndist
+  json..whirls  map.whirls
+  json.user_gallery_id    map.user_gallery_id
+  json.omment_count   map.comment_count
 end
 
 

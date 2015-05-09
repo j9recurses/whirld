@@ -22,20 +22,17 @@ class MapsController < ApplicationController
   def search
     puts "******"
     puts params
-    http = false
     if params[:query ]
       @maps = Map.simple_search(params)
     else
       @maps = Map.where(["finished = 0"])
-      http = true
     end
-    @user = current_user
     unless @maps.blank?
-      @maps = Map.search_type(@maps, params, http)
+      @maps = Map.search_type(@maps, params)
     end
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :ollaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls ]}
+        format.json { render :json => @maps, :methods => [:taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id,  :comment_count  ]}
       else
         format.html { render "maps/index" }
       end

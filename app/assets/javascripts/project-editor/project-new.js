@@ -28,7 +28,19 @@ $(document).ready(function(){
   //   anonymous:  false
 
   // });
+  
+  $('#knitter-map-pane').droppable({
+    accept: '.draggable',
+    activeClass: 'drop-active',
+    hoverClass: 'drop-target',
+    drop: function(e, ui){
+      var container = $(e.target);
+      var img = ui.helper.find('.img-wrapper');
 
+      window.mapKnitter.addImage($(img).data('warpable-url'), $(img).data('warpable-id'));
+
+    }
+  });
 
 });
 

@@ -7,19 +7,19 @@
   <div id='project-top' class='uk-width-3-4'>
   	<section id='project-map' class='uk-grid uk-grid-collapse'>
 	  	<div class='uk-width-7-10'>
-		  	<div id='knitter-map-pane' class='uk-margin-top'>	  		
+		  	<div id='knitter-map-pane' class='uk-margin-top droppable'>	  		
 		  	</div>
 		  </div>
 	  	<div id='project-form' class='uk-width-3-10 uk-margin-top'>
 
-		  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion="{showfirst: false}">
+		  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion>
 
 			  	<!-- Project Title -->
 					<label id='name-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-name">Title
 						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
 						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
 					</label>
-			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top">
 	        	<textarea id='project-name' type="text" placeholder="Project Title" class="uk-width-1-1" maxlength='70'><%=@map.name%></textarea>
 	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='70'>70</small>
 			    </div>
@@ -29,7 +29,7 @@
 						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
 						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
 					</label>
-			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-grid uk-margin-bottom">
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-grid">
 							<div class='uk-width-1-1 uk-margin-top'>
 								<input id='project-location' type="text" placeholder="Location" class="uk-width-1-1" value='<%=@map.location%>'>
 							</div>
@@ -49,18 +49,13 @@
 						<i class='fa fa-spinner uk-hidden fa-spin uk-float-right uk-vertical-align-middle'></i>
 						<i class='fa fa-check-circle uk-animation-fade uk-float-right uk-text-success uk-vertical-align-middle'></i>
 					</label>
-			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top uk-margin-bottom">
+			    <div class="uk-accordion-content uk-padding-remove input-wrapper uk-margin-top">
 	        	<textarea id='project-description' type="text" placeholder="Project Description" class="uk-width-1-1" maxlength='70'><%=@map.description%></textarea>
 	        	<small class='char-limit uk-text-muted uk-invisible' data-limit='140'>140</small>
 			    </div>
 
-			    <hr>
-
-        	
-
-
+			    <label id='cover-photo-label' class='uk-form-label uk-text-muted' for='profile-upload'>Cover Photo:</label>
 			    <div class="uk-form-file" data-uk-tooltip="{pos:'bottom-left'}" title="Upload a cover photo for your project.">
-			    	<label id='cover-photo-label' class='uk-form-label uk-text-muted uk-margin-top' for='profile-upload'>Cover Photo:</label>
   					<div class="uk-placeholder uk-text-center droppable">
 							<i class='fa fa-upload fa-lg uk-text-muted uk-margin-small-right'></i>Upload a cover photo here.
 						</div>
@@ -69,9 +64,6 @@
 			        <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 			      <% end %>
 			    </div>
-
-
-					<hr>
 
 		    	<label id='tags-label' class='uk-form-label uk-text-muted' for='project-tag_list'>Tags:</label>
 		    	<input id='project-tag_list' class='tag-input uk-width-1-1'/>

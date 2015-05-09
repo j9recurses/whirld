@@ -47,25 +47,25 @@
   .button-bar-btw .option-toggle button:hover{ opacity: 1; }
 
 	#knitter-map-pane{
-		/*display: none;*/
 		height: 400px;
 		width: 98%;
 		z-index: 99;
 	}
-	.preview{
-		/*position: relative;*/
+	#knitter-map-pane.drop-active{
+		background: blue;
+		opacity: .5;
+	}
+	#knitter-map-pane.drop-target{
+		background: green;
+		opacity: .5;
 	}
 	.preview .draggable-wrapper{
 		height: 100%;
 		width: 100%;
-		/*position: absolute;*/
 	}
 	.preview .img-wrapper{
 	  width: 100%;
 	  height: 100%;
-/*	  position: absolute;
-	  top: 0;
-	  left: 0;*/
 	}
 	#preview-list{
 	  margin-top: -96px;
@@ -85,7 +85,7 @@
 		font-family: FontAwesome;
 	}
 	.uk-placeholder{
-		min-height: 67px;
+		height: 40px;
 	}
 	.uk-placeholder.drop-active, .uk-grid.drop-active{
 	  background-color: #ebf7fd;

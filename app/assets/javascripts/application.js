@@ -13,7 +13,6 @@
 //= require sparklines/source/sparkline.js
 
 //= require mapknitter.js
-//= require annotations.js
 
 // Everythinge else:
 //= require uikit/js/uikit.min.js

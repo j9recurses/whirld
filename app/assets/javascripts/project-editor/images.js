@@ -9,6 +9,24 @@ var ImageUploader = function(options){
 }
 
 ImageUploader.prototype = {
+
+  coverphoto: function(){
+    var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
+    console.log(url)
+    
+    this.el.fileupload({
+      dataType: 'json',
+      url: url,
+      done: function (e, data) {
+        console.log(data)
+      }, // end done
+      fail: function (e, data) {
+        console.log(data.errorThrown)
+        console.log(data.textStatus);
+        console.log(data.jqXHR);
+      }
+    }); // end fileupload
+  },
   init: function(){
     var pe = new ProjectEditor();
     console.log('Initated: photo uploader')
@@ -94,7 +112,8 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half draggable img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "'data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "'style=\"background-image:url('" + this.options.mediumPath + "')\"></article>";
+    var imgWrapper = "<div class='img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUr + "' data-img-id='" + this.id + "' style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.photoType + "'><div class='draggable'>" + imgWrapper + "</div></article>";
     var el = $(html)
     console.log(el)
     return el;

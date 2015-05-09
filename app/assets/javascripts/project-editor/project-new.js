@@ -20,14 +20,14 @@ $(document).ready(function(){
     anonymous:  false,
   });
 
-  var annotations = new MapKnitter.Annotations({
-    name:   'annotation',
-    map_id: mapId,
-    map:   window.mapKnitter.getMap(),
-    logged_in: true,
-    anonymous:  false
+  // var annotations = new MapKnitter.Annotations({
+  //   name:   'annotation',
+  //   map_id: mapId,
+  //   map:   window.mapKnitter.getMap(),
+  //   logged_in: true,
+  //   anonymous:  false
 
-  });
+  // });
 
 
 });
@@ -121,6 +121,10 @@ ProjectEditor.prototype = {
     // initiate photo uploader
     var p = new ImageUploader();
         p.init();
+    var cp = new ImageUploader({
+      id: 'cover-photo-upload'
+    });
+        cp.coverphoto();
 
     this.uiActions();
 

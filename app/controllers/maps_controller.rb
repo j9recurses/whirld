@@ -26,7 +26,7 @@ class MapsController < ApplicationController
       @maps = Map.simple_search(params)
       @maps = Map.search_type(@maps, params)
     else
-   #   @maps = Map.where(["finished = true"])
+      @maps = Map.where(["finished = true"])
       @maps = Map.search_type(@maps, params)
     end
     respond_to do |format|
@@ -115,7 +115,7 @@ class MapsController < ApplicationController
     @map[:finished_dt] = Time.now
     if @user_gallery.save && @map.save
       @map.create_activity key: 'map.finished', owner: current_user
-      render :js => "window.location = '/maps/#{@map[:slug]}'"
+      # render :js => "window.location = '/maps/#{@map[:slug]}'"
     else
       flash[:notice] = "Error! Could not save project!"
     end

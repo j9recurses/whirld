@@ -1,3 +1,17 @@
+  #cancel, #delete-button{
+		background-color: rgba(18, 18, 18, 0.37);
+		color: white;
+  }
+  #finish-bar{
+	  margin: 0;
+	  position: fixed;
+	  bottom: 0;
+	  right: 15%;
+	  width: 70px;
+	  height: 70px;
+	  z-index: 100;
+  }
+
 #project-creation-2{
 	height: 100%;
 	overflow-y: 100%;
@@ -17,6 +31,8 @@
 	}
 
   .button-bar-btw button{
+    background-color:#7CD1F1;
+    color: white;
     height: 40px;
     width: 40px;
   }
@@ -46,30 +62,47 @@
   .button-bar-btw .option-4{left: 278px;}
   .button-bar-btw .option-toggle button:hover{ opacity: 1; }
 
+  #cover-photo-label{
+  	font-weight: 700;
+  }
+  #delete{
+  	border-right: 1px solid #d5d5d5;
+  }
+
 	#knitter-map-pane{
-		/*display: none;*/
 		height: 400px;
 		width: 98%;
 		z-index: 99;
 	}
-	.preview{
-		/*position: relative;*/
+	#knitter-map-pane.drop-active{
+		background: blue;
+		opacity: .5;
+	}
+	#knitter-map-pane.drop-target{
+		background: green;
+		opacity: .5;
+	}
+	#module-content{
+		padding-right: 30px;
+	}
+	.module .uk-close:hover{
+		color: #d85030!important;
 	}
 	.preview .draggable-wrapper{
 		height: 100%;
 		width: 100%;
-		/*position: absolute;*/
 	}
 	.preview .img-wrapper{
 	  width: 100%;
 	  height: 100%;
-/*	  position: absolute;
-	  top: 0;
-	  left: 0;*/
 	}
 	#preview-list{
 	  margin-top: -96px;
 	  margin-bottom: 100px;
+	}
+	#project-top{
+	  background: #EDEDED;
+		padding-bottom: 20px;
 	}
 	.text-module .text-module-body{
 		height: 204px;
@@ -80,12 +113,16 @@
 	.uk-accordion{
 		font-size: 14px;
 	}
+	.uk-accordion-title{
+		border-bottom: 1px solid #CDCDCD;
+		padding: 0 0 10px 0;
+	}
 	.uk-accordion-title.uk-active::after{
 		content: "\f0d7";
 		font-family: FontAwesome;
 	}
 	.uk-placeholder{
-		min-height: 67px;
+		height: 40px;
 	}
 	.uk-placeholder.drop-active, .uk-grid.drop-active{
 	  background-color: #ebf7fd;

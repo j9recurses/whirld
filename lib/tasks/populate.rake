@@ -1,4 +1,5 @@
-#https://github.com/stympy/faker
+# #https://github.com/stympy/faker
+
 
 require 'populator'
 require 'faker'
@@ -12,6 +13,7 @@ def make_tags(id, type, user_id)
     tag.user_id = user_id
   end
 end
+
 
 def make_comments(id, type, user_id, user_login)
   Comment.populate 5 do | comment|

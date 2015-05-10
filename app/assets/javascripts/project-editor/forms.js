@@ -200,12 +200,22 @@ Form.prototype = {
     }
   },
   tagSave: function(map_id, taglist){
-    var data = {
-      mod_gallery: this.modId,
-      mod_type: this.modType,
-      taglist: taglist,
+    var data;
+    if(map_id){ 
+      data = {
+        mod_gallery: map_id,
+        mod_type: 'map',
+        tagList: taglist
+      }
     }
-    if(map_id){ data['map_id'] = map_id }
+    else{
+      data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType,
+        taglist: taglist,
+      }
+    }
+    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -335,23 +345,26 @@ Form.prototype = {
   // functions for finish button
   finishButton: function(){
     var map_id = $('#project-creation-2').data('map-id');
-    $('#project-finish').on({
+    $('#finish').on({
         click: function(){
           var data_list = [];
 
           $.each($('.module'), function(i, mod){
-            var obj = {};
-            obj[$(mod).data('mod-id')] = $(mod).data('mod-type');
+            var obj = [$(mod).data('mod-id'), $(mod).data('mod-type')];
+
+            // obj[$(mod).data('mod-id')] = $(mod).data('mod-type');
             data_list.push(obj);
           });
 
-          console.log(data_list);
+          console.log(data_list)
+          
           var data =  {
             map_id:  map_id,
             mod_order: JSON.stringify(data_list)
           };
 // mod_order = [ [12(modgallery_id), "grid"], [14, "split"], [14, "text"]
 
+          console.log(data);
           $.ajax({
             url: '/maps/map_info_finish/'+ map_id,// URL HERE,
             data: data,

@@ -42,7 +42,7 @@ ImageUploader.prototype = {
         $('#loader').addClass('uk-hidden');
         $('#preview-list').removeClass('uk-hidden');
 
-        console.log(data.result)
+        console.log(data.result.warpable_url)
 
         var img = new Image({
           updated_at: data.result.updated_at,
@@ -112,8 +112,8 @@ Image.prototype = {
       else{ return 'normal' }
   },
   htmlThumb: function(){
-    var imgWrapper = "<div class='img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUr + "' data-img-id='" + this.id + "' style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
-    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.photoType + "'><div class='draggable'>" + imgWrapper + "</div></article>";
+    var imgWrapper = "<div class='img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "' style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.photoType + "'><div class='draggable draggable-wrapper'>" + imgWrapper + "</div></article>";
     var el = $(html)
     console.log(el)
     return el;
@@ -182,11 +182,10 @@ Image.prototype = {
     }); // end ajax
   },
   init: function(){
-    var self = this;
-    $('.preview').off().on('click', 'img', function(){
-      console.log(this)
-      window.mapKnitter.addImage($(this).data('warpable-url'), $(this).data('warpable-id'));
-    });
+    // var self = this;
+    // $('.preview').off().on('click', '.img-wrapper', function(){
+    //   window.mapKnitter.addImage($(this).data('warpable-url'), $(this).data('warpable-id'));
+    // });
   },
   initUploaded: function(){
     console.log('Initated: uploaded photo');

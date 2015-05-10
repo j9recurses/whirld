@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20150510070833) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
+    t.string   "author",                                           :default => "anonymous"
     t.decimal  "zoom",             :precision => 15, :scale => 10, :default => 2.0
     t.string   "location",                                         :default => ""
     t.string   "static_data",                                      :default => ""
@@ -137,7 +138,6 @@ ActiveRecord::Schema.define(:version => 20150510070833) do
     t.integer  "coverphoto"
     t.text     "tile_url"
     t.datetime "finished_dt"
-    t.string   "author"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true

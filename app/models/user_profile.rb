@@ -8,13 +8,19 @@ class UserProfile < ActiveRecord::Base
   validates_length_of       :last_name,     :maximum => 100
 
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  #tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.get_collaborators(maps)
     collaborators = Hash.new
     maps.each do |map|
-      musers = map.users
-      collaborators[map] = musers
+      musers = Collaborator.where('map_id = ?', map.id).uniq.pluck(:user_id)
+      collabos = Array.new
+       musers.each do |m|
+          colab = User.find(m)
+          collabos << colab
+        end
+      collaborators[map] = collabos
+      puts collaborators[map]
     end
     return collaborators
   end
@@ -43,6 +49,8 @@ class UserProfile < ActiveRecord::Base
     #map_photos = Photo.where(["user_id = ? and is_aerial = true " , user_id])
     return user_photos
   end
+
+
   def self.find_nearby_users(user_profile)
     unless user_profile.lat.blank? or user_profile.lon.blank?
       neighbors = UserProfile.near([user_profile.lat, user_profile.lon], 3000)
@@ -56,6 +64,8 @@ class UserProfile < ActiveRecord::Base
       return neighbor_info
     end
   end
+
+
   def self.neighbor_distance(lat1, lon1, lat2, lon2)
     distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
     return distance

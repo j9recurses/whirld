@@ -91,6 +91,13 @@ gem 'sidekiq'
 gem 'sidekiq-middleware'
 gem 'recommendable'
 
+
+
+gem 'rspec'
+
+
+#factory girl for seeding db
+
 #for deepLearn predicter
 #gem 'delayed_job_active_record'
 #gem 'daemons'

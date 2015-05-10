@@ -5,7 +5,7 @@ class Photo < ActiveRecord::Base
   mount_uploader :photo_file, PhotoFileUploader
   # acts_as_votable
   include PublicActivity::Model
-   tracked owner: Proc.new{ |controller, model| controller.current_user }
+   #tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   def self.make_warpable(photo)
     photo_dir = "#{Rails.root}/public/uploads/#{photo.class.to_s.underscore}/#{photo[:user_gallery_id]}/#{photo[:id]}"

@@ -43,4 +43,7 @@ Whirld::Application.configure do
 
   config.assets.logger = false
 
+
+
+
 end

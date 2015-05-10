@@ -43,7 +43,7 @@ ModuleHtml.prototype = {
     return html
   },
   htmlDropzone: function(){
-    var html = "<div class='uk-placeholder uk-placeholder-large droppable ui-droppable ui-sortable uk-text-center'>" + this.emptyMessage + "</div>";
+    var html = "<div class='uk-placeholder uk-text-muted uk-placeholder-large droppable ui-droppable ui-sortable uk-text-center'>" + this.emptyMessage + "</div>";
     return html;
   },
   htmlHeader: function(){
@@ -64,7 +64,7 @@ ModuleHtml.prototype = {
   },
   split: function(){
     var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-width-1-1' placeholder='Add some text'></textarea></div>";
-    var photo = "<div class='uk-placeholder uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
+    var photo = "<div class='uk-placeholder uk-text-muted uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
     var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "</div>" + this.htmlTaginput() + "</article>";
     return $(html);
   },
@@ -182,6 +182,8 @@ Module.prototype = {
 
           self.mod = self.dropzone.closest('.module');
 
+          console.log(ui.helper.find('.img-wrapper').data('img-id'))
+
           var photo = new ModPhoto({
             modId: self.id,
             modType: self.options.modType,
@@ -189,7 +191,8 @@ Module.prototype = {
             dropzone: self.dropzone,
             modType: self.options.modType,
             ui: ui,
-            path: path
+            path: path,
+            imgId: ui.helper.find('.img-wrapper').data('img-id')
           });
           photo.create();
 

@@ -49,8 +49,7 @@ ModPhoto.prototype = {
   setImg: function(){
     var img = this.ui.draggable.clone();
         img.removeClass('draggable').removeClass('ui-draggable').removeClass('ui.draggable-handle');
-    this.imgId = this.ui.draggable.data('img-id');
-    img.data('img-id', this.imgId);
+    img.data('img-id', this.options.imgId);
     this.img = img;
   },
   setRemoveButton: function(){
@@ -101,7 +100,7 @@ ModPhoto.prototype = {
             modtype: this.options.modType,
             photo_id: this.imgId
           };
-
+    console.log(data)
     $.ajax({
       url: url,
       data: data,

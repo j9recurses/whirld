@@ -1,6 +1,6 @@
 <div data-uk-sticky>
-  <nav id='main-nav' class="wh-navbar uk-navbar uk-navbar-attached">
-    <a class="uk-navbar-brand" href="/">Whirld</a>
+  <nav id='main-nav' class="wh-navbar uk-navbar uk-navbar-attached <%=className%> wh-caps uk-text-large">
+    <a id='wh-logo' class="uk-navbar-brand" href="/" style="background-image:url('assets/logo.png')"></a>
 
     <div class='uk-navbar-content'>
       <%= link_to("Create", maps_new_path ) %>
@@ -8,7 +8,7 @@
 
     <ul class="uk-navbar-nav uk-navbar-flip">
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href="">kbasye<i class="fa fa-caret-down"></i> </a>
+            <a href="">kbasye <i class="fa fa-caret-down"></i> </a>
 
             <div class="uk-dropdown uk-dropdown-navbar" data-uk-dropdown="{mode:'click'}">
                 <ul class="uk-nav uk-nav-navbar">
@@ -24,14 +24,14 @@
         </li>
     </ul>
 
-    <div class="uk-navbar-content uk-navbar-flip">
-        <form id='search-form' class="uk-form uk-margin-remove uk-display-inline-block">
-              <input id='search-bar-keyword' type="text" placeholder="Search">
-
-            <input id='search-bar-location' type="text" placeholder="Location">
-            <button id='search-bar-go' class="search-go uk-button uk-button-primary"><i class='fa fa-search'></i></button>
-        </form>
-
+    
+      <%if className == 'front' %>
+          <div class="uk-invisible uk-navbar-content uk-navbar-flip">
+      <% else %>
+          <div class="uk-navbar-content uk-navbar-flip">
+      <% end %>
+      <%= render :partial => 'maps/search_pieces/top_search_bar' %>
+      
     </div>
   </nav>
 

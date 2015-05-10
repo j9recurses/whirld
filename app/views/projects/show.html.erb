@@ -1,0 +1,20 @@
+<div class='wh-front-img-top uk-position-absolute'>
+	<div id='wh-front-image' class='uk-cover-background uk-height-viewport uk-position-relative' style="background-image:url('assets/front-top.jpg')">
+		 <img class="uk-invisible"  src="<%= asset_path 'front-top.jpg' %>" width="" height="" alt="">
+
+		 <div class="wh-front-image-content uk-position-cover uk-flex uk-flex-top uk-flex-center uk-contrast uk-text-center">
+		 	<div class='uk-width-4-10'>
+		 		<h1 class='wh-caps'>Hello Whirld</h1>
+		 		<span class='wh-subtitle'>online collaboration for aerial imagery</span>
+		 	</div>
+		 </div>
+	</div>
+</div>
+<div id='wh-front-search-bar' class='uk-position-absolute'>
+	<%= render :partial => 'maps/search_pieces/top_search_bar' %>
+</div>
+<div class='wh-front-img-bottom uk-position-absolute uk-width-1-1'>
+	<div id='wh-front-image' class='uk-cover-background uk-height-viewport uk-position-relative' style="background-image:url('assets/front-bottom.jpg')">
+		 <img class="uk-invisible"  src="<%= asset_path 'front-bottom.jpg' %>" width="" height="" alt="">
+	</div>
+</div>

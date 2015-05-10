@@ -15,17 +15,74 @@ body, html{
 .wh-caps {
 	text-transform: uppercase;
 }
-.wh-middle{
-
+#front-page .uk-cover-background{
+  background-position: 0% 0%;
+}
+.wh-front-img-top{
+	top: 0;
+}
+.wh-front-img-top.uk-height-viewport {
+	height: 80vh;
+}
+.wh-front-img-bottom{
+	top: 88vh;
+}
+.wh-front-image-content{
+	padding-top: 16px;
+	/*padding-left: 80px;*/
+}
+.wh-front-image-content h1{
+	font-size: 8em;
+	line-height: 1em;
+}
+#wh-front-search-bar{
+  right: 33%;
+  top: 46vh;
+  z-index: 1000000;
+}
+#wh-front-search-bar input{
+	padding: 20px;
+  opacity: .6;
+}
+	#wh-front-search-bar input:focus{
+		opacity: 1;
+	}
+#wh-front-search-bar #search-bar-go{
+	opacity: .6;
+	padding: 7px;
+  width: 42px;
+}
+	#wh-front-search-bar #search-bar-go:hover{ opacity: 1; }
+#wh-logo{
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 72px;
+}
+.wh-subtitle{
+  font-size: 2em;
+  font-weight: 100;
 }
 .wh-navbar {
 	border-bottom: 1px solid white;
 	padding: 10px 0;
 	z-index: 100;
 }
+.wh-navbar .uk-navbar-content>a:not([class]){
+	color: #333;
+}
 .wh-right-button{
 	border-left: 1px solid #fff;
 }
 .wh-search-bar{
 	padding: 10px 0;
+}
+
+/*Front page modifications*/
+.wh-navbar.front{
+  background: none;
+  border: none;
+}
+
+#front-page .uk-sticky-placeholder{
+	/*position: absolute;*/
 }

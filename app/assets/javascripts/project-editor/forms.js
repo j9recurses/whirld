@@ -233,6 +233,7 @@ Form.prototype = {
     var self = this;
     this.modEl.find('.tag-input').on({
       keyup: function(e){
+        e.preventDefault();
         self.eTarget = $(e.target);
         self.tagAppend(e);
       },
@@ -255,6 +256,8 @@ Form.prototype = {
     var self = this;
     $('#project-tag_list').on({
       keyup: function(e){
+        console.log(e.which)
+        e.preventDefault();
         self.eTarget = $(e.target);
         self.tagAppend(e);
       },

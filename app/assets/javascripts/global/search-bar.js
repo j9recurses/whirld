@@ -60,10 +60,7 @@ SearchBar.prototype = {
 	},
 	htmlTagList: function(item){
 		var tagList = "";
-		console.log(item.taglist)
 		$.each(item.taglist, function(i, tag){
-			console.log(i)
-			console.log(tag)
 			var tagText = "<a class='uk-text-muted' href='search/" + tag.name + "'>" + tag.name + "</a>";
 			tagList += tagText;
 		});
@@ -129,6 +126,21 @@ SearchBar.prototype = {
 		console.log(data)
 		return data;
 	},
+	setPageValues: function(value){
+		if($('#search-page-keyword').val()){
+			$('#search-page-keyword').val(value.query)
+		}
+		else{
+			$('#search-page-keyword').val('Everything');
+		}
+
+		if($('#search-page-location').val()){
+			$('#search-page-location').val(value.location)
+		}
+		else{
+			$('#search-page-location').val('Anywhere');
+		}
+	},
 	// functions for posting queries to server
 	pageGo: function(){
 		var self = this;
@@ -140,37 +152,6 @@ SearchBar.prototype = {
 				$('#search-page-location').autocomplete( "close" );
 			}
 		});
-	},
-	pageSearch: function(data){
-		var self = this;
-		$.ajax({
-			url: '/search',
-			data: data,
-			type: 'get',
-			success: function(data){
-				console.log(data)
-				console.log('Success: results are returning');
-
-				self.resultsCount.text(data.length);
-				self.searchResultsContainer.empty();
-				self.appendProjectResults(data);
-			},
-			error: function(){
-				console.log('Oops something went wrong.')
-			}
-		});
-	},
-	initTopBar: function(){
-		this.keywordAC('search-bar-keyword');
-		this.locationAC('search-bar-location');
-	},
-	initFilterBar: function(){
-		this.keywordAC('search-page-keyword');
-		this.locationAC('search-page-location');
-		this.dropDowns();
-		this.viewSwitch();
-		this.pageGo();
-
 		// $('#search-page-location').on({
 		// 	keyup:function(e){
 		// 		if(e.which == 13){
@@ -188,6 +169,40 @@ SearchBar.prototype = {
 		// 		}
 		// 	}
 		// });
+	},
+	pageSearch: function(data){
+		var value = data;
+		var self = this;
+		$.ajax({
+			url: '/search',
+			data: value,
+			type: 'get',
+			success: function(data){
+				console.log(data)
+				console.log('Success: results are returning');
+
+
+
+				self.resultsCount.text(data.length);
+				self.searchResultsContainer.empty();
+				self.appendProjectResults(data);
+				self.setPageValues(value);
+			},
+			error: function(){
+				console.log('Oops something went wrong.')
+			}
+		});
+	},
+	initTopBar: function(){
+		this.keywordAC('search-bar-keyword');
+		this.locationAC('search-bar-location');
+	},
+	initFilterBar: function(){
+		this.keywordAC('search-page-keyword');
+		this.locationAC('search-page-location');
+		this.dropDowns();
+		this.viewSwitch();
+		this.pageGo();
 		
 	} // end init
 }

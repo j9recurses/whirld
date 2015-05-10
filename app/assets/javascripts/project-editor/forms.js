@@ -161,7 +161,7 @@ Form.prototype = {
         tag.attr('id', tagID);
         tag.on('click', function() {
           $(this).remove();
-          self.tagSave(null, self.tagList());
+          self.tagSave('map', self.tagList());
         });
     return tag;
   },
@@ -199,11 +199,11 @@ Form.prototype = {
       }
     }
   },
-  tagSave: function(map_id, taglist){
+  tagSave: function(map, taglist){
     var data;
-    if(map_id){ 
+    if(map){ 
       data = {
-        mod_gallery: map_id,
+        mod_gallery: $('#project-creation-2').data('map-id'),
         mod_type: 'map',
         tagList: taglist
       }
@@ -256,13 +256,12 @@ Form.prototype = {
     var self = this;
     $('#project-tag_list').on({
       keyup: function(e){
-        console.log(e.which)
         e.preventDefault();
         self.eTarget = $(e.target);
         self.tagAppend(e);
       },
       focusout: function(){
-        self.tagSave($('#project-creation-2').data('map-id'), self.projectTagList());
+        self.tagSave('map', self.projectTagList());
       }
     })
   },

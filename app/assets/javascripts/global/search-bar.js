@@ -123,9 +123,7 @@ SearchBar.prototype = {
 		var self = this;
 		$('#search-page-go').on({
 			click: function(e){
-				console.log(this)
 				e.preventDefault();
-				console.log("Searching...")
 				self.pageSearch(self.getPageValues());
 				$('#search-page-keyword').autocomplete( "close" );
 				$('#search-page-location').autocomplete( "close" );
@@ -140,7 +138,7 @@ SearchBar.prototype = {
 			type: 'get',
 			success: function(data){
 				console.log(data)
-				console.log('Success: user results are returning');
+				console.log('Success: results are returning');
 
 				self.resultsCount.text(data.length);
 				self.searchResultsContainer.empty();

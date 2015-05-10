@@ -67,10 +67,17 @@
 		padding: 0 4px;
 		width: 75px;
 	}
+	.sc-activity{
+		background: #f0f1f2;
+		padding-top: 20px;
+	}
 	.sc-cover{
 	  width: 100%;
 	  height: 200px;
 	  margin-top: -20px;
+	}
+	.sc-meta{
+		font-size: 13px;
 	}
 	.sc-footer{
 		height: 37px;
@@ -81,7 +88,10 @@
 		height: 80px;
 	}
 	.sc-location{
-		padding: 2px 0;
+		/*padding: 2px 0;*/
+	}
+	.sc-main{
+		padding: 15px 15px 5px 20px;
 	}
 	.sc-meta ul{
 		margin-bottom: 0;
@@ -90,7 +100,13 @@
 		height: 40px;
 	  overflow-y: hidden;
 	}
-	.sc-title a:hover { text-decoration: none; }
+	.sc-title a{
+		color: #404041;
+	}
+	.sc-title a:hover { 
+		color: #20a593;
+		text-decoration: none;
+	}
 	#search-results-list{
 		min-height: 385px;
 	}

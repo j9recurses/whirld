@@ -34,7 +34,6 @@ AutoComp.prototype = {
           data: {term: request.term},
           success: function(data) {
             response($.map(data.projects, function(item) {
-              console.log(item)
               return item;
             }));
           },

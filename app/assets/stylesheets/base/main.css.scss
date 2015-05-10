@@ -93,7 +93,12 @@ a.wh-text-muted:hover{
   background: none;
   border: none;
 }
-
-#front-page .uk-sticky-placeholder{
-	/*position: absolute;*/
+.wh-navbar.front .uk-nav-navbar > li > a:hover, .uk-nav-navbar > li > a:focus{
+	background: rgba(32, 165, 147, 0.55);
+}
+.wh-navbar.front .uk-dropdown-navbar{
+	background: rgba(245, 245, 245, 0.5);
+}
+.wh-navbar.front .uk-navbar-nav > li:hover > a, .uk-navbar-nav > li > a:focus, .uk-navbar-nav > li.uk-open > a{
+	background: rgba(245, 245, 245, 0.5);
 }

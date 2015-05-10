@@ -2,6 +2,7 @@
 	<a href='maps_path(card.name)' class="sc-cover uk-cover-background uk-overlay" style="background-image: url('<%=card.coverphoto_name%>');">
 	    <img class="uk-invisible" src="<%=card.coverphoto_name%>" alt="Placeholder image for card.name">
 	</a>
+	
 	<div class='uk-grid uk-grid-collapse'>
 		<div class='sc-activity uk-width-2-10 uk-text-center'>
 			<p>
@@ -18,28 +19,35 @@
 			</p>
 		</div>
 
+
 		<div class='sc-main uk-width-8-10'>
+
 			<div class='sc-header'>
 				<h1 class='sc-title uk-h4 wh-caps uk-text-bold'>
 					<a href='maps_path(card.name)'><%=card.name%></a>
 				</h1>
 			</div>
+
+
 			<div class='sc-meta uk-text-muted uk-margin-bottom'>
 				<span class='sc-location'><%= card.location %></span>  |  <span><%= card.updated_at.strftime("Updated on %B %d, %Y")%></span><br>
 				<span class='sc-collabos'>
 					<i class='fa fa-users uk-text-muted uk-text-small' data-uk-tooltip title="Project collaborators"></i>  
 					<% card.collaborator_list.each do |collabo| %>
-							<a href="/users_profiles/<%=collabo[0]%>"><%=collabo[1]%></a>   
+							<a href="/users_profiles/<%=collabo[0]%>" class='uk-text-small'><%=collabo[1]%></a>   
 					<% end %>
 				</span> 
 			</div>
+
 			<div class='sc-tags uk-subnav uk-text-small uk-width-6-10 uk-float-left uk-text-nowrap'>
 				<span class='uk-text-small'><i class='fa fa-tag uk-text-muted'></i></span>
 				<% card.taglist.each do |tag| %>
 					<a class='uk-text-muted' href='/search/<%=tag.name%>'><%=tag.name%></a>
 				<% end %>
 			</div>
+			
 		</div>
+
 	</div>
 </article>
 

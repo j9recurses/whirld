@@ -37,7 +37,7 @@ class MapsController < ApplicationController
     end
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id]}
+        format.json { render :json => @maps, :methods => [:taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id, :comment_count]}
         format.html {render "maps/index" }
       else
         format.html { render "maps/index" }

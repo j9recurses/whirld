@@ -60,22 +60,33 @@ SearchBar.prototype = {
 	},
 	htmlTagList: function(item){
 		var tagList = "";
+		console.log(item.taglist)
 		$.each(item.taglist, function(i, tag){
-			var tagText = "<a class='uk-text-muted' href='maps/tagged/" + tag + "'>" + tag + "</a>";
+			console.log(i)
+			console.log(tag)
+			var tagText = "<a class='uk-text-muted' href='search/" + tag.name + "'>" + tag.name + "</a>";
 			tagList += tagText;
 		});
 		if(tagList != ""){ return "<span class='uk-text-small'><i class='fa fa-tag uk-text-muted'></i></span>" + tagList }
 			else{ return "" }
 	},
+	htmlCollaboList: function(item){
+		var collabList = "";
+		$.each(item.collaborator_list, function(id, collabo){
+			collabList += "<a href='/users_profiles/" + id + "' class='uk-text-small'>" + collabo + "</a>   ";
+		});
+		if(collabList != ""){ return "<i class='fa fa-users uk-text-muted uk-text-small' data-uk-tooltip title='Project collaborators'></i> " + collabList }
+			else{ return "" } 
+	},
 	htmlProjectResult: function(item){
 		var commentCount = 100; 
 		var voteCount = 4000;
-		console.log(item)
-		var thumb = "<a href='/maps/" + item.id + "' class='sc-cover uk-cover-background uk-overlay' style=\"background-image: url('/uploads/photo/" + item.user_id + "/" + item.coverphoto + "/" + item.photo_file + "');\"><img class='uk-invisible' src='/uploads/photo/13/31/NorthBerkeley.jpg' alt='" + item.name + "'><div class='sc-location uk-text-contrast wh-caps uk-overlay-panel uk-overlay-bottom uk-overlay-background'><div class='uk-container '>" + item.location + "</div></div></a>";
-		var title = "<div class='uk-container uk-margin-top'><div class='sc-header'><h1 class='sc-title uk-h4 wh-caps uk-text-bold'><a href='/maps/" + item.id + "'>" + item.name + "</a></h1></div><div class='sc-meta uk-text-muted uk-text-small'><ul class='uk-subnav uk-subnav-line'><li class='uk-active'>Posted by <a href='/users_profiles/" + item.user_id + "'>kbasye</a></li><li>Updated on " + this.htmlUpdatedPretty(item) + "</li></ul></div></div>";
-		var activity = "<ul class='uk-subnav uk-text-small uk-float-right uk-width-4-10'><li class='uk-width-1-2 uk-text-muted'><i class='fa fa-comment uk-text-muted'></i> <span id='sc-comment-count' class='uk-text-muted'>" + commentCount + "</span></li><li class='uk-width-1-2 uk-text-muted'><i class='fa fa-heart uk-text-muted'></i> <span id='sc-whirl-count' class='uk-text-muted'>" + voteCount + "</span></li></ul>";
-		var footer = "<div class='sc-footer uk-container'><div class='sc-tags uk-subnav uk-text-small uk-width-6-10 uk-float-left uk-text-nowrap'>" + this.htmlTagList(item) + "</div>" + activity + "</div>"
-		return "<article class='search-card mix' data-map-id='" + item.id + "' data-updated='" + this.updatedInt(item) + "' data-relevant='" + item.search_order + "'>" + thumb + title + "<hr>" + footer + "</article>";
+		var thumb = "<a href='/maps/" + item.id + "' class='sc-cover uk-cover-background uk-overlay' style=\"background-image: url('" + item.coverphoto_name + "');\"><img class='uk-invisible' src='" + item.coverphoto_name + "' alt='" + item.name + "'/></a>";
+		var activity = "<div class='sc-activity uk-width-2-10 uk-text-center'><p><i class='fa fa-users wh-text-green' data-uk-tooltip title='No. of colaborators'></i><br><span id='sc-collabo-count' class='uk-text-small uk-text-muted'>" + Object.keys(item.collaborator_list).length + "</span></p><p><i class='fa fa-comment wh-text-green'></i><br><span id='sc-comment-count' class='uk-text-small uk-text-muted'>" + item.comment_count + "</span></p><p><i class='fa fa-heart wh-text-green' data-uk-tooltip title='No. of colaborators'></i><br><span id='sc-whirl-count' class='uk-text-small uk-text-muted' data-uk-tooltip title='No. of Whirls'>" + item.whirls + "</span></p></div>"
+		var header = "<div class='sc-header'><h1 class='sc-title uk-h4 wh-caps uk-text-bold'><a href='/maps/" + item.name + "'>" + item.name + "</a></h1></div>"
+		var meta = "<div class='sc-meta uk-text-muted uk-margin-bottom'><span class='sc-location'>" + item.location + "</span>  |  <span> " + item.updated_at + "</span><br><span class='sc-collabos'>" + this.htmlCollaboList(item) + "</span></div>";
+		var tags = "<div class='sc-tags uk-subnav uk-text-small uk-width-6-10 uk-float-left uk-text-nowrap'>" + this.htmlTagList(item) + "</div>";
+		return "<article class='search-card mix' data-map-id='" + item.id + "' data-updated='" + this.updatedInt(item) + "' data-relevant='" + item.search_order + "'>" + thumb + "<div class='uk-grid uk-grid-collapse'>" + activity + "<div class='sc-main uk-width-8-10'>" + header + meta + tags + "</div></article>";
 	},
 	appendProjectResults: function(data){
 		var self = this;

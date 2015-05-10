@@ -151,6 +151,10 @@ SearchBar.prototype = {
 			}
 		});
 	},
+	initTopBar: function(){
+		this.keywordAC('search-bar-keyword');
+		this.locationAC('search-bar-location');
+	},
 	initFilterBar: function(){
 		this.keywordAC('search-page-keyword');
 		this.locationAC('search-page-location');

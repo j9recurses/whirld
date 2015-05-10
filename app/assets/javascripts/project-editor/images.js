@@ -13,7 +13,7 @@ ImageUploader.prototype = {
   coverphoto: function(){
     // var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
     var url = "/user_galleries/" + this.user_gallery_id + "/photos";
-    
+
     this.el.fileupload({
       dataType: 'json',
       url: url,
@@ -126,7 +126,7 @@ Image.prototype = {
 
     var self = this;
     self.thumbEl.find('.img-wrapper').off().on({
-      mouseenter: function(){ 
+      mouseenter: function(){
           self.removeButton.removeClass('uk-hidden');
        },
       mouseleave: function(){ self.removeButton.addClass('uk-hidden'); }

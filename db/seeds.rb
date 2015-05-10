@@ -79,7 +79,7 @@ end
 def map_module_order(maps)
   maps.each do |map|
     mod_order_list = Array.new
-    ug_id = UserGalleries.where(["map_id = ?" map.id])
+    ug_id = UserGalleries.where(["map_id = ?", map.id])
     user_gallery_grid_ids = UserGalleryGrid.where(['user_gallery_id = ?', ug_id.id]).pluck([:id])
     order_list = Array.new
    user_gallery_grid_ids.each do | grid|
@@ -91,8 +91,7 @@ def map_module_order(maps)
     ug_id.save
   end
 end
-  ug_id = UserGallery.where(["map_id = ?", map.id]).update_all(:module_order => "[[459,\"grid\"]]")
-.where(:unique_id => x).update_all(:name => "x")
+
 
 ####main#######
 filedir = "app/assets/images/test/faker"
@@ -101,9 +100,9 @@ maps_coverphoto_img = 'teagarden.jpg'
 images = ['grid-02.jpg', 'grid-04.jpg',  'grid-06.jpg', 'grid-09.png', 'grid-10.png', 'teagarden.jpg']
 maps = Map.all
 users = User.all
-#get_profile_pics(users, filedir, userprofile_image)
-#get_collabos(maps, users)
-#coverphoto_maps(maps, filedir, maps_coverphoto_img)
-#upload_map_images(filedir, images, maps)
+get_profile_pics(users, filedir, userprofile_image)
+get_collabos(maps, users)
+coverphoto_maps(maps, filedir, maps_coverphoto_img)
+upload_map_images(filedir, images, maps)
 make_gallery_grids(maps)
 map_module_order(maps)

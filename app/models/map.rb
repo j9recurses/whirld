@@ -78,14 +78,17 @@ class Map < ActiveRecord::Base
         indexes :description,   type: 'string', analyzer: 'snowball'
         indexes :lat_lon, type: 'geo_point'
         indexes :id, :index    => :not_analyzed
+        indexes :tags,  type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
       end
 
-      indexes :tags do
-        indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
-      end
+    #  indexes :tags do
+     #   indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: 'keyword'
+     # end
     end
 
   end
+
+
 
   def lat_lon
     [lat, lon].join(',')
@@ -93,14 +96,23 @@ class Map < ActiveRecord::Base
 
   def to_indexed_json
     # to_json(only: ['name', 'description'], methods: ['lat_lon'])
-    to_json(:include => [:tags], :methods => [:lat_lon])
+    to_json(:include => [:tags], :methods => [:lat_lon, :tag_name])
   end
 
   def self.simple_search(params)
     unless params[:location].blank?
       point  = self.get_search_cords(params[:location])
-      unless params[:query].blank?
-        s = Tire.search('maps') { query { match [:name, :description, :name],  params[:query]  } }
+      unless params[:query].blank? || params[':query'].blank?
+        if params[':query']
+           s = Tire.search('maps') do
+            query do
+              match params[':query'], fields: [:name, :tags, :description, :location],  fuzziness: 2
+             # { match ,  fields:[:name, :description, :tags], params[':query'], fuzziness: 2  } }
+       end
+     end
+        else
+        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[:query], fuzziness: 2  } }
+        end
       else
         s = Tire.search('maps') { query { all } }
       end
@@ -114,7 +126,7 @@ class Map < ActiveRecord::Base
       results = s.results
     else
       results = Map.search do
-        query { match [:name, :description, :name],  params[:query] }
+        query { match [:name, :description, :tags],  params[:query] }
       end
     end
     return results

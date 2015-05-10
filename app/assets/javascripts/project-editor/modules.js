@@ -39,7 +39,7 @@ ModuleHtml.prototype = {
     }
   },
   htmlCaption: function(){
-    var html = "<input class='caption uk-width-1-1' placeholder='Describe your content.'/><small class='char-limit uk-invisible' data-limit='70'>70</small>";
+    var html = "<div class='uk-form width-1-1'><textarea class='caption uk-width-1-1' placeholder='Describe your content.'</textarea><small class='char-limit uk-invisible' data-limit='70'>70</small></div>";
     return html
   },
   htmlDropzone: function(){
@@ -55,11 +55,11 @@ ModuleHtml.prototype = {
     return html
   },
   comparison: function(){
-    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + this.htmlTaginput(); + "</article>";
+    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   grid: function(){
-    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlCaption() + this.htmlTaginput() + "</div></article>";
+    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   split: function(){
@@ -282,6 +282,10 @@ Module.prototype = {
         else if(self.options.modType == 'text'){
           var txtField = new Form({ modAttrId: self.modEl.attr('id') });
               txtField.textField();
+        }
+        else if(self.options.modType == 'grid' || self.options.modType == 'comparison'){
+          var caption = new Form({ modAttrId: self.modEl.attr('id') });
+              caption.captionField();
         }
 
       },

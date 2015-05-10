@@ -23,16 +23,16 @@
             </div>
         </li>
     </ul>
-
+ <!-- addd form to this to add search  here -->
     <div class="uk-navbar-content uk-navbar-flip">
-        <form id='search-form' class="uk-form uk-margin-remove uk-display-inline-block">
-              <input id='search-bar-keyword' type="text" placeholder="Search">
-
-            <input id='search-bar-location' type="text" placeholder="Location">
-            <button id='search-bar-go' class="search-go uk-button uk-button-primary"><i class='fa fa-search'></i></button>
+      <%= form_tag  search_path, :id => "search-form", :class => "uk-form uk-margin-remove uk-display-inline-block" do  %>
+            <%= text_field_tag :query ,  nil,  id: "search-bar-keyword", placeholder: "Search" %>
+            <%= text_field_tag :location, nil, id: "search-bar-location" %>
+            <%= submit_tag "submit", class: "search-go uk-button uk-button-primary", id:"search-bar-go" %>
+            <%end%>
+            <!--need to for button: i class='fa fa-search' -->
         </form>
-
-    </div>
+   </div>
   </nav>
 
   <% if className == 'search' %>

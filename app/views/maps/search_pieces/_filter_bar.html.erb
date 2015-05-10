@@ -1,7 +1,7 @@
 <nav id='search-filter-bar' class="uk-navbar wh-search-bar">
 
   <span id='count-container' class="uk-navbar-content uk-h2 uk-text-center">
-    <span id='search-results-count'>1,333</span>
+    <span id='search-results-count'><%= @maps.size  %></span>
   </span>
 
   <div id='search-page-entity' class="wh-select uk-button-dropdown uk-navbar-nav" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false" data-uk-tooltip="{pos:'top-left'}" title="Change your search results.">
@@ -18,7 +18,7 @@
   </div>
 
   <div class="uk-navbar-content">featuring</div>
-  
+
   <div class="uk-navbar-content uk-hidden-small">
       <form class="uk-form uk-margin-remove uk-display-inline-block">
           <input id='search-page-keyword' type="text" placeholder="Keyword" value="Your Query">

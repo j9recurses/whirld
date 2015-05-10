@@ -2,7 +2,7 @@ require 'open3'
 include ApplicationHelper
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
-  before_filter :authenticate_user!,  :except => [:index, :show, :images]
+  before_filter :authenticate_user!,  :except => [:index, :show, :images, :search]
   layout :resolve_layout
 
   def resolve_layout
@@ -20,18 +20,25 @@ class MapsController < ApplicationController
   end
 
   def search
-    puts "******"
+    puts "********************"
+    puts "***in here form***"
     puts params
-    if params[:query ]
+    puts "**************"
+    if params[:query ] or params[':query']
+    puts "********************"
+    puts "***in here query form***"
       @maps = Map.simple_search(params)
       @maps = Map.search_type(@maps, params)
+      puts @maps
     else
-      @maps = Map.where(["finished = true"])
+      puts params
+      @maps = Map.where(["finished = 0"])
       @maps = Map.search_type(@maps, params)
     end
     respond_to do |format|
       if params[:query ]
         format.json { render :json => @maps, :methods => [:taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id]}
+        format.html {render "maps/index" }
       else
         format.html { render "maps/index" }
       end

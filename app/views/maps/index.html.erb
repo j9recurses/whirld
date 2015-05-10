@@ -10,9 +10,9 @@
 	</div>
 
 	<div id='search-results-list' class='container'>
-		<%# @projects.each do |card| %>
-			<%#= render :partial => "maps/search_pieces/search_card", :card => card %>
-		<%# end %>
+			<% @maps.each do |card| %>
+			<%= render :partial => "maps/search_pieces/search_card", :locals => {:card => card} %>
+		<%end %>
 	</div>
 
 </div>

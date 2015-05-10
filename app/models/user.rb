@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_one :user_profile
   has_many :tags, :as => :taggable, dependent: :destroy
 
-  recommends :maps, :photos, :comments, :user_gallery_grids
+  #recommends :maps, :photos, :comments, :user_gallery_grids
 
 
 

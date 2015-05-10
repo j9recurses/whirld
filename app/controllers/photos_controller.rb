@@ -30,6 +30,8 @@ class PhotosController < ApplicationController
 
 
   def create
+    puts "******"
+    puts params
     @photo = @user_gallery.photos.new(params[:photo])
     @photo[:user_id] = current_user.id
     if @photo.save

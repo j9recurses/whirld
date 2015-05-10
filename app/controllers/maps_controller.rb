@@ -188,8 +188,18 @@ class MapsController < ApplicationController
     params.delete :controller
     params.delete :_method
     params.delete :format
+    params.delete "user-gal-id"
     unless params[:name].nil?
       params[:slug] = params[:name]
+    end
+    if params[:photo]
+      user_gallery_id = UserGallery.where(["map_id = ?", @map.id]).pluck([:id])
+      @user_gallery = UserGallery.find(user_gallery_id)
+      @photo =  @user_gallery.photos.new(params[:photo])
+      @photo.user_id = current_user.id
+      @photo.save
+      params[:coverphoto] = @photo.id
+      params.delete :photo
     end
     respond_to do |format|
       if @map.update_attributes(params)

@@ -51,7 +51,7 @@
 <!--- should out the below in a helper method later dot DRY it up?  -->
    <!-- splits -->
 
-   <%= mod_orders =  @user_gallery.module_order %>
+   <% mod_orders =  eval(@user_gallery.module_order) %>
 	    <%= mod_orders.inspect %> </h1>
 		<% unless mod_orders.nil?%>
 		<% mod_orders.each do | mod| %>

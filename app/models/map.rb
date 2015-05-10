@@ -150,7 +150,10 @@ class Map < ActiveRecord::Base
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
-      #map.ndist = map.sort
+      #unless map.sort.blank?
+       # distance_away = map.sort
+      #end
+      map = Map.find(map.id)
       unless params[:location].blank?
         puts params[:location]
         map.geographic_search = 1
@@ -160,27 +163,23 @@ class Map < ActiveRecord::Base
       if params[:entity]
         map.search_entity = params[:entity]
       end
+      puts map.name
+      #map.ndist = distance
       map.taglist = map.tags
       map.collaborator_list = collaborators_list(map)
-      map.user_gallery_id,  map.coverphoto_name = self.get_map_coverphoto(map)
       map.search_order = counter
-      user_gallery = UserGallery.where(['map_id = ?', map.id]).first
-      unless map.coverphoto.blank?
-        coverphoto = Photo.find(map.coverphoto)
-        map.user_gallery_id = user_gallery.id
-        map.coverphoto_name = coverphoto.photo_file
-        puts map.coverphoto_name
-      end
+      coverphoto = Photo.find(map.coverphoto)
+      map.user_gallery_id = coverphoto.user_gallery_id
+      map.coverphoto_name = coverphoto.photo_file.medium.url
+      puts "****here****"
+      puts map.coverphoto_name
       unless map.votes_for.nil?
-        map.whirls =  map.votes_for.size
-        puts map.whirls
+        map.whirls = map.votes_for.size
       end
       unless map.comment_threads.nil?
         map.comment_count = map.comment_threads.size
       end
       counter = counter + 1
-      puts "**************"
-      puts  map. coverphoto.photo_file
       search_info_maps << map
     end
     return search_info_maps
@@ -205,80 +204,52 @@ class Map < ActiveRecord::Base
 
 
 
-  attr_accessor :collaborator_list, :geographic_search, :taglist,  :search_entity,  :search_order, :ndist, :whirls, :overphoto_name, :comment_count,  :user_gallery_id
-  def collaborator_list
-    @collaborator_list
-  end
-
-  def collaborator_list=(val)
-    @collaborator_list = val
-  end
-
-  def geographic_search
-    @geographic_search
-  end
-
-  def geographic_search=(val)
-    @geographic_search = val
-  end
-
-  def taglist
-    @taglist
-  end
-
-  def taglist=(val)
-    @taglist = val
-  end
+  attr_accessor :search_order, :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
 
 
-  def coverphoto_name
-    @coverphoto_name
-  end
-
-  def coverphoto_name=(val)
-    @coverphoto_name = val
-  end
-
-  def user_gallery_id
-    @user_gallery_id
-  end
-
-  def user_gallery_id=(val)
-    @user_gallery_id = val
-  end
 
 
-  def search_order
-    @search_order
-  end
+  # #attr_accessor  :search_order
+  # def search_order
+  #   @search_order
+  # end
 
-  def search_order=(val)
-    @search_order = val
-  end
+  # def search_order=(val)
+  #   @search_order = val
+  # end
 
-  def search_entity
-    @search_entity
-  end
+  # def search_entity
+  #   @search_entity
+  # end
 
-  def search_entity=(val)
-    @search_entity= val
-  end
+  # def search_entity=(val)
+  #   @search_entity= val
+  # end
 
-  def ndist
-    @ndist
-  end
+  # def ndist
+  #   @ndist
+  # end
 
-  def ndist=(val)
-    @ndist = val
-  end
+  # def ndist=(val)
+  #   @ndist = val
+  # end
 
-  def whirls
-    @whirls
-  end
+  # def whirls
+  #   @whirls
+  # end
 
-  def whirls=(val)
-    @whirls = val
-  end
+  # def whirls=(val)
+  #   @whirls = val
+  # end
+
+  #  def comment_count
+  #   @comment_count
+  # end
+
+  # def comment_count=(val)
+  #   @comment_count = val
+  # end
+
 
 
   def validate

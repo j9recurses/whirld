@@ -16,7 +16,7 @@ json.array!([@maps]) do |json, map|
   json.search_entity  map.search_entity
   json.geographic_search  map.geographic_search
   json.ndist   map.ndist
-  json..whirls  map.whirls
+  json.whirls  map.whirls
   json.user_gallery_id    map.user_gallery_id
   json.omment_count   map.comment_count
 end

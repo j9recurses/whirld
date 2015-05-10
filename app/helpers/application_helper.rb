@@ -86,9 +86,6 @@ module ApplicationHelper
 
 
   def collaborators_list(map)
-    puts "****"
-    puts map.inspect
-    puts "******"
     collabo_hash = Hash.new
     puts map.collaborators.inspect
     if map.collaborators.blank?
@@ -103,16 +100,6 @@ module ApplicationHelper
   end
 
 
-
-  def get_map_coverphoto(map)
-    user_gallery = UserGallery.where(['map_id = ?', map.id]).first
-    unless map.coverphoto.blank?
-      coverphoto = Photo.find(map.coverphoto)
-      map.user_gallery_id = user_gallery.id
-      map.coverphoto_name = coverphoto.photo_file
-    end
-    return map
-  end
 
 
   def get_map_coverphotos(maps)

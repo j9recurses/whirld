@@ -3394,7 +3394,7 @@ select.uk-form-width-mini {
 /* Active */
 .uk-button-primary:active,
 .uk-button-primary.uk-active {
-  background-color: #0091ca;
+  background-color: #20A554;
   color: #ffffff;
 }
 /*
@@ -7973,7 +7973,7 @@ a.uk-thumbnail:focus {
 }
 .uk-contrast .uk-button-primary:active,
 .uk-contrast .uk-button-primary.uk-active {
-  background-color: #0091ca;
+  background-color: #20A554;
   color: #ffffff;
 }
 .uk-contrast .uk-icon-hover {

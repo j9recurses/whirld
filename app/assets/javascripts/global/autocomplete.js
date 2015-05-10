@@ -33,7 +33,7 @@ AutoComp.prototype = {
           dataType: "json",
           data: {term: request.term},
           success: function(data) {
-            response($.map(data, function(item) {
+            response($.map(data.projects, function(item) {
               console.log(item)
               return item;
             }));
@@ -54,7 +54,7 @@ AutoComp.prototype = {
       var category = null;
       // var exploreAll = "<li class='browse'><a href='/all'>Explore the Whole Whirld <i class='fa fa-angle-right pull-right'></i></a></li>";
       // ul.append(exploreAll)
-      // ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
+      ul.append("<li class='ui-autocomplete-category'>" + 'Projects' + "</li>");
       $.each(items, function(i, item){
         // if (item.category != category) {
         //   category = item.category;

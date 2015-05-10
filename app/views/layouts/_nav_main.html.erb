@@ -29,7 +29,9 @@
       <% else %>
           <div class="uk-navbar-content uk-navbar-flip">
       <% end %>
-      <%= render :partial => 'maps/search_pieces/top_search_bar' %>
+      <% unless className == 'front' %>
+        <%= render :partial => 'maps/search_pieces/top_search_bar' %>
+      <% end %>
       
          </div>
   </nav>

@@ -11,12 +11,15 @@ var ImageUploader = function(options){
 ImageUploader.prototype = {
 
   coverphoto: function(){
-    var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
-    console.log(url)
+    // var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
+    var url = "/user_galleries/" + this.user_gallery_id + "/photos";
     
     this.el.fileupload({
       dataType: 'json',
       url: url,
+      progressall: function(){
+        console.log('progressall: Uploading cover photo??')
+      },
       done: function (e, data) {
         console.log(data)
       }, // end done

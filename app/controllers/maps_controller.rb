@@ -37,7 +37,7 @@ class MapsController < ApplicationController
     end
     respond_to do |format|
       if params[:query ]
-        format.json { render :json => @maps, :methods => [:taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id]}
+        format.json { render :json => @maps, :methods => [:search_geo_name, :search_term , :search_term_bar, :taglist, :collaborator_list, :coverphoto_name, :search_order, :geographic_search, :search_entity, :ndist, :whirls, :user_gallery_id, :comment_count]}
         format.html {render "maps/index" }
       else
         format.html { render "maps/index" }
@@ -84,7 +84,6 @@ class MapsController < ApplicationController
     @map.user_id = current_user.id
     @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
     gallery = UserGallery.new()
-    gallery.name = @map.slug
     gallery.user_id = @user.id
 
     if @map.save && gallery.save
@@ -115,23 +114,32 @@ class MapsController < ApplicationController
 
   def map_info_finish
     @map = Map.find params[:id]
-    @map[:finished] = 0
+   # user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
+   # @user_gallery = UserGallery.find(user_gallery_id[0])
+    puts params[:mod_order].inspect
+   # @user_gallery = UserGallery.where(["map_id = ?", @map.id]).first
+   # @user_gallery.module_order  = params[:mod_order]
+   # @user_gallery.save
+    @map.finished = 0
+    @map.finished_dt = Time.now
+    @map.author = current_user
+    @map.save
+    puts @map.errors.messages
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
-    @user_gallery[:module_order] = params[:mod_order]
-    @map[:finished_dt] = Time.now
-    if @user_gallery.save && @map.save
-      @map.create_activity key: 'map.finished', owner: current_user
-      # render :js => "window.location = '/maps/#{@map[:slug]}'"
-    else
-      flash[:notice] = "Error! Could not save project!"
-    end
+    @user_gallery.module_order  = params[:mod_order]
+      if @map.save && @user_gallery.save
+       render :js => "window.location = '/maps/#{@map.name}'"
+      else
+      render json: "error! something went wrong!!"
+      end
   end
 
   def show
     @map = Map.find params[:id]
     @map.taglist = @map.tags.pluck([:name])
     @user_gallery = UserGallery.where(['map_id = ?', @map]).first
+    puts @user_gallery.inspect
     @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
     @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
     @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])

@@ -154,8 +154,15 @@ class Map < ActiveRecord::Base
        # distance_away = map.sort
       #end
       map = Map.find(map.id)
+      unless params[:query].blank?
+        map.search_term =  params[:query]
+      end
+      unless params[':query'].blank?
+        map.search_term_bar = params[':query']
+      end
       unless params[:location].blank?
         map.geographic_search = 1
+        map.search_geo_name = params[:location]
       else
         map.geographic_search = 0
       end
@@ -200,7 +207,7 @@ class Map < ActiveRecord::Base
 
 
 
-  attr_accessor :search_order, :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
+  attr_accessor :search_order, :search_term, :search_term_bar,  :search_geo_name,  :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
 
 
 

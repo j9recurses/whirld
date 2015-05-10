@@ -17,7 +17,6 @@ Whirld::Application.routes.draw do
   post 'maps' => 'maps#create' # legacy, will be replaced by resourceful route
   put 'map/:id' => 'maps#update' # legacy, will be replaced by resourceful route
   get 'search/:id' => 'maps#search'
-
   get 'map/update/:id' => 'maps#update' # legacy
   get 'map/region/:id' => 'maps#region'
   get 'map/license/:id' => 'maps#license'
@@ -29,7 +28,7 @@ Whirld::Application.routes.draw do
   get 'maps/:id/warpables' => 'maps#images' # deprecate this in favor of resourceful route below; this is just to override maps/:id
   post 'maps/:map_id/warpables' => 'images#create' # deprecate this in favor of resourceful route below; this is just to override maps/:id
   get 'export/progress/:id' => 'export#progress'
-  get 'maps/:id' => 'maps#show'
+  #get 'maps/:id' => 'maps#show' , as: :map
   get 'map/:id', to: redirect('/maps/%{id}')
   get 'embed/:id' => 'maps#embed'
   post 'maps/export/:id' => 'maps#export'

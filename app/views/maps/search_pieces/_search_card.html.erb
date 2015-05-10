@@ -1,9 +1,9 @@
 <article class='search-card mix' data-map-id='1' data-updated='2' data-relevant='1'>
 
 	<a href='maps_path(card.name)' class="sc-cover uk-cover-background uk-overlay" style="background-image: url('<%=card.coverphoto_name%>');">
-	    <img class="uk-invisible" src="<%= asset_path 'grid-03.jpg' %>" alt="Placeholder">
+	    <img class="uk-invisible" src="<%=card.coverphoto_name%>" alt="Placeholder">
 		<div class='sc-location uk-text-contrast wh-caps uk-overlay-panel uk-overlay-bottom uk-overlay-background'>
-			<div class='uk-container '>Berkeley, California</div>
+			<div class='uk-container '><%=card.location%></div>
 		</div>
 	</a>
 	<div class='uk-container uk-margin-top'>

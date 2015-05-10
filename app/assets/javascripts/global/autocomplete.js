@@ -34,8 +34,12 @@ AutoComp.prototype = {
           data: {term: request.term},
           success: function(data) {
             response($.map(data, function(item) {
+              console.log(item)
               return item;
             }));
+          },
+          error: function(data){
+            console.log(data)
           }
         });
       }

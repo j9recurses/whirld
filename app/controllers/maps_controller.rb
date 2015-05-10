@@ -2,7 +2,7 @@ require 'open3'
 include ApplicationHelper
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
-  before_filter :authenticate_user!,  :except => [:index, :show, :images, :search]
+  before_filter :authenticate_user!,  :except => [:index, :show, :images, :search, :autocomplete]
   layout :resolve_layout
 
   def resolve_layout

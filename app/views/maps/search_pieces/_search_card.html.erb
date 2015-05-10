@@ -1,8 +1,9 @@
+
 <article class='search-card mix' data-map-id='<%=card.id%>' data-updated='<%= card.updated_at %>' data-relevant='<%=card.search_order%>' data-popular='<%=card.whirls %>'>
 	<a href='/maps/<%=card.name%>' class="sc-cover uk-cover-background uk-overlay" style="background-image: url('<%=card.coverphoto_name%>');">
 	    <img class="uk-invisible" src="<%=card.coverphoto_name%>" alt="Placeholder image for card.name">
 	</a>
-	
+
 	<div class='uk-grid uk-grid-collapse'>
 		<div class='sc-activity uk-width-2-10 uk-text-center'>
 			<p>
@@ -32,9 +33,9 @@
 			<div class='sc-meta uk-text-muted uk-text-nowrap'>
 				<span class='sc-location'><i class='fa fa-map-marker uk-text-muted'></i> <%= card.location %></span><br>
 				<span class='sc-collabos'>
-					<i class='fa fa-users wh-text-muted uk-text-small' data-uk-tooltip title="Project collaborators"></i>  
+					<i class='fa fa-users wh-text-muted uk-text-small' data-uk-tooltip title="Project collaborators"></i>
 					<% card.collaborator_list.each do |collabo| %>
-							<a href="/users_profiles/<%=collabo[0]%>" class='uk-text-small wh-text-muted'><%=collabo[1]%></a>   
+							<a href="/users_profiles/<%=collabo[0]%>" class='uk-text-small wh-text-muted'><%=collabo[1]%></a>
 					<% end %>
 				</span><br>
 				<span class='uk-text-small'><%= card.updated_at.strftime("Updated on %B %d, %Y")%></span><br>
@@ -44,10 +45,10 @@
 			<div class='sc-tags uk-text-small uk-width-1-1 uk-float-left uk-text-nowrap'>
 				<span class='uk-text-small'><i class='fa fa-tag wh-text-muted'></i></span>
 				<% card.taglist.each do |tag| %>
-					<a class='wh-text-muted' href='/search/<%=tag.name%>'><%=tag.name%></a>   
+					<a class='wh-text-muted' href='/search/<%=tag.name%>'><%=tag.name%></a>
 				<% end %>
 			</div>
-			
+
 		</div>
 
 	</div>

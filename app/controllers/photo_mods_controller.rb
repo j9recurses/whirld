@@ -155,8 +155,8 @@ class PhotoModsController < ApplicationController
       @photo_mod = PhotoMod.find(@photo_mod[0][:id])
       @photo_mod[:caption] = params[:caption]
     else
-      print "ALSDJFALSDKFJLKJ"
-      print params[:modtype]
+      puts "******params******"
+      puts params
       @photo_mod = PhotoMod.new
       @photo_mod[:photo_id] = params[:photo_id]
       @photo_mod[:mod_gallery_id] = params[:mod_gallery]

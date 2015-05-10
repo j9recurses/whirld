@@ -51,10 +51,10 @@
 <!--- should out the below in a helper method later dot DRY it up?  -->
    <!-- splits -->
 
-   <% mod_orders =  @user_gallery.arrange_modules(@user_gallery.module_order) %>
+   <%= mod_orders =  @user_gallery.module_order %>
+	    <%= mod_orders.inspect %> </h1>
 		<% unless mod_orders.nil?%>
 		<% mod_orders.each do | mod| %>
- 			<!-- grids -->
 			<%if mod[1]  == "grid" %>
 			<% unless @grids.nil? %>
 				<% @grids.each do | grid| %>

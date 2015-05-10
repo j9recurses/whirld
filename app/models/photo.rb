@@ -55,14 +55,14 @@ class Photo < ActiveRecord::Base
     end
   end
 
-#attributes
-  def whirls
-    @whirls
-  end
+  attr_accessor :whirls
+  # def whirls
+  #   @whirls
+  # end
 
-  def whirls=(val)
-    @whirls = val
-  end
+  # def whirls=(val)
+  #   @whirls = val
+  # end
 
 
 end

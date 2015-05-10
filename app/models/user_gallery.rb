@@ -1,5 +1,6 @@
 class UserGallery < ActiveRecord::Base
-  attr_accessible :name, :map_id, :user_id
+  attr_accessible  :map_id, :user_id, :module_order
+  trimmed_fields  :module_order
   belongs_to :map
   has_many :photos, dependent: :destroy
   has_many :user_gallery_grids, dependent: :destroy
@@ -7,8 +8,8 @@ class UserGallery < ActiveRecord::Base
   has_many :user_gallery_bloc_texts, dependent: :destroy
   has_many  :user_gallery_comparisons , dependent: :destroy
   serialize :module_order
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  #validates_presence_of :name
+  #validates_uniqueness_of :name
 
 
   def at_least_one_photo?

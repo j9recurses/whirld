@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150509033343) do
+ActiveRecord::Schema.define(:version => 20150510070833) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(:version => 20150509033343) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.string   "author",                                           :default => "anonymous"
     t.decimal  "zoom",             :precision => 15, :scale => 10, :default => 2.0
     t.string   "location",                                         :default => ""
     t.string   "static_data",                                      :default => ""
@@ -138,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20150509033343) do
     t.integer  "coverphoto"
     t.text     "tile_url"
     t.datetime "finished_dt"
+    t.string   "author"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true
@@ -207,7 +207,6 @@ ActiveRecord::Schema.define(:version => 20150509033343) do
   end
 
   create_table "user_galleries", :force => true do |t|
-    t.string   "name"
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false

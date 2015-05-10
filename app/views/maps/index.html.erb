@@ -3,9 +3,7 @@
 	<div class='uk-container uk-margin-top'>
 		<ul id='search-tag-bar' class="uk-subnav uk-subnav-pill uk-width-1-1">
 				<li class='uk-text-bold uk-text-muted wh-subnav-header'>Popular <i class='fa fa-tag uk-text-muted'></i></li>
-				<%#= @popular_tags.each do |tag| %>
-		      <li><a class='uk-text-muted <%#= tag.name %>'><%#=tag.name%></a></li>
-		    <%# end %>
+
 	  </ul>
 	</div>
 
@@ -13,13 +11,11 @@
 			<% @maps.each do |card| %>
 			<%= render :partial => "maps/search_pieces/search_card", :locals => {:card => card} %>
 		<%end %>
+		<% length = @maps.size %>
+		<% if length %3 != 0 %>
+			<div class='gap'></div>
+		<% end %>
+
 	</div>
 
 </div>
-
-
-
-
-
-
-

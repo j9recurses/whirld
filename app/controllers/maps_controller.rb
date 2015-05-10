@@ -2,7 +2,7 @@ require 'open3'
 include ApplicationHelper
 class MapsController < ApplicationController
   protect_from_forgery :except => [:export]
-  before_filter :authenticate_user!,  :except => [:index, :show, :images, :search]
+  before_filter :authenticate_user!,  :except => [:index, :show, :images, :search, :autocomplete]
   layout :resolve_layout
 
   def resolve_layout
@@ -127,12 +127,23 @@ class MapsController < ApplicationController
     puts @map.errors.messages
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
+<<<<<<< HEAD
     @user_gallery.module_order  = params[:mod_order]
       if @map.save && @user_gallery.save
        render :js => "window.location = '/maps/#{@map.name}'"
       else
       render json: "error! something went wrong!!"
       end
+=======
+    @user_gallery[:module_order] = params[:mod_order]
+    @map[:finished_dt] = Time.now
+    if @user_gallery.save && @map.save
+      @map.create_activity key: 'map.finished', owner: current_user
+      render :js => "window.location = '/maps/#{@map[:slug]}'"
+    else
+      flash[:notice] = "Error! Could not save project!"
+    end
+>>>>>>> 114e80dc0e007fca465936fc723923473fefe13b
   end
 
   def show

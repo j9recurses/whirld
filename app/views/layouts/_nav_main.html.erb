@@ -24,16 +24,12 @@
         </li>
     </ul>
     
-      <%if className == 'front' %>
-          <div class="uk-invisible uk-navbar-content uk-navbar-flip">
-      <% else %>
-          <div class="uk-navbar-content uk-navbar-flip">
-      <% end %>
-      <% unless className == 'front' %>
-        <%= render :partial => 'maps/search_pieces/top_search_bar' %>
-      <% end %>
       
-         </div>
+        <% unless className == 'front' %>
+          <div class="uk-navbar-content uk-navbar-flip">
+            <%= render :partial => 'maps/search_pieces/top_search_bar' %>
+          </div>
+        <% end %>
   </nav>
 
   <% if className == 'search' %>

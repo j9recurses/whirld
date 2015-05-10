@@ -184,12 +184,6 @@ Image.prototype = {
       }
     }); // end ajax
   },
-  init: function(){
-    // var self = this;
-    // $('.preview').off().on('click', '.img-wrapper', function(){
-    //   window.mapKnitter.addImage($(this).data('warpable-url'), $(this).data('warpable-id'));
-    // });
-  },
   initUploaded: function(){
     console.log('Initated: uploaded photo');
     this.setUploadedData();

@@ -328,12 +328,12 @@ pre {
 /* Selection pseudo-element 
  ========================================================================== */
 ::-moz-selection {
-  background: #3399ff;
+  background: #20a593;
   color: #ffffff;
   text-shadow: none;
 }
 ::selection {
-  background: #3399ff;
+  background: #20a593;
   color: #ffffff;
   text-shadow: none;
 }

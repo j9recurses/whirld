@@ -92,7 +92,6 @@ module ApplicationHelper
       map =  map.load(:include => 'collaborators')
     end
     map.collaborators.each do |c |
-      puts c.inspect
       ustuff = User.find(c.user_id)
       collabo_hash[ustuff.id] = ustuff.login
     end

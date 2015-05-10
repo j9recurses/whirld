@@ -36,11 +36,14 @@ def coverphoto_maps(maps, filedir, image)
   end
 end
 
+def make_gallery_grid(maps, filedir)
+ cool = 'cool'
+end
 
 
 
 ####main#######
-filedir = "app/assets/images/test/"
+filedir = "app/assets/images/test/faker"
 userprofile_image =  "cat.png"
 maps_coverphoto_img = 'teagarden.jpg'
 

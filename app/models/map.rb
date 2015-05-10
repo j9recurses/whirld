@@ -155,7 +155,6 @@ class Map < ActiveRecord::Base
       #end
       map = Map.find(map.id)
       unless params[:location].blank?
-        puts params[:location]
         map.geographic_search = 1
       else
         map.geographic_search = 0
@@ -163,7 +162,6 @@ class Map < ActiveRecord::Base
       if params[:entity]
         map.search_entity = params[:entity]
       end
-      puts map.name
       #map.ndist = distance
       map.taglist = map.tags
       map.collaborator_list = collaborators_list(map)
@@ -171,8 +169,6 @@ class Map < ActiveRecord::Base
       coverphoto = Photo.find(map.coverphoto)
       map.user_gallery_id = coverphoto.user_gallery_id
       map.coverphoto_name = coverphoto.photo_file.medium.url
-      puts "****here****"
-      puts map.coverphoto_name
       unless map.votes_for.nil?
         map.whirls = map.votes_for.size
       end

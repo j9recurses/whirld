@@ -1,5 +1,7 @@
-<form id='search-form' class="uk-form uk-margin-remove uk-display-inline-block">
-  <input id='search-bar-keyword' type="text" placeholder="Search">
-  <input id='search-bar-location' type="text" placeholder="Location">
-  <button id='search-bar-go' class="search-go uk-button uk-button-primary"><i class='fa fa-search'></i></button>
-</form>
+<%= form_tag  search_path, :id => "search-form", :class => "uk-form uk-margin-remove uk-display-inline-block" do  %>
+	<%= text_field_tag :query ,  nil,  id: "search-bar-keyword", placeholder: "Keyword" %>
+	<%= text_field_tag :location, nil, id: "search-bar-location", placeholder: "Location" %>
+	<%= button_tag(type: 'submit', :id => 'search-bar-go', :class => 'uk-button uk-button-primary') do %>
+		<% content_tag("i class='fa fa-search'></i") %>
+	<% end %>
+<%end%>

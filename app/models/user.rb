@@ -18,10 +18,14 @@ class User < ActiveRecord::Base
   has_many :youtube_users
   has_one :user_profile
   has_many :tags, :as => :taggable, dependent: :destroy
+  has_many :user_gallery_grids,  dependent: :destroy
+  has_many :user_gallery_splits,  dependent: :destroy
+  has_many :user_gallery_bloc_texts,  dependent: :destroy
+ has_many :user_gallery_comparisons,  dependent: :destroy
+
 
   #recommends :maps, :photos, :comments, :user_gallery_grids
-
-
+  acts_as_messageable
 
   accepts_nested_attributes_for :user_profile
 

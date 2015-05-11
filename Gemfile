@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 ruby "2.1.2"
+#rbenv "2.1.2"
 gem "rails", "~>3.2.3"
 
 gem "will_paginate", "3.0.7"
@@ -24,7 +25,7 @@ group :dependencies do
   gem "paperclip", "~>4.2.0"
 
   # if you use amazon s3 for warpable image storage
-  gem 'aws-sdk', '~> 1.5.7'
+  #gem 'aws-sdk', '~> 1.5.7'
 
   # for rake image migration tasks
   gem 'right_aws'
@@ -92,8 +93,14 @@ gem 'sidekiq-middleware'
 gem 'recommendable'
 
 
+group :development do
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+end
 
-gem 'rspec'
+gem "mailboxer", "~> 0.9.0"
+
+# Add this if you're using rbenv
 
 
 #factory girl for seeding db

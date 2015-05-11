@@ -28,7 +28,8 @@ filtertypes = filtertypes.split(",")
 #End Options
 
 #This needs to point to whatever the local classifier is
-facepath = '/Users/Tyche/anaconda/pkgs/opencv-2.4.8-np17py27_2/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
+#facepath = '/Users/Tyche/anaconda/pkgs/opencv-2.4.8-np17py27_2/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
+facepath = "haarcascade_frontalface_default.xml"
 face_cascade = cv2.CascadeClassifier(facepath)
 
 allFiles = []

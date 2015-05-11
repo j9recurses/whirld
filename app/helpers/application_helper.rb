@@ -44,6 +44,9 @@ module ApplicationHelper
       item = UserProfile.find(mod_gallery_id)
     end
     puts item
+    puts "****taglist****"
+    puts taglist
+    puts "**********"
     unless taglist.blank? or item.blank?
       newtaglist =  taglist.split(",")
       modtag_ids = item.tags.pluck(:id)

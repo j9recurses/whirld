@@ -1,10 +1,14 @@
 
 class PhotoModsController < ApplicationController
   include ApplicationHelper
+   before_filter :authenticate_user!
+
 
   def user_gallery_grid_create
     @user_gallery_grid = UserGalleryGrid.new
     @user_gallery_grid[:user_gallery_id] = params[:user_gallery_id]
+    @user_gallery_grid[:user_id] = current_user.id
+    puts @user_gallery_grid.inspect
     respond_to do |format|
       if @user_gallery_grid.save
         format.json { render json:  @user_gallery_grid}
@@ -41,6 +45,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_comparison_create
     @user_gallery_comparison = UserGalleryComparison.new
     @user_gallery_comparison[:user_gallery_id] = params[:user_gallery_id]
+    @user_gallery_comparison[:user_id] = current_user.id
     respond_to do |format|
       if @user_gallery_comparison.save
         format.json { render json:  @user_gallery_comparison}
@@ -77,6 +82,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_split_create
     @user_gallery_split = UserGallerySplit.new
     @user_gallery_split[:user_gallery_id] = params[:user_gallery_id]
+    @user_gallery_split[:user_id] = current_user.id
     respond_to do |format|
       if @user_gallery_split.save
         format.json { render json:  @user_gallery_split}
@@ -113,6 +119,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_text_create
     @user_gallery_text = UserGalleryBlocText.new
     @user_gallery_text[:user_gallery_id] = params[:user_gallery_id]
+    @user_gallery_text[:user_id] = current_user.id
     respond_to do |format|
       if @user_gallery_text.save
         format.json { render json:  @user_gallery_text}
@@ -200,8 +207,12 @@ class PhotoModsController < ApplicationController
   def create_taggings
     puts params
     #parsetag list is in the application helper
+    if params[:tagList]
+      @item = parse_taglist(params[:tagList], params[:mod_type], params[:mod_gallery])
+    else
     @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
     puts @item.inspect
+  end
     respond_to do |format|
       format.json { render json:@item}
     end

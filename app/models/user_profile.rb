@@ -65,31 +65,32 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+attr_accessor  :login, :ndist, :taglist
 
   def self.neighbor_distance(lat1, lon1, lat2, lon2)
     distance = Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2])
     return distance
   end
 
-  def login
-    @login
-  end
-  def login=(val)
-    @login = val
-  end
-  def ndist
-    @ndist
-  end
-  def ndist=(val)
-    @ndist = val
-  end
+  # def login
+  #   @login
+  # end
+  # def login=(val)
+  #   @login = val
+  # end
+  # def ndist
+  #   @ndist
+  # end
+  # def ndist=(val)
+  #   @ndist = val
+  # end
 
-    def taglist
-    @taglist
-  end
-  def taglist=(val)
-    @taglist = val
-  end
+  #   def taglist
+  #   @taglist
+  # end
+  # def taglist=(val)
+  #   @taglist = val
+  # end
 
 end
 

@@ -16,6 +16,9 @@ class Map < ActiveRecord::Base
   acts_as_commentable
   acts_as_votable
 
+  attr_accessor :search_order, :search_term, :search_term_bar,  :search_geo_name,  :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
+
+
   friendly_id :name
   trimmed_fields  :author, :name, :slug, :lat, :lon, :location, :description, :zoom, :tag_list
 
@@ -78,12 +81,12 @@ class Map < ActiveRecord::Base
         indexes :description,   type: 'string', analyzer: 'snowball'
         indexes :lat_lon, type: 'geo_point'
         indexes :id, :index    => :not_analyzed
-        indexes :tags,  type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
+        # indexes :tags,  type: 'string', index_analyzer: "index_ngram_analyzer", search_analyzer: "search_ngram_analyzer"
       end
 
-    #  indexes :tags do
-     #   indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: 'keyword'
-     # end
+      indexes :tags do
+        indexes :name, index_analyzer: "index_ngram_analyzer", search_analyzer: 'keyword'
+      end
     end
 
   end
@@ -96,39 +99,45 @@ class Map < ActiveRecord::Base
 
   def to_indexed_json
     # to_json(only: ['name', 'description'], methods: ['lat_lon'])
-    to_json(:include => [:tags], :methods => [:lat_lon, :tag_name])
+    to_json(:include => [:tags], :methods => [:lat_lon])
   end
 
   def self.simple_search(params)
     unless params[:location].blank?
+      puts "in here"
       point  = self.get_search_cords(params[:location])
-      unless params[:query].blank? || params[':query'].blank?
-        if params[':query']
-           s = Tire.search('maps') do
-            query do
-              match params[':query'], fields: [:name, :tags, :description, :location],  fuzziness: 2
-             # { match ,  fields:[:name, :description, :tags], params[':query'], fuzziness: 2  } }
-       end
-     end
-        else
-        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[:query], fuzziness: 2  } }
-        end
+      puts point
+      if params[':query'] && !params[':query'].blank?
+        puts "aaaaa"
+        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[':query']  } }
+      elsif params[:query] && !params[:query].blank?
+        puts "coool"
+        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[:query] } }
       else
+        puts "im i hereer"
         s = Tire.search('maps') { query { all } }
       end
-      s. filter :geo_distance, lat_lon: point, distance: '300km'
+      s. filter :geo_distance, lat_lon: point, distance: '300mi'
       s.sort {  by "_geo_distance", {
                   "lat_lon" => point,
                   "order"       => SEARCH_ORDER,
                   "unit"        => SEARCH_UNIT
                 }
                 }
-      results = s.results
     else
-      results = Map.search do
-        query { match [:name, :description, :tags],  params[:query] }
+      if params[':query'] && !params[':query'].blank?
+        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[':query']  } }
+      elsif params[:query]&& !params[:query].blank?
+        s = Tire.search('maps') { query { match [:name, :description, :tags],  params[:query] } }
+      else
+        puts "im i hereer"
+        s = Tire.search('maps') { query { all } }
       end
+      #results = Map.search do
+      #    s = Tire.search('maps') { query { match [:name, :description],  params[:query]  } }
+      #query { match [:name, :description, :tags],  params[:query] }
     end
+    results = s.results
     return results
   end
   #
@@ -163,7 +172,7 @@ class Map < ActiveRecord::Base
     counter = 1
     maps.each do |map|
       #unless map.sort.blank?
-       # distance_away = map.sort
+      # distance_away = map.sort
       #end
       map = Map.find(map.id)
       unless params[:query].blank?
@@ -218,8 +227,6 @@ class Map < ActiveRecord::Base
   end
 
 
-
-  attr_accessor :search_order, :search_term, :search_term_bar,  :search_geo_name,  :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
 
 
 

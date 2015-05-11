@@ -3,7 +3,7 @@
 		<div class='uk-width-1-1 uk-margin-top'>
 
 			<div class='uk-width-1-2 uk-float-left uk-text-primary uk-margin-bottom'>
-				<i class='fa fa-heart'></i> 
+				<i class='fa fa-heart'></i>
 				<%= @map.votes_for.size%> whirls
 			</div>
 			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
@@ -15,7 +15,7 @@
 			<p>
 				<i class='fa fa-users uk-text-muted'></i>
 				<% @collaborators.each do |collab| %>
-					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %>  
+					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %>
 				<% end %>
 			</p>
 
@@ -23,11 +23,11 @@
 				<i class='fa fa-tag uk-text-muted'></i>
 				<% if @map.taglist.size > 0 %>
 					<% @map.taglist.each do |tag| %>
-						<a href='/search<%=tag.name%>' class=''><%=tag.name%></a>  
+						<a href='/search<%=tag%>' class=''><%=tag%></a>
 					<% end %>
 				<% else %>
 					<span class='uk-text-muted wh-italics'>
-						Sorry no tags. 
+						Sorry no tags.
 						Ask <%=link_to(@collaborators.first.login, user_profile_path(@collaborators.first.id)) %> to add some.
 						</span>
 				<% end %>

@@ -192,21 +192,24 @@ class MapsController < ApplicationController
     unless params[:name].nil?
       params[:slug] = params[:name]
     end
+    if params[:tagList]
+      @map.taglist = parse_taglist(params[:tagList], "map", @map.id)
+    end
     if params[:photo]
       user_gallery_id = UserGallery.where(["map_id = ?", @map.id]).pluck([:id])
       @user_gallery = UserGallery.find(user_gallery_id)
-      @photo =  @user_gallery.photos.new(params[:photo])
+      @photo =  Photo.new
+      @photo.photo_file = params[:photo]
+      @photo.user_gallery = @user_gallery
       @photo.user_id = current_user.id
       @photo.save
       params[:coverphoto] = @photo.id
       params.delete :photo
     end
+    puts "made it here"
+    @map = @map.update_attributes(params)
     respond_to do |format|
-      if @map.update_attributes(params)
-        format.json { render json: params  }
-      else
-        format.json { render json: "error! something went wrong!!" }
-      end
+        format.json { render json: @map }
     end
   end
 

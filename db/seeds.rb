@@ -68,7 +68,6 @@ def make_gallery_grids(maps)
         photo_mod.save
         grid_photo_order = grid_photo_order +  photo.to_s + ","
       end
-      puts grid_photo_order
       grid_photo_order = grid_photo_order[0...-1]
        grid.grid_photo_order  = grid_photo_order
       grid.save
@@ -79,7 +78,7 @@ end
 def map_module_order(maps)
   maps.each do |map|
     mod_order_list = Array.new
-    ug_id = UserGalleries.where(["map_id = ?", map.id])
+    ug_id = UserGallery.where(["map_id = ?", map.id])
     user_gallery_grid_ids = UserGalleryGrid.where(['user_gallery_id = ?', ug_id.id]).pluck([:id])
     order_list = Array.new
    user_gallery_grid_ids.each do | grid|
@@ -91,6 +90,9 @@ def map_module_order(maps)
     ug_id.save
   end
 end
+
+
+
 
 
 ####main#######

@@ -25,7 +25,7 @@ group :dependencies do
   gem "paperclip", "~>4.2.0"
 
   # if you use amazon s3 for warpable image storage
-  gem 'aws-sdk', '~> 1.5.7'
+  #gem 'aws-sdk', '~> 1.5.7'
 
   # for rake image migration tasks
   gem 'right_aws'
@@ -96,8 +96,9 @@ gem 'recommendable'
 group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
-
 end
+
+gem "mailboxer", "~> 0.9.0"
 
 # Add this if you're using rbenv
 

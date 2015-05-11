@@ -1,0 +1,18 @@
+####installation process###
+###install mysql
+sudo apt-get install mysql-server
+
+#Application-specific dependencies:
+sudo apt-get install bundler libmysqlclient-dev imagemagick ruby-rmagick libfreeimage3 libfreeimage-dev ruby-dev libmagickcore-dev libmagickwand-dev
+
+
+sudo apt-get install gfortran
+sudo apt-get install libopencv-dev python-opencv
+
+
+#start up the elastic search server
+sudo service elasticsearch start
+#to see status of elastic search
+sudo service elasticsearch status
+
+

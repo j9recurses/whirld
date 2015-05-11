@@ -144,7 +144,7 @@ Module.prototype = {
   },
   setData: function(){
     if(this.options.modType == 'grid'){
-      this.photoLimit = 10;
+      this.photoLimit = 5;
     }
     else if(this.options.modType == 'split'){
       this.photoLimit = 1;

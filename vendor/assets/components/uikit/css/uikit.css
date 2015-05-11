@@ -22,6 +22,7 @@ html {
  */
 body {
   margin: 0;
+  color: #404041;
 }
 /* Links
  ========================================================================== */
@@ -6989,7 +6990,10 @@ a.uk-thumbnail:focus {
   color: #999999 !important;
 }
 .uk-text-primary {
-  color: #2d7091 !important;
+  color: #20a593 !important;
+}
+.uk-text-primary-muted {
+  color: #18414a !important;
 }
 .uk-text-success {
   color: #659f13 !important;

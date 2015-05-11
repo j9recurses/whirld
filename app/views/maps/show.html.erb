@@ -1,0 +1,49 @@
+<div id='project-show' class='uk-grid uk-grid-collapse' data-map-lat='<%=@map.lat%>' data-map-lon='<%=@map.lon%>' data-map-zoom='<%=@map.zoom%>' data-warpable-url='/maps/<%=@map.slug%>/warpables.json'>
+	<section class='pp-main uk-width-4-10 wh-container uk-grid wh-height-viewport'>
+		<div class='uk-width-1-1 uk-margin-top'>
+
+			<div class='uk-width-1-2 uk-float-left uk-text-primary uk-margin-bottom'>
+				<i class='fa fa-heart'></i> 
+				<%= @map.votes_for.size%> whirls
+			</div>
+			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
+				<a class='uk-text-primary'><i class='fa fa-share'></i>  Share This</a>
+			</div>
+			<h1 class='uk-margin-top'><%= @map.name %></h1>
+			<h2><%= @map.location %></h2>
+
+			<p>
+				<i class='fa fa-users uk-text-muted'></i>
+				<% @collaborators.each do |collab| %>
+					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %>  
+				<% end %>
+			</p>
+
+			<p>
+				<i class='fa fa-tag uk-text-muted'></i>
+				<% if @map.taglist.size > 0 %>
+					<% @map.taglist.each do |tag| %>
+						<a href='/search<%=tag.name%>' class=''><%=tag.name%></a>  
+					<% end %>
+				<% else %>
+					<span class='uk-text-muted wh-italics'>
+						Sorry no tags. 
+						Ask <%=link_to(@collaborators.first.login, user_profile_path(@collaborators.first.id)) %> to add some.
+						</span>
+				<% end %>
+			</p>
+			<p class='uk-h3'><%=@map.description%></p>
+
+			<div class='uk-position-bottom'>
+				<button class='uk-button uk-button-primary uk-button-large uk-width-1-10'>Edit Project</button>
+			</div>
+		</div>
+	</section>
+
+	<section class='wh-map-container uk-width-6-10 wh-height-viewport'>
+		<div id='knitter-map-pane'></div>
+	</section>
+
+
+
+</div>

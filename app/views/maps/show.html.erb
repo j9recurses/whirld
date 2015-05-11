@@ -1,4 +1,4 @@
-<div id='project-show' class='uk-grid uk-grid-collapse' data-map-lat='<%=@map.lat%>' data-map-lon='<%=@map.lon%>' data-map-zoom='<%=@map.zoom%>' data-warpable-url='/maps/<%=@map.slug%>/warpables.json'>
+<div id='project-show' class='uk-grid uk-grid-collapse' data-map-lat='<%=@map.lat%>' data-map-lon='<%=@map.lon%>' data-map-zoom='<%=@map.zoom%>' data-warpable-url='/maps/<%=@map.id%>/warpables.json'>
 	<section class='pp-main uk-width-4-10 wh-container uk-grid wh-height-viewport'>
 		<div class='uk-width-1-1 uk-margin-top'>
 
@@ -38,23 +38,16 @@
 
 	</section>
 
-	<section class='wh-map-container uk-width-6-10 wh-height-viewport uk-margin-bottom'>
+	<section class='wh-map-container uk-width-6-10 wh-height-viewport'>
 		<div id='knitter-map-pane'></div>
 	</section>
 
-	<section class='wh-module-show wh-mod-container uk-grid wh-height-viewport uk-width-1-1 uk-margin-top'>
+	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
 	   <% mod_orders =  eval(@user_gallery.module_order) %>
 			<% unless mod_orders.nil?%>
 			<% mod_orders.each do | mod| %>
 				<%if mod[1]  == "grid" %>
-				<% unless @grids.nil? %>
-					<% @grids.each do | grid| %>
-					<% if grid.id == mod[0].to_i %>
-						<%= render partial: "maps/show_pieces/module_grid", :locals => {:grid => grid, :collaborators => @map.collaborators } %>
-						<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => grid.taglist} %>
-					<%end%>
-				<%end%>
-				<%end%>
+					<%= render partial: "maps/show_pieces/module_grid", :locals => {:grids => @grids, :collaborators => @map.collaborators, :mod => mod } %>
 				 <!-- comps -->
 				<%elsif mod[1]  == "comparison" %>
 					<% unless @comps.nil? %>

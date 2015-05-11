@@ -6,7 +6,12 @@
 .field_with_errors{
 	color: #d85030;
 }
-
+#knitter-map-pane{
+	z-index: 99;
+}
+.leaflet-bottom.leaflet-left{
+	z-index: 99;
+}
 .img-wrapper{
   background-color: #f5f5f5;
   background-size: cover;
@@ -54,8 +59,11 @@
   width: 42px;
 }
 #wh-front-search-bar #search-bar-go:hover{ opacity: 1; }
+.wh-height-forty{
+	height: 40%;
+}
 .wh-height-eighty{
-	height: 80%;
+	height: 75%;
 }
 .wh-height-full{
 	height: 100%;

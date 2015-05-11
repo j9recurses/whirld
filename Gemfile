@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 ruby "2.1.2"
+#rbenv "2.1.2"
 gem "rails", "~>3.2.3"
 
 gem "will_paginate", "3.0.7"
@@ -92,8 +93,13 @@ gem 'sidekiq-middleware'
 gem 'recommendable'
 
 
+group :development do
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
 
-gem 'rspec'
+end
+
+# Add this if you're using rbenv
 
 
 #factory girl for seeding db

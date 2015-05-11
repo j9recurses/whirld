@@ -6,20 +6,7 @@ $(document).ready(function(){
   var tb = new SearchBar();
       tb.initTopBar();
 
-  $('#knitter-map-pane').css('height', $(this).height() * .9 );
-  $('#knitter-map-pane').css('display', 'block');
-  var page = $('#project-show');
-  setTimeout(function(){
-    var map
-    (function(){
-      window.mapKnitter = new MapKnitter.Map({
-        latlng:     L.latLng(page.data('map-lat'), page.data('map-lon')),
-        zoom:       page.data('map-zoom'),
-        readOnly:   true,
-        warpablesUrl:   page.data('warpable-url')
-      });
-     })();
-  }, 1000)
+
 
 //like whirl function.
 //this function takes the following params:

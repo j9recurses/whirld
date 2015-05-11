@@ -1,11 +1,13 @@
-<ul class='inline-list font_small'>
-	<li class='project-tag-icon item h3-size'>
-		<i class='fa fa-tag'></i></li>
-	<% if taglist.present? %>
-	<% taglist.each do |tag| %>
-		<% tag_d = TagDecorator.decorate(tag) %>
-		<%= tag_d.tag_li.html_safe %>
-	<%end%>
-<%end%>
-	</li>
-</ul>
+<div class='wh-mod-taglist uk-margin-top uk-text-small'>
+	<i class='fa fa-tag uk-text-muted'></i> 
+	<% if taglist.size > 0 %>
+		<% taglist.each do |tag| %>
+			<a href='/search/<%=tag%>' class=''><%=tag%></a>  
+		<% end %>
+	<% else %>
+		<span class='uk-text-muted wh-italics'>
+			Sorry no tags. 
+			Ask <%=link_to(collaborators.first.login, user_profile_path(collaborators.first.id)) %> to add some.
+			</span>
+	<% end %>
+</div>

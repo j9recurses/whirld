@@ -14,6 +14,7 @@
 
 #project-creation-2{
 	height: 100%;
+	font-size: 14px;
 	overflow-y: 100%;
 
 	#end-bar .uk-button {
@@ -196,6 +197,9 @@
 	}
 	.uk-overlay-panel a{
 		cursor: -webkit-grabbing;
+	}
+	.uk-text-small{
+		font-size: 12px;
 	}
 	.container{
 	  padding: 2% 7% 0 2%;

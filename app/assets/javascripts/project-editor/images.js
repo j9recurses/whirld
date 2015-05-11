@@ -189,7 +189,6 @@ Image.prototype = {
     this.setUploadedData();
     this.setRemoveButton();
     this.setDrag();
-    this.init();
     this.append();
   },
   initSaved: function(){
@@ -197,6 +196,5 @@ Image.prototype = {
     this.setSavedData();
     this.setRemoveButton();
     this.setDrag();
-    this.init();
   }
 }

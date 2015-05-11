@@ -66,7 +66,9 @@ module Whirld
     config.assets.version = '1.3'
     config.assets.paths << Rails.root.join("public","lib")
     config.assets.paths << Rails.root.join("public")
-    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    # config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.precompile += %w( .svg .eot .woff .ttf .otf )
 
     #Bower
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')

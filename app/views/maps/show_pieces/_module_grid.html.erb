@@ -1,15 +1,52 @@
+<% unless grid.photos.blank? %>
+ 	<% grid.photos.each do |photo| %>
+    <div class='module uk-width-1-1 wh-height-full uk-grid uk-margin-bottom'>
 
-<section id='module-grid-<%= grid.id %>' class='slide module module-grid'>
-	<div class='module-grid-wrapper twenty columns column-first'>
-		<div class='grid-sizer'></div>
+    <% if grid.photos.size == 1 %>
+          <div class='wh-height-full uk-width-9-10 uk-grid-collapse'>
+            <figure class="uk-cover-background uk-width-1-1 wh-height-eighty" style="background-image:url(<%=photo[0].photo_file%>)">
+              <div class='wh-whirl uk-h4 uk-container uk-margin-top'><i class='fa fa-heart-o uk-text-primary uk-float-right uk-margin-top'></i></div>
+              <img class="uk-invisible" src="<%=photo[0].photo_file%>" width="" height="" alt="">
+            </figure>
 
-		<% unless grid.photos.blank? %>
-     	<% grid.photos.each do |photo| %>
-     	<% photo_d = PhotoDecorator.decorate(photo[0]) %>
-      		<div class='grid-photo'>
-      		<%=image_tag(photo_d.img_href)%>
-    			</div>
-      <%end%>
-     <%end%>
-	</div>
-</section>
+    <% elsif grid.photos.size == 2 %>
+        <div class='wh-height-full uk-width-9-10 uk-grid-small'>
+
+          <div class='uk-width-1-2 uk-float-left'>
+            <figure class="uk-cover-background wh-height-eighty" style="background-image:url(<%=photo[0].photo_file%>)">
+              <div class='wh-whirl uk-h4 uk-container uk-margin-top'><i class='fa fa-heart-o uk-text-primary uk-float-right uk-margin-top'></i></div>
+              <img class="uk-invisible" src="<%=photo[0].photo_file%>" width="" height="" alt="">
+            </figure>
+        </div>
+         <div class='uk-width-1-2 uk-float-right'>
+            <figure class="uk-cover-background wh-height-eighty" style="background-image:url(<%=photo[0].photo_file%>)">
+              <div class='wh-whirl uk-h4 uk-container uk-margin-top'><i class='fa fa-heart-o uk-text-primary uk-float-right uk-margin-top'></i></div>
+              <img class="uk-invisible" src="<%=photo[0].photo_file%>" width="" height="" alt="">
+            </figure>
+          </div>
+
+    <% end %>
+
+        <!-- Tags and caption for all -->
+        <div class='uk-width-1-1'>
+          <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+
+          <p>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
+        </div>
+
+      </div> <!-- end wh-height-full uk-width-9-10 -->
+      
+      <!-- Activity for all -->
+      <div class='wh-mod-meta wh-height-full uk-width-1-10 uk-text-small uk-text-muted'>
+          <p class='wh-italics'>
+            Updated <br><%=photo[0].updated_at.strftime("%B %d, %Y") %>
+          </p>
+          <p>Comments will go here.</p>
+      </div> <!-- end wh-mod-meta -->
+
+      
+    </div> <!-- end .module -->
+  <%end%>
+
+
+<%end%>

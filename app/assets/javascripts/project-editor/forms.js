@@ -268,27 +268,30 @@ Form.prototype = {
   captionField: function(){
     var self = this;
     var caption = $(this.modEl.find('.caption'));
-        autosize(caption)
+        autosize(caption);
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
     var data = {
         mod_gallery: this.modId,
-        mod_type: this.modType
+        mod_type: this.modType,
       }
     // Update mod
     caption.on({
       focusout: function(e){
         self.eTarget = $(e.target);
-        console.log(self.modType)
+    console.log(caption)
+    console.log($(caption).val())
+    data[self.modType + "_text"] = caption.val();
+    console.log(data)
         $.ajax({
           url: url,
           data: data,
           cache: false,
           type: 'put',
           success: function(data){
-            console.log('Success: text field was updated');
+            console.log('Success: caption field was updated');
           },
           error: function(){
-            console.log('Error: text field was not updated');
+            console.log('Error: caption field was not updated');
           }
         }); // end ajax
       }

@@ -1,8 +1,6 @@
 <% unless grids.nil? %>
   <% grids.each do | grid| %>
     <% if grid.id == mod[0].to_i %>
-
-
       <% if grid.photos.size > 0 && grid.photos.size == 1 %>
 
           <div id='grid-<%=grid.id%>' class='module-one wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
@@ -14,18 +12,13 @@
               </figure>
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-                <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 0 } %>
+                <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 0 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
             <!-- Activity for all -->
-            <div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-              <p class='wh-italics'>
-                Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-              </p>
-              <p>Comments will go here.</p>
-            </div> 
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
 
           </div> <!-- end module -->
 
@@ -39,18 +32,13 @@
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[1][0], :float => 'right', :height => 'full' } %>
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-                <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 1 } %>
+                <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 1 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
             <!-- Activity for all -->
-            <div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-              <p class='wh-italics'>
-                Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-              </p>
-              <p>Comments will go here.</p>
-            </div> 
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
           </div> <!-- end module -->
 
       <% elsif grid.photos.size > 0 && grid.photos.size == 3 %>
@@ -66,18 +54,13 @@
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[2][0], :float => 'right', :height => 'half' } %>
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-                <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 2 } %>
+                <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 2 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
             <!-- Activity for all -->
-            <div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-              <p class='wh-italics'>
-                Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-              </p>
-              <p>Comments will go here.</p>
-            </div> 
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
           </div> <!-- end module -->
       <% elsif grid.photos.size > 0 && grid.photos.size == 4 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
@@ -92,18 +75,13 @@
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[3][0], :float => 'right', :height => 'half' } %>
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-                <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 3 } %>
+                <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 3 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
             <!-- Activity for all -->
-            <div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-              <p class='wh-italics'>
-                Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-              </p>
-              <p>Comments will go here.</p>
-            </div> 
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
           </div> <!-- end module -->
      <% elsif grid.photos.size > 0 && grid.photos.size == 5 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
@@ -120,18 +98,13 @@
               <%= render partial: "maps/show_pieces/module_grid_photo_third", :locals => { :grid => grid, :photo => grid.photos[4][0], :float => 'right', :height => 'half', :margin_left => 'wh-photo-margin-left' } %>
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-                <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 4 } %>
+                <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 4 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
             <!-- Activity for all -->
-            <div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-              <p class='wh-italics'>
-                Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-              </p>
-              <p>Comments will go here.</p>
-            </div> 
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
           </div> <!-- end module -->
       <% end %> <!-- if size photo -->
 

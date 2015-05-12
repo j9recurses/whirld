@@ -62,9 +62,9 @@
 				<%elsif mod[1]  == "split" %>
 				<% unless @splits.nil? %>
 					<% @splits.each do |split| %>
+						<%=split.inspect%>
 						<% if split.id == mod[0].to_i %>
 							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split} %>
-							<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => split.taglist} %>
 						<% end %>
 					<% end %>
 					<% end %>

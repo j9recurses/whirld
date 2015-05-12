@@ -109,17 +109,16 @@ Image.prototype = {
     return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
   },
   setPhotoType: function(){
-    var type = "";
+    var type;
     if(this.options.is_aerial){
-      type += "aerial"
+      type = "aerial"
     }
     else if(this.options.is_normal){
-      type =+ "normal"
+      type = "normal"
+      if (this.options.is_faces){
+        type += " people"
+      }
     }
-    if (this.options.is_faces){
-      type += " people"
-    }
-    console.log(type)
     return type;
   },
   htmlThumb: function(){

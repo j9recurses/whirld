@@ -3016,7 +3016,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
   /* 2 */
   max-width: 100%;
   /* 3 */
-  padding: 4px 6px;
+  padding: 20px 10px 15px 10px;
   /* 4 */
   border: 1px solid #dddddd;
   background: #ffffff;
@@ -3373,7 +3373,7 @@ select.uk-form-width-mini {
   /* 8 */
   line-height: 30px;
   /* 9 */
-  min-height: 30px;
+  min-height: 36px;
   /* 10 */
   font-size: 1rem;
   /* 11 */

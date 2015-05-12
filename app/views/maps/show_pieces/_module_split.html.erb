@@ -1,19 +1,11 @@
-<% split_d = UserGallerySplitsDecorator.decorate(split) %>
-<section class='slide module module-split'>
-	<div class='row group module-split-wrapper'>
+<div id='split-<%=split.id%>' class='wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
+    <!-- Thumbnail -->
+    <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse'>
+      
 
-    <% unless split.photos.blank? or split.photos.size > 1 %>
-      <% split.photos.each do |photo| %>
-      <%unless photo.nil? %>
-      <% photo_d = PhotoDecorator.decorate(photo) %>
-        <div class='twelve columns img-wrapper'>
-          <%=image_tag(photo_d.img_href, :class => '') %>
-          </div>
-      <%end%>
-     <%end%>
-     <%end%>
-		<div class='eleven offset-one columns'>
-			<p><%=split_d.split_txt%></p>
-		</div>
-	</div>
-</section>
+      
+    </div>
+    <!-- Activity for all -->
+    <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :split => mod } %>
+
+  </div> <!-- end module -->

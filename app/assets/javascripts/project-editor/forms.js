@@ -261,7 +261,14 @@ Form.prototype = {
         self.tagAppend(e);
       },
       focusout: function(){
-        self.tagSave('map', self.projectTagList());
+        var tagContainer = $(this).nextAll('.tag-container');
+        if($('#project-tag_list').val().length > 0){
+          self.eTarget = $(this);
+          var tag = self.tagHtml();
+          tagContainer.append(tag);
+          self.tagSave('map', self.projectTagList());
+          $('#project-tag_list').val('')
+        }
       }
     })
   },
@@ -276,12 +283,12 @@ Form.prototype = {
       }
     // Update mod
     caption.on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+      },
       focusout: function(e){
         self.eTarget = $(e.target);
-    console.log(caption)
-    console.log($(caption).val())
-    data[self.modType + "_text"] = caption.val();
-    console.log(data)
         $.ajax({
           url: url,
           data: data,
@@ -429,7 +436,7 @@ Form.prototype = {
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
-        autosize($('#project-name'));
+        autosize($('#project-description'));
       }
     });
     var locAC = new AutoComp({

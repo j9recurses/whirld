@@ -4,14 +4,14 @@
 		<div class='juxtapose'>
 		  <% unless comp.photos.blank? %>
 
-			   <div id='comparison-<%=compid%>' class='module-comparison wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
+			   <div id='comparison-<%=comp.id%>' class='module-comparison wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
 			    <!-- Thumbnail -->
 			    <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
-			      
+
 			     <%=comp.inspect%>
 			    </div>
 			    <!-- Activity for all -->
-			    <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :comp => mod } %>
+			    <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb",  :locals => { :mod => comp }  %>
 
 			  </div> <!-- end module -->
 

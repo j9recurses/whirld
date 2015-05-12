@@ -44,6 +44,7 @@
 
 	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
 	   <% mod_orders =  eval(@user_gallery.module_order) %>
+			 <%=mod_orders.inspect%>
 			<% unless mod_orders.nil?%>
 			<% mod_orders.each do | mod| %>
 				<%if mod[1]  == "grid" %>
@@ -59,7 +60,9 @@
 					<%end%>
 							<%end%>
 				<!-- splits -->
+				<%=mod.inspect%>
 				<%elsif mod[1]  == "split" %>
+				<%=@splits.inspect%>
 				<% unless @splits.nil? %>
 					<% @splits.each do |split| %>
 						<%=split.inspect%>

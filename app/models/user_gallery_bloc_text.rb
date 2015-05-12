@@ -1,7 +1,7 @@
 class UserGalleryBlocText < ActiveRecord::Base
   belongs_to :user_gallery
   has_many :tags, :as => :taggable, dependent: :destroy
-  attr_accessible :bloc_text,  :user_gallery_id, :user_id
+  attr_accessible :bloc_text, :user_id,  :user_gallery_id
   trimmed_fields  :bloc_text
   include PublicActivity::Model
   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
@@ -14,9 +14,10 @@ class UserGalleryBlocText < ActiveRecord::Base
     block_texts = UserGalleryBlocText.where(['user_gallery_id = ?', user_gallery_id])
     unless block_texts.blank? || block_texts.nil?
       block_texts.each do |block|
+        puts block.id
+        user = User.find(block.user_id)
         blocktags =  block.tags.pluck([:name])
         block.taglist = blocktags
-        user = User.find(block.user_id)
         block.user_login = user.login
         #get comments
         block = get_comment_stuff(block)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150512130441) do
+ActiveRecord::Schema.define(:version => 20150512151748) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20150512130441) do
   create_table "user_gallery_bloc_texts", :force => true do |t|
     t.integer "user_gallery_id"
     t.text    "bloc_text"
+    t.integer "user_id"
   end
 
   create_table "user_gallery_comparisons", :force => true do |t|

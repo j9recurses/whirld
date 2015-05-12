@@ -18,7 +18,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => grid } %>
 
           </div> <!-- end module -->
 
@@ -38,7 +38,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => grid } %>
           </div> <!-- end module -->
 
       <% elsif grid.photos.size > 0 && grid.photos.size == 3 %>
@@ -60,7 +60,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => grid } %>
           </div> <!-- end module -->
       <% elsif grid.photos.size > 0 && grid.photos.size == 4 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
@@ -81,7 +81,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => grid } %>
           </div> <!-- end module -->
      <% elsif grid.photos.size > 0 && grid.photos.size == 5 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
@@ -104,7 +104,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => grid } %>
           </div> <!-- end module -->
       <% end %> <!-- if size photo -->
 

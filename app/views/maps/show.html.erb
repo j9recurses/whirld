@@ -47,7 +47,7 @@
 			<% unless mod_orders.nil?%>
 			<% mod_orders.each do | mod| %>
 				<%if mod[1]  == "grid" %>
-					<%= render partial: "maps/show_pieces/module_grid", :locals => {:grids => @grids, :collaborators => @map.collaborators, :mod => mod } %>
+					<%= render partial: "maps/show_pieces/module_grid", :locals => {:grids => @grids, :collaborators => @collaborators, :mod => mod } %>
 				 <!-- comps -->
 				<%elsif mod[1]  == "comparison" %>
 					<% unless @comps.nil? %>

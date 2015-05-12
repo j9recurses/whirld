@@ -155,7 +155,7 @@ Form.prototype = {
   tagHtml: function(){
     var self = this;
     var t = this.tagText();
-    var tagHTML = "<span class='project-tag uk-text-small uk-text-muted uk-margin-right'>#" + t + "</span>";
+    var tagHTML = "<span class='project-tag uk-text-small uk-text-muted'>" + t + "</span>  ";
     var tag = $(tagHTML);
     var tagID = 'tag-' + t;
         tag.attr('id', tagID);
@@ -168,20 +168,22 @@ Form.prototype = {
   tagList: function(){
     var taglist = []
      $.each(this.modEl.find('.project-tag'), function(i, tag){
-      var tagval =  $(tag).text().split('#')[1];
+      var tagval =  $(tag).text();
       taglist.push(tagval);
     });
     var taglist_str = taglist.join(",");
     return taglist_str;
   },
-  tagAppend: function(e){
+  tagAppend: function(e, map){
+    var self = this;
     e.preventDefault();
     var tagContainer = this.eTarget.nextAll('.tag-container');
     var tag = this.tagHtml(e)[0];
     if(e.which == 188 || e.which == 13 || e.which == 1) {
       if(tagContainer.children('.project-tag').length == 0) {
         tagContainer.append(tag);
-        this.eTarget.val('');
+        if(map){self.tagSave(map, self.projectTagList());}
+        else{self.tagSave(map, self.tagList());}
       }
       else {
         var tagCheck = tagContainer.find('#'+tag.id);
@@ -194,14 +196,16 @@ Form.prototype = {
         }
         else{
           tagContainer.append(tag);
-          this.eTarget.val('');
+          if(map){self.tagSave(map, self.projectTagList());}
+          else{self.tagSave(map, self.tagList());}
         }
       }
     }
   },
   tagSave: function(map, taglist){
+    var self = this;
     var data;
-    if(map){ 
+    if(map != null){ 
       data = {
         mod_gallery: $('#project-creation-2').data('map-id'),
         mod_type: 'map',
@@ -212,9 +216,10 @@ Form.prototype = {
       data = {
         mod_gallery: this.modId,
         mod_type: this.modType,
-        taglist: taglist,
+        taglist: taglist
       }
     }
+    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -222,6 +227,7 @@ Form.prototype = {
       type: 'post',
       success: function(data){
         console.log('Success: tags were created');
+        self.eTarget.val('')
       },
       error: function(){
         console.log('Error: tags were not created');
@@ -234,7 +240,7 @@ Form.prototype = {
       keyup: function(e){
         e.preventDefault();
         self.eTarget = $(e.target);
-        self.tagAppend(e);
+        self.tagAppend(e, null);
       },
       focusout: function(){
         self.tagSave(null, self.tagList());
@@ -245,7 +251,7 @@ Form.prototype = {
     var project_tags = $('#project-tag_list').next().find('.project-tag');
     var taglist = []
      $.each(project_tags, function(i, tag){
-      var tagval =  $(tag).text().split('#')[1];
+      var tagval =  $(tag).text();
       taglist.push(tagval);
     });
     var taglist_str = taglist.join(",");
@@ -257,18 +263,17 @@ Form.prototype = {
       keyup: function(e){
         e.preventDefault();
         self.eTarget = $(e.target);
-        self.tagAppend(e);
-      },
-      focusout: function(){
-        var tagContainer = $(this).nextAll('.tag-container');
-        if($('#project-tag_list').val().length > 0){
-          self.eTarget = $(this);
-          var tag = self.tagHtml();
-          tagContainer.append(tag);
-          self.tagSave('map', self.projectTagList());
-          $('#project-tag_list').val('')
-        }
+        self.tagAppend(e, 'map');
       }
+      // focusout: function(){
+      //   var tagContainer = $(this).nextAll('.tag-container');
+      //   if($('#project-tag_list').val().length > 0){
+      //     self.eTarget = $(this);
+      //     var tag = self.tagHtml();
+      //     tagContainer.append(tag);
+      //     self.tagSave('map', self.projectTagList());
+      //   }
+      // }
     })
   },
   captionField: function(){
@@ -278,7 +283,7 @@ Form.prototype = {
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
     var data = {
         mod_gallery: this.modId,
-        mod_type: this.modType,
+        mod_type: this.modType
       }
     // Update mod
     caption.on({
@@ -288,6 +293,8 @@ Form.prototype = {
       },
       focusout: function(e){
         self.eTarget = $(e.target);
+        data[self.modType + '_text'] = caption.val();
+        console.log(data)
         $.ajax({
           url: url,
           data: data,

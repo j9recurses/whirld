@@ -44,7 +44,7 @@ class MapsController < ApplicationController
   end
 
   def coverphoto_uploader
-    puts "********"
+    puts "COVER PHOTO HEREEEE"
     puts params
     puts "******"
     if params[:photo]
@@ -100,6 +100,7 @@ class MapsController < ApplicationController
     @map = @user.maps.new(params[:map])
     @map.author = @user.login
     @map.name = params[:name]
+    @map.description = params[:description]
     @map.user_id = current_user.id
     @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
     gallery = UserGallery.new()

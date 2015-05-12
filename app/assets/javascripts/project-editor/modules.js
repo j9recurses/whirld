@@ -55,7 +55,7 @@ ModuleHtml.prototype = {
     return html
   },
   comparison: function(){
-    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'><div class='uk-form'>" + this.htmlCaption() + åthis.htmlTaginput() + "</div></div></article>";
+    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'><div class='uk-form'>" + this.htmlCaption() + this.htmlTaginput() + "</div></div></article>";
     return $(html);
   },
   grid: function(){

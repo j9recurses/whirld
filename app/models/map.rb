@@ -42,7 +42,6 @@ class Map < ActiveRecord::Base
   has_many :collaborators,  dependent: :destroy
   has_many :users, through: :collaborators
   has_many :annotations, :dependent => :destroy
-
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

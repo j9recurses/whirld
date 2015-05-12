@@ -133,7 +133,9 @@ class MapsController < ApplicationController
 
   def map_info_finish
     @map = Map.find params[:id]
+    puts "**************"
     puts params[:mod_order].inspect
+    puts "*************"
     @map.finished_dt = Time.now
     @map.author = current_user
     @map.save
@@ -160,7 +162,6 @@ class MapsController < ApplicationController
     @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
     @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
     @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
-    puts @comps
     @map.zoom ||= 12
     @embed = true
     @user = @map.user_id

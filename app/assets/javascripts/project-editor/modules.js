@@ -55,11 +55,11 @@ ModuleHtml.prototype = {
     return html
   },
   comparison: function(){
-    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'><div class='uk-form'>" + this.htmlTaginput() + this.htmlCaption() + "</div></div></article>";
+    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'><div class='uk-form'>" + this.htmlCaption() + åthis.htmlTaginput() + "</div></div></article>";
     return $(html);
   },
   grid: function(){
-    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div>" + this.htmlCaption() + "</article>";
+    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>"  + this.htmlCaption() + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   split: function(){
@@ -73,7 +73,7 @@ ModuleHtml.prototype = {
     return $(html);
   },
   video: function(){
-    var html = "<article class='video-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='row group wrapper'><textarea class='padding-bottom' class='text-module-body' placeholder='Insert video URL from Youtube or Vimeo' class='twelve columns'></textarea>" + this.htmlCaption() +  + this.htmlTaginput() + "</article>";
+    var html = "<article class='video-module module uk-width-1-1 input-wrapper'>" + this.htmlHeader() + "<div class='uk-form uk-width-1-1'><input class='video-module-url uk-width-1-1 uk-margin-bottom' placeholder='Add a url from YouTube'/></div><div class='uk-form'>"  + this.htmlCaption() + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   html: function(){
@@ -243,6 +243,7 @@ Module.prototype = {
     var self = this;
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_create/' + this.user_gallery_id;
     var data = {user_gallery_id: this.user_gallery_id};
+    console.log(data)
     $.ajax({
       url: url,
       data:  data,
@@ -281,9 +282,13 @@ Module.prototype = {
         }
         else if(self.options.modType == 'text'){
           var txtField = new Form({ modAttrId: self.modEl.attr('id') });
-              txtField.textField();
+              txtField.blockTextField();
         }
-        else if(self.options.modType == 'grid' || self.options.modType == 'comparison'){
+        else if(self.options.modType == 'video'){
+          var vidField = new Form({ modAttrId: self.modEl.attr('id') });
+              vidField.videoField();
+        }
+        else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
           var caption = new Form({ modAttrId: self.modEl.attr('id') });
               caption.captionField();
         }
@@ -332,7 +337,6 @@ Module.prototype = {
     });
   },
   update: function(order){
-    console.log(order)
     var self = this;
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_update/'  + this.id;
     var data = {mod_gallery: this.id};

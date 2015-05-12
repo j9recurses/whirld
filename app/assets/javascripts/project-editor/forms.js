@@ -215,7 +215,6 @@ Form.prototype = {
         taglist: taglist,
       }
     }
-    console.log(data)
     $.ajax({
       url: '/photo_mods/create_taggings',
       data: data,
@@ -332,7 +331,7 @@ Form.prototype = {
       }
     });
   },
-  textField: function(){
+  blockTextField: function(){
     autosize(this.modEl.find('.text-module-body'));
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
     var data = {
@@ -347,6 +346,37 @@ Form.prototype = {
 
         console.log($(this))
         data['bloc_text'] = self.eTarget.val();
+        console.log(data)
+        $.ajax({
+          url: url,
+          data: data,
+          cache: false,
+          type: 'put',
+          success: function(data){
+            console.log('Success: text field was updated');
+          },
+          error: function(){
+            console.log('Error: text field was not updated');
+          }
+        }); // end ajax
+      }
+    });
+  },
+  videoField: function(){
+    autosize(this.modEl.find('.text-module-body'));
+    var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
+    var data = {
+        mod_gallery: this.modId,
+        mod_type: this.modType
+      }
+
+    // Update mod
+    this.modEl.find('.video-module-url').on({
+      focusout: function(e){
+        self.eTarget = $(e.target);
+
+        console.log($(this))
+        data['url'] = self.eTarget.val();
         console.log(data)
         $.ajax({
           url: url,

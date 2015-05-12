@@ -1,12 +1,22 @@
 <!-- NEED Module ID -->
-<section id='module-comparison-<%=comp.id%>' class='slide module module-comparison'>
+<section id='module-comp-<%=comp.id%>' class='slide module module-comp'>
 	<div class='row group'>
 		<div class='juxtapose'>
 		  <% unless comp.photos.blank? %>
-      <% comp.photos.each do |photo| %>
-      <% photo_d = PhotoDecorator.decorate(photo[0]) %>
-          <%=image_tag(photo_d.img_href, :class => '') %>
-      <%end%>
+
+			   <div id='comparison-<%=compid%>' class='module-comparison wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
+			    <!-- Thumbnail -->
+			    <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+			      
+			     <%=comp.inspect%>
+			    </div>
+			    <!-- Activity for all -->
+			    <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :comp => mod } %>
+
+			  </div> <!-- end module -->
+
+
+
      <%end%>
 		</div>
 	</div>

@@ -1,0 +1,13 @@
+<!-- Activity for all -->
+<div class='wh-mod-meta wh-height-eighty uk-width-1-10 uk-text-small uk-text-muted'>
+  <p class='wh-italics'>
+    Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
+  </p>
+  <p>Comments will go here.</p>
+</div> 
+
+<!-- Tags and caption for all -->
+<div class='uk-width-9-10 uk-margin-top'>
+  <%= render partial: "maps/show_pieces/module_taglist", :locals => { :taglist => taglist, :collaborators => collaborators } %>
+  <p>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
+</div>

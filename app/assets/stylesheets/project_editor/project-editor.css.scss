@@ -14,6 +14,7 @@
 
 #project-creation-2{
 	height: 100%;
+	font-size: 14px;
 	overflow-y: 100%;
 
 	#end-bar .uk-button {
@@ -115,7 +116,9 @@
 	}
 	.uk-accordion-title{
 		border-bottom: 1px solid #CDCDCD;
-		padding: 0 0 10px 0;
+		padding: 0 0 5px 0;
+	  font-size: 14px;
+	  line-height: 16px;
 	}
 	.uk-accordion-title.uk-active::after{
 		content: "\f0d7";
@@ -179,13 +182,21 @@
 	#project-top{
 		margin-left: 25%;
 	  width: 75%;
+
+	  input, textarea{
+	  	height: 30px;
+		  max-width: 100%;
+		  padding: 4px 6px;
+	  }
+
 	}
 	.sort.uk-active::before, #photo-select .filter.uk-active::before{
 		content: "\f00c";
 		font-family: FontAwesome;
 	}
-	.split-module .uk-placeholder{
+	.split-module .uk-placeholder.droppable{
 		margin-bottom: 0;
+		height: 227px;
 	}
 	.tag-container{
 		min-height: 20px;
@@ -196,6 +207,9 @@
 	}
 	.uk-overlay-panel a{
 		cursor: -webkit-grabbing;
+	}
+	.uk-text-small{
+		font-size: 12px;
 	}
 	.container{
 	  padding: 2% 7% 0 2%;

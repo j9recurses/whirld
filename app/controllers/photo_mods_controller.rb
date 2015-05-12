@@ -21,6 +21,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_grid_update
     @user_gallery_grid = UserGalleryGrid.find(params[:mod_gallery])
     @user_gallery_grid[:grid_photo_order] =  params[:grid_photo_order]
+    @user_gallery_grid[:grid_text] =  params[:grid_text]
     respond_to do |format|
       if @user_gallery_grid.save
         format.json { render json:  @user_gallery_grid}
@@ -58,6 +59,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_comparison_update
     @user_gallery_comparison = UserGalleryComparison.find(params[:mod_gallery])
     @user_gallery_comparison[:comparison_photo_order] = params[:comparison_photo_order]
+    @user_gallery_comparison[:comparison_text] = params[:comparison_text]
     respond_to do |format|
       if @user_gallery_comparison.save
         format.json { render json:  @user_gallery_comparison}

@@ -12,7 +12,35 @@
     width: 62%;
   }
   .wh-height-viewport{
-    height: 88vh; 
+    height: 90vh; 
     min-height: 557px;
   }
+  .wh-module{
+    padding-left: 50px;
+  }
+  .wh-mod-wrapper{
+    padding-left: 0;
+  }
+  .wh-mod-container{
+    background: #e6e7e8;
+    padding: 0 8%;
+  }
+  .wh-mod-meta{
+    padding: 5px 0px 0 15px;
+  }
+  .wh-photo-half{
+    width: 49.2%;
+    margin-top: 0;
+  }
+  .wh-photo-third{
+    width: 32%;
+    margin-top: 0;
+  }
+  .wh-photo-margin-left{
+    margin-left: 15px;
+  }
+  .wh-photo-half .wh-whirl.uk-container {
+    padding: 0 20px;
+  }
+
 }

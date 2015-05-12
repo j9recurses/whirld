@@ -261,34 +261,44 @@ Form.prototype = {
         self.tagAppend(e);
       },
       focusout: function(){
-        self.tagSave('map', self.projectTagList());
+        var tagContainer = $(this).nextAll('.tag-container');
+        if($('#project-tag_list').val().length > 0){
+          self.eTarget = $(this);
+          var tag = self.tagHtml();
+          tagContainer.append(tag);
+          self.tagSave('map', self.projectTagList());
+          $('#project-tag_list').val('')
+        }
       }
     })
   },
   captionField: function(){
     var self = this;
     var caption = $(this.modEl.find('.caption'));
-        autosize(caption)
+        autosize(caption);
     var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
     var data = {
         mod_gallery: this.modId,
-        mod_type: this.modType
+        mod_type: this.modType,
       }
     // Update mod
     caption.on({
+      keyup: function(e){
+        self.eTarget = $(e.target);
+        self.changeCounter(e);
+      },
       focusout: function(e){
         self.eTarget = $(e.target);
-        console.log(self.modType)
         $.ajax({
           url: url,
           data: data,
           cache: false,
           type: 'put',
           success: function(data){
-            console.log('Success: text field was updated');
+            console.log('Success: caption field was updated');
           },
           error: function(){
-            console.log('Error: text field was not updated');
+            console.log('Error: caption field was not updated');
           }
         }); // end ajax
       }
@@ -334,6 +344,8 @@ Form.prototype = {
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
         self.eTarget = $(e.target);
+
+        console.log($(this))
         data['bloc_text'] = self.eTarget.val();
         console.log(data)
         $.ajax({
@@ -424,7 +436,7 @@ Form.prototype = {
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
-        autosize($('#project-name'));
+        autosize($('#project-description'));
       }
     });
     var locAC = new AutoComp({

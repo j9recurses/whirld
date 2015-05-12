@@ -14,12 +14,12 @@
  *= require leaflet-illustrate/dist/Leaflet.Illustrate.css
  *= require leaflet-toolbar/dist/leaflet.toolbar.css
  *= require leaflet-distortableimage/dist/leaflet.distortableimage.css
+ 
 
-
-*= require base/fonts
 *= require uikit/css/uikit
-*= require base/main
-*= require global_components/navbar
+*= require global/main
+*= require global/autocomplete
+*= require fonts
 *= require uikit/css/components/form-file.min
 *= require uikit/css/components/form-select.min
 *= require uikit/css/components/sticky.min
@@ -27,6 +27,7 @@
 *= require uikit/css/components/upload.min
 *= require uikit/css/components/placeholder.min
 *= require uikit/css/components/accordion.min
+
 *= require search
 *= require projects/project-show.css.scss
 

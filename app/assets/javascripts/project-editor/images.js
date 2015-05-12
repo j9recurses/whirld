@@ -45,8 +45,6 @@ ImageUploader.prototype = {
         $('#loader').addClass('uk-hidden');
         $('#preview-list').removeClass('uk-hidden');
 
-        console.log(data.result.warpable_url)
-
         var img = new Image({
           updated_at: data.result.updated_at,
           id: data.result.id,
@@ -111,14 +109,22 @@ Image.prototype = {
     return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
   },
   setPhotoType: function(){
-    if(this.options.is_aerial){ return 'aerial' }
-      else{ return 'normal' }
+    var type;
+    if(this.options.is_aerial){
+      type = "aerial"
+    }
+    else if(this.options.is_normal){
+      type = "normal"
+      if (this.options.is_faces){
+        type += " people"
+      }
+    }
+    return type;
   },
   htmlThumb: function(){
-    var imgWrapper = "<div class='img-wrapper " + this.photoType + "' data-user-id='" + this.user_id + "' data-img-type='" + this.photoType + "' data-created='" + this.updated_at + "' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "' style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
-    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.photoType + "'><div class='draggable draggable-wrapper'>" + imgWrapper + "</div></article>";
+    var imgWrapper = "<div class='img-wrapper " + this.setPhotoType() + "' data-user-id='" + this.user_id + "' data-img-type='" + this.setPhotoType() + "' data-created='" + this.updated_at + "' data-warpable-id='" + this.options.warpableId + "' data-warpable-url='" + this.options.warpableUrl + "' data-img-id='" + this.id + "' style=\"background-image:url('" + this.options.mediumPath + "')\"'></div>";
+    var html = "<article id='preview-" + this.id + "' class='preview mix mix-half " + this.setPhotoType() + "'><div class='draggable draggable-wrapper'>" + imgWrapper + "</div></article>";
     var el = $(html)
-    console.log(el)
     return el;
   },
   setRemoveButton: function(){
@@ -189,7 +195,6 @@ Image.prototype = {
     this.setUploadedData();
     this.setRemoveButton();
     this.setDrag();
-    this.init();
     this.append();
   },
   initSaved: function(){
@@ -197,6 +202,5 @@ Image.prototype = {
     this.setSavedData();
     this.setRemoveButton();
     this.setDrag();
-    this.init();
   }
 }

@@ -15,17 +15,17 @@ var ModuleHtml = function(options){
 ModuleHtml.prototype = {
   setModData: function(){
     if(this.options.modType == 'grid'){
-      this.emptyMessage = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag up to ten photos here.</p>";
+      this.emptyMessage = "<p class='uk-h3'><i class='fa fa-photo'></i> Drag up to five photos here.</p>";
       this.iconClass = 'th-large';
       this.label = 'Photo Grid';
     }
     else if(this.options.modType == 'split'){
-      this.emptyMessage = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag one photo here.</p>";
+      this.emptyMessage = "<p class='uk-h4'><i class='fa fa-photo'></i> Drag one photo here.</p>";
       this.iconClass = 'star-half';
       this.label = 'Text With Photo';
     }
     else if(this.options.modType == 'comparison'){
-      this.emptyMessage = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag two photos here to compare them.</p>";
+      this.emptyMessage = "<p class='uk-h3'><i class='fa fa-photo'></i> Drag two photos here to compare them.</p>";
       this.iconClass = 'angle-right';
       this.label = 'Compare Two Photos';
     }
@@ -39,7 +39,7 @@ ModuleHtml.prototype = {
     }
   },
   htmlCaption: function(){
-    var html = "<div class='uk-form width-1-1'><textarea class='caption uk-width-1-1' placeholder='Describe your content.'</textarea><small class='char-limit uk-invisible' data-limit='70'>70</small></div>";
+    var html = "<div class='uk-margin-top uk-form width-1-1 input-wrapper'><textarea class='caption uk-width-1-1' placeholder='Describe your content.'></textarea><small class='char-limit uk-invisible' data-limit='140'>140</small></div>";
     return html
   },
   htmlDropzone: function(){
@@ -55,21 +55,21 @@ ModuleHtml.prototype = {
     return html
   },
   comparison: function(){
-    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div></article>";
+    var html = "<article class='comparison-module module uk-width-1-1'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'><div class='uk-form'>" + this.htmlTaginput() + this.htmlCaption() + "</div></div></article>";
     return $(html);
   },
   grid: function(){
-    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div></article>";
+    var html = "<article class='grid-module uk-width-1-1 module'>" + this.htmlHeader() + this.htmlDropzone() + "<div class='uk-form width-1-1'>" + this.htmlTaginput() + "</div>" + this.htmlCaption() + "</article>";
     return $(html);
   },
   split: function(){
     var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-width-1-1' placeholder='Add some text'></textarea></div>";
     var photo = "<div class='uk-placeholder uk-text-muted uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
-    var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "</div>" + this.htmlTaginput() + "</article>";
+    var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "<div class='uk-form uk-width-1-1'>" + this.htmlTaginput() + "</div></div></article>";
     return $(html);
   },
   text: function(){
-    var html = "<article class='text-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-form uk-width-1-1'><textarea class='text-module-body uk-width-1-1 uk-margin-bottom' placeholder='Add a block of text'></textarea></div>" + this.htmlTaginput() + "</article>";
+    var html = "<article class='text-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-form uk-width-1-1'><textarea class='text-module-body uk-width-1-1 uk-margin-bottom' placeholder='Add a block of text'></textarea></div><div class='uk-form'>" + this.htmlTaginput() + "</div></article>";
     return $(html);
   },
   video: function(){
@@ -132,7 +132,7 @@ Module.prototype = {
       message = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag two photos here to compare them.</p>";
     }
     else if(this.options.modType == 'grid'){
-      message = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag up to ten photos here.</p>";
+      message = "<p class='uk-h1'><i class='fa fa-photo'></i> Drag up to five photos here.</p>";
     }
     else if(this.options.modType == 'split'){
       message = "<p class='uk-h2'><i class='fa fa-photo'></i> Drag one photo here.</p>";
@@ -144,7 +144,7 @@ Module.prototype = {
   },
   setData: function(){
     if(this.options.modType == 'grid'){
-      this.photoLimit = 10;
+      this.photoLimit = 5;
     }
     else if(this.options.modType == 'split'){
       this.photoLimit = 1;

@@ -22,8 +22,7 @@
 //= require uikit/js/components/tooltip.min.js
 //= require uikit/js/components/accordion.min.js
 //= require uikit/js/components/pagination.min.js
-
-
+//= require uikit/js/components/lightbox.min.js
 
 
 //for uploading videos

@@ -6,19 +6,18 @@ $(document).ready(function(){
   if($('#project-creation-2').length > 0){
     var pe = new ProjectEditor();
         pe.init();
+    var mapId = $('#project-creation-2').data('map-id');
+    var mapLat = $('#project-creation-2').data('map-lat');
+    var mapLon = $('#project-creation-2').data('map-lon');
+    window.mapKnitter = new MapKnitter.Map({
+      latlng:     L.latLng(mapLat, mapLon),
+      readOnly:   false,
+      zoom: 12,
+      warpablesUrl: "/maps/" + mapId +"/warpables.json",
+      logged_in: true,
+      anonymous:  false,
+    });
   }
-
-  var mapId = $('#project-creation-2').data('map-id');
-  var mapLat = $('#project-creation-2').data('map-lat');
-  var mapLon = $('#project-creation-2').data('map-lon');
-  window.mapKnitter = new MapKnitter.Map({
-    latlng:     L.latLng(mapLat, mapLon),
-    readOnly:   false,
-    zoom: 12,
-    warpablesUrl: "/maps/" + mapId +"/warpables.json",
-    logged_in: true,
-    anonymous:  false,
-  });
 
   // var annotations = new MapKnitter.Annotations({
   //   name:   'annotation',

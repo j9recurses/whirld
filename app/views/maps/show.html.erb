@@ -1,25 +1,27 @@
-<div id='project-show' class='uk-grid uk-grid-collapse' data-map-lat='<%=@map.lat%>' data-map-lon='<%=@map.lon%>' data-map-zoom='<%=@map.zoom%>' data-warpable-url='/maps/<%=@map.slug%>/warpables.json'>
-	<section class='pp-main uk-width-4-10 wh-container uk-grid wh-height-viewport'>
+<div id='project-show' class='uk-grid uk-grid-collapse' data-map-lat='<%=@map.lat%>' data-map-lon='<%=@map.lon%>' data-map-zoom='<%=@map.zoom%>' data-warpable-url='/maps/<%=@map.id%>/warpables.json'>
+	<section class='pp-main uk-width-4-10 wh-container uk-grid wh-height-viewport uk-margin-bottom'>
 		<div class='uk-width-1-1 uk-margin-top'>
 
-			<div class='uk-width-1-2 uk-float-left uk-text-primary uk-margin-bottom'>
-				<i class='fa fa-heart'></i>
-				<%= @map.votes_for.size%> whirls
+			<div class='uk-width-1-2 uk-float-left uk-margin-bottom'>
+				<a class='wh-js-whirl uk-text-primary unwhirled' data-whirl-type='Map' data-whirl-id='<%=@map.id%>'><i class='fa fa-heart-o'></i></a>
+				<span class='wh-js-whirl-count'><%= @map.votes_for.size%></span> whirls
 			</div>
 			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
 				<a class='uk-text-primary'><i class='fa fa-share'></i>  Share This</a>
 			</div>
-			<h1 class='uk-margin-top'><%= @map.name %></h1>
-			<h2><%= @map.location %></h2>
+			<h1 class='uk-margin-top'>
+				<%= @map.name %>
+			</h1>
+			<h2 class='uk-h3'><%= @map.location %></h2>
 
-			<p>
-				<i class='fa fa-users uk-text-muted'></i>
+			<p class='uk-text-small'>
+				<i class='fa fa-users uk-text-muted' data-uk-tooltip title="Project collaborators"></i>
 				<% @collaborators.each do |collab| %>
 					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %>
 				<% end %>
 			</p>
 
-			<p>
+			<p class='uk-text-small'>
 				<i class='fa fa-tag uk-text-muted'></i>
 				<% if @map.taglist.size > 0 %>
 					<% @map.taglist.each do |tag| %>
@@ -32,18 +34,51 @@
 						</span>
 				<% end %>
 			</p>
-			<p class='uk-h3'><%=@map.description%></p>
+			<p class='project-description'><%=@map.description%></p>
 
-			<div class='uk-position-bottom'>
-				<button class='uk-button uk-button-primary uk-button-large uk-width-1-10'>Edit Project</button>
-			</div>
-		</div>
 	</section>
 
 	<section class='wh-map-container uk-width-6-10 wh-height-viewport'>
 		<div id='knitter-map-pane'></div>
 	</section>
 
+	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
+	   <% mod_orders =  eval(@user_gallery.module_order) %>
+			<% unless mod_orders.nil?%>
+			<% mod_orders.each do | mod| %>
+				<%if mod[1]  == "grid" %>
+					<%= render partial: "maps/show_pieces/module_grid", :locals => {:grids => @grids, :collaborators => @map.collaborators, :mod => mod } %>
+				 <!-- comps -->
+				<%elsif mod[1]  == "comparison" %>
+					<% unless @comps.nil? %>
+					<% @comps.each do |comp| %>
+						<% if comp.id == mod[0].to_i %>
+							<%= render partial: "maps/show_pieces/module_comparison", :locals => {:comp => comp} %>
+							<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => comp.taglist} %>
+						<% end %>
+					<%end%>
+							<%end%>
+				<!-- splits -->
+				<%elsif mod[1]  == "split" %>
+				<% unless @splits.nil? %>
+					<% @splits.each do |split| %>
+						<%=split.inspect%>
+						<% if split.id == mod[0].to_i %>
+							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split} %>
+						<% end %>
+					<% end %>
+					<% end %>
 
+				<!-- block text -->
+			 <%elsif mod[1]  == "text" %>
+			 		<% @block_texts.each do |block| %>
+			 			<% if block.id == mod[0].to_i %>
+							<%= render partial: "maps/show_pieces/module_text", :locals => {:block => block} %>
+						<% end %>
+					<% end %>
+		  <% end %>
+		<% end %>
+		<% end %>
+	</section>
 
 </div>

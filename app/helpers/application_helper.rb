@@ -91,9 +91,6 @@ module ApplicationHelper
   def collaborators_list(map)
     collabo_hash = Hash.new
     puts map.collaborators.inspect
-    if map.collaborators.blank?
-      map =  map.load(:include => 'collaborators')
-    end
     map.collaborators.each do |c |
       ustuff = User.find(c.user_id)
       collabo_hash[ustuff.id] = ustuff.login
@@ -132,15 +129,10 @@ module ApplicationHelper
   end
 
   def get_whirl_stuff(model)
-    puts model
-    model.whirls = model.votes.size
-    if user_signed_in?
-      if model.votes.size > 0
-       model.user_whirled = current_user.voted_for? model
-     end
-    end
+       model.whirls = model.votes_for.size
+       model.user_whirled =  false #current_user.voted_for? model
     return model
-  end
+end
 
 end
 

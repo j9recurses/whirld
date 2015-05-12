@@ -7,6 +7,7 @@ class UserGallery < ActiveRecord::Base
   has_many :user_gallery_splits,  dependent: :destroy
   has_many :user_gallery_bloc_texts, dependent: :destroy
   has_many  :user_gallery_comparisons , dependent: :destroy
+  has_many :videos, dependent: :destroy
   serialize :module_order
   #validates_presence_of :name
   #validates_uniqueness_of :name

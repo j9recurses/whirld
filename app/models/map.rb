@@ -16,7 +16,7 @@ class Map < ActiveRecord::Base
   acts_as_commentable
   acts_as_votable
 
-  attr_accessor :search_order, :search_term, :search_term_bar,  :search_geo_name,  :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id
+  attr_accessor :search_order, :search_term, :search_term_bar,  :search_geo_name,  :search_entity, :ndist, :whirls, :comment_count, :collaborator_list, :geographic_search, :taglist, :coverphoto_name, :user_gallery_id, :user_whirled, :comment_cnt, :comments
 
 
   friendly_id :name
@@ -42,7 +42,7 @@ class Map < ActiveRecord::Base
   has_many :collaborators,  dependent: :destroy
   has_many :users, through: :collaborators
   has_many :annotations, :dependent => :destroy
-  has_many :votes,  dependent: :destroy
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

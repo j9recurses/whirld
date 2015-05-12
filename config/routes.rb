@@ -118,7 +118,9 @@ Whirld::Application.routes.draw do
   post 'photo_mods/create_taggings', :to => 'photo_mods#create_taggings', :as => 'create_taggings'
   delete 'photo_mods/delete_taggings/:id', :to => 'photo_mods#delete_taggings', :as => 'delete_taggings'
 
-  post 'photo_mods/coverphoto', :to => 'photo_mods#coverphoto', :as => 'coverphoto'
+  #video
+  post 'photo_mods/user_gallery_video_create/:id', :to => 'photo_mods#user_gallery_video_create'
+  delete 'photo_mods/user_gallery_video_delete/:id', :to => 'photo_mods#user_gallery_video_delete',  :as => 'user_gallery_video_delete'
 
   #user profiles
   get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"
@@ -150,6 +152,9 @@ Whirld::Application.routes.draw do
   post 'threaded_comment' => "comments#threaded_comment" ,  :as => "threaded_comment_path"
   put  'edit_comment/:id'  => "comments#edit_comment" ,  :as => "edit_comment_path"
   delete  'delete_comment/:id'  => "comments#delete_comment" ,  :as => "delete_comment_path"
+
+  #map cover photo
+  post  '/coverphoto_uploader/:id'  => "maps#coverphoto_uploader" ,  :as => "coverphoto_uploader_path"
 
 
 end

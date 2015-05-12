@@ -1,7 +1,7 @@
 
 class PhotoModsController < ApplicationController
   include ApplicationHelper
-   before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
 
   def user_gallery_grid_create
@@ -121,7 +121,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_text_create
     @user_gallery_text = UserGalleryBlocText.new
     @user_gallery_text[:user_gallery_id] = params[:user_gallery_id]
-   @user_gallery_text[:user_id] = current_user.id
+    @user_gallery_text[:user_id] = current_user.id
     respond_to do |format|
       if @user_gallery_text.save
         format.json { render json:  @user_gallery_text}
@@ -133,7 +133,7 @@ class PhotoModsController < ApplicationController
 
   def user_gallery_text_update
     @user_gallery_text  = UserGalleryBlocText.find(params[:mod_gallery])
-     @user_gallery_text [:bloc_text] = params[:bloc_text]
+    @user_gallery_text [:bloc_text] = params[:bloc_text]
     respond_to do |format|
       if  @user_gallery_text.save
         format.json { render json:   @user_gallery_text }
@@ -210,9 +210,9 @@ class PhotoModsController < ApplicationController
     if params[:tagList]
       @item = parse_taglist(params[:tagList], params[:mod_type], params[:mod_gallery])
     else
-    @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
-    puts @item.inspect
-  end
+      @item = parse_taglist(params[:taglist], params[:mod_type], params[:mod_gallery])
+      puts @item.inspect
+    end
     respond_to do |format|
       format.json { render json:@item}
     end
@@ -229,5 +229,30 @@ class PhotoModsController < ApplicationController
     end
   end
 
+  #videos
+  def user_gallery_video_create
+    @video = Video.new
+    @video.user_gallery_id = params[:user_gallery_id]
+    @video.user_id = current_user.id
+    respond_to do |format|
+      if @video.save
+        format.json { render json:  @video}
+      else
+        render :json => { "errors" => @video.errors }
+      end
+    end
+  end
+
+  def user_gallery_video_delete
+    puts params
+    @video = Video.find(params[:mod_gallery])
+    respond_to do |format|
+      if @video.destroy
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @video.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
 end

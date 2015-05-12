@@ -132,9 +132,12 @@ module ApplicationHelper
   end
 
   def get_whirl_stuff(model)
+    puts model
     model.whirls = model.votes.size
     if user_signed_in?
-       model.user_whirled current_user.voted_for? model
+      if model.votes.size > 0
+       model.user_whirled = current_user.voted_for? model
+     end
     end
     return model
   end

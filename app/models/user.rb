@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   #       :omniauthable, :omniauth_providers => [:google_oauth2]
 
+acts_as_voter
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_profile_attributes, :encrypted_password

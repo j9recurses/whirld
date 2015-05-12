@@ -19,9 +19,9 @@ class UserGalleryBlocText < ActiveRecord::Base
         user = User.find(block.user_id)
         block.user_login = user.login
         #get comments
-        block = get_comment_stuff(model)
+        block = get_comment_stuff(block)
         #get whirls
-
+        block =  get_whirl_stuff(block)
         combined_block_texts << block
       end
     end

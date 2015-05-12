@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150511123054) do
+ActiveRecord::Schema.define(:version => 20150512130441) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -257,7 +257,6 @@ ActiveRecord::Schema.define(:version => 20150511123054) do
   create_table "user_gallery_bloc_texts", :force => true do |t|
     t.integer "user_gallery_id"
     t.text    "bloc_text"
-    t.integer "user_id"
   end
 
   create_table "user_gallery_comparisons", :force => true do |t|
@@ -330,10 +329,11 @@ ActiveRecord::Schema.define(:version => 20150511123054) do
     t.integer  "map_id"
     t.string   "description"
     t.string   "yt_video_id"
-    t.boolean  "is_complete", :default => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_complete",     :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "uid"
+    t.integer  "user_gallery_id"
   end
 
   add_index "videos", ["map_id"], :name => "index_videos_on_map_id"

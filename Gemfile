@@ -85,6 +85,7 @@ gem 'acts_as_commentable_with_threading', '~>1.2.0'
 
 #voting
 gem 'acts_as_votable', '~> 0.10.0'
+
 #gem 'routing_concerns', '~> 0.1.0'
 
 #recommender

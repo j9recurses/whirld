@@ -1,13 +1,15 @@
 class UserGallerySplit < ActiveRecord::Base
   belongs_to :user_gallery
+  trimmed_fields :split_text
   attr_accessible :split_text, :user_gallery_id, :user_id
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
-   acts_as_votable
-  #
-  attr_accessor :whirls, :taglist, :user_login, :photos
+  tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
+  acts_as_votable
+  acts_as_commentable
+
+  attr_accessor :whirls, :taglist, :user_login, :photos, :user_whirled, :comment_cnt, :comments
 
 
   def self.gather_gallery_splits(user_gallery_id)
@@ -21,6 +23,10 @@ class UserGallerySplit < ActiveRecord::Base
         split.taglist = split_tags
         user = User.find(split.user_id)
         split.user_login = user.login
+        #get comments
+        split = get_comment_stuff(split)
+        #get whirls
+        split =  get_whirl_stuff(split)
         combined_gallery_splits  << split
       end
     end
@@ -28,30 +34,5 @@ class UserGallerySplit < ActiveRecord::Base
   end
 
 
-
-
-  # def taglist
-  #   @taglist
-  # end
-
-  # def taglist=(val)
-  #   @taglist = val
-  # end
-
-  # def photos
-  #   @photos
-  # end
-
-  # def photos=(val)
-  #   @photos = val
-  # end
-
-  # def whirls
-  #   @whirls
-  # end
-
-  # def whirls=(val)
-  #   @whirls = val
-  # end
 
 end

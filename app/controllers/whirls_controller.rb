@@ -8,7 +8,7 @@ class WhirlsController < ApplicationController
     @klass_obj = klass.find( klass_id )
     if user_signed_in?
       @klass_obj.liked_by current_user
-      @klass_obj.whirls =  @klass_obj.votes_for.size
+      @klass_obj.whirls =  @klass_obj.votes.size
     end
     respond_to do |format|
       if user_signed_in?
@@ -26,7 +26,7 @@ class WhirlsController < ApplicationController
     @klass_obj = klass.find( klass_id )
     if user_signed_in?
       @klass_obj.unliked_by current_user
-      @klass_obj.whirls =  @klass_obj.votes_for.size
+      @klass_obj.whirls =  @klass_obj.votes.size
     end
     respond_to do |format|
       if user_signed_in?

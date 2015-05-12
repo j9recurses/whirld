@@ -12,6 +12,7 @@ class PhotoMod < ActiveRecord::Base
           photo_mod = PhotoMod.find(photo.to_i)
           unless photo_mod.blank?
             photo_img = Photo.find( photo_mod.photo_id)
+            photo_img =  get_whirl_stuff(photo_img)
             photo_info << photo_img
             photo_info << photo_mod
             allphotos << photo_info
@@ -26,8 +27,9 @@ class PhotoMod < ActiveRecord::Base
     photo_info = Array.new
     photo_mod = PhotoMod.where(["mod_gallery_type = ? and mod_gallery_id = ?" , mod_gallery_type, mod_gallery_id])
     unless photo_mod.blank?
-          photo_img = Photo.find(photo_mod[0].photo_id)
-          photo_info << photo_img
+      photo_img = Photo.find(photo_mod[0].photo_id)
+      photo_img =  get_whirl_stuff(photo_img)
+      photo_info << photo_img
     end
     return photo_info
   end

@@ -2,13 +2,15 @@
 class UserGalleryGrid < ActiveRecord::Base
   serialize :grid_order
   belongs_to :user_gallery
-  attr_accessible :grid_order, :user_gallery_id,:user_id
+  trimmed_fields :grid_text
+  attr_accessible :grid_order, :user_gallery_id,:user_id, :grid_text
   has_many :photo_mods, as: :mod_gallery, dependent: :destroy
   has_many :tags, :as => :taggable, dependent: :destroy
   include PublicActivity::Model
-   tracked owner: Proc.new{ |controller, model| controller.current_user }
+  tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
   acts_as_votable
-attr_accessor  :taglist, :photos, :whirls, :user_login
+  acts_as_commentable
+  attr_accessor  :taglist, :photos, :whirls, :user_login, :user_whirled, :comment_cnt, :comments
 
 
   def self.gather_gallery_grids(user_gallery_id)
@@ -22,35 +24,16 @@ attr_accessor  :taglist, :photos, :whirls, :user_login
         grid.taglist = grid_tags
         user = User.find(grid.user_id)
         grid.user_login = user.login
-        puts grid.photos
+        #get comments
+        grid = get_comment_stuff(grid)
+        #get whirls
+        grid =  get_whirl_stuff(grid)
+        #puts grid.photos
         combined_gallery_grids  << grid
       end
     end
     return combined_gallery_grids
   end
 
- #  def taglist
- #    @taglist
- #  end
-
- #  def taglist=(val)
- #     @taglist = val
- #  end
-
- #  def photos
- #    @photos
- #  end
-
- #  def photos=(val)
- #    @photos = val
- #  end
-
- # def whirls
- #    @whirls
- #  end
-
- #  def whirls=(val)
- #    @whirls = val
- #  end
 
 end

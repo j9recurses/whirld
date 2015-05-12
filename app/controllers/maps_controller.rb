@@ -20,13 +20,11 @@ class MapsController < ApplicationController
   end
 
   def search
-    puts "********************"
-    puts "***in here form***"
+    puts "****search"
     puts params
     puts "**************"
     if params[:query ] or params[':query']
-    puts "********************"
-    puts "***in here query form***"
+      puts "***in here query form***"
       @maps = Map.simple_search(params)
       @maps = Map.search_type(@maps, params)
       puts @maps
@@ -45,8 +43,29 @@ class MapsController < ApplicationController
     end
   end
 
-  def search_top_navbar
-    puts params.inspect
+  def coverphoto_uploader
+    puts "********"
+    puts params
+    puts "******"
+    if params[:photo]
+      user_gallery =  UserGallery.find(params[:id])
+      puts user_gallery.inspect
+      @map = Map.find(user_gallery.map_id)
+      @photo = user_gallery.photos.new
+      @photo.photo_file = params[:photo]
+      @photo.user_id = current_user.id
+      puts "here"
+    end
+    respond_to do |format|
+      if @photo.save
+        @map.coverphoto = @photo.id
+        @map.coverphoto_name = @photo.photo_file.medium.url
+        puts "made it here"
+        format.json { render :json => @maps, :methods => [:coverphoto_name]}
+      else
+        format.json { render "Error! Something went wrong! Couldn't save map coverphoto." }
+      end
+    end
   end
 
 
@@ -122,18 +141,21 @@ class MapsController < ApplicationController
     user_gallery_id = UserGallery.where(map_id: @map[:id]).pluck(:id)
     @user_gallery = UserGallery.find(user_gallery_id[0])
     @user_gallery.module_order  = params[:mod_order]
-      if @map.save && @user_gallery.save
-       render :js => "window.location = '/maps/#{@map.name}'"
-      else
+    if @map.save && @user_gallery.save
+      render :js => "window.location = '/maps/#{@map.name}'"
+    else
       render json: "error! something went wrong!!"
-      end
+    end
   end
 
   def show
     @map = Map.find params[:id]
+    @map =  get_whirl_stuff(@map)
     @map.taglist = @map.tags.pluck([:name])
+    #comments
+    @map = get_comment_stuff(@map)
+    #get whirls
     @user_gallery = UserGallery.where(['map_id = ?', @map]).first
-    puts @user_gallery.inspect
     @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
     @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
     @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
@@ -195,21 +217,9 @@ class MapsController < ApplicationController
     if params[:tagList]
       @map.taglist = parse_taglist(params[:tagList], "map", @map.id)
     end
-    if params[:photo]
-      user_gallery_id = UserGallery.where(["map_id = ?", @map.id]).pluck([:id])
-      @user_gallery = UserGallery.find(user_gallery_id)
-      @photo =  Photo.new
-      @photo.photo_file = params[:photo]
-      @photo.user_gallery = @user_gallery
-      @photo.user_id = current_user.id
-      @photo.save
-      params[:coverphoto] = @photo.id
-      params.delete :photo
-    end
-    puts "made it here"
     @map = @map.update_attributes(params)
     respond_to do |format|
-        format.json { render json: @map }
+      format.json { render json: @map }
     end
   end
 

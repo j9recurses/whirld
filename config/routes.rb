@@ -142,6 +142,8 @@ Whirld::Application.routes.draw do
 
   #whirls
   post 'whirl' => 'whirls#whirl',  :as => "whirl_path"
+  post 'unwhirl' => 'whirls#unwhirl',  :as => "unwhirl_path"
+
 
   #comments
   post 'comment' => "comments#comment" ,  :as => "comment_path"

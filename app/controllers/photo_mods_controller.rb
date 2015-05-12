@@ -121,7 +121,7 @@ class PhotoModsController < ApplicationController
   def user_gallery_text_create
     @user_gallery_text = UserGalleryBlocText.new
     @user_gallery_text[:user_gallery_id] = params[:user_gallery_id]
-    @user_gallery_text[:user_id] = current_user.id
+   @user_gallery_text[:user_id] = current_user.id
     respond_to do |format|
       if @user_gallery_text.save
         format.json { render json:  @user_gallery_text}
@@ -132,13 +132,13 @@ class PhotoModsController < ApplicationController
   end
 
   def user_gallery_text_update
-    @user_gallery_bloc_txt = UserGalleryBlocText.find(params[:mod_gallery])
-    @user_gallery_bloc_txt[:bloc_text] = params[:bloc_text]
+    @user_gallery_text  = UserGalleryBlocText.find(params[:mod_gallery])
+     @user_gallery_text [:bloc_text] = params[:bloc_text]
     respond_to do |format|
-      if @user_gallery_bloc_txt.save
-        format.json { render json:  @user_gallery_bloc_txt}
+      if  @user_gallery_text.save
+        format.json { render json:   @user_gallery_text }
       else
-        render :json => { "errors" => @user_gallery_bloc_txt.errors }
+        render :json => { "errors" => @user_gallery_text.errors }
       end
     end
   end
@@ -164,8 +164,6 @@ class PhotoModsController < ApplicationController
       @photo_mod = PhotoMod.find(@photo_mod[0][:id])
       @photo_mod[:caption] = params[:caption]
     else
-      puts "******params******"
-      puts params
       @photo_mod = PhotoMod.new
       @photo_mod[:photo_id] = params[:photo_id]
       @photo_mod[:mod_gallery_id] = params[:mod_gallery]

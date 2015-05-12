@@ -121,8 +121,26 @@ module ApplicationHelper
     return maps
   end
 
+  def get_comment_stuff(model)
+    unless model.comment_threads.blank?
+      model.comment_cnt = model.comment_threads.size
+    else
+      model.comment_cnt = 0
+    end
+    model.comments = model.comment_threads.order(created_dt: :desc)
+    return model
+  end
+
+  def get_whirl_stuff(model)
+    model.whirls = model.votes.size
+    if user_signed_in?
+       model.user_whirled current_user.voted_for? model
+    end
+    return model
+  end
+
 end
 
 
-  # polyfill for jquery-ujs in rails 2.x
-  # see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2
+# polyfill for jquery-ujs in rails 2.x
+# see https://github.com/rails/jquery-ujs/wiki/Manual-installing-and-Rails-2

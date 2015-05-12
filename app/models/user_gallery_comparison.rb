@@ -7,7 +7,7 @@ class UserGalleryComparison < ActiveRecord::Base
   include PublicActivity::Model
   tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user }
   acts_as_votable
-attr_accessor  :taglist, :photos, :whirls, :user_login
+  attr_accessor  :taglist, :photos, :whirls, :user_login
 
   def self.gather_gallery_comparisions(user_gallery_id)
     combined_gallery_comps= Array.new

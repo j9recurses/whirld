@@ -25,7 +25,6 @@
 //= require uikit/js/components/lightbox.min.js
 
 
-
 //for uploading videos
 
 //= require jquery.turbolinks

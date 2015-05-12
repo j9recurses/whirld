@@ -6,6 +6,17 @@ $(document).ready(function(){
   var tb = new SearchBar();
       tb.initTopBar();
 
+  $('.wh-js-whirl').on({
+    click: function(){
+      var wh = new Whirl({
+              button: $(this),
+              ownerId: $(this).data('whirl-id'),
+              ownerType: $(this).data('whirl-type')
+            })
+          wh.init();
+    }
+  });
+
 //like whirl function.
 //this function takes the following params:
 //Klass_id : id of the module object
@@ -14,28 +25,7 @@ $(document).ready(function(){
 //Klass_id:1, klass_type:Map
 //This function returns the model object plus the updated number of whirls for that object.
 //This variable can be found in json hash as: whirls: 2
- $( '#someButton' ).click ( function () {
-  var data_items = {
-                     //module object
-                     klass_id: 2,
-                     ////module class
-                     klass_type: "Map"};
-  console.log(data_items);
-        $.ajax({
-          // at some point will need to differentiate between projects, users, etc.
-          url: "/whirl",
-          type: 'post',
-          dataType: "json",
-          data: data_items,
-          success: function(data) {
-           console.log(data)
-          },
-           error: function() {
-              console.log("Something went wrong!");
-            }
-        });
-    }
-  );
+ 
 
 ///comments- singular non-threaded
 //this function takes the following params:

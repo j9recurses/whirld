@@ -2,9 +2,9 @@
 	<section class='pp-main uk-width-4-10 wh-container uk-grid wh-height-viewport uk-margin-bottom'>
 		<div class='uk-width-1-1 uk-margin-top'>
 
-			<div class='uk-width-1-2 uk-float-left uk-text-primary uk-margin-bottom'>
-				<i class='fa fa-heart'></i>
-				<%= @map.votes_for.size%> whirls
+			<div class='uk-width-1-2 uk-float-left uk-margin-bottom'>
+				<a class='wh-js-whirl uk-text-primary unwhirled' data-whirl-type='Map' data-whirl-id='<%=@map.id%>'><i class='fa fa-heart-o'></i></a>
+				<span class='wh-js-whirl-count'><%= @map.votes_for.size%></span> whirls
 			</div>
 			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
 				<a class='uk-text-primary'><i class='fa fa-share'></i>  Share This</a>

@@ -1,15 +1,15 @@
-<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-small uk-text-muted'>
-			<p>
-				<i class='fa fa-comment wh-text-green'></i>
-				<br><span id='wh-comment-count' class='uk-text-small uk-text-muted'><%#=card.comment_count %></span>
-			</p>
-			<p>
-				<i class='fa fa-heart wh-text-green'></i> <br>
-				<span id='sc-whirl-count' class='uk-text-small uk-text-muted' data-uk-tooltip title="No. of Whirls"><%#= card.whirls %></span>
-			</p>
-
-  <p class='wh-italics'>
-    Updated <br><%=grid.updated_at.strftime("%B %d, %Y") %>
-  </p>
-  <p>Comments will go here.</p>
+<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-muted uk-text-small'>
+	<div class='wh-activity'>
+		<p>
+			<i class='fa fa-heart-o wh-text-green'></i><br>
+			<span class='mod-vote-count wh-side-count'><%= mod.votes_for.size %></span>
+			<span class='uk-text-small uk-text-muted' data-uk-tooltip title="No. of Whirls"></span>
+		</p>
+		<p>
+			<i class='fa fa-comment wh-text-green'></i><br>
+			<span class='mod-vote-count wh-side-count'><%= mod.votes_for.size %></span>
+			<span class='uk-text-small uk-text-muted' data-uk-tooltip title="No. of Comments"></span>
+		</p>
+	</div>
+  <p class='uk-text-small'>Comments will go here.</p>
 </div>

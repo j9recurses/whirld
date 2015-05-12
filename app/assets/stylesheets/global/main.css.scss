@@ -66,7 +66,7 @@
 	height: 50%;
 }
 .wh-height-ninety{
-	height: 90%;
+	min-height: 90%;
 }
 .wh-height-full{
 	height: 100%;
@@ -98,6 +98,9 @@
 }
 .wh-search-bar{
 	padding: 10px 0;
+}
+.wh-side-count{
+	padding-left: 3px;
 }
 .wh-text-green{
 	color: #20a593;

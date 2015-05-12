@@ -6,8 +6,6 @@ $(document).ready(function(){
   var tb = new SearchBar();
       tb.initTopBar();
 
-
-
 //like whirl function.
 //this function takes the following params:
 //Klass_id : id of the module object

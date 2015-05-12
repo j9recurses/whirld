@@ -1,4 +1,4 @@
-<div class='wh-mod-taglist uk-margin-top uk-text-small uk-margin-top uk-width-9-10 uk-float-left'>
+<div class='wh-mod-taglist uk-margin-top uk-text-small uk-margin-top uk-width-6-10 uk-float-left'>
 	<i class='fa fa-tag uk-text-muted'></i> 
 	<% if taglist.size > 0 %>
 		<% taglist.each do |tag| %>
@@ -10,4 +10,9 @@
 			Ask <%=link_to(collaborators.first.login, user_profile_path(collaborators.first.id)) %> to add some.
 			</span>
 	<% end %>
+</div>
+<div class='uk-width-3-10'>
+  <p class='wh-italics uk-text-small uk-text-muted uk-margin-top'>
+    Updated <br><%#=mod.updated_at.strftime("%B %d, %Y") %>
+  </p>
 </div>

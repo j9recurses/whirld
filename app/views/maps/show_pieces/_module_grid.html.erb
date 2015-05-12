@@ -5,7 +5,7 @@
 
           <div id='grid-<%=grid.id%>' class='module-one wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
             <!-- Thumbnail -->
-            <div class='wh-mod-photo-container wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+            <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
               
               <figure class="uk-cover-background uk-width-1-1 wh-height-full" style="background-image:url(<%=grid.photos[0][0].photo_file%>)">
                 <img class="uk-invisible" src="<%=grid.photos[0][0].photo_file%>" width="" height="" alt="<%=grid.photos[0][0].photo_file%>">
@@ -18,7 +18,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
 
           </div> <!-- end module -->
 
@@ -26,7 +26,7 @@
       <% elsif grid.photos.size > 0 && grid.photos.size == 2 %>
           <div id='grid-<%=grid.id%>' class='module-two wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
             <!-- Thumbnail -->
-            <div class='wh-mod-photo-container wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+            <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[0][0], :float => 'left', :height => 'full' } %>
              
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[1][0], :float => 'right', :height => 'full' } %>
@@ -38,13 +38,13 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
           </div> <!-- end module -->
 
       <% elsif grid.photos.size > 0 && grid.photos.size == 3 %>
           <div id='grid-<%=grid.id%>' class='module-three wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
             <!-- Thumbnail -->
-            <div class='wh-mod-photo-container wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+            <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
 
               <figure class="uk-cover-background uk-width-1-1 uk-float-left wh-height-half uk-margin-bottom" style="background-image:url(<%=grid.photos[0][0].photo_file%>)">
                 <img class="uk-invisible" src="<%=grid.photos[0][0].photo_file%>" width="" height="" alt="<%=grid.photos[0][0].photo_file%>">
@@ -60,12 +60,12 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
           </div> <!-- end module -->
       <% elsif grid.photos.size > 0 && grid.photos.size == 4 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
             <!-- Thumbnail -->
-            <div class='wh-mod-photo-container wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+            <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[0][0], :float => 'left', :height => 'half' } %>
              
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[1][0], :float => 'right', :height => 'half' } %>
@@ -81,12 +81,12 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
           </div> <!-- end module -->
      <% elsif grid.photos.size > 0 && grid.photos.size == 5 %>
           <div id='grid-<%=grid.id%>' class='module-four wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
             <!-- Thumbnail -->
-            <div class='wh-mod-photo-container wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+            <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[0][0], :float => 'left', :height => 'half' } %>
              
               <%= render partial: "maps/show_pieces/module_grid_photo_half", :locals => { :grid => grid, :photo => grid.photos[1][0], :float => 'right', :height => 'half' } %>
@@ -104,7 +104,7 @@
               </div>
             </div>
             <!-- Activity for all -->
-            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => grid } %>
+            <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :grid => mod } %>
           </div> <!-- end module -->
       <% end %> <!-- if size photo -->
 

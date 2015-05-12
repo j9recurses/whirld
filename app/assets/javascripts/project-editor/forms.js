@@ -337,6 +337,8 @@ Form.prototype = {
     this.modEl.find('.text-module-body').on({
       focusout: function(e){
         self.eTarget = $(e.target);
+
+        console.log($(this))
         data['bloc_text'] = self.eTarget.val();
         console.log(data)
         $.ajax({

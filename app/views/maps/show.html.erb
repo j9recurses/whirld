@@ -34,7 +34,7 @@
 						</span>
 				<% end %>
 			</p>
-			<p class=''><%=@map.description%></p>
+			<p class='project-description'><%=@map.description%></p>
 
 	</section>
 
@@ -54,7 +54,7 @@
 					<% @comps.each do |comp| %>
 						<% if comp.id == mod[0].to_i %>
 							<%= render partial: "maps/show_pieces/module_comparison", :locals => {:comp => comp} %>
-							<%= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => comp.taglist} %>
+							<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => comp.taglist} %>
 						<% end %>
 					<%end%>
 							<%end%>
@@ -64,7 +64,7 @@
 					<% @splits.each do |split| %>
 						<% if split.id == mod[0].to_i %>
 							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split} %>
-							<%= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => split.taglist} %>
+							<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => split.taglist} %>
 						<% end %>
 					<% end %>
 					<% end %>
@@ -74,7 +74,6 @@
 			 		<% @block_texts.each do |block| %>
 			 			<% if block.id == mod[0].to_i %>
 							<%= render partial: "maps/show_pieces/module_text", :locals => {:block => block} %>
-							<%= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => block.taglist} %>
 						<% end %>
 					<% end %>
 		  <% end %>

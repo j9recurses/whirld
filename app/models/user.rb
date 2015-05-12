@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
 
   #recommends :maps, :photos, :comments, :user_gallery_grids
-  acts_as_messageable
+  # acts_as_messageable
 
   accepts_nested_attributes_for :user_profile
 

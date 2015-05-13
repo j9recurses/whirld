@@ -13,6 +13,7 @@ ImageUploader.prototype = {
   coverphoto: function(){
     // var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
     //var url = "/coverphoto_uploader/" + this.user_gallery_id ; //+ "/photos";
+    var self = this;
     var url = '/user_galleries/'+ this.user_gallery_id + '/photos'
     this.el.fileupload({
       dataType: 'json',
@@ -22,7 +23,8 @@ ImageUploader.prototype = {
       },
       done: function (e, data) {
         console.log(data)
-        console.log(data)
+        console.log($(this).parent().find('.uk-placeholder'))
+        console.log(self.el)
       }, // end done
       fail: function (e, data) {
         console.log(data.errorThrown)

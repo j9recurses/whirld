@@ -34,12 +34,22 @@ $(document).ready(function(){
 
 $('.wh-js-whirl').on({
   click: function(){
-    var wh = new Whirl({
-            button: $(this),
-            ownerId: $(this).data('whirl-id'),
-            ownerType: $(this).data('whirl-type')
-          })
-        wh.init();
+    var icon = $($(this).find('.icon-whirl'));
+    var count = $(this).next('.wh-side-count');
+    if(icon.hasClass('icon-whirl-off')){
+      icon.removeClass('icon-whirl-off');
+      icon.addClass('icon-whirl-on');
+      $(this).toggleClass('whirled');
+      var newCount = parseInt(count.text()) + 1;
+      count.text(newCount)
+    }
+    else if(icon.hasClass('icon-whirl-on')){
+      icon.removeClass('icon-whirl-on');
+      icon.addClass('icon-whirl-off');
+      $(this).toggleClass('whirled');
+      var newCount = parseInt(count.text()) - 1;
+      count.text(newCount)
+    }
   }
 });
 

@@ -1,12 +1,23 @@
 #project-show{
+  .icon-whirl-off, .icon-whirl-on{
+    padding-top: 28px;
+    padding-bottom: 6px;
+    color: #20a593;
+  }
+  .icon-whirl-off:hover, .icon-whirl-on:hover{
+    color: #74c16a;
+  }
+  .wh-js-whirl:hover{
+    text-decoration: none;
+  }
   .pp-main{
 
   }
   .side-comment{
     position: absolute;
     top: 75px;
-    left: 15px;
-    width: 20px;
+    left: 19px;
+    width: 23px;
     min-height: 100%;
     height: 100%;
   }
@@ -30,6 +41,9 @@
   }
   .side-comment .marker:hover:after, .side-comment.active .marker:after {
     border-color: #74c16a transparent;
+  }
+  .wh-activity{
+    padding-top: 15px;
   }
   .wh-container{
     background: white;
@@ -64,6 +78,11 @@
   }
   .wh-mod-meta{
     padding: 5px 0px 0 15px;
+
+    .wh-js-whirl.whirled{
+      top: -5px;
+    }
+
   }
   .wh-photo-half{
     width: 49.2%;
@@ -79,5 +98,25 @@
   .wh-photo-half .wh-whirl.uk-container {
     padding: 0 20px;
   }
+  .wh-side-count{
+    padding-left: 13px;
+    top: 25px;
+  }
+  #project-show-main{
+    #project-name{
+      padding-top: 30px;
+    }
+    .wh-js-whirl{
+      top: 13px;
+      left: 0;
+    }
 
+    .wh-js-whirl.whirled{
+      top: -7px;
+    }
+
+    .wh-whirl-count-wrapper{
+      left: 40px;
+    }
+  }
 }

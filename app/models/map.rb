@@ -9,6 +9,8 @@ class NotAtOriginValidator < ActiveModel::Validator
 end
 
 class Map < ActiveRecord::Base
+  after_save :map_update_index
+
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   extend FriendlyId
   #mount_uploader :photo_file, MapUploader
@@ -46,12 +48,16 @@ class Map < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  def map_update_index
+     self.tire.update_index
+  end
+
   #FOR SEARCH
   after_touch() { tire.update_index }
 
   #set the search units for tire
   SEARCH_UNIT   = "mi"
-  SEARCH_RADIUS = "300mi"
+  SEARCH_RADIUS = "200mi"
   SEARCH_ORDER  = "asc"
 
   tire do

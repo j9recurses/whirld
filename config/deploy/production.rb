@@ -18,7 +18,7 @@
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 #server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-set :stage, :production
+set :stage, :development
 server '107.170.205.147', user: 'deploy', roles: %w{web app}
 #ssh_options[:keys] = %w(~/.ssh/id_rsa.pub)
 

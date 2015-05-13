@@ -4,6 +4,9 @@ Whirld::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  config.assets.precompile += %w( *.js *.css )
+
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -11,6 +14,7 @@ Whirld::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = true
 
+  config.assets.raise_runtime_errors = true
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
@@ -20,7 +24,9 @@ Whirld::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
+  config.assets.precompile << /\.(?:svg|eot|woff|otf|ttf)\z/
+
+  config.assets.precompile += %w( *.js *.css )
   config.assets.precompile += ['tags.js',
                                  'uploads.js',
                                  'knitter.js',

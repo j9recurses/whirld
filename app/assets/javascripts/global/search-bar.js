@@ -32,7 +32,7 @@ SearchBar.prototype = {
 			if(icon.hasClass('fa-th-large')){
 				icon.removeClass('fa-th-large');
 				icon.addClass('fa-map-marker');
-				
+
 				//Temp
 				$('.search-card').addClass('uk-hidden');
 				self.searchResultsContainer.append($("<h1 id='placeholder'>A Map Will Go Here</h1>"))
@@ -73,7 +73,7 @@ SearchBar.prototype = {
 			collabList += "<a href='/users_profiles/" + id + "' class='wh-text-muted uk-text-small'>" + collabo + "</a>   ";
 		});
 		if(collabList != ""){ return "<i class='fa fa-users uk-text-muted uk-text-small' data-uk-tooltip title='Project collaborators'></i> " + collabList }
-			else{ return "" } 
+			else{ return "" }
 	},
 	htmlTagClasses: function(item){
 		var str = "";
@@ -84,11 +84,11 @@ SearchBar.prototype = {
 		return str;
 	},
 	htmlProjectResult: function(item){
-		var commentCount = 100; 
+		var commentCount = 100;
 		var voteCount = 4000;
 		var thumb = "<a href='/maps/" + item.id + "' class='sc-cover uk-cover-background uk-overlay' style=\"background-image: url('" + item.coverphoto_name + "');\"><img class='uk-invisible' src='" + item.coverphoto_name + "' alt='" + item.name + "'/></a>";
 		var activity = "<div class='sc-activity uk-width-2-10 uk-text-center'><p><i class='fa fa-users wh-text-green' data-uk-tooltip title='No. of colaborators'></i><br><span id='sc-collabo-count' class='uk-text-small uk-text-muted'>" + Object.keys(item.collaborator_list).length + "</span></p><p><i class='fa fa-comment wh-text-green'></i><br><span id='sc-comment-count' class='uk-text-small uk-text-muted'>" + item.comment_count + "</span></p><p><i class='fa fa-heart wh-text-green' data-uk-tooltip title='No. of colaborators'></i><br><span id='sc-whirl-count' class='uk-text-small uk-text-muted' data-uk-tooltip title='No. of Whirls'>" + item.whirls + "</span></p></div>"
-		var header = "<div class='sc-header'><h1 class='sc-title uk-h4 wh-caps uk-text-bold'><a href='/maps/" + item.name + "'>" + item.name + "</a></h1></div>"
+		var header = "<div class='sc-header'><h1 class='sc-title uk-h4 wh-caps uk-text-bold'><a href='/maps/" + item.slug + "'>" + item.name + "</a></h1></div>"
 		var collabos = "<span class='sc-collabos'>" + this.htmlCollaboList(item) + "</span>";
 		var meta = "<div class='sc-meta uk-text-muted uk-text-nowrap'><span class='sc-location'><i class='fa fa-map-marker uk-text-muted'></i> " + item.location + "</span><br>" + collabos + "<br><span class='uk-text-small'>Updated on " + this.htmlUpdatedPretty(item) + "</span><br><hr></div>";
 		var tags = "<div class='sc-tags uk-text-small uk-width-1-1 uk-float-left uk-text-nowrap'>" + this.htmlTagList(item) + "</div>";
@@ -252,6 +252,6 @@ SearchBar.prototype = {
 		this.dropDowns();
 		this.viewSwitch();
 		this.pageGo();
-		
+
 	} // end init
 }

@@ -80,6 +80,9 @@ Whirld::Application.routes.draw do
   get '/auth/failure', to: 'sessions#fail'
   resources :videos, only: [:new, :index]
 
+  #get 'maps/about',  to: 'maps#about',  :as => :maps_about_path
+
+
   match "videos/:id/add_comment", :to => "videos#add_comment"
   get 'maps/map_info/:id', to: 'maps#map_info',  :as => :map_info
   put 'maps/map_info_finish/:id',  to: 'maps#map_info_finish',  :as => :map_info_finish

@@ -109,7 +109,7 @@ module ApplicationHelper
       unless map.coverphoto.blank?
         coverphoto = Photo.find(map[:coverphoto])
         #this will work once we have real data
-        map.coverphoto_name = "/uploads/photo/#{map[:id]}/#{user_gallery_id[0]}/#{coverphoto[:photo_file]}"
+        map.coverphoto_name = coverphoto.photo_file.medium.url
         #map.coverphoto_name = "/assets/test/grid-09.png"
       else
         map.coverphoto_name = "/assets/test/grid-09.png"

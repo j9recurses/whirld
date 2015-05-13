@@ -30,7 +30,7 @@ class MapsController < ApplicationController
       puts @maps
     else
       puts params
-      @maps = Map.where(["finished = 0"])
+      @maps = Map.where(["finished = 1"])
       @maps = Map.search_type(@maps, params)
     end
     respond_to do |format|
@@ -232,6 +232,10 @@ class MapsController < ApplicationController
     else
       render :text => 'You must be logged in to export, unless the map is anonymous.'
     end
+  end
+
+  def about
+    cool = "cool"
   end
 
   # render list of exports

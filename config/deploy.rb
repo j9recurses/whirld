@@ -15,6 +15,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/ca
 set :ssh_options ,{ keys:  %w('~/.ssh/id_rsa.pub') }
 
 namespace :deploy do
+  set :log_level, :debug
   after :finishing, 'deploy:cleanup'
 
   desc 'Restart application'
@@ -48,7 +49,7 @@ end
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-# set :log_level, :debug
+#
 
 # Default value for :pty is false
 # set :pty, true

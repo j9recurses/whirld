@@ -6,13 +6,22 @@
       <%= link_to("Create", maps_new_path ) %>
     </div>
 
+      <div class='uk-navbar-content'>
+       About
+    </div>
+
     <ul class="uk-navbar-nav uk-navbar-flip">
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href="">kbasye <i class="fa fa-caret-down"></i> </a>
+            <a href="">Dave <i class="fa fa-caret-down"></i> </a>
 
             <div class="uk-dropdown uk-dropdown-navbar" data-uk-dropdown="{mode:'click'}">
                 <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="#">Item</a></li>
+                    <li><a href="#"> <% if user_signed_in? %>
+        Signed in as <%= current_user.login %>
+       <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+    <% else %>
+        <%= link_to 'Register', new_user_registration_path %> or <%= link_to 'Sign in', new_user_session_path %>
+    <% end %></a></li>
                     <li><a href="#">Another item</a></li>
                     <li class="uk-nav-header">Header</li>
                     <li><a href="#">Item</a></li>
@@ -20,13 +29,13 @@
                     <li class="uk-nav-divider"></li>
                     <li><a href="#">Separated item</a></li>
 
-                    
+
                 </ul>
             </div>
         </li>
     </ul>
-    
-      
+
+
         <% unless className == 'front' %>
           <div class="uk-navbar-content uk-navbar-flip">
             <%= render :partial => 'maps/search_pieces/top_search_bar' %>

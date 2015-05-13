@@ -71,6 +71,16 @@
 					<% end %>
 					<% end %>
 
+				<%elsif mod[1]  == "video" %>
+				<% unless @video.nil? %>
+					<% @video.each do |vid| %>
+						<% if vid.id == mod[0].to_i %>
+							<%=vid.inspect%>
+							<%= render partial: "maps/show_pieces/module_video", :locals => {:video => vid, :collaborators => @collaborators } %>
+						<% end %>
+					<% end %>
+					<% end %>
+
 				<!-- block text -->
 			 <%elsif mod[1]  == "text" %>
 			 		<% @block_texts.each do |block| %>

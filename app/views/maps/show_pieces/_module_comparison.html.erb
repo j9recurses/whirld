@@ -2,13 +2,16 @@
 
 	<div id='comp-<%=comp.id%>' class='module-one wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
 	  <!-- Thumbnail -->
-	  <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover juxtapose'>
+	  <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
 	    
-	  <%= image_tag(comp.photos[0][0].photo_file) %>
-	  <%= image_tag(comp.photos[1][0].photo_file) %>
+		  <div class='juxtapose'>
+			  <%= image_tag(comp.photos[0][0].photo_file) %>
+			  <%= image_tag(comp.photos[1][0].photo_file) %>
+		  </div>
 
 	    <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
-
+				<%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => comp.taglist, :collaborators => collaborators } %>
+				<%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => comp, :lightbox_link_count => 1 } %>
 	      <p class='uk-float-left'><%=comp.comparison_text%></p>
 	    </div>
 	  </div>
@@ -16,8 +19,3 @@
 	  <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => comp } %>
 
 <%end%>
-
-
-
-	      <%#= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-	      <%#= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 0 } %>

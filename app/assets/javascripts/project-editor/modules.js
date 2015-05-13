@@ -288,10 +288,30 @@ Module.prototype = {
           var vidField = self.modEl.find('.video-module-url');
               vidField.on({
                 focusout:function(e){
-                  var url = $(this).val();
                   self.update();
                 }
               });
+          var captionField = self.modEl.find('.caption');
+              autosize(captionField);
+              captionField.on({
+                keyup: function(e){
+                  var wrapper = $(this).parent('.input-wrapper');
+                  var span = $(wrapper).find('.char-limit');
+                      span.removeClass('uk-invisible');
+                  var letterCount = $(this).val().length;
+                  var count = $(span).data('limit') - letterCount;
+                  $(span).text(count);
+
+                  $(this).on('focusout', function() {
+                    if(letterCount == 0) { span.addClass('invisible'); }
+                  });
+                },
+                focusout: function(){
+                  var caption = $(this).val();
+                  console.log(caption)
+                  self.update();
+                }
+              })
         }
         else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
           var captionField = self.modEl.find('.caption');

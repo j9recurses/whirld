@@ -99,10 +99,10 @@ class MapsController < ApplicationController
     @user = current_user
     @map = @user.maps.new(params[:map])
     @map.author = @user.login
-    @map.name = params[:name]
     @map.description = params[:description]
+    @map.name = params[:name].strip.downcase.gsub(/[\W]+/,'_')
     @map.user_id = current_user.id
-    @map.slug = params[:name].downcase.gsub(/[\W]+/,'-')
+    @map.slug = params[:name].strip.downcase.gsub(/[\W]+/,'_')
     gallery = UserGallery.new()
     gallery.user_id = @user.id
 
@@ -215,7 +215,8 @@ class MapsController < ApplicationController
     params.delete :format
     params.delete "user-gal-id"
     unless params[:name].nil?
-      params[:slug] = params[:name]
+     params[:name] =  params[:name].strip.downcase.gsub(/[\W]+/,'_')
+      params[:slug] = params[:name]..strip.downcase.gsub(/[\W]+/,'_')
     end
     if params[:tagList]
       @map.taglist = parse_taglist(params[:tagList], "map", @map.id)

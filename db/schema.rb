@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150512151748) do
+ActiveRecord::Schema.define(:version => 20150512222421) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20150512151748) do
     t.integer  "coverphoto"
     t.text     "tile_url"
     t.datetime "finished_dt"
+    t.string   "photo_file"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true

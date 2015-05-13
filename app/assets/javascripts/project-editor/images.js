@@ -22,6 +22,7 @@ ImageUploader.prototype = {
       },
       done: function (e, data) {
         console.log(data)
+        console.log(data)
       }, // end done
       fail: function (e, data) {
         console.log(data.errorThrown)

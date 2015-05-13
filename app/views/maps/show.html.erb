@@ -34,7 +34,7 @@
 						</span>
 				<% end %>
 			</p>
-			<p class='project-description'><%=@map.description%></p>
+			<p class='project-description uk-text-break'><%=@map.description%></p>
 
 	</section>
 
@@ -61,12 +61,11 @@
 				<!-- splits -->
 				<%#=mod.inspect%>
 				<%elsif mod[1]  == "split" %>
-				<%=@splits.inspect%>
 				<% unless @splits.nil? %>
 					<% @splits.each do |split| %>
 						<%#=split.inspect%>
 						<% if split.id == mod[0].to_i %>
-							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split} %>
+							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split, :collaborators => @collaborators } %>
 						<% end %>
 					<% end %>
 					<% end %>

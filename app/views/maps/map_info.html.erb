@@ -1,6 +1,6 @@
 
 <div id='project-creation-2' data-user-gallery-id = '<%=@user_gallery.id%>' data-user-name='<%=@user_name%>' data-user-id='<%=@user_id%>' data-map-id = '<%=@map.id%>' data-map-lat='<%= @map.lat %>' data-map-lon='<%= @map.lon %>'>
-	
+
 	<div class='uk-grid uk-grid-small'>
 	  <section id='photo-manager' class='uk-width-1-4'>
 	    <%= render :partial => "maps/map_info_pieces/side" %>
@@ -9,7 +9,7 @@
 	  <div id='project-top' class='uk-width-3-4'>
 	  	<section id='project-map' class='uk-grid uk-grid-collapse'>
 		  	<div class='uk-width-7-10'>
-			  	<div id='knitter-map-pane' class='uk-margin-top droppable'>	  		
+			  	<div id='knitter-map-pane' class='uk-margin-top droppable'>
 			  	</div>
 			  </div>
 		  	<div id='project-form' class='uk-width-3-10 uk-margin-top'>
@@ -63,7 +63,7 @@
 							<i class='fa fa-upload fa-lg uk-text-muted uk-margin-small-right'></i>Upload a cover photo here.
 						</div>
 			      <%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
-			        <input id='cover-photo-upload' type='file' name='photo[photo_file]' multiple/>
+			        <input id='cover-photo-upload' data-id='map' type='file' name='photo[photo_file]' multiple/>
 			        <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 			      <% end %>
 			    </div>
@@ -86,7 +86,7 @@
 
 	</div>
 	<div class='uk-width-1-4'>
-		
+
 	</div>
 	<div class='uk-width-3-4'>
 			<section id='module-content' class='uk-grid'>

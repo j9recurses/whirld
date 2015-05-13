@@ -121,6 +121,7 @@ Whirld::Application.routes.draw do
   #video
   post 'photo_mods/user_gallery_video_create/:id', :to => 'photo_mods#user_gallery_video_create'
   delete 'photo_mods/user_gallery_video_delete/:id', :to => 'photo_mods#user_gallery_video_delete',  :as => 'user_gallery_video_delete'
+  put 'photo_mods/user_gallery_video_update/:id', :to => 'photo_mods#user_gallery_video_update', :as => 'user_gallery_video_update'
 
   #user profiles
   get 'users_profiles/:id' => 'user_profiles#show', :as => "user_profile"

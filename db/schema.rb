@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150512151748) do
+ActiveRecord::Schema.define(:version => 20150513045138) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -326,7 +326,6 @@ ActiveRecord::Schema.define(:version => 20150512151748) do
     t.integer  "dislikes"
     t.date     "vid_date"
     t.time     "vid_time"
-    t.integer  "user_id"
     t.integer  "map_id"
     t.string   "description"
     t.string   "yt_video_id"
@@ -335,10 +334,11 @@ ActiveRecord::Schema.define(:version => 20150512151748) do
     t.datetime "updated_at",                         :null => false
     t.string   "uid"
     t.integer  "user_gallery_id"
+    t.text     "video_text"
+    t.integer  "user_id"
   end
 
   add_index "videos", ["map_id"], :name => "index_videos_on_map_id"
-  add_index "videos", ["user_id"], :name => "index_videos_on_user_id"
 
   create_table "votes", :force => true do |t|
     t.integer  "votable_id"

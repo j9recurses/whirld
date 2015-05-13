@@ -14,6 +14,7 @@ ImageUploader.prototype = {
     // var url = '/maps/update_remote/' + $('#project-creation-2').data('map-id');
     //var url = "/coverphoto_uploader/" + this.user_gallery_id ; //+ "/photos";
     var url = '/user_galleries/'+ this.user_gallery_id + '/photos'
+
     this.el.fileupload({
       dataType: 'json',
       url: url,

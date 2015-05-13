@@ -196,12 +196,6 @@ class PhotoModsController < ApplicationController
     end
   end
 
-  def coverphoto
-    @photo =  Photo.find(params[:photo_id])
-    if params[:coverphoto] == 'Map'
-      puts params
-    end
-  end
 
   #taggings
   def create_taggings

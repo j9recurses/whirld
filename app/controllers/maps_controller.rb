@@ -43,31 +43,6 @@ class MapsController < ApplicationController
     end
   end
 
-  def coverphoto_uploader
-    puts "COVER PHOTO HEREEEE"
-    puts params
-    puts "******"
-    if params[:photo]
-      user_gallery =  UserGallery.find(params[:id])
-      puts user_gallery.inspect
-      @map = Map.find(user_gallery.map_id)
-      @photo = user_gallery.photos.new
-      @photo.photo_file = params[:photo]
-      @photo.user_id = current_user.id
-      puts "here"
-    end
-    respond_to do |format|
-      if @photo.save
-        @map.coverphoto = @photo.id
-        @map.coverphoto_name = @photo.photo_file.medium.url
-        puts "made it here"
-        format.json { render :json => @maps, :methods => [:coverphoto_name]}
-      else
-        format.json { render "Error! Something went wrong! Couldn't save map coverphoto." }
-      end
-    end
-  end
-
 
   def autocomplete
     maps = Map.order(:name).where("name LIKE ?", "%#{params[:term]}%")

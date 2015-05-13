@@ -25,7 +25,7 @@
 				<i class='fa fa-tag uk-text-muted'></i>
 				<% if @map.taglist.size > 0 %>
 					<% @map.taglist.each do |tag| %>
-						<a href='/search<%=tag%>' class=''><%=tag%></a>
+						<a class='project-tag' href='/search<%=tag%>' class=''><%=tag%></a>   
 					<% end %>
 				<% else %>
 					<span class='uk-text-muted wh-italics'>
@@ -44,7 +44,7 @@
 
 	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
 	   <% mod_orders =  eval(@user_gallery.module_order) %>
-			 <%=mod_orders.inspect%>
+			 <%#=mod_orders.inspect%>
 			<% unless mod_orders.nil?%>
 			<% mod_orders.each do | mod| %>
 				<%if mod[1]  == "grid" %>
@@ -60,12 +60,12 @@
 					<%end%>
 							<%end%>
 				<!-- splits -->
-				<%=mod.inspect%>
+				<%#=mod.inspect%>
 				<%elsif mod[1]  == "split" %>
 				<%=@splits.inspect%>
 				<% unless @splits.nil? %>
 					<% @splits.each do |split| %>
-						<%=split.inspect%>
+						<%#=split.inspect%>
 						<% if split.id == mod[0].to_i %>
 							<%= render partial: "maps/show_pieces/module_split", :locals => {:split => split} %>
 						<% end %>

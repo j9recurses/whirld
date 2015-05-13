@@ -73,8 +73,9 @@
 			    	<input id='project-tag_list' class='tag-input uk-width-9-10'/>
 				    <div id='tag-container' class='tag-container'>
 				      <% unless @maptags.nil? || @maptags.blank? %>
+				      	<i class='fa fa-tag uk-text-small uk-text-muted'></i>
 				        <% @map.tags.each do |tag| %>
-				          <span class='project-tag cursor-def light font_small'># <%= tag.name %> </span>
+					        <span class='project-tag uk-text-small uk-text-muted'><%= tag.name %></span>
 				        <% end %>
 				      <% end %>
 				    </div>

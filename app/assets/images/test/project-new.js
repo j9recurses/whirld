@@ -18,6 +18,9 @@ $(document).ready(function() {
     console.log('hello')
     console.log(annotations)
 	}
+  else if($('#project-creation-1').length > 0){
+    
+  }
 
 });
 

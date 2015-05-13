@@ -18,15 +18,6 @@ $(document).ready(function(){
       anonymous:  false,
     });
   }
-
-  // var annotations = new MapKnitter.Annotations({
-  //   name:   'annotation',
-  //   map_id: mapId,
-  //   map:   window.mapKnitter.getMap(),
-  //   logged_in: true,
-  //   anonymous:  false
-
-  // });
   
   $('#knitter-map-pane').droppable({
     accept: '.draggable',

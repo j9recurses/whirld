@@ -44,7 +44,6 @@ class MapsController < ApplicationController
   end
 
 
-
   def autocomplete
     maps = Map.order(:name).where("name LIKE ?", "%#{params[:term]}%")
     maptags = Tag.order(:name).where(["name LIKE ? and taggable_type = ?", "%#{params[:term]}%", "Map"] )
@@ -75,6 +74,7 @@ class MapsController < ApplicationController
     @user = current_user
     @map = @user.maps.new(params[:map])
     @map.author = @user.login
+    @map.description = params[:description]
     @map.name = params[:name].strip.downcase.gsub(/[\W]+/,'_')
     @map.user_id = current_user.id
     @map.slug = params[:name].strip.downcase.gsub(/[\W]+/,'_')

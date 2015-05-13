@@ -1,4 +1,23 @@
-#project-show{
+#user-profile{
+  background: white;
+  .icon-whirl-on:hover{
+    color: #20a593;
+  }
+  .profile-counts{
+    margin-left: 15px;
+  }
+  .profile-counts.project-count{
+    margin-left: 23px;
+  }
+  .profile-skill{
+    margin-right: 10px;
+  }
+  h2.about{
+    margin-top: 0;
+  }
+}
+
+#project-show, #user-profile{
   .icon-whirl-off, .icon-whirl-on{
     padding-top: 28px;
     padding-bottom: 6px;

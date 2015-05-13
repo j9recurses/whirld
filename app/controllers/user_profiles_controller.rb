@@ -8,7 +8,7 @@ class UserProfilesController < ApplicationController
   def resolve_layout
     case action_name
     when "show"
-      "application"
+      "layout_read"
     end
   end
 

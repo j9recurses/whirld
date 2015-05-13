@@ -1,0 +1,76 @@
+<section id = 'login' class='first-section'>
+  <div class='wrapper'>
+    <div class='row group'>
+      <div class='twelve columns'>
+        <h1>User Profile</h1>
+        <h5> <%= link_to "Manage Your Profile", user_profile_edit_path(@user.id) %> </h5>
+         <%= image_tag(@user_profile.photo_file, :size => "200x250")%>
+         <h4>Username: <%= @user.login %> </h4>
+        <h4>Location: <%= @user_profile.location  %> </h4>
+        <h4>Tools and Skills : <%=  @user.taglist.join(",") %> </h4>
+        <H4>Description: </h4>
+        <p> <%= @user_profile.description %></p>
+        <h4> <%= @user.login.titleize %> has worked on <%= @maps_cnt %> projects and has finished <%= @maps.size.to_s %> projects</h4>
+        <% unless @collaborators.nil? %>
+          <% @collaborators.each do |map, collabo| %>
+              <div id= "user_projects">
+              <%= image_tag(map.coverphoto_name, :size => "100x100") %>
+              <li class='user-meta-item item font_small bold'>
+              <%= link_to "Project: " + map.name, map_path(map.id) %>
+              <% if collabo.size == 1%>
+                <%next%>
+              <%else%>
+                 => Collaborators:
+                <% collabo.each do |c| %>
+                  <%=link_to c.login + ",", user_profile_path(c.id) %>
+                <%end%>
+              <%end%>
+              </li>
+            </div>
+          <%end%>
+        <%end%>
+        <h3> Nearby Users <%= @user.login.titleize%> </h3>
+        <% @neighbors.each do |n| %>
+        <%if n.id != @user_profile.id %>
+        <%unless n.photo_file.blank? %>
+         <%= image_tag(n.photo_file, :size => "100x100") %>
+         <%else%>
+           <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+         <%end%>
+        <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist.round(0)%> miles away from <%=@user.login%> </h5>
+        <% end %>
+        <% end %>
+        <h3>Recent Activity for <%= @user.login.titleize %> </h3>
+        <div class="col-sm-3">
+          <%= render_activities @activities %>
+        </div>
+        <h3> <%= @user.login.titleize%> has contributed <%=@photos_contributed %> Photos</h3>
+       <div id="user_street_photos">
+        <% @user_photos.each do |photo|%>
+         <li class='user-meta-item item font_small bold'>
+           <%= image_tag(photo.photo_file, :size => "100x100") %>
+          </li>
+          <%end%>
+          </div>
+
+    <H3> <%@user.login.titleize%> Collaborators </H3>
+          <%  @collaborators_list.each do |collabo | %>
+          <%  cprofile = collabo.user_profile %>
+             <% unless cprofile.blank? %>
+             <li class='user-meta-item item font_small bold'>
+                 <% unless cprofile.photo_file.blank? %>
+                    <%= image_tag(cprofile.photo_file, :size => "100x100") %>
+                <%else%>
+                  <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+                <%end%>
+              <%else%>
+                 <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
+               <%end%>
+                  <%= collabo.tags.pluck([:name]).join(" , ") %>
+            <%= link_to collabo.login.titleize, user_profile_path(collabo.id)%>
+          </li>
+          <%end%>
+      </div>
+    </div>
+  </div>
+</section>

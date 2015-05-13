@@ -14,7 +14,7 @@
 			  </div>
 		  	<div id='project-form' class='uk-width-3-10 uk-margin-top'>
 
-			  	<form class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion>
+			  	<div class="uk-accordion uk-form uk-form-stacked uk-width-9-10" data-uk-accordion>
 
 				  	<!-- Project Title -->
 						<label id='name-label' class="uk-accordion-title uk-form-label uk-text-muted" for="project-name">Title
@@ -55,7 +55,7 @@
 		        	<textarea id='project-description' type="text" placeholder="Project Description" class="uk-width-1-1" maxlength='200'><%=@map.description%></textarea>
 		        	<small class='char-limit uk-text-muted uk-invisible' data-limit='200'>200</small>
 				    </div>
-					</form>
+					</div>
 
 			    <label id='cover-photo-label' class='uk-form-label uk-text-muted' for='profile-upload'>Cover Photo:</label>
 			    <div class="uk-form-file" data-uk-tooltip="{pos:'bottom-left'}" title="Upload a cover photo for your project.">
@@ -69,7 +69,9 @@
 			    </div>
 
 			    <div class='uk-form uk-form-stacked'>
-			    	<label id='cover-photo-label' class='uk-form-label uk-text-muted' for='project-tag_list'>Tags:</label>
+			    	<label id='cover-photo-label' class='uk-form-label uk-text-muted uk-display-inline-block' for='project-tag_list'>Tags:</label>
+			    	<i class='fa fa-spinner uk-hidden fa-spin'></i>
+							<i class='fa fa-check-circle uk-animation-fade uk-text-success uk-display-inline-block'></i>
 			    	<input id='project-tag_list' class='tag-input uk-width-9-10'/>
 				    <div id='tag-container' class='tag-container'>
 				      <% unless @maptags.nil? || @maptags.blank? %>

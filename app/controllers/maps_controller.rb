@@ -30,7 +30,7 @@ class MapsController < ApplicationController
       puts @maps
     else
       puts params
-      @maps = Map.where(["finished = 0"])
+      @maps = Map.where(["finished = 1"])
       @maps = Map.search_type(@maps, params)
     end
     respond_to do |format|

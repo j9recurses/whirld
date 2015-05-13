@@ -83,15 +83,7 @@
 
    <%=mod[1].inspect%>
 
-   			<%elsif mod[1]  == "video" %>
-				<% unless @videos.nil? %>
-					<% @videos.each do |video| %>
-						<%#=split.inspect%>
-						<% if video.id == mod[0].to_i %>
-							<%= render partial: "maps/show_pieces/module_video", :locals => {:video => video, :collaborators => @collaborators } %>
-						<% end %>
-					<% end %>
-					<% end %>
+
 
 
 		<% end %>

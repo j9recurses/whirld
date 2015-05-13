@@ -42,7 +42,7 @@
 		<div id='knitter-map-pane'></div>
 	</section>
  
-	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
+	<section id='module-container' class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
 	 <% unless @user_gallery.module_order.blank?%>
 	   <% mod_orders =  eval(@user_gallery.module_order) %>
 			 <%#=mod_orders.inspect%>
@@ -95,8 +95,8 @@
 			<% end %>
 	</section>
 
-	<section class='uk-grid uk-width-1-1'>
-		<%= render partial: "maps/show_pieces/comments"%>
-	</section>
+	<!-- <section class='uk-grid uk-width-1-1'> -->
+		<%#= render partial: "maps/show_pieces/comments"%>
+	<!-- </section> -->
 
 </div>

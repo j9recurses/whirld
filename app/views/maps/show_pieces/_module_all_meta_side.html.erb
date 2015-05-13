@@ -1,16 +1,10 @@
-<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-muted'>
+<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-muted commentable-section' data-section-id='<%=mod.class.name%>-<%=mod.id%>'>
 	<div class='wh-activity'>
 		<p>
 			<i class='fa fa-heart-o wh-text-green' data-uk-tooltip title="No. of Whirls"></i><br>
 			<span class='mod-vote-count wh-side-count'><%= mod.whirls %></span>
 		</p>
-		<p>
-			<i class='fa fa-comment wh-text-green' data-uk-tooltip="{pos:'top-left'}" title="No. of Comments"></i><br>
-			<span class='mod-vote-count wh-side-count'><%= mod.comment_cnt %></span>
-		</p>
-		<hr>
 	</div>
-  <p class='uk-text-small uk-text-muted'>Comments will go here.</p>
 </div>
 
 <%if mod.class.name == 'Video' %>

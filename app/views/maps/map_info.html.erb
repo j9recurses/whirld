@@ -63,7 +63,7 @@
 							<i class='fa fa-upload fa-lg uk-text-muted uk-margin-small-right'></i>Upload a cover photo here.
 						</div>
 			      <%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
-			        <input id='cover-photo-upload' data-id='map' type='file' name='photo[photo_file]' multiple/>
+			        <input id='cover-photo-upload'  type='file' name='photo[photo_file]' multiple/>
 			        <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
 			      <% end %>
 			    </div>

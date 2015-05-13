@@ -48,6 +48,7 @@
 			 <%#=mod_orders.inspect%>
 			<% unless mod_orders.nil?%>
 			<% mod_orders.each do | mod| %>
+
 				<%if mod[1]  == "grid" %>
 					<%= render partial: "maps/show_pieces/module_grid", :locals => {:grids => @grids, :collaborators => @collaborators, :mod => mod } %>
 				 <!-- comps -->
@@ -89,6 +90,20 @@
 						<% end %>
 					<% end %>
 		  <% end %>
+
+   <%=mod[1].inspect%>
+
+   			<%elsif mod[1]  == "video" %>
+				<% unless @videos.nil? %>
+					<% @videos.each do |video| %>
+						<%#=split.inspect%>
+						<% if video.id == mod[0].to_i %>
+							<%= render partial: "maps/show_pieces/module_video", :locals => {:video => video, :collaborators => @collaborators } %>
+						<% end %>
+					<% end %>
+					<% end %>
+
+
 		<% end %>
 		<% end %>
 			<% end %>

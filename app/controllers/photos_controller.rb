@@ -28,6 +28,22 @@ class PhotosController < ApplicationController
     end
   end
 
+  def coverphoto_uploader
+    user_gallery =  UserGallery.find(params[:id])
+    puts user_gallery.inspect
+    @map = Map.find(user_gallery.map_id)
+    @photo = @user_gallery.photos.new(params[:photo])
+    respond_to do |format|
+      if @photo.save
+        @map.cover_photo = @photo.id
+        @map.save
+        format.json { render json:  @photo } # , methods: [:warpable_id, :warpable_url, :warpable_url] }
+      else
+        render :json => { "errors" => @photo.errors }
+      end
+    end
+  end
+
 
   def create
     @photo = @user_gallery.photos.new(params[:photo])
@@ -42,7 +58,7 @@ class PhotosController < ApplicationController
         format.json { render json:  @photo } # , methods: [:warpable_id, :warpable_url, :warpable_url] }
       end
     else
-        render :json => { "errors" => @photo.errors }
+      render :json => { "errors" => @photo.errors }
     end
   end
 

@@ -11,7 +11,7 @@ end
 class Map < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   extend FriendlyId
-  mount_uploader :photo_file, MapUploader
+  #mount_uploader :photo_file, MapUploader
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user }
   acts_as_commentable

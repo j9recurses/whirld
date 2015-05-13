@@ -14,7 +14,7 @@
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
                 <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 0 } %>
-                <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
+                <p class='uk-float-left'><%=grid.grid_text%></p>
               </div>
             </div>
             <!-- Activity for all -->

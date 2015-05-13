@@ -69,7 +69,9 @@
 			    </div>
 
 			    <div class='uk-form uk-form-stacked'>
-			    	<label id='cover-photo-label' class='uk-form-label uk-text-muted' for='project-tag_list'>Tags:</label>
+			    	<label id='cover-photo-label' class='uk-form-label uk-text-muted uk-display-inline-block' for='project-tag_list'>Tags:</label>
+			    	<i class='fa fa-spinner uk-hidden fa-spin'></i>
+							<i class='fa fa-check-circle uk-animation-fade uk-text-success uk-display-inline-block'></i>
 			    	<input id='project-tag_list' class='tag-input uk-width-9-10'/>
 				    <div id='tag-container' class='tag-container'>
 				      <% unless @maptags.nil? || @maptags.blank? %>

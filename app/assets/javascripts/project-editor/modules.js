@@ -288,10 +288,10 @@ Module.prototype = {
           var vidField = new Form({ modAttrId: self.modEl.attr('id') });
               vidField.videoField();
         }
-        // else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
-        //   var caption = new Form({ modAttrId: self.modEl.attr('id') });
-        //       caption.captionField();
-        // }
+        else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
+          var caption = new Form({ modAttrId: self.modEl.attr('id') });
+              caption.captionField();
+        }
 
       },
       error: function(){

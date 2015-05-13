@@ -42,6 +42,7 @@ Form.prototype = {
       cache: false,
       type: 'post',
       beforeSend: function(){
+        console.log(wrapper)
         wrapper.find('.fa-check-circle').addClass('uk-hidden');
         wrapper.find('.fa-spinner').removeClass('uk-hidden');
       },
@@ -225,8 +226,12 @@ Form.prototype = {
       data: data,
       cache: false,
       type: 'post',
+      beforeSend: function(){
+        
+      },
       success: function(data){
         console.log('Success: tags were created');
+        console.log(self.eTarget)
         self.eTarget.val('')
       },
       error: function(){

@@ -65,7 +65,7 @@ ModuleHtml.prototype = {
   split: function(){
     var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-width-1-1' placeholder='Add some text'></textarea></div>";
     var photo = "<div class='uk-placeholder uk-text-muted uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
-    var html = "<article class='split-module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "<div class='uk-form uk-width-1-1'>" + this.htmlTaginput() + "</div></div></article>";
+    var html = "<article class='split-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "<div class='uk-form uk-width-1-1'>" + this.htmlTaginput() + "</div></div></article>";
     return $(html);
   },
   text: function(){
@@ -288,10 +288,10 @@ Module.prototype = {
           var vidField = new Form({ modAttrId: self.modEl.attr('id') });
               vidField.videoField();
         }
-        else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
-          var caption = new Form({ modAttrId: self.modEl.attr('id') });
-              caption.captionField();
-        }
+        // else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
+        //   var caption = new Form({ modAttrId: self.modEl.attr('id') });
+        //       caption.captionField();
+        // }
 
       },
       error: function(){

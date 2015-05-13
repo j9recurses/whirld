@@ -8,7 +8,7 @@ var Whirl = function(options){
 
   this.icon = $(this.options.button.find('i'));
   this.countContainer = $(this.options.button.parent().find('.' + this.options.countSpanClassName));
-  this.count = parseInt(this.countContainer.text());
+  this.count = null;
 }
 
 Whirl.prototype = {
@@ -24,18 +24,17 @@ Whirl.prototype = {
 		this.icon.removeClass('fa-heart-o');
 		this.icon.addClass('fa-heart');
 		this.options.button.toggleClass('unwhirled');
-		this.count += 1;
 		this.countContainer.text(this.count);
+		console.log(this.count)
 	},
 	htmlUnWhirl: function(){
 		this.icon.addClass('fa-heart-o');
 		this.icon.removeClass('fa-heart');
 		this.options.button.toggleClass('unwhirled');
-		this.count -= 1;
 		this.countContainer.text(this.count);
 	},
 	create: function(){
-
+		var self = this;
 		var data = {
          //module object
          klass_id: this.options.ownerId,
@@ -49,8 +48,10 @@ Whirl.prototype = {
 		  dataType: "json",
 		  data: data,
 		  success: function(data) {
-		    console.log('Success: whirling');
-		   // console.log(data)
+		   console.log('Success: whirling');
+		   console.log(data)
+		   self.count = data.whirls;
+		   self.htmlWhirl();
 		  },
 		  error: function() {
 		    console.log("Something went wrong!");
@@ -58,12 +59,6 @@ Whirl.prototype = {
 		});
 	},
 	init: function(){
-		if(this.isWhirled()){
-			this.htmlUnWhirl();
-		}
-		else{
-			this.htmlWhirl();
 			this.create();
-		}
 	}
 }

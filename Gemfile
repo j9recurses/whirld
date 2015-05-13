@@ -8,7 +8,7 @@ gem "will_paginate", "3.0.7"
 gem "friendly_id"
 
 gem "omniauth-google-oauth2"
-gem 'youtube_it', github: 'bodrovis/youtube_it'
+#gem 'youtube_it', github: 'bodrovis/youtube_it'
 
 
 # dependencies
@@ -84,6 +84,8 @@ gem 'faker'
 
 #public activity
 gem 'public_activity'
+
+gem 'seed_dump'
 
 #comments
 gem 'acts_as_commentable_with_threading', '~>1.2.0'

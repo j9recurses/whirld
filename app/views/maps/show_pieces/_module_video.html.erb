@@ -1,0 +1,12 @@
+<div id='video-<%=video.id%>' class='module-one wh-module uk-width-1-1 wh-height-viewport uk-grid'>
+  <!-- Thumbnail -->
+  <div class='wh-mod-wrapper wh-height-eighty uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover uk-position-relative uk-cover'>
+
+	  	<img class="uk-invisible" src="" width="" height="" alt="">
+			<iframe width="" height="" src="https://www.youtube.com/embed/<%=video.link.split('=')[1]%>" frameborder="0" allowfullscreen  data-uk-cover class='uk-cover-object uk-position-absolute'></iframe>
+
+
+  </div>
+  <!-- Activity for all -->
+  <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => video } %>
+</div> <!-- end module -->

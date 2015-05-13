@@ -234,6 +234,10 @@ class MapsController < ApplicationController
     end
   end
 
+  def about
+    cool = "cool"
+  end
+
   # render list of exports
   def exports
     @map = Map.find params[:id]

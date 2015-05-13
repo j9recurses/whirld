@@ -38,12 +38,17 @@ group :dependencies do
   gem 'sass-rails',   '~> 3.2.3'
   gem "autoprefixer-rails"
   gem 'uglifier', '>= 1.0.3'
-end
-
-group :development do
   gem "jshintrb"
   gem "therubyracer"
 end
+
+
+
+
+# group :development do
+#   gem "jshintrb"
+#   gem "therubyracer"
+# end
 
 
 #passenger server
@@ -89,15 +94,14 @@ gem 'acts_as_votable', '~> 0.10.0'
 #gem 'routing_concerns', '~> 0.1.0'
 
 #recommender
-gem 'sidekiq'
-gem 'sidekiq-middleware'
-gem 'recommendable'
+#gem 'sidekiq'
+#gem 'sidekiq-middleware'
+#gem 'recommendable'
 
 
-group :development do
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-end
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+
 
 gem "mailboxer", "~> 0.9.0"
 

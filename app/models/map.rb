@@ -49,7 +49,7 @@ class Map < ActiveRecord::Base
   include Tire::Model::Callbacks
 
   def map_update_index
-    update_index
+     self.tire.update_index
   end
 
   #FOR SEARCH
@@ -57,7 +57,7 @@ class Map < ActiveRecord::Base
 
   #set the search units for tire
   SEARCH_UNIT   = "mi"
-  SEARCH_RADIUS = "300mi"
+  SEARCH_RADIUS = "200mi"
   SEARCH_ORDER  = "asc"
 
   tire do

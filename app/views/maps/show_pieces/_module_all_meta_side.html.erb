@@ -1,18 +1,24 @@
-<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-muted'>
+<div class='wh-mod-meta wh-height-ninety uk-width-1-10 uk-text-muted commentable-section' data-section-id='<%=mod.class.name%>-<%=mod.id%>'>
 	<div class='wh-activity'>
 		<p>
 			<i class='fa fa-heart-o wh-text-green' data-uk-tooltip title="No. of Whirls"></i><br>
 			<span class='mod-vote-count wh-side-count'><%= mod.whirls %></span>
 		</p>
-		<p>
-			<i class='fa fa-comment wh-text-green' data-uk-tooltip="{pos:'top-left'}" title="No. of Comments"></i><br>
-			<span class='mod-vote-count wh-side-count'><%= mod.comment_cnt %></span>
-		</p>
-		<hr>
 	</div>
-  <p class='uk-text-small uk-text-muted'>Comments will go here.</p>
 </div>
-<div class='wh-mod-updated uk-width-9-10 uk-text-right uk-text-muted uk-text-small'>
-	Updated<br>
-	<span class='wh-italics wh-mod-updated'><%=mod.updated_at.strftime("%B %d, %Y")%></span>
-</div>
+
+<%if mod.class.name == 'Video' %>
+	<div class='uk-width-7-10'>
+		<%=mod.video_text %>
+	</div>
+	<div class='wh-mod-updated uk-width-2-10 uk-text-right uk-text-muted uk-text-small'>
+		Updated<br>
+		<span class='wh-italics wh-mod-updated'><%=mod.updated_at.strftime("%B %d, %Y")%></span>
+	</div>
+
+<%else%>
+	<div class='wh-mod-updated uk-width-9-10 uk-text-right uk-text-muted uk-text-small'>
+		Updated<br>
+		<span class='wh-italics wh-mod-updated'><%=mod.updated_at.strftime("%B %d, %Y")%></span>
+	</div>
+<% end %>

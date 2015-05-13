@@ -1,21 +1,60 @@
 // $('.map-pane').css('height', $(this).height() * .9 );
 // $('.map-pane').css('display', 'block');
 
+var currentUser = {
+  id: 1,
+  avatarUrl: "/assets/dave.jpg",
+  name: "Dave"
+}
+var existingComments = [
+  {
+    "sectionId": "UserGalleryGrid-51",
+    "comments": [
+      {
+        "authorAvatarUrl": "/assets/jeff.jpg",
+        "authorName": "Jeff",
+        "comment": "Looks like fun. Did you get any shots of the old military installations there?"
+      },
+      {
+        "authorAvatarUrl": "/assets/pat.jpg",
+        "authorName": "Pat",
+        "comment": "I saw them. The goats are grazing on top of them."
+      }
+    ]
+  }
+];
 $(document).ready(function(){
 
   var tb = new SearchBar();
       tb.initTopBar();
 
-  $('.wh-js-whirl').on({
-    click: function(){
-      var wh = new Whirl({
-              button: $(this),
-              ownerId: $(this).data('whirl-id'),
-              ownerType: $(this).data('whirl-type')
-            })
-          wh.init();
-    }
-  });
+  var SideComments = require('side-comments');
+      sideComments = new SideComments('#module-container', currentUser, existingComments);
+
+
+$('.wh-js-whirl').on({
+  click: function(){
+    var wh = new Whirl({
+            button: $(this),
+            ownerId: $(this).data('whirl-id'),
+            ownerType: $(this).data('whirl-type')
+          })
+        wh.init();
+  }
+});
+
+$('#grid-51').find('.post').on('click', function(e){
+  e.preventDefault();
+  var val = $($(this).parent().siblings('input')).val();
+  var list = $($(this).parent().parent().siblings('.comments'));
+  var comment = "<li data-comment-id=''><div class='author-avatar'><img src='/assets/dave.jpg'></div><p class='author-name right-of-avatar'>Dave</p><p class='comment right-of-avatar'>" + val + "</p><a href='#' class='action-link delete'>Delete</a></li>";
+  list.append($(comment))
+  $(this).parent().parent().remove();
+
+  var newButton = $("<a href='#' class='add-comment'>Leave a comment</a>");
+  list.append(newButton)
+
+})
 
 //like whirl function.
 //this function takes the following params:

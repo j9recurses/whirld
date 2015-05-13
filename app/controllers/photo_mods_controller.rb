@@ -248,14 +248,18 @@ class PhotoModsController < ApplicationController
       end
     end
   end
+
+
   def user_gallery_video_update
-    @user_gallery_text  = Video.find(params[:mod_gallery])
-    @user_gallery_text [:url] = params[:url]
+    @video = Video.find(params[:mod_gallery])
+    @video.link = params[:video_url]
+    @video.video_text =  params[:video_text]
+    @video.user_id = current_user
     respond_to do |format|
-      if  @user_gallery_text.save
-        format.json { render json:   @user_gallery_text }
+      if  @video.save
+        format.json { render json:   @video }
       else
-        render :json => { "errors" => @user_gallery_text.errors }
+        render :json => { "errors" => @video.errors }
       end
     end
   end

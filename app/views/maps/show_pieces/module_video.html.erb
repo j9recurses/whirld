@@ -1,0 +1,15 @@
+
+<div id='video-<%=video.id%>' class='module-one wh-module uk-width-1-1 wh-height-viewport uk-grid uk-margin-bottom uk-margin-top'>
+  <!-- Thumbnail -->
+  <div class='wh-mod-wrapper wh-height-ninety uk-width-9-10 uk-grid-collapse uk-overlay uk-overlay-hover'>
+  
+  <iframe id="ytplayer" type="text/html" width="640" height="390"
+src="https://www.youtube.com/watch?v=nfWlot6h_JM"
+frameborder="0"/>
+ 
+  </div>
+  <!-- Activity for all -->
+  <%= render partial: "maps/show_pieces/module_all_meta_side.html.erb", :locals => { :mod => video } %>
+</div> <!-- end module -->
+
+

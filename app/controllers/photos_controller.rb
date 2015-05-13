@@ -44,21 +44,29 @@ class PhotosController < ApplicationController
     end
   end
 
-
   def create
     @photo = @user_gallery.photos.new(params[:photo])
     @photo[:user_id] = current_user.id
-    if @photo.save
-      photo_class_name = @photo.class.to_s.underscore
-      #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
-      @photo = Photo.deepLearnPredict(@photo)
-      puts @photo.inspect
-      @photo = Photo.make_warpable(@photo)
-      respond_to do |format|
-        format.json { render json:  @photo } # , methods: [:warpable_id, :warpable_url, :warpable_url] }
+    respond_to do |format|
+      if @photo.save
+        if params[:map]
+          @map = Map.find(@user_gallery.map_id)
+          @map.coverphoto = @photo.id
+          @map.save
+          @map.coverphoto_name = @photo.photo_file.medium.url
+           format.json { render json:  @map, methods: [:coverphoto_name ]}
+        else
+          photo_class_name = @photo.class.to_s.underscore
+          #Delayed::Job.enqueue PhotoProcessing.new(photo_class_name, @photo[:user_gallery_id], @photo[:id])
+          @photo = Photo.deepLearnPredict(@photo)
+          @photo = Photo.make_warpable(@photo)
+          @photo.save
+          format.json { render json:  @photo } #
+        end
+        # methods: [:warpable_id, :warpable_url, :warpable_url] }
+      else
+        render :json => { "errors" => @photo.errors }
       end
-    else
-      render :json => { "errors" => @photo.errors }
     end
   end
 

@@ -128,27 +128,34 @@ class MapsController < ApplicationController
 
   def show
     @map = Map.find params[:id]
-    @map =  get_whirl_stuff(@map)
-    @map.taglist = @map.tags.pluck([:name])
-    #comments
-    @map = get_comment_stuff(@map)
-    #get whirls
-    @user_gallery = UserGallery.where(['map_id = ?', @map]).first
-    @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
-    @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
-    @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
-    @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
-    @map.zoom ||= 12
-    @embed = true
-    @user = @map.user_id
-    @collaborators = @map.users
-    if @collaborators.size == 0
-      @collaborators = Array.new
-      @collaborators << User.find(@map.user_id)
+    unless @map.finished_dt.blank?
+      @map.name = @map.name.gsub("_", " ")
+      @map =  get_whirl_stuff(@map)
+      @map.taglist = @map.tags.pluck([:name])
+      #comments
+      @map = get_comment_stuff(@map)
+      #get whirls
+      @user_gallery = UserGallery.where(['map_id = ?', @map]).first
+      @grids = UserGalleryGrid.gather_gallery_grids(@user_gallery[:id])
+      @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
+      @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
+      @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
+      @video = Video.gather_videos(@user_gallery[:id])
+      puts @video.inspect
+      @map.zoom ||= 12
+      @embed = true
+      @user = @map.user_id
+      @collaborators = @map.users
+      if @collaborators.size == 0
+        @collaborators = Array.new
+        @collaborators << User.find(@map.user_id)
+      end
+      @nearby_maps = Map.find_nearby_maps(@map)
+      @nearby_maps = get_map_coverphotos(@nearby_maps)
+      @map_comments =  @map.comment_threads
+    else
+      render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
     end
-    @nearby_maps = Map.find_nearby_maps(@map)
-    @nearby_maps = get_map_coverphotos(@nearby_maps)
-    @map_comments =  @map.comment_threads
   end
 
 
@@ -190,7 +197,7 @@ class MapsController < ApplicationController
     params.delete :format
     params.delete "user-gal-id"
     unless params[:name].nil?
-     params[:name] =  params[:name].strip.downcase.gsub(/[\W]+/,'_')
+      params[:name] =  params[:name].strip.downcase.gsub(/[\W]+/,'_')
       params[:slug] = params[:name].strip.downcase.gsub(/[\W]+/,'_')
     end
     if params[:tagList]

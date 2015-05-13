@@ -65,6 +65,7 @@
 			      <%= form_for [@user_gallery, @photo], :multipart => true , :remote => true do %>
 			        <input id='cover-photo-upload'  type='file' name='photo[photo_file]' multiple/>
 			        <input type="hidden" name="user-gal-id" id= "user-gal-id" value= <%=@user_gallery[:id]%>>
+			     		 <input type="hidden" name="map" id="map" value="map">
 			      <% end %>
 			    </div>
 

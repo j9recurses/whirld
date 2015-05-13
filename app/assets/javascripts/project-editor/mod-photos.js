@@ -166,6 +166,6 @@ ModPhoto.prototype = {
     $.each($('#' + this.options.modAttrId).find('.photo'), function(i, modphoto){
       ids += $(modphoto).data('mod-photo-id') + ',';
     });
-    mod.update(ids)
+    mod.update({ids: ids})
   }
 }

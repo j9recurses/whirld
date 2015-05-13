@@ -216,7 +216,7 @@ class MapsController < ApplicationController
     params.delete "user-gal-id"
     unless params[:name].nil?
      params[:name] =  params[:name].strip.downcase.gsub(/[\W]+/,'_')
-      params[:slug] = params[:name]..strip.downcase.gsub(/[\W]+/,'_')
+      params[:slug] = params[:name].strip.downcase.gsub(/[\W]+/,'_')
     end
     if params[:tagList]
       @map.taglist = parse_taglist(params[:tagList], "map", @map.id)

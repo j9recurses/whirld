@@ -36,13 +36,13 @@ Form.prototype = {
   },
   save: function(wrapper){
     var self = this;
+    console.log(self.setData())
     $.ajax({
       url: self.url,
-      data:  this.setData(),
+      data:  self.setData(),
       cache: false,
       type: 'post',
       beforeSend: function(){
-        console.log(wrapper)
         wrapper.find('.fa-check-circle').addClass('uk-hidden');
         wrapper.find('.fa-spinner').removeClass('uk-hidden');
       },
@@ -185,6 +185,7 @@ Form.prototype = {
         tagContainer.append(tag);
         if(map){self.tagSave(map, self.projectTagList());}
         else{self.tagSave(map, self.tagList());}
+        self.eTarget.val('');
       }
       else {
         var tagCheck = tagContainer.find('#'+tag.id);
@@ -199,6 +200,7 @@ Form.prototype = {
           tagContainer.append(tag);
           if(map){self.tagSave(map, self.projectTagList());}
           else{self.tagSave(map, self.tagList());}
+          self.eTarget.val('');
         }
       }
     }
@@ -232,7 +234,6 @@ Form.prototype = {
       success: function(data){
         console.log('Success: tags were created');
         console.log(self.eTarget)
-        self.eTarget.val('')
       },
       error: function(){
         console.log('Error: tags were not created');
@@ -246,9 +247,6 @@ Form.prototype = {
         e.preventDefault();
         self.eTarget = $(e.target);
         self.tagAppend(e, null);
-      },
-      focusout: function(){
-        self.tagSave(null, self.tagList());
       }
     })
   },
@@ -295,23 +293,6 @@ Form.prototype = {
       keyup: function(e){
         self.eTarget = $(e.target);
         self.changeCounter(e);
-      },
-      focusout: function(e){
-        self.eTarget = $(e.target);
-        data[self.modType + '_text'] = caption.val();
-        console.log(data)
-        $.ajax({
-          url: url,
-          data: data,
-          cache: false,
-          type: 'put',
-          success: function(data){
-            console.log('Success: caption field was updated');
-          },
-          error: function(){
-            console.log('Error: caption field was not updated');
-          }
-        }); // end ajax
       }
     });    
   },
@@ -358,37 +339,6 @@ Form.prototype = {
 
         console.log($(this))
         data['bloc_text'] = self.eTarget.val();
-        console.log(data)
-        $.ajax({
-          url: url,
-          data: data,
-          cache: false,
-          type: 'put',
-          success: function(data){
-            console.log('Success: text field was updated');
-          },
-          error: function(){
-            console.log('Error: text field was not updated');
-          }
-        }); // end ajax
-      }
-    });
-  },
-  videoField: function(){
-    autosize(this.modEl.find('.text-module-body'));
-    var url = '/photo_mods/user_gallery_' + this.modType + '_update/'  + this.modId;
-    var data = {
-        mod_gallery: this.modId,
-        mod_type: this.modType
-      }
-
-    // Update mod
-    this.modEl.find('.video-module-url').on({
-      focusout: function(e){
-        self.eTarget = $(e.target);
-
-        console.log($(this))
-        data['url'] = self.eTarget.val();
         console.log(data)
         $.ajax({
           url: url,

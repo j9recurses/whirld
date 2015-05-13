@@ -217,7 +217,7 @@ Module.prototype = {
         $.each(self.modEl.find('.photo'), function(i, modphoto){
           ids += $(modphoto).data('mod-photo-id') + ',';
         });
-        self.update(ids)
+        self.update({ids: ids})
       }
     });
   },
@@ -285,12 +285,35 @@ Module.prototype = {
               txtField.blockTextField();
         }
         else if(self.options.modType == 'video'){
-          var vidField = new Form({ modAttrId: self.modEl.attr('id') });
-              vidField.videoField();
+          var vidField = self.modEl.find('.video-module-url');
+              vidField.on({
+                focusout:function(e){
+                  var url = $(this).val();
+                  self.update();
+                }
+              });
         }
         else if(self.options.modType == 'grid' || self.options.modType == 'comparison' || self.options.modType == 'video'){
-          var caption = new Form({ modAttrId: self.modEl.attr('id') });
-              caption.captionField();
+          var captionField = self.modEl.find('.caption');
+              autosize(captionField);
+              captionField.on({
+                keyup: function(e){
+                  var wrapper = $(this).parent('.input-wrapper');
+                  var span = $(wrapper).find('.char-limit');
+                      span.removeClass('uk-invisible');
+                  var letterCount = $(this).val().length;
+                  var count = $(span).data('limit') - letterCount;
+                  $(span).text(count);
+
+                  $(this).on('focusout', function() {
+                    if(letterCount == 0) { span.addClass('invisible'); }
+                  });
+                },
+                focusout: function(){
+                  var caption = $(this).val();
+                  self.update();
+                }
+              })
         }
 
       },
@@ -336,12 +359,34 @@ Module.prototype = {
           photo.delete();
     });
   },
-  update: function(order){
+  getOrder: function(){
+    var ids = '';
+    $.each($(this.modEl.find('.photo')), function(i, photo){
+      ids += $(photo).data('mod-photo-id') + ',';
+    });
+    console.log(ids)
+    return ids;
+  },
+  update: function(){
     var self = this;
     var url = '/photo_mods/user_gallery_' + this.options.modType + '_update/'  + this.id;
+    this.modEl = $('#module-'+this.options.modType + '-' + this.id)
     var data = {mod_gallery: this.id};
-    if(order){
-      data[this.options.modType+'_photo_order'] = order;
+
+    // Captions
+    if(this.options.modType == 'grid'){
+      data[this.options.modType+'_text'] = $(this.modEl.find('.caption')).val();
+      data[this.options.modType+'_photo_order'] = this.getOrder();
+    }
+    else if(this.options.modType == 'comparison'){
+      data[this.options.modType+'_text'] = $(this.modEl.find('.caption')).val();
+      data[this.options.modType+'_photo_order'] = this.getOrder();
+    }
+    else if(this.options.modType == 'video'){
+      data[this.options.modType+'_text'] = $(this.modEl.find('.caption')).val();
+    }
+    else if(this.options.modType == 'split'){
+      data[this.options.modType+'_photo_order'] = this.getOrder();
     }
     console.log(data)
     $.ajax({

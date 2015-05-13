@@ -254,7 +254,7 @@ class PhotoModsController < ApplicationController
     @video = Video.find(params[:mod_gallery])
     @video.link = params[:video_url]
     @video.video_text =  params[:video_text]
-    @video.user_id = current_user
+    @video.user_id = current_user.id
     respond_to do |format|
       if  @video.save
         format.json { render json:   @video }

@@ -1,6 +1,6 @@
 
 <article class='search-card mix' data-map-id='<%=card.id%>' data-updated='<%= card.updated_at %>' data-relevant='<%=card.search_order%>' data-popular='<%=card.whirls %>'>
-	<a href='/maps/<%=card.name%>' class="sc-cover uk-cover-background uk-overlay" style="background-image: url('<%=card.coverphoto_name%>');">
+	<a href='/maps/<%=card.slug%>' class="sc-cover uk-cover-background uk-overlay" style="background-image: url('<%=card.coverphoto_name%>');">
 	    <img class="uk-invisible" src="<%=card.coverphoto_name%>" alt="Placeholder image for card.name">
 	</a>
 
@@ -25,7 +25,7 @@
 
 			<div class='sc-header'>
 				<h1 class='sc-title uk-h4 wh-caps uk-text-bold'>
-					<a href='/maps/<%=card.name%>'><%=card.name%></a>
+					<a href='/maps/<%=card.slug%>'><%=card.name%></a>
 				</h1>
 			</div>
 

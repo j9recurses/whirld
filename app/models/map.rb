@@ -171,9 +171,11 @@ class Map < ActiveRecord::Base
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
+    unless map.finished_dt.blank?
       #unless map.sort.blank?
       # distance_away = map.sort
       #end
+      #.name.gsub("_", " ")
       map = Map.find(map.id)
       unless params[:query].blank?
         map.search_term =  params[:query]
@@ -191,12 +193,19 @@ class Map < ActiveRecord::Base
         map.search_entity = params[:entity]
       end
       #map.ndist = distance
+      map.name = map.name.gsub("_", " ")
       map.taglist = map.tags
       map.collaborator_list = collaborators_list(map)
       map.search_order = counter
+      coverphoto = Photo.where (["id = ?", map.coverphoto])
+    unless coverphoto.blank?
       coverphoto = Photo.find(map.coverphoto)
       map.user_gallery_id = coverphoto.user_gallery_id
       map.coverphoto_name = coverphoto.photo_file.medium.url
+    else
+      map.coverphoto_name = "/assets/images/goat404.jpg"
+       map.user_gallery_id = 1
+    end
       unless map.votes_for.nil?
         map.whirls = map.votes_for.size
       end
@@ -205,6 +214,7 @@ class Map < ActiveRecord::Base
       end
       counter = counter + 1
       search_info_maps << map
+    end
     end
     return search_info_maps
   end

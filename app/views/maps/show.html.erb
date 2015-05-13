@@ -25,7 +25,7 @@
 				<i class='fa fa-tag uk-text-muted'></i>
 				<% if @map.taglist.size > 0 %>
 					<% @map.taglist.each do |tag| %>
-						<a class='project-tag' href='/search<%=tag%>' class=''><%=tag%></a>   
+						<a class='project-tag' href='/search<%=tag%>' class=''><%=tag%></a>
 					<% end %>
 				<% else %>
 					<span class='uk-text-muted wh-italics'>
@@ -43,6 +43,7 @@
 	</section>
  
 	<section class='wh-module-show wh-mod-container uk-grid uk-width-1-1'>
+	 <% unless @user_gallery.module_order.blank?%>
 	   <% mod_orders =  eval(@user_gallery.module_order) %>
 			 <%#=mod_orders.inspect%>
 			<% unless mod_orders.nil?%>
@@ -80,6 +81,7 @@
 		  <% end %>
 		<% end %>
 		<% end %>
+			<% end %>
 	</section>
 
 </div>

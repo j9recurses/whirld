@@ -140,8 +140,7 @@ class MapsController < ApplicationController
       @block_texts  = UserGalleryBlocText.gather_bloc_texts(@user_gallery[:id])
       @splits = UserGallerySplit.gather_gallery_splits(@user_gallery[:id])
       @comps = UserGalleryComparison.gather_gallery_comparisions(@user_gallery[:id])
-      @video = Video.gather_videos(@user_gallery[:id])
-      puts @video.inspect
+      @videos = Video.gather_videos(@user_gallery[:id])
       @map.zoom ||= 12
       @embed = true
       @user = @map.user_id

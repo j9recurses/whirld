@@ -233,7 +233,6 @@ Form.prototype = {
       },
       success: function(data){
         console.log('Success: tags were created');
-        console.log(self.eTarget)
       },
       error: function(){
         console.log('Error: tags were not created');

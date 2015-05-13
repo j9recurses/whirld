@@ -13,8 +13,8 @@
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 0 } %>
-                <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => grid, :lightbox_link_count => 0 } %>
+                <p class='uk-float-left'><%=grid.grid_text%></p>
               </div>
             </div>
             <!-- Activity for all -->
@@ -33,7 +33,7 @@
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 1 } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => grid, :lightbox_link_count => 1 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
@@ -55,7 +55,7 @@
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 2 } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => grid, :lightbox_link_count => 2 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
@@ -76,7 +76,7 @@
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 3 } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => grid, :lightbox_link_count => 3 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>
@@ -99,7 +99,7 @@
 
               <div class='uk-overlay-panel uk-overlay-slide-bottom uk-overlay-background uk-overlay-bottom'>
                 <%= render partial: "maps/show_pieces/module_all_taglist", :locals => { :taglist => grid.taglist, :collaborators => collaborators } %>
-                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :grid => grid, :lightbox_link_count => 4 } %>
+                <%= render partial: "maps/show_pieces/module_all_lightbox_list", :locals => { :mod => grid, :lightbox_link_count => 4 } %>
                 <p class='uk-float-left'>Bacon ipsum dolor amet beef ribs doner kevin meatball turkey meatloaf. Kielbasa venison ground round pork strip steak shoulder landjaeger meatloaf fatback corned beef andouille frankfurter. Turducken</p>
               </div>
             </div>

@@ -384,6 +384,7 @@ Module.prototype = {
     }
     else if(this.options.modType == 'video'){
       data[this.options.modType+'_text'] = $(this.modEl.find('.caption')).val();
+      data[this.options.modType+'_url'] = $(this.modEl.find('.video-module-url')).val();
     }
     else if(this.options.modType == 'split'){
       data[this.options.modType+'_photo_order'] = this.getOrder();

@@ -1,6 +1,6 @@
 <div class='uk-width-1-10 uk-float-right'>
-	 <a href='<%=grid.photos[0][0].photo_file%>' data-uk-lightbox="{group:'grid-<%=grid.id%>'}" title="1 of <%= grid.photos.size %>" class='uk-text-contrast'><i class='fa fa-expand'></i></a>
+	 <a href='<%=mod.photos[0][0].photo_file%>' data-uk-lightbox="{group:'grid-<%=mod.id%>'}" title="1 of <%= mod.photos.size %>" class='uk-text-contrast'><i class='fa fa-expand'></i></a>
 	 <% lightbox_link_count.times do |i| %>
-		 <a href='<%=grid.photos[i+1][0].photo_file%>' data-uk-lightbox="{group:'grid-<%=grid.id%>'}" title="<%=i+2%> of <%= grid.photos.size %>" class='uk-text-muted'></a>
+		 <a href='<%=mod.photos[i+1][0].photo_file%>' data-uk-lightbox="{group:'grid-<%=mod.id%>'}" title="<%=i+2%> of <%= mod.photos.size %>" class='uk-text-muted'></a>
 	 <% end %>
 </div>

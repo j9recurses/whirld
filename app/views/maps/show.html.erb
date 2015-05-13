@@ -9,7 +9,7 @@
 			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
 				<a class='uk-text-primary'><i class='fa fa-share'></i>  Share This</a>
 			</div>
-			<h1 class='uk-margin-top'>
+			<h1 class='uk-margin-top uk-text-break'>
 				<%= @map.name %>
 			</h1>
 			<h2 class='uk-h3'><%= @map.location %></h2>
@@ -54,8 +54,7 @@
 					<% unless @comps.nil? %>
 					<% @comps.each do |comp| %>
 						<% if comp.id == mod[0].to_i %>
-							<%= render partial: "maps/show_pieces/module_comparison", :locals => {:comp => comp} %>
-							<%#= render partial: "maps/show_pieces/module_taglist", :locals => {:taglist => comp.taglist} %>
+							<%= render partial: "maps/show_pieces/module_comparison", :locals => {:comp => comp, :collaborators => @collaborators } %>
 						<% end %>
 					<%end%>
 							<%end%>

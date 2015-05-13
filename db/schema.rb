@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20150513045138) do
     t.integer  "coverphoto"
     t.text     "tile_url"
     t.datetime "finished_dt"
+    t.string   "photo_file"
   end
 
   add_index "maps", ["slug"], :name => "index_maps_on_slug", :unique => true

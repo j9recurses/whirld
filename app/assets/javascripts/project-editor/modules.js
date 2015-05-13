@@ -39,7 +39,7 @@ ModuleHtml.prototype = {
     }
   },
   htmlCaption: function(){
-    var html = "<div class='uk-margin-top uk-form width-1-1 input-wrapper'><textarea class='caption uk-width-1-1' placeholder='Describe your content.'></textarea><small class='char-limit uk-invisible' data-limit='140'>140</small></div>";
+    var html = "<div class='uk-margin-top uk-form width-1-1 input-wrapper'><textarea class='caption uk-width-1-1' placeholder='Describe your content.' maxlength='140'></textarea><small class='char-limit uk-invisible' data-limit='140'>140</small></div>";
     return html
   },
   htmlDropzone: function(){
@@ -63,7 +63,7 @@ ModuleHtml.prototype = {
     return $(html);
   },
   split: function(){
-    var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-width-1-1' placeholder='Add some text'></textarea></div>";
+    var text = "<div class='uk-width-1-2 uk-form'><textarea class='text-module-body uk-text-break uk-width-1-1' placeholder='Add some text' maxlength='830'></textarea></div>";
     var photo = "<div class='uk-placeholder uk-text-muted uk-placeholder-large droppable dropzone ui-droppable ui-sortable uk-text-center uk-width-1-2'>" + this.emptyMessage + "</div>";
     var html = "<article class='split-module module uk-width-1-1'>" + this.htmlHeader() + "<div class='uk-grid uk-width-1-1 uk-grid-collapse'>" + photo + text + "<div class='uk-form uk-width-1-1'>" + this.htmlTaginput() + "</div></div></article>";
     return $(html);

@@ -8,7 +8,8 @@ var currentUser = {
 }
 var existingComments = [
   {
-    "sectionId": "UserGalleryGrid-51",
+    // this section id is the data-section-id attribute from the split module 
+    "sectionId": "UserGallerySplit-14",
     "comments": [
       {
         "authorAvatarUrl": "/assets/jeff.jpg",

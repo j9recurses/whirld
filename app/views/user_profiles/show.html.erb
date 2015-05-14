@@ -1,76 +1,40 @@
-<section id = 'login' class='first-section'>
-  <div class='wrapper'>
-    <div class='row group'>
-      <div class='twelve columns'>
-        <h1>User Profile</h1>
-        <h5> <%= link_to "Manage Your Profile", user_profile_edit_path(@user.id) %> </h5>
-         <%= image_tag(@user_profile.photo_file, :size => "200x250")%>
-         <h4>Username: <%= @user.login %> </h4>
-        <h4>Location: <%= @user_profile.location  %> </h4>
-        <h4>Tools and Skills : <%=  @user.taglist.join(",") %> </h4>
-        <H4>Description: </h4>
-        <p> <%= @user_profile.description %></p>
-        <h4> <%= @user.login.titleize %> has worked on <%= @maps_cnt %> projects and has finished <%= @maps.size.to_s %> projects</h4>
-        <% unless @collaborators.nil? %>
-          <% @collaborators.each do |map, collabo| %>
-              <div id= "user_projects">
-              <%= image_tag(map.coverphoto_name, :size => "100x100") %>
-              <li class='user-meta-item item font_small bold'>
-              <%= link_to "Project: " + map.name, map_path(map.id) %>
-              <% if collabo.size == 1%>
-                <%next%>
-              <%else%>
-                 => Collaborators:
-                <% collabo.each do |c| %>
-                  <%=link_to c.login + ",", user_profile_path(c.id) %>
-                <%end%>
-              <%end%>
-              </li>
-            </div>
-          <%end%>
-        <%end%>
-        <h3> Nearby Users <%= @user.login.titleize%> </h3>
-        <% @neighbors.each do |n| %>
-        <%if n.id != @user_profile.id %>
-        <%unless n.photo_file.blank? %>
-         <%= image_tag(n.photo_file, :size => "100x100") %>
-         <%else%>
-           <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
-         <%end%>
-        <h5><%=link_to n.login, user_profile_path(:id => n.user_id) %> is  <%=n.ndist.round(0)%> miles away from <%=@user.login%> </h5>
-        <% end %>
-        <% end %>
-        <h3>Recent Activity for <%= @user.login.titleize %> </h3>
-        <div class="col-sm-3">
-          <%= render_activities @activities %>
-        </div>
-        <h3> <%= @user.login.titleize%> has contributed <%=@photos_contributed %> Photos</h3>
-       <div id="user_street_photos">
-        <% @user_photos.each do |photo|%>
-         <li class='user-meta-item item font_small bold'>
-           <%= image_tag(photo.photo_file, :size => "100x100") %>
-          </li>
-          <%end%>
-          </div>
-
-    <H3> <%@user.login.titleize%> Collaborators </H3>
-          <%  @collaborators_list.each do |collabo | %>
-          <%  cprofile = collabo.user_profile %>
-             <% unless cprofile.blank? %>
-             <li class='user-meta-item item font_small bold'>
-                 <% unless cprofile.photo_file.blank? %>
-                    <%= image_tag(cprofile.photo_file, :size => "100x100") %>
-                <%else%>
-                  <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
-                <%end%>
-              <%else%>
-                 <%= image_tag("/assets/test/cat.png", :size => "100x100") %>
-               <%end%>
-                  <%= collabo.tags.pluck([:name]).join(" , ") %>
-            <%= link_to collabo.login.titleize, user_profile_path(collabo.id)%>
-          </li>
-          <%end%>
-      </div>
+<div id='user-profile' class='uk-grid uk-grid-collapse'>
+  <section id="user-profile-main" class="uk-width-10-10 wh-container uk-grid uk-margin-bottom">
+    <div class='uk-width-1-1 uk-margin-top'>
+      <h1>Dave • Oakland, CA</h1>
     </div>
-  </div>
-</section>
+    <div class='uk-width-2-10 uk-position-relative'>
+      <%= image_tag("/assets/dave.jpg", :class => 'uk-responsive-width uk-border-circle') %>
+      <div class='whirl-wrapper'>
+        <div class='icon-on'></div>
+        <span class='uk-text-muted uk-text-small'>800 whirls</span>
+      </div>
+      <p class='uk-text-small'>
+        <i class='fa fa-photo uk-text-primary'></i><span class='uk-text-muted profile-counts'>200 photos</span>
+      </p>
+      <p class='uk-text-small'>
+        <i class='fa fa-users uk-text-primary'></i><span class='uk-text-muted profile-counts'>18 collaborators</span>
+      </p>
+      <p class='uk-text-small'>
+        <i class='fa fa-map-marker uk-text-primary'></i><span class='uk-text-muted profile-counts project-count'>42 projects</span>
+      </p>
+    </div>
+    <div class='uk-width-6-10'>
+      <h2 class='uk-margin-top-remove'>About</h2>
+      <p>This is the about section.</p>
+      <h2>Tools & Skills</h2>
+      <% 7.times.each do |skill| %>
+        <a class='profile-skill' href="/search/skill">skill</a>
+      <% end %>
+    </div>
+    <div class='uk-width-2-10'>
+      <h2 class='uk-margin-top-remove'>Recent Activity</h2>
+      <p>
+        <i class='fa fa-comment uk-text-primary'></i> Comment
+      </p>
+      <p>
+        <i class='fa fa-photo uk-text-primary'></i> Photos
+      </p>
+    </div>
+  </section>
+</div>

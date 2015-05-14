@@ -3,6 +3,14 @@
 class UserProfilesController < ApplicationController
  include ApplicationHelper
 
+ layout :resolve_layout
+
+  def resolve_layout
+    case action_name
+    when "show"
+      "layout_read"
+    end
+  end
 
   def show
     @user = User.find(params[:id])

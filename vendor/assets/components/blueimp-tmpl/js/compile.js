@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+//#!/usr/bin/env node
 /*
  * JavaScript Templates Compiler 2.4.0
  * https://github.com/blueimp/JavaScript-Templates

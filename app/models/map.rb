@@ -10,6 +10,9 @@ end
 
 class Map < ActiveRecord::Base
   after_save :map_update_index
+  after_destroy :map_update_index
+  after_touch :map_update_index
+  after_create :map_update_index
 
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   extend FriendlyId
@@ -177,7 +180,10 @@ class Map < ActiveRecord::Base
     search_info_maps = Array.new
     counter = 1
     maps.each do |map|
-    unless map.finished_dt.blank?
+    unless map.finished_dt.blank? or map.finished_dt.nil?
+      # puts "*******"
+      # puts map.inspect
+      # puts "**********8"
       #unless map.sort.blank?
       # distance_away = map.sort
       #end

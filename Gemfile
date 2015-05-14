@@ -40,6 +40,7 @@ group :dependencies do
   gem 'uglifier', '>= 1.0.3'
   gem "jshintrb"
   gem "therubyracer"
+  gem "less-rails"
 end
 
 

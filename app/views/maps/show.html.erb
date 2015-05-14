@@ -4,7 +4,7 @@
 
 			<div class='uk-width-1-2 uk-float-left uk-margin-bottom uk-position-relative'>
 				<a class='wh-js-whirl uk-text-primary unwhirled uk-position-absolute' data-whirl-type='Map' data-whirl-id='<%=@map.id%>'><i class="icon-whirl icon-whirl-off uk-h2"></i></a>
-				
+
 				<span class='wh-whirl-count-wrapper uk-position-absolute'><span class='wh-js-whirl-count'><%= @map.whirls %></span> whirls</span>
 			</div>
 			<div class='uk-width-1-2 uk-float-right uk-margin-bottom'>
@@ -86,7 +86,7 @@
 			 <%elsif mod[1]  == "text" %>
 			 		<% @block_texts.each do |block| %>
 			 			<% if block.id == mod[0].to_i %>
-							<%= render partial: "maps/show_pieces/module_text", :locals => {:block => block} %>
+							<%#= render partial: "maps/show_pieces/module_text", :locals => {:block => block} %>
 						<% end %>
 					<% end %>
 		  <% end %>

@@ -8,8 +8,10 @@
 
     <ul class="uk-navbar-nav uk-navbar-flip">
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href=""> <%=current_user.login %> <i class="fa fa-caret-down"></i> </a>
-
+            <a href="">  <% if user_signed_in? %>
+            <%= current_user.login %>
+            <%end%>
+             <i class="fa fa-caret-down"></i> </a>
             <div class="uk-dropdown uk-dropdown-navbar" data-uk-dropdown="{mode:'click'}">
                 <ul class="uk-nav uk-nav-navbar">
                     <li><a href="#">Another item</a></li>

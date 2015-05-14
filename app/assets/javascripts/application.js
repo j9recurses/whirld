@@ -2,7 +2,7 @@
 //= require jquery/dist/jquery.js
 //= require jquery-ui/jquery-ui.min.js
 //= require jquery-ujs/src/rails.js
-//= require bootstrap/dist/js/bootstrap.js
+
 
 //= require leaflet/dist/leaflet
 //= require leaflet-providers/leaflet-providers.js

@@ -41,7 +41,7 @@
           <% @collaborators.each do |map, collabo| %>
               <%= image_tag(map.coverphoto_name, :size => "100x100") %>
              <a class='profile-skill' >
-              <%= link_to "Project: " + map.name, map_path(map.id) %> </a>
+              <%= link_to "Project: " + map.name.name.gsub("_", " "), map_path(map.id) %> </a>
           <%end%>
         <%end%>
     </div>

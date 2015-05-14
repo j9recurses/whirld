@@ -8,7 +8,7 @@ var currentUser = {
 }
 var existingComments = [
   {
-    // this section id is the data-section-id attribute from the split module 
+    // this section id is the data-section-id attribute from the split module
     "sectionId": "UserGallerySplit-14",
     "comments": [
       {
@@ -54,7 +54,7 @@ $('.wh-js-whirl').on({
   }
 });
 
-$('#grid-51').find('.post').on('click', function(e){
+$('#grid-1').find('.post').on('click', function(e){
   e.preventDefault();
   var val = $($(this).parent().siblings('input')).val();
   var list = $($(this).parent().parent().siblings('.comments'));
@@ -75,7 +75,7 @@ $('#grid-51').find('.post').on('click', function(e){
 //Klass_id:1, klass_type:Map
 //This function returns the model object plus the updated number of whirls for that object.
 //This variable can be found in json hash as: whirls: 2
- 
+
 
 ///comments- singular non-threaded
 //this function takes the following params:

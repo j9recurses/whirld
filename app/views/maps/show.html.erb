@@ -11,7 +11,7 @@
 				<a class='uk-text-primary'><i class='fa fa-share'></i>  Share This</a>
 			</div>
 			<h1 id='project-name' class='uk-margin-top uk-text-break'>
-				<%= @map.name %>
+				<%= @map.name.titleize %>
 			</h1>
 			<h2 class='uk-h3'><%= @map.location %></h2>
 
@@ -37,14 +37,15 @@
 				<% end %>
 			</p>
 			<p class='project-description uk-text-break'><%=@map.description%></p>
-			<div class='request-wrapper uk-width-4-10 uk-position-absolute'>
+		<!--	<div class='request-wrapper uk-width-4-10 uk-position-absolute'>
 				<button class='uk-button uk-button-large uk-button-primary' data-uk-modal="{target:'#collabo-request'}">Request to Collaborate</button>
 			</div>
+		-->
 
 			<div id="collabo-request" class="uk-modal">
 			    <div class="uk-modal-dialog">
 			        <a class="uk-modal-close uk-close"></a>
-			        <h1 class='uk-h2'><%=@map.name%></h1>
+			        <h1 class='uk-h2'><%=@map.name.titleize%></h1>
 			        <h2 class='uk-h3'>Request to collaborate</h2>
 			        <div class='uk-grid'>
 			        	<div class='uk-width-2-10'>

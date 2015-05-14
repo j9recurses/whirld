@@ -2,8 +2,8 @@
   <small class="text-muted"><%= a.created_at.strftime('%H:%M:%S %-d %B %Y') %></small><br/>
   <strong><%= activity.owner ? activity.owner.login : 'Guest' %></strong>
   <% if a.trackable %>
-    edited the project <%=a.trackable.name%>.
+    added the project <%=a.trackable.name%>
   <% else %>
-    edited the project that is currently deleted.
+    added the project that is currently deleted.
   <% end %>
 

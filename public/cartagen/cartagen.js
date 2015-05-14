@@ -9400,14 +9400,14 @@ var Warper = {
         //calculate the altitude of the image
         if(typeof GPS.GPSAltitude !== 'undefined' && typeof GPS.GPSAltitudeRef !== 'undefined' && typeof act_height!== 'undefined' && typeof act_width !== 'undefined'){
             Altitude = (GPS.GPSAltitude["numerator"]/GPS.GPSAltitude["denominator"]+GPS.GPSAltitudeRef) / 10;
-            // Convert altitude to zoom, for large altitude it is not a possible conversion as at any altitude it 
+            // Convert altitude to zoom, for large altitude it is not a possible conversion as at any altitude it
             // is not possible for a camera to see a complete view of earth
-            // For small altitudes the following will work fine. It is still experimental and needs testing. 
-            // For correction based on altitude we need the original dimensions of the image. 
+            // For small altitudes the following will work fine. It is still experimental and needs testing.
+            // For correction based on altitude we need the original dimensions of the image.
 
             //Some GPS data shows altitude as zero even though it is not, we need to account for errors or we will have infinity zoom.
             if(Altitude >0)
-                Altitude_to_zoom = ( (act_height/Img_height) * (act_width/Img_width) ) / Altitude;           
+                Altitude_to_zoom = ( (act_height/Img_height) * (act_width/Img_width) ) / Altitude;
             else
                 Altitude_to_zoom = Map.zoom * 1.3;
 
@@ -9435,7 +9435,7 @@ var Warper = {
 
 
         // Calculate the distance to move on map, Mapknitter uses Map.zoom = Zoom / 1.3.
-        var hh=(Img_height / 2) / pixel_ratio, wh=(Img_width / 2) / pixel_ratio; 
+        var hh=(Img_height / 2) / pixel_ratio, wh=(Img_width / 2) / pixel_ratio;
         var points = Array(4);
         var Cos = Math.cos(Angle);
         var Sin = Math.sin(Angle);
@@ -9454,9 +9454,9 @@ var Warper = {
         // We need to map the center of the image with GPS lat, lon.
         Warper.images.push(new Warper.Image($A([ // should build points clockwise from top left
                         [ points[0][0] , points[0][1] ],
-                        [ points[1][0] , points[1][1] ],       
-                        [ points[2][0] , points[2][1] ],        
-                        [ points[3][0] , points[3][1] ]        
+                        [ points[1][0] , points[1][1] ],
+                        [ points[2][0] , points[2][1] ],
+                        [ points[3][0] , points[3][1] ]
                         ]),url,id,false))
 
             Knitter.new_image = Warper.images.last()

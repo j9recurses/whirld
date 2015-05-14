@@ -18,8 +18,8 @@
 			<p class='uk-text-small'>
 				<i class='fa fa-users uk-text-muted' data-uk-tooltip title="Project collaborators"></i>
 				<% @collaborators.each do |collab| %>
-					<a>Pat</a>
-					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %>
+					<a>
+					<%= link_to(collab.login, user_profile_path(collab.id) , :class => '') %> </a>
 				<% end %>
 			</p>
 
@@ -37,10 +37,10 @@
 				<% end %>
 			</p>
 			<p class='project-description uk-text-break'><%=@map.description%></p>
-		<!--	<div class='request-wrapper uk-width-4-10 uk-position-absolute'>
+		<div class='request-wrapper uk-width-4-10 uk-position-absolute'>
 				<button class='uk-button uk-button-large uk-button-primary' data-uk-modal="{target:'#collabo-request'}">Request to Collaborate</button>
 			</div>
-		-->
+
 
 			<div id="collabo-request" class="uk-modal">
 			    <div class="uk-modal-dialog">

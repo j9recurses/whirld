@@ -8,7 +8,7 @@
 
     <ul class="uk-navbar-nav uk-navbar-flip">
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href="">Dave <i class="fa fa-caret-down"></i> </a>
+            <a href=""> <%=current_user.login %> <i class="fa fa-caret-down"></i> </a>
 
             <div class="uk-dropdown uk-dropdown-navbar" data-uk-dropdown="{mode:'click'}">
                 <ul class="uk-nav uk-nav-navbar">
@@ -18,7 +18,11 @@
                     <li><a href="#">Another item</a></li>
                     <li class="uk-nav-divider"></li>
                     <li><a href="#"> <% if user_signed_in? %>
-        Signed in as <%= current_user.login %>
+        Signed in as <%if user_signed_in? %>
+                 <%= current_user.login %>
+                <%else%>
+                        <%= %>
+                        <%end%>
        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
     <% else %>
         <%= link_to 'Register', new_user_registration_path %> or <%= link_to 'Sign in', new_user_session_path %>

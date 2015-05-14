@@ -1,4 +1,5 @@
-
+<li class="list-group-item">
+  <span class="glyphicon glyphicon-edit"></span>
   <small class="text-muted"><%= a.created_at.strftime('%H:%M:%S %-d %B %Y') %></small><br/>
   <strong><%= activity.owner ? activity.owner.login : 'Guest' %></strong>
   <% if a.trackable %>
@@ -6,4 +7,4 @@
   <% else %>
     edited the project that is currently deleted.
   <% end %>
-
+</li>

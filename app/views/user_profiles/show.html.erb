@@ -39,9 +39,11 @@
        <h2 class='uk-margin-top-remove'><%= @user.login.titleize %>  has finished <%= %> projects</h2>
         <% unless @collaborators.nil? %>
           <% @collaborators.each do |map, collabo| %>
+          <p>
               <%= image_tag(map.coverphoto_name, :size => "100x100") %>
              <a class='profile-skill' >
               <%= link_to "Project: " + map.name.gsub("_", " ").titleize, map_path(map.id) %> </a>
+          </p>
           <%end%>
         <%end%>
     </div>
